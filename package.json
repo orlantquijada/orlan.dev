@@ -23,5 +23,10 @@
     "npm": ">=7.0.0",
     "node": ">=14.0.0"
   },
-  "packageManager": "pnpm@7.1.7"
+  "packageManager": "pnpm@7.1.7",
+  "lint-staged": {
+    "*.{ts,tsx,md}": [
+      "pnpm lint"
+    ]
+  }
 }
