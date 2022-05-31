@@ -10,9 +10,12 @@
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "prepare": "husky install"
   },
   "devDependencies": {
+    "husky": "^8.0.1",
+    "lint-staged": "^12.4.3",
     "prettier": "latest",
     "turbo": "latest"
   },
