@@ -1,9 +1,132 @@
+import * as Stitches from '@stitches/react'
 import { createStitches } from '@stitches/react'
 
-export const { styled, css } = createStitches({
-  theme: {
-    colors: {
-      primary: 'tomato',
-    },
+const spaceAndSizesCommon = {
+  0: '0px',
+  px: '1px',
+  1: '0.25rem',
+  2: '0.5rem',
+  3: '0.75rem',
+  4: '1rem',
+  5: '1.25rem',
+  6: '1.5rem',
+  7: '1.75rem',
+  8: '2rem',
+  9: '2.25rem',
+  10: '2.5rem',
+  11: '2.75rem',
+  12: '3rem',
+  14: '3.5rem',
+  16: '4rem',
+  20: '5rem',
+  24: '6rem',
+  28: '7rem',
+  32: '8rem',
+  36: '9rem',
+  40: '10rem',
+  // 44: '11rem',
+  // 48: '12rem',
+  // 52: '13rem',
+  // 56: '14rem',
+  // 60: '15rem',
+  // 64: '16rem',
+}
+
+export const defaultTheme = {
+  colors: {
+    primary: 'tomato',
   },
-})
+  space: spaceAndSizesCommon,
+  sizes: {
+    ...spaceAndSizesCommon,
+    full: '100%',
+    fit: 'fit-content',
+  },
+
+  fontSizes: {
+    xs: '0.75rem',
+    sm: '0.875rem',
+    base: '1rem',
+    lg: '1.125rem',
+    xl: '1.25rem',
+    '2xl': '1.5rem',
+    '3xl': '1.875rem',
+    '4xl': '2.25rem',
+    '5xl': '3rem',
+    '6xl': '3.75rem',
+    '7xl': '4.5rem',
+    '8xl': '6rem',
+    '9xl': '8rem',
+  },
+
+  radii: {
+    none: '0',
+    sm: '0.125rem',
+    base: '0.25rem',
+    md: '0.375rem',
+    lg: '0.5rem',
+    xl: '0.75rem',
+    '2xl': '1rem',
+    '3xl': '1.5rem',
+    full: '9999px',
+  },
+}
+
+const defaultCreateStitchesConfig = {
+  theme: defaultTheme,
+
+  utils: {
+    w: (v: Stitches.PropertyValue<'width'>) => ({ width: v }),
+    h: (v: Stitches.PropertyValue<'height'>) => ({ height: v }),
+    size: (v: Stitches.PropertyValue<'width'>) => ({ height: v, width: v }),
+
+    m: (v: Stitches.PropertyValue<'margin'>) => ({ margin: v }),
+    mt: (v: Stitches.PropertyValue<'margin'>) => ({ marginBlockStart: v }),
+    mr: (v: Stitches.PropertyValue<'margin'>) => ({ marginInlineEnd: v }),
+    mb: (v: Stitches.PropertyValue<'margin'>) => ({ marginBlockEnd: v }),
+    ml: (v: Stitches.PropertyValue<'margin'>) => ({ marginInlineStart: v }),
+    mx: (v: Stitches.PropertyValue<'marginInline'>) => ({ marginInline: v }),
+    my: (v: Stitches.PropertyValue<'marginBlock'>) => ({ marginBlock: v }),
+
+    p: (v: Stitches.PropertyValue<'padding'>) => ({ padding: v }),
+    pt: (v: Stitches.PropertyValue<'padding'>) => ({ paddingBlockStart: v }),
+    pr: (v: Stitches.PropertyValue<'padding'>) => ({ paddingInlineEnd: v }),
+    pb: (v: Stitches.PropertyValue<'padding'>) => ({ paddingBlockEnd: v }),
+    pl: (v: Stitches.PropertyValue<'padding'>) => ({ paddingInlineStart: v }),
+    px: (v: Stitches.PropertyValue<'paddingInline'>) => ({ paddingInline: v }),
+    py: (v: Stitches.PropertyValue<'paddingBlock'>) => ({ paddingBlock: v }),
+
+    gapy: (v: Stitches.PropertyValue<'rowGap'>) => ({ rowGap: v }),
+    gapx: (v: Stitches.PropertyValue<'columnGap'>) => ({ columnGap: v }),
+
+    rt: (v: Stitches.PropertyValue<'borderRadius'>) => ({
+      borderTopLeftRadius: v,
+      borderTopRightRadius: v,
+    }),
+    rb: (v: Stitches.PropertyValue<'borderRadius'>) => ({
+      borderBottomLeftRadius: v,
+      borderBottomRightRadius: v,
+    }),
+    rl: (v: Stitches.PropertyValue<'borderRadius'>) => ({
+      borderTopLeftRadius: v,
+      borderBottomLeftRadius: v,
+    }),
+    rr: (v: Stitches.PropertyValue<'borderRadius'>) => ({
+      borderTopRightRadius: v,
+      borderBottomRightRadius: v,
+    }),
+  },
+}
+
+export const {
+  styled,
+  css,
+  globalCss,
+  keyframes,
+  getCssText,
+  theme,
+  createTheme,
+  config,
+  prefix,
+  reset,
+} = createStitches(defaultCreateStitchesConfig)
