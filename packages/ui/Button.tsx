@@ -1,4 +1,7 @@
-import * as React from "react";
+import { useState } from 'react'
+
 export const Button = () => {
-  return <button>Boop</button>;
-};
+  const [count, setCount] = useState(0)
+
+  return <button onClick={() => setCount((c) => c + 1)}>{count}</button>
+}
