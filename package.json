@@ -25,8 +25,11 @@
   },
   "packageManager": "pnpm@7.1.7",
   "lint-staged": {
-    "*.{ts,tsx,md}": [
+    "*.{ts,tsx}": [
       "eslint --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
     ]
   }
 }
