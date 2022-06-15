@@ -1,6 +1,36 @@
 import * as Stitches from '@stitches/react'
 import { createStitches } from '@stitches/react'
 
+const olive = {
+  olive1: '#fcfdfc',
+  olive2: '#f8faf8',
+  olive3: '#f2f4f2',
+  olive4: '#ecefec',
+  olive5: '#e6e9e6',
+  olive6: '#e0e4e0',
+  olive7: '#d8dcd8',
+  olive8: '#c3c8c2',
+  olive9: '#8b918a',
+  olive10: '#818780',
+  olive11: '#6b716a',
+  olive12: '#141e12',
+} as const
+
+const oliveDark = {
+  olive1: '#151715',
+  olive2: '#1a1d19',
+  olive3: '#20241f',
+  olive4: '#262925',
+  olive5: '#2b2f2a',
+  olive6: '#313530',
+  olive7: '#3b3f3a',
+  olive8: '#4c514b',
+  olive9: '#687366',
+  olive10: '#778175',
+  olive11: '#9aa299',
+  olive12: '#eceeec',
+} as const
+
 const spaceAndSizesCommon = {
   0: '0px',
   px: '1px',
@@ -34,7 +64,7 @@ const spaceAndSizesCommon = {
 
 export const defaultTheme = {
   colors: {
-    primary: 'tomato',
+    ...olive,
   },
   space: spaceAndSizesCommon,
   sizes: {
@@ -130,3 +160,5 @@ export const {
   prefix,
   reset,
 } = createStitches(defaultCreateStitchesConfig)
+
+export const darkTheme = createTheme({ colors: oliveDark })
