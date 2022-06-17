@@ -33,22 +33,22 @@ export const Text = styled('span', {
       },
       '4xl': {
         fontSize: '$4xl',
-        lineHeight: '2.5rem',
+        lineHeight: 'calc($fontSizes$4xl + 0.25rem)',
         letterSpacing: '-0.02em',
       },
       '5xl': {
         fontSize: '$5xl',
-        lineHeight: '3.75rem',
+        lineHeight: 'calc($fontSizes$5xl + 0.25rem)',
         letterSpacing: '-0.02em',
       },
       '6xl': {
         fontSize: '$6xl',
-        lineHeight: '4.5rem',
+        lineHeight: 'calc($fontSizes$6xl + 0.25rem)',
         letterSpacing: '-0.02em',
       },
       '7xl': {
         fontSize: '$7xl',
-        lineHeight: '5.625rem',
+        lineHeight: 'calc($fontSizes$7xl + 0.25rem)',
         letterSpacing: '-0.02em',
       },
     },
