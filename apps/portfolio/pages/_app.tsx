@@ -7,18 +7,12 @@ export const globalStyles = globalCss({
     boxSizing: 'border-box',
   },
 
-  ':root': {
-    '$font-serif':
-      "'Playfair Display', Georgia, 'Times New Roman', Times, serif",
-  },
-
   '*': {
     margin: 0,
   },
 
   'html, body': {
-    fontFamily:
-      '"Inter",-apple-system,ui-sans-serif,system-ui,"Helvetica Neue","Helvetica", BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell, "Open Sans",sans-serif',
+    fontFamily: '$sans-serif',
   },
 
   'html, body, #__next': {

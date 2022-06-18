@@ -89,6 +89,12 @@ export const defaultTheme = {
     '9xl': '8rem',
   },
 
+  fonts: {
+    serif: "'Serif', Georgia, 'Times New Roman', Times, serif",
+    'sans-serif':
+      '"Inter",-apple-system,ui-sans-serif,system-ui,"Helvetica Neue","Helvetica", BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell, "Open Sans",sans-serif',
+  },
+
   radii: {
     none: '0',
     sm: '0.125rem',
@@ -145,6 +151,12 @@ const defaultCreateStitchesConfig = {
       borderTopRightRadius: v,
       borderBottomRightRadius: v,
     }),
+  },
+
+  media: {
+    mobile: '(min-width: 375px)',
+    tab: '(min-width: 768px)',
+    desktop: '(min-width: 1024px)',
   },
 }
 
