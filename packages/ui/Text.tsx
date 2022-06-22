@@ -53,7 +53,4 @@ export const Text = styled('span', {
       },
     },
   },
-  defaultVariants: {
-    size: 'base',
-  },
 })
