@@ -65,6 +65,10 @@ const spaceAndSizesCommon = {
 export const defaultTheme = {
   colors: {
     ...olive,
+
+    bg: olive.olive1,
+    accent: olive.olive9,
+    textColor: olive.olive12,
   },
   space: spaceAndSizesCommon,
   sizes: {
@@ -173,4 +177,11 @@ export const {
   reset,
 } = createStitches(defaultCreateStitchesConfig)
 
-export const darkTheme = createTheme({ colors: oliveDark })
+export const darkTheme = createTheme({
+  colors: {
+    ...oliveDark,
+    bg: oliveDark.olive1,
+    accent: oliveDark.olive10,
+    textColor: oliveDark.olive12,
+  },
+})
