@@ -1,54 +1,41 @@
-import type { InferGetStaticPropsType } from 'next'
-// import Link from 'next/link'
-import { Button } from 'ui'
-import { allPosts } from 'contentlayer/generated'
-// import { allPosts, Post } from 'contentlayer/generated'
-import { useMDXComponent } from 'next-contentlayer/hooks'
+import { type ComponentProps } from 'react'
+import { Text, Box } from 'ui'
 
-export default function Home({
-  post,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  // const MDXComponent = useMDXComponent(posts[1].body.raw)
-  const MDXContent = useMDXComponent(post.body.code)
-
+export default function Home() {
   return (
-    <div>
-      <h1>Hello World</h1>
-      <Button />
-      <ul></ul>
-
-      <MDXContent components={{ Button }} />
-
-      {/* {posts.map((post) => (
-        <li key={post._id}>
-          <PostCard {...post} />
-        </li>
-      ))}
-
-      {posts.map((post) => (
-        <p key={post._id}>{post.body.raw}</p>
-      ))} */}
-    </div>
+    <Box
+      css={{
+        minHeight: '100vh',
+        pt: '$16',
+        backgroundColor: '$olive1',
+        '& > *': { px: '$4' },
+      }}
+    >
+      <Box as="header" css={{ maxWidth: 780, '@tab': { mx: 'auto' } }}>
+        <HeaderText>
+          <Text css={{ display: 'block', color: '$olive10' }}>
+            Orlan Quijada
+          </Text>
+          Full Stack <Text css={{ display: 'block' }}>Developer &</Text>
+          Freelancer
+        </HeaderText>
+      </Box>
+      <Box as="main"></Box>
+    </Box>
   )
 }
 
-// function PostCard(post: Post) {
-//   return (
-//     <div className="mb-6">
-//       <time dateTime={post.date} className="block text-sm text-slate-600">
-//         {new Date(post.date).toLocaleDateString()}
-//       </time>
-//       <h2 className="text-lg">
-//         <Link href={post.url}>
-//           <a className="text-blue-700 hover:text-blue-900">{post.title}</a>
-//         </Link>
-//       </h2>
-//     </div>
-//   )
-// }
-
-export async function getStaticProps() {
-  const post = allPosts[1]
-
-  return { props: { post } }
+function HeaderText({ children }: ComponentProps<'h1'>) {
+  return (
+    <Text
+      as="h1"
+      size={{ '@initial': '5xl', '@tab': '7xl' }}
+      css={{
+        color: '$olive12',
+        fontFamily: '$serif',
+      }}
+    >
+      {children}
+    </Text>
+  )
 }
