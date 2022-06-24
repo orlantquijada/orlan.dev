@@ -93,6 +93,14 @@ export const defaultTheme = {
     '9xl': '8rem',
   },
 
+  fontWeights: {
+    light: 300,
+    regular: 400,
+    medium: 500,
+    semibold: 600,
+    bold: 700,
+  },
+
   fonts: {
     serif: "'Serif', Georgia, 'Times New Roman', Times, serif",
     'sans-serif':
