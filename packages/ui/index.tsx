@@ -1,3 +1,4 @@
-export * from './Button'
 export * from './stitches.config'
-export * from './Text'
+export * from './components/Button'
+export * from './components/Text'
+export * from './components/Box'
