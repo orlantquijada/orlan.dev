@@ -1,5 +1,5 @@
 import { type ComponentProps } from 'react'
-import { Text, Box } from 'ui'
+import { Text, Box, Banner } from 'ui'
 
 export default function Home() {
   return (
@@ -7,13 +7,16 @@ export default function Home() {
       css={{
         minHeight: '100vh',
         pt: '$16',
-        backgroundColor: '$olive1',
+        backgroundColor: '$bg',
         '& > *': { px: '$4' },
       }}
     >
       <Box as="header" css={{ maxWidth: 780, '@tab': { mx: 'auto' } }}>
+        <Banner.Container css={{ mb: '$5' }}>
+          <Banner.Close>Close</Banner.Close>
+        </Banner.Container>
         <HeaderText>
-          <Text css={{ display: 'block', color: '$olive10' }}>
+          <Text css={{ display: 'block', color: '$accent' }}>
             Orlan Quijada
           </Text>
           Full Stack <Text css={{ display: 'block' }}>Developer &</Text>

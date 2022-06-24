@@ -13,6 +13,7 @@ export const globalStyles = globalCss({
 
   'html, body': {
     fontFamily: '$sans-serif',
+    color: '$textColor',
   },
 
   'html, body, #__next': {
@@ -24,6 +25,10 @@ export const globalStyles = globalCss({
     '-webkit-font-smoothing': 'antialiased',
   },
 
+  '::selection': {
+    backgroundColor: '$olive5',
+  },
+
   'img, picture, video, canvas, svg': {
     display: 'block',
     maxWidth: '100%',
@@ -31,6 +36,10 @@ export const globalStyles = globalCss({
 
   'input, button, textarea, select': {
     font: 'inherit',
+  },
+
+  button: {
+    userSelect: 'none',
   },
 
   'p, h1, h2, h3, h4, h5, h6': {
