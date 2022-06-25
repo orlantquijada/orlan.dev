@@ -3,6 +3,10 @@ import { styled } from '../stitches.config'
 export const Text = styled('span', {
   variants: {
     size: {
+      '2xs': {
+        fontSize: '$2xs',
+        lineHeight: '0.875rem',
+      },
       xs: {
         fontSize: '$xs',
         lineHeight: '1rem',
