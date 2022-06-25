@@ -1,5 +1,6 @@
 import { type ComponentProps } from 'react'
-import { Text, Box, Banner } from 'ui'
+import { Text, Box } from 'ui'
+import WIPBanner from '@components/WIPBanner'
 
 export default function Home() {
   return (
@@ -12,9 +13,7 @@ export default function Home() {
       }}
     >
       <Box as="header" css={{ maxWidth: 780, '@tab': { mx: 'auto' } }}>
-        <Banner.Container css={{ mb: '$5' }}>
-          <Banner.Close>Close</Banner.Close>
-        </Banner.Container>
+        <WIPBanner />
         <HeaderText>
           <Text css={{ display: 'block', color: '$accent' }}>
             Orlan Quijada
