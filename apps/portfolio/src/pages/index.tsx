@@ -1,5 +1,5 @@
 import { type ComponentProps } from 'react'
-import { Text, Box } from 'ui'
+import { Text, Box, Flex } from 'ui'
 import WIPBanner from '@components/WIPBanner'
 
 export default function Home() {
@@ -12,7 +12,12 @@ export default function Home() {
         '& > *': { px: '$4' },
       }}
     >
-      <Box as="header" css={{ maxWidth: 780, '@tab': { mx: 'auto' } }}>
+      <Flex
+        direction="column"
+        gap="5"
+        as="header"
+        css={{ maxWidth: 780, '@tab': { mx: 'auto' } }}
+      >
         <WIPBanner />
         <HeaderText>
           <Text css={{ display: 'block', color: '$accent' }}>
@@ -21,7 +26,7 @@ export default function Home() {
           Full Stack <Text css={{ display: 'block' }}>Developer &</Text>
           Freelancer
         </HeaderText>
-      </Box>
+      </Flex>
       <Box as="main"></Box>
     </Box>
   )
