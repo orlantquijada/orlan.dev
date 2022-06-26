@@ -10,8 +10,39 @@ export default function Document() {
           dangerouslySetInnerHTML={{ __html: getCssText() }}
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
-          rel="stylesheet"
+          rel="preload"
+          href="/fonts/Inter-Thin.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Inter-Regular.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Inter-Medium.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Inter-SemiBold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="preload"
+          href="/fonts/Inter-Bold.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
         />
         <link
           rel="preload"
@@ -20,27 +51,44 @@ export default function Document() {
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <link
-          rel="preload"
-          href="/fonts/SerifLight.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
         <style
           dangerouslySetInnerHTML={{
             __html: `
+              @font-face {
+                font-family: 'Inter';
+                font-weight: 300;
+                font-display: swap;
+                src: url(/fonts/Inter-Thin.woff2) format('woff2');
+              }
+              @font-face {
+                font-family: 'Inter';
+                font-weight: 400;
+                font-display: swap;
+                src: url(/fonts/Inter-Regular.woff2) format('woff2');
+              }
+              @font-face {
+                font-family: 'Inter';
+                font-weight: 500;
+                font-display: swap;
+                src: url(/fonts/Inter-Medium.woff2) format('woff2');
+              }
+              @font-face {
+                font-family: 'Inter';
+                font-weight: 600;
+                font-display: swap;
+                src: url(/fonts/Inter-SemiBold.woff2) format('woff2');
+              }
+              @font-face {
+                font-family: 'Inter';
+                font-weight: 700;
+                font-display: swap;
+                src: url(/fonts/Inter-Bold.woff2) format('woff2');
+              }
               @font-face {
                 font-family: 'Serif';
                 font-weight: 500;
                 font-display: swap;
                 src: url(/fonts/SerifBold.woff2) format('woff2');
-              }
-              @font-face {
-                font-family: 'Serif';
-                font-weight: 300;
-                font-display: swap;
-                src: url(/fonts/SerifLight.woff2) format('woff2');
               }
           `,
           }}
