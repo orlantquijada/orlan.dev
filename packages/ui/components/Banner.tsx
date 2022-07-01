@@ -9,8 +9,10 @@ export const Container = styled('div', {
 
   p: '$3',
   display: 'flex',
-  justifyContent: 'space-between',
+  justifyContent: 'space-around',
   alignItems: 'center',
+
+  gap: '$2',
 })
 
 export const Tag = forwardRef<HTMLSpanElement, ComponentProps<typeof Text>>(
@@ -40,9 +42,9 @@ export const Title = forwardRef<
 >((props, ref) => (
   <Text
     as="p"
-    size="sm"
+    size={{ '@initial': 'xs', '@tab': 'sm' }}
     {...props}
-    css={{ color: '$olive11', ...props.css }}
+    css={{ color: '$olive11', flex: 1, ...props.css }}
     ref={ref}
   />
 ))
@@ -54,7 +56,6 @@ export const Close = forwardRef<HTMLButtonElement, ComponentProps<typeof Pill>>(
       as="button"
       {...props}
       css={{
-        ml: 'auto',
         fontSize: '$2xs',
         fontWeight: '$semibold',
         ...props.css,

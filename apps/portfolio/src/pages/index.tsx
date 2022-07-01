@@ -7,18 +7,20 @@ export default function Home() {
     <Box
       css={{
         minHeight: '100vh',
-        pt: '$16',
+        pt: '$8',
         backgroundColor: '$bg',
         '& > *': { px: '$4' },
+        '@tab': {
+          pt: '$16',
+        },
       }}
     >
       <Flex
         direction="column"
-        gap="5"
         as="header"
         css={{ maxWidth: 780, '@tab': { mx: 'auto' } }}
       >
-        <WIPBanner />
+        <WIPBanner css={{ mb: '$6' }} />
         <HeaderText>
           <Text css={{ display: 'block', color: '$accent' }}>
             Orlan Quijada
