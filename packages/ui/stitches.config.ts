@@ -186,6 +186,8 @@ export const {
   reset,
 } = createStitches(defaultCreateStitchesConfig)
 
+export type CSS = Stitches.CSS<typeof config>
+
 export const darkTheme = createTheme({
   colors: {
     ...oliveDark,
