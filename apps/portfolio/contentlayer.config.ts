@@ -1,8 +1,9 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import { getDateFromPath, MonthSubjectsMap } from './src/lib/contentlayer'
 
 export const Post = defineDocumentType(() => ({
   name: 'Post',
-  filePathPattern: `**/*.md*`,
+  filePathPattern: 'posts/*.md*',
   contentType: 'mdx',
   fields: {
     title: {
@@ -24,9 +25,67 @@ export const Post = defineDocumentType(() => ({
   },
 }))
 
+export const Daily = defineDocumentType(() => ({
+  name: 'Daily',
+  filePathPattern: 'daily/*/[0-3][1-9].md*',
+  fields: {
+    title: {
+      type: 'string',
+      required: true,
+    },
+    author: {
+      type: 'enum',
+      options: ['Marcus Aurelius', 'Seneca', 'Epictetus'],
+      required: true,
+    },
+    book: {
+      type: 'string',
+      required: true,
+    },
+    section: {
+      type: 'string',
+      required: true,
+    },
+    quote: {
+      type: 'string',
+      required: true,
+    },
+  },
+  computedFields: {
+    url: {
+      type: 'string',
+      resolve: (daily) => {
+        const { day, month } = getDateFromPath(daily._raw.flattenedPath)
+        return `/daily/${month}/${day}`.toLowerCase()
+      },
+    },
+    day: {
+      type: 'number',
+      resolve: (daily) => {
+        const { day } = getDateFromPath(daily._raw.flattenedPath)
+        return day
+      },
+    },
+    month: {
+      type: 'enum',
+      resolve: (daily) => {
+        const { month } = getDateFromPath(daily._raw.flattenedPath)
+        return month
+      },
+    },
+    monthSubject: {
+      type: 'string',
+      resolve: (daily) => {
+        const { month } = getDateFromPath(daily._raw.flattenedPath)
+        return MonthSubjectsMap[month]
+      },
+    },
+  },
+}))
+
 const source = makeSource({
-  contentDirPath: 'src/data/posts',
-  documentTypes: [Post],
+  contentDirPath: 'src/data',
+  documentTypes: [Post, Daily],
 })
 
 export default source
