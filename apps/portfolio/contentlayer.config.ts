@@ -30,7 +30,7 @@ export const Daily = defineDocumentType(() => ({
   filePathPattern: 'daily/*/[0-3][1-9].md*',
   fields: {
     title: {
-      type: 'string',
+      type: 'markdown',
       required: true,
     },
     author: {
@@ -47,7 +47,7 @@ export const Daily = defineDocumentType(() => ({
       required: true,
     },
     quote: {
-      type: 'string',
+      type: 'markdown',
       required: true,
     },
   },
