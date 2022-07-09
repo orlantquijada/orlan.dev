@@ -27,7 +27,7 @@ export const Post = defineDocumentType(() => ({
 
 export const Daily = defineDocumentType(() => ({
   name: 'Daily',
-  filePathPattern: 'daily/*/[0-3][1-9].md*',
+  filePathPattern: 'daily/*/[0-3][0-9].md*',
   fields: {
     title: {
       type: 'markdown',
