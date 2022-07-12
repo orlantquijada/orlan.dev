@@ -13,11 +13,14 @@ export const MonthSubjectsMap = {
   December: 'Meditation On Mortality',
 } as const
 
+type Month = keyof typeof MonthSubjectsMap
+export const Months = Object.keys(MonthSubjectsMap) as Month[]
+
 export function getDateFromPath(path: string) {
-  /* path format is `daily/{3 letter Month}/{day}` */
+  /* path format is `daily/{Month}/{day}` */
   const [, month, day] = path.split('/')
   return {
-    month: month as keyof typeof MonthSubjectsMap,
+    month: month as Month,
     day: parseInt(day, 10),
   }
 }
