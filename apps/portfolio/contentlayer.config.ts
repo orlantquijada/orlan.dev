@@ -68,7 +68,7 @@ export const Daily = defineDocumentType(() => ({
       },
     },
     month: {
-      type: 'enum',
+      type: 'string',
       resolve: (daily) => {
         const { month } = getDateFromPath(daily._raw.flattenedPath)
         return month
