@@ -170,6 +170,8 @@ const defaultCreateStitchesConfig = {
     mobile: '(min-width: 375px)',
     tab: '(min-width: 768px)',
     desktop: '(min-width: 1024px)',
+    dark: '(prefers-color-scheme: dark)',
+    light: '(prefers-color-scheme: light)',
   },
 }
 
