@@ -1,4 +1,5 @@
 import { defineDocumentType, makeSource } from 'contentlayer/source-files'
+import remarkSmartypants from 'remark-smartypants'
 import { getDateFromPath, MonthSubjectsMap } from './src/lib/contentlayer'
 
 export const Post = defineDocumentType(() => ({
@@ -87,6 +88,9 @@ export const Daily = defineDocumentType(() => ({
 const source = makeSource({
   contentDirPath: 'src/data',
   documentTypes: [Post, Daily],
+  mdx: {
+    remarkPlugins: [[remarkSmartypants]],
+  },
 })
 
 export default source

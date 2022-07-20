@@ -1,4 +1,5 @@
-import type { AppProps } from 'next/app'
+import { type NextPage } from 'next'
+import { type AppProps } from 'next/app'
 import { ThemeProvider } from 'next-themes'
 import { darkTheme, globalCss, theme } from 'ui'
 
@@ -21,6 +22,7 @@ export const globalStyles = globalCss({
   },
 
   body: {
+    backgroundColor: '$bg',
     lineHeight: 1.5,
     '-webkit-font-smoothing': 'antialiased',
   },
@@ -51,15 +53,22 @@ export const globalStyles = globalCss({
   },
 })
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({
+  Component,
+  pageProps,
+}: AppProps & {
+  Component: NextPage & { theme?: 'dark' | 'light' }
+}) {
   globalStyles()
 
   return (
     <ThemeProvider
       defaultTheme="system"
+      forcedTheme={Component.theme}
       attribute="class"
       value={{ dark: darkTheme, light: theme }}
       themes={[theme, darkTheme]}
+      enableSystem
       disableTransitionOnChange
     >
       <Component {...pageProps} />

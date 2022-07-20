@@ -13,7 +13,7 @@ export const MonthSubjectsMap = {
   December: 'Meditation On Mortality',
 } as const
 
-type Month = keyof typeof MonthSubjectsMap
+export type Month = keyof typeof MonthSubjectsMap
 export const Months = Object.keys(MonthSubjectsMap) as Month[]
 
 export function getDateFromPath(path: string) {

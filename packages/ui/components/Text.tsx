@@ -1,6 +1,6 @@
-import { styled } from '../stitches.config'
+import { css, styled } from '../stitches.config'
 
-export const Text = styled('span', {
+export const textStyles = css({
   variants: {
     size: {
       '2xs': {
@@ -58,3 +58,4 @@ export const Text = styled('span', {
     },
   },
 })
+export const Text = styled('span', textStyles)

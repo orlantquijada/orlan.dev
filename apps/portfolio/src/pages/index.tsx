@@ -8,7 +8,6 @@ export default function Home() {
       css={{
         minHeight: '100vh',
         pt: '$8',
-        backgroundColor: '$bg',
         '& > *': { px: '$4' },
         '@tab': {
           pt: '$16',
