@@ -1,10 +1,18 @@
 import { useMDXComponent } from 'next-contentlayer/hooks'
-import { type Daily } from 'contentlayer/generated'
-import { Box, css, Flex, styled, Text, textStyles } from 'ui'
-import { useEffect, useState, type ComponentProps } from 'react'
+import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
-import { motion } from 'framer-motion'
+
+import { type Daily } from 'contentlayer/generated'
+import { Box, css, Flex, styled, Text, textStyles } from 'ui'
+import {
+  useEffect,
+  useRef,
+  useState,
+  type ComponentProps,
+  type MutableRefObject,
+} from 'react'
+import { Months } from 'src/lib/contentlayer'
 
 interface Props {
   daily: Daily
@@ -15,12 +23,18 @@ export default function DailyDetail({ daily }: Props) {
   const Body = useMDXComponent(daily.body.code)
   const Quote = useMDXComponent(daily.quote.code)
 
-  const show = useShowBackButton()
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const ref = useRef<any>()
+
+  const [show, initial, isLoading] = useShowBackButton(ref)
+
+  const today = new Date()
+  const currentMonth = Months[today.getMonth()].toLowerCase()
 
   const dateFormat = format(new Date(`${daily.month} ${daily.day}`), 'LLLL do')
 
   return (
-    <Wrapper>
+    <Wrapper ref={ref}>
       <header>
         <HeaderCover />
         <HeaderContentWrapper>
@@ -48,20 +62,38 @@ export default function DailyDetail({ daily }: Props) {
         </Box>
       </Main>
       <Footer>
-        <FooterIconButton
-          initial={{ opacity: 0 }}
-          animate={{ opacity: show ? 1 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ArrowLeftIcon className={footerIconStyles()} />
-        </FooterIconButton>
+        {!isLoading ? (
+          <FooterIconButton
+            href={`/daily/${currentMonth}`}
+            initial={{ opacity: initial }}
+            animate={{ opacity: show || initial ? 1 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArrowLeftIcon className={footerIconStyles()} />
+          </FooterIconButton>
+        ) : null}
       </Footer>
     </Wrapper>
   )
 }
 
-function useShowBackButton() {
+function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
   const [showBackButton, setShowBackButton] = useState(false)
+  const [showInitial, setShowInitial] = useState(0)
+
+  // https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85#option-2-lazily-show-component-with-uselayouteffect
+  const [loading, setLoading] = useState(true)
+  useEffect(() => {
+    setLoading(false)
+  }, [])
+
+  useEffect(() => {
+    const htmlClientHeight = document.querySelector('html')?.clientHeight
+    const contentClientHeight = contentRef.current.clientHeight
+
+    if (htmlClientHeight)
+      setShowInitial(contentClientHeight < htmlClientHeight ? 1 : 0)
+  }, [contentRef])
 
   useEffect(() => {
     const handleScrollToggle = () => {
@@ -75,7 +107,7 @@ function useShowBackButton() {
     return () => window.removeEventListener('scroll', handleScrollToggle)
   }, [showBackButton])
 
-  return showBackButton
+  return [showBackButton, showInitial, loading] as const
 }
 
 const Wrapper = styled('div', {
@@ -166,7 +198,7 @@ const Footer = styled('footer', {
     bottom: '$10',
   },
 })
-const FooterIconButton = styled(motion.button, {
+const FooterIconButton = styled(motion.a, {
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
@@ -180,10 +212,6 @@ const FooterIconButton = styled(motion.button, {
 
   '&:hover': { backgroundColor: '$olive5' },
   '&:active': { backgroundColor: '$olive6' },
-
-  '@tab': {
-    opacity: '1 !important',
-  },
 })
 const footerIconStyles = css({
   color: '$textColor',
