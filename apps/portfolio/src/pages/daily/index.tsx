@@ -3,10 +3,7 @@ import { allDailies, Daily } from 'contentlayer/generated'
 import { Month, Months } from 'src/lib/contentlayer'
 import DailyDetail from '@components/daily/DailyDetail'
 
-import { format, setDefaultOptions } from 'date-fns'
-import { zhHK } from 'date-fns/locale'
-
-setDefaultOptions({ locale: zhHK })
+import { formatInTimeZone } from 'date-fns-tz'
 
 export default function DailyPage({
   daily,
@@ -35,7 +32,9 @@ InferGetServerSidePropsType<typeof getServerSideProps>) {
 DailyPage.theme = 'light'
 
 export async function getServerSideProps() {
-  const today = new Date(format(new Date(), 'M/d/y'))
+  const today = new Date(
+    formatInTimeZone(new Date(), 'Asia/Hong_Kong', 'yyyy-MM-dd HH:mm:ss zzz')
+  )
 
   const dailyToday = allDailies.find(
     ({ month, day }) =>
