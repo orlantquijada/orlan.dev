@@ -1,7 +1,4 @@
-import {
-  GetServerSidePropsContext,
-  type InferGetServerSidePropsType,
-} from 'next'
+import { type InferGetServerSidePropsType } from 'next'
 import { allDailies, Daily } from 'contentlayer/generated'
 import { Month, Months } from 'src/lib/contentlayer'
 import DailyDetail from '@components/daily/DailyDetail'
@@ -10,22 +7,29 @@ export default function DailyPage({
   daily,
   toLocaleString,
   toString,
-  context,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+}: // defaultLocale, locale,
+// locales,
+InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <>
       <DailyDetail daily={daily} />
       <div>
         <div>{toLocaleString}</div>
         <div>{toString}</div>
-        <pre>{JSON.stringify(context, null, 2)}</pre>
+        {/* <div>{locale}</div>
+        <div>
+          {locales?.map((l, i) => (
+            <p key={i}>{l}</p>
+          ))}
+        </div>
+        <div>{defaultLocale}</div> */}
       </div>
     </>
   )
 }
 DailyPage.theme = 'light'
 
-export async function getServerSideProps(context: GetServerSidePropsContext) {
+export async function getServerSideProps() {
   const today = new Date()
 
   const dailyToday = allDailies.find(
@@ -39,7 +43,9 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       daily: dailyToday,
       toLocaleString: today.toLocaleString(),
       toString: today.toString(),
-      context,
+      // locale,
+      // locales,
+      // defaultLocale,
     },
     notFound: !dailyToday,
   }
