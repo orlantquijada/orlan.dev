@@ -4,6 +4,7 @@ import { Month, Months } from 'src/lib/contentlayer'
 import DailyDetail from '@components/daily/DailyDetail'
 
 import { formatInTimeZone } from 'date-fns-tz'
+import { parse } from 'date-fns'
 
 export default function DailyPage({
   daily,
@@ -32,8 +33,11 @@ InferGetServerSidePropsType<typeof getServerSideProps>) {
 DailyPage.theme = 'light'
 
 export async function getServerSideProps() {
-  const today = new Date(
-    formatInTimeZone(new Date(), 'Asia/Hong_Kong', 'yyyy-MM-dd HH:mm:ss zzz')
+  const format = 'yyyy-MM-dd HH:mm:ss'
+  const today = parse(
+    formatInTimeZone(new Date(), 'Asia/Hong_Kong', format),
+    format,
+    new Date()
   )
 
   const dailyToday = allDailies.find(
