@@ -5,8 +5,18 @@ import DailyDetail from '@components/daily/DailyDetail'
 
 export default function DailyPage({
   daily,
+  toLocaleString,
+  toString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return <DailyDetail daily={daily} />
+  return (
+    <>
+      <DailyDetail daily={daily} />
+      <div>
+        <div>{toLocaleString}</div>
+        <div>{toString}</div>
+      </div>
+    </>
+  )
 }
 DailyPage.theme = 'light'
 
@@ -22,6 +32,8 @@ export async function getServerSideProps() {
   return {
     props: {
       daily: dailyToday,
+      toLocaleString: today.toLocaleString(),
+      toString: today.toString(),
     },
     notFound: !dailyToday,
   }
