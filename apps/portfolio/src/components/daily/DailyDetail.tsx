@@ -231,7 +231,7 @@ const titleComponents = {
   ),
 }
 
-const QuoteParagraph = styled('p', textStyles, {
+const QuoteParagraph = styled('q', textStyles, {
   '&::before': {
     content: 'open-quote',
   },
