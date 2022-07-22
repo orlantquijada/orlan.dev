@@ -1,27 +1,26 @@
 import { type InferGetServerSidePropsType } from 'next'
+import { parse } from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
 import { allDailies, Daily } from 'contentlayer/generated'
 import { Month, Months } from 'src/lib/contentlayer'
 import DailyDetail from '@components/daily/DailyDetail'
 
 export default function DailyPage({
   daily,
-  toLocaleString,
-  toString,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  return (
-    <>
-      <DailyDetail daily={daily} />
-      <div>
-        <div>{toLocaleString}</div>
-        <div>{toString}</div>
-      </div>
-    </>
-  )
+  return <DailyDetail daily={daily} />
 }
 DailyPage.theme = 'light'
 
 export async function getServerSideProps() {
-  const today = new Date()
+  // necessary to display the correct daily entry based on HK timezone
+  // since `getServerSideProps` uses UTC by default
+  const format = 'yyyy-MM-dd HH:mm:ss'
+  const today = parse(
+    formatInTimeZone(new Date(), 'Asia/Hong_Kong', format),
+    format,
+    new Date()
+  )
 
   const dailyToday = allDailies.find(
     ({ month, day }) =>
@@ -30,11 +29,7 @@ export async function getServerSideProps() {
   ) as Daily
 
   return {
-    props: {
-      daily: dailyToday,
-      toLocaleString: today.toLocaleString(),
-      toString: today.toString(),
-    },
+    props: { daily: dailyToday },
     notFound: !dailyToday,
   }
 }
