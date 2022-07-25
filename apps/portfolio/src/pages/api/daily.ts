@@ -3,7 +3,7 @@ import { type NextApiRequest, NextApiResponse } from 'next'
 import { getDailyToday } from 'src/lib/daily'
 import { pickProps } from 'src/lib/utils'
 
-function transformData(data: Daily) {
+function transformData(data: Daily, timezone?: string) {
   return {
     ...pickProps(data, {
       author: true,
@@ -17,6 +17,7 @@ function transformData(data: Daily) {
     title: data.title.raw,
     quote: data.quote.raw,
     body: data.body.raw,
+    timezone,
   }
 }
 
@@ -26,7 +27,7 @@ export default function handler(
 ) {
   const dailyToday = getDailyToday(timezone as string)
 
-  if (dailyToday) res.status(200).json(transformData(dailyToday))
+  if (dailyToday) res.status(200).json(transformData(dailyToday, timezone))
   else
     res.status(404).json({
       message: `No entry found for today.`,
