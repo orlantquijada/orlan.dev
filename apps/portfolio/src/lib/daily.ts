@@ -1,5 +1,7 @@
 import { allDailies, Daily } from 'contentlayer/generated'
-import { Month } from './contentlayer'
+import { parse } from 'date-fns'
+import { formatInTimeZone } from 'date-fns-tz'
+import { Month, Months } from './contentlayer'
 import { FilterFalseProps, KeysFlag, pickProps } from './utils'
 
 type FilterKeys = Extract<keyof Daily, 'author' | 'day' | 'month'>
@@ -38,4 +40,21 @@ export function getDailies<
   }
 
   return dailies as unknown as Result[]
+}
+
+export function getDailyToday(timezone = 'Asia/Hong_Kong') {
+  // necessary to display the correct daily entry based on HK timezone
+  // since `getServerSideProps` uses UTC by default
+  const format = 'yyyy-MM-dd HH:mm:ss'
+  const today = parse(
+    formatInTimeZone(new Date(), timezone, format),
+    format,
+    new Date()
+  )
+
+  const dailyToday = getDailies({
+    filter: { month: Months[today.getMonth()], day: today.getDate() },
+  })
+
+  if (dailyToday.length) return dailyToday[0]
 }

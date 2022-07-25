@@ -1,19 +1,34 @@
+import { Daily } from 'contentlayer/generated'
 import { type NextApiRequest, NextApiResponse } from 'next'
-import { Months } from 'src/lib/contentlayer'
-import { getDailies } from 'src/lib/daily'
+import { getDailyToday } from 'src/lib/daily'
+import { pickProps } from 'src/lib/utils'
 
-export default function handler(_req: NextApiRequest, res: NextApiResponse) {
-  const today = new Date()
-  const monthToday = today.getMonth()
-  const dateToday = today.getDate()
+function transformData(data: Daily) {
+  return {
+    ...pickProps(data, {
+      author: true,
+      book: true,
+      section: true,
+      url: true,
+      day: true,
+      month: true,
+      monthSubject: true,
+    }),
+    title: data.title.raw,
+    quote: data.quote.raw,
+    body: data.body.raw,
+  }
+}
 
-  const dailyToday = getDailies({
-    filter: { month: Months[monthToday], day: dateToday },
-  })
+export default function handler(
+  { query: { timezone } }: NextApiRequest,
+  res: NextApiResponse
+) {
+  const dailyToday = getDailyToday(timezone as string)
 
-  if (dailyToday.length) res.status(200).json(dailyToday)
+  if (dailyToday) res.status(200).json(transformData(dailyToday))
   else
     res.status(404).json({
-      message: `No entry found for ${Months[monthToday]} ${dateToday}.`,
+      message: `No entry found for today.`,
     })
 }
