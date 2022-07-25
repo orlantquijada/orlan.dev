@@ -3,7 +3,7 @@ import { type NextApiRequest, NextApiResponse } from 'next'
 import { getDailyToday } from 'src/lib/daily'
 import { pickProps } from 'src/lib/utils'
 
-function transformData(data: Daily, timezone?: string) {
+function transformData(data: Daily, timezone?: string | string[] | undefined) {
   return {
     ...pickProps(data, {
       author: true,
