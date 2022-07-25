@@ -42,9 +42,9 @@ export function getDailies<
   return dailies as unknown as Result[]
 }
 
-export function getDailyToday(timezone = 'Asia/Hong_Kong') {
-  // necessary to display the correct daily entry based on HK timezone
-  // since `getServerSideProps` uses UTC by default
+export function getDailyToday(timezone = 'Asia/Manila') {
+  // correctly display `Daily` today based on timezone if given
+  // ^ above is necessary bec `getServerSideProps` uses UTC by default
   const format = 'yyyy-MM-dd HH:mm:ss'
   const today = parse(
     formatInTimeZone(new Date(), timezone, format),
