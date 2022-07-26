@@ -121,7 +121,7 @@ export const defaultTheme = {
   },
 }
 
-const defaultCreateStitchesConfig = {
+export const defaultCreateStitchesConfig = {
   theme: defaultTheme,
 
   utils: {
