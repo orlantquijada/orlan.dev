@@ -1,6 +1,6 @@
 import { type Daily } from 'contentlayer/generated'
 import { type NextApiRequest, type NextApiResponse } from 'next'
-import { getDailyToday } from 'src/lib/daily'
+import { getDailyToday } from 'src/lib/api'
 import { pickProps } from 'src/lib/utils'
 
 function transformData(data: Daily) {

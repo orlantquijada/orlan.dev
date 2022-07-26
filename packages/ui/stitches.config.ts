@@ -1,7 +1,7 @@
 import * as Stitches from '@stitches/react'
 import { createStitches } from '@stitches/react'
 
-const olive = {
+export const olive = {
   olive1: '#fcfdfc',
   olive2: '#f8faf8',
   olive3: '#f2f4f2',
@@ -16,7 +16,7 @@ const olive = {
   olive12: '#141e12',
 } as const
 
-const oliveDark = {
+export const oliveDark = {
   olive1: '#151715',
   olive2: '#1a1d19',
   olive3: '#20241f',
