@@ -22,7 +22,6 @@ export default function MonthsNavPage({
     </div>
   )
 }
-MonthsNavPage.theme = 'light'
 
 function Card({ data: { title, url } }: { data: Data }) {
   const Title = useMDXComponent(title.code)

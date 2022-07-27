@@ -1,6 +1,6 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { type Month } from 'src/lib/contentlayer'
-import { getDailies } from 'src/lib/daily'
+import { getDailies } from 'src/lib/api'
 
 export default function handler(_req: NextApiRequest, res: NextApiResponse) {
   const { month } = _req.query

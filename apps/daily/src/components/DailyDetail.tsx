@@ -1,22 +1,22 @@
+import { useEffect, useRef, useState, type MutableRefObject } from 'react'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
-
 import { type Daily } from 'contentlayer/generated'
-import { Box, css, Flex, styled, Text, textStyles } from 'ui'
-import {
-  useEffect,
-  useRef,
-  useState,
-  type ComponentProps,
-  type MutableRefObject,
-} from 'react'
+
 import { Months } from 'src/lib/contentlayer'
+import { headerTitleComponents } from './HeaderTitleMDXComponents'
+import { titleComponents } from './TitleMDXComponents'
+import { quoteComponents } from './QuoteMDXComponents'
+import { bodyComponents } from './BodyMDXComponents'
+import { Text } from '@/components/Text'
+import { css, styled } from '@stitches.config'
 
 interface Props {
   daily: Daily
 }
+const DEFAULT_OPACITY = 0
 
 export default function DailyDetail({ daily }: Props) {
   const Title = useMDXComponent(daily.title.code)
@@ -26,7 +26,7 @@ export default function DailyDetail({ daily }: Props) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>()
 
-  const [show, initial, isLoading] = useShowBackButton(ref)
+  const [show, initialOpacity, isLoading] = useShowBackButton(ref)
 
   const today = new Date()
   const currentMonth = Months[today.getMonth()].toLowerCase()
@@ -45,28 +45,37 @@ export default function DailyDetail({ daily }: Props) {
         </HeaderContentWrapper>
       </header>
       <Main>
-        <Flex
-          direction="column"
-          align="center"
-          css={{ alignSelf: 'center', mb: '$8' }}
+        <Box
+          css={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            alignSelf: 'center',
+            mb: '2rem',
+          }}
         >
           <Text>{dateFormat}</Text>
           <Title components={titleComponents} />
-        </Flex>
-        <Quote components={quoteComponents} />
-        <Box css={{ alignSelf: 'flex-end', mt: '$2' }}>
-          — {daily.author}, <em>{daily.book}</em>, {daily.section}
         </Box>
-        <Box as="article" css={{ mt: '$10' }}>
+        <Quote components={quoteComponents} />
+        <Text
+          as="address"
+          css={{ alignSelf: 'flex-end', mt: '0.5rem', fontStyle: 'normal' }}
+        >
+          — {daily.author}, <em>{daily.book}</em>, {daily.section}
+        </Text>
+        <Box as="article" css={{ mt: '2.5rem' }}>
           <Body components={bodyComponents} />
         </Box>
       </Main>
       <Footer>
         {!isLoading ? (
           <FooterIconButton
-            href={`/daily/${currentMonth}`}
-            initial={{ opacity: initial }}
-            animate={{ opacity: show || initial ? 1 : 0 }}
+            href={`/${currentMonth}`}
+            initial={{ opacity: initialOpacity }}
+            animate={{
+              opacity: show || initialOpacity === 1 ? 1 : DEFAULT_OPACITY,
+            }}
             transition={{ duration: 0.2 }}
           >
             <ArrowLeftIcon className={footerIconStyles()} />
@@ -79,7 +88,7 @@ export default function DailyDetail({ daily }: Props) {
 
 function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
   const [showBackButton, setShowBackButton] = useState(false)
-  const [showInitial, setShowInitial] = useState(0)
+  const [initialOpacity, setInitialOpacity] = useState(DEFAULT_OPACITY)
 
   // https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85#option-2-lazily-show-component-with-uselayouteffect
   const [loading, setLoading] = useState(true)
@@ -92,7 +101,9 @@ function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
     const contentClientHeight = contentRef.current.clientHeight
 
     if (htmlClientHeight)
-      setShowInitial(contentClientHeight < htmlClientHeight ? 1 : 0)
+      setInitialOpacity(
+        contentClientHeight < htmlClientHeight ? 1 : DEFAULT_OPACITY
+      )
   }, [contentRef])
 
   useEffect(() => {
@@ -107,13 +118,13 @@ function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
     return () => window.removeEventListener('scroll', handleScrollToggle)
   }, [showBackButton])
 
-  return [showBackButton, showInitial, loading] as const
+  return [showBackButton, initialOpacity, loading] as const
 }
 
 const Wrapper = styled('div', {
   '--contentMaxWidth': '650px',
-  '--contentPX': '$sizes$4',
-  '--headerHeight': 'min(15vw, $sizes$28)',
+  '--contentPX': '1rem',
+  '--headerHeight': 'min(15vw, 7rem)',
   '--headerLayer': 10,
   '--iconButtonSize': '4rem',
 
@@ -124,7 +135,7 @@ const Main = styled('main', {
   maxWidth: 'var(--contentMaxWidth)',
   mx: 'auto',
   pt: 'var(--headerHeight)',
-  pb: 'calc($sizes$10 + var(--iconButtonSize))',
+  pb: 'calc(2.5rem + var(--iconButtonSize))',
   px: 'var(--contentPX)',
 
   display: 'flex',
@@ -156,46 +167,29 @@ const HeaderContentWrapper = styled('div', {
 const HeaderContent = styled('div', {
   display: 'flex',
   justifyContent: 'space-between',
-  gap: '$4',
+  gap: '1rem',
 
   maxWidth: 'var(--contentMaxWidth)',
   width: '100%',
   mx: 'auto',
   px: 'var(--contentPX)',
 })
-const HeaderTitleHeading = styled('h1', textStyles, {
-  color: '$textColor',
-  fontWeight: '$regular',
-  fontFamily: '"EB Garamond", serif',
-  display: 'block',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
-})
-const headerTitleComponents = {
-  // override <p> tags to render as <h1> to avoid adding a necessary <h1> tag in the
-  // content files `title` frontmatter since `title`'s type is markdown to enable italics
-  p: (props: ComponentProps<typeof TitleHeading>) => (
-    <HeaderTitleHeading {...props} size="base" />
-  ),
-}
 
 const Footer = styled('footer', {
   display: 'flex',
   justifyContent: 'space-between',
 
   position: 'fixed',
-  bottom: '$4',
+  bottom: '1rem',
   left: 0,
   right: 0,
 
-  maxWidth:
-    'calc(var(--iconButtonSize) * 2 + var(--contentMaxWidth) + $sizes$6)',
+  maxWidth: 'calc(var(--iconButtonSize) * 2 + var(--contentMaxWidth) + 1.5rem)',
   mx: 'auto',
-  px: '$4',
+  px: '1rem',
 
   '@tab': {
-    bottom: '$10',
+    bottom: '2.5rem',
   },
 })
 const FooterIconButton = styled(motion.a, {
@@ -204,63 +198,26 @@ const FooterIconButton = styled(motion.a, {
   alignItems: 'center',
   justifyContent: 'center',
   border: 'none',
-  borderRadius: '$lg',
+  borderRadius: '0.5rem',
   size: 'var(--iconButtonSize)',
   backgroundColor: '$olive4',
-  transition: 'background-color 150ms ease',
+  transition:
+    'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   '-webkit-tap-highlight-color': 'transparent',
 
-  '&:hover': { backgroundColor: '$olive5' },
+  '&:hover': { backgroundColor: '$olive5', opacity: '1 !important' },
   '&:active': { backgroundColor: '$olive6' },
+  '&:focus': {
+    '$$ring-offset': '2px',
+    outline: 'none',
+    boxShadow:
+      '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
+    opacity: '1 !important',
+  },
 })
 const footerIconStyles = css({
   color: '$textColor',
   size: '1.25rem',
-  fontWeight: '$medium',
 })
 
-const TitleHeading = styled('h1', textStyles, {
-  textAlign: 'center',
-})
-
-const titleComponents = {
-  // override <p> tags to render as <h1> to avoid adding a necessary <h1> tag in the
-  // content files `title` frontmatter since `title`'s type is markdown to enable italics
-  p: (props: ComponentProps<typeof TitleHeading>) => (
-    <TitleHeading {...props} size="2xl" />
-  ),
-}
-
-const QuoteParagraph = styled('q', textStyles, {
-  '&::before': {
-    content: 'open-quote',
-  },
-  '&::after': {
-    content: 'close-quote',
-  },
-})
-
-const quoteComponents = {
-  p: (props: ComponentProps<typeof QuoteParagraph>) => (
-    <QuoteParagraph {...props} size="xl" />
-  ),
-}
-
-const BodyParagraph = styled('p', textStyles, {
-  '&:not(:first-of-type)': {
-    textIndent: '2em',
-  },
-
-  '&:first-of-type::first-letter': {
-    float: 'left',
-    lineHeight: '85%',
-    width: '.7em',
-    fontSize: '325%',
-  },
-})
-
-const bodyComponents = {
-  p: (props: ComponentProps<typeof BodyParagraph>) => (
-    <BodyParagraph {...props} size="xl" />
-  ),
-}
+const Box = styled('div', {})

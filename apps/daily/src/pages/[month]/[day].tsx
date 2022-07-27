@@ -1,14 +1,13 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { allDailies, type Daily } from 'contentlayer/generated'
 import { Month } from 'src/lib/contentlayer'
-import DailyDetail from '@components/daily/DailyDetail'
+import DailyDetail from '@/components/DailyDetail'
 
 export default function EntryDetailPage({
   daily,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return <DailyDetail daily={daily} />
 }
-EntryDetailPage.theme = 'light'
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = allDailies.map(({ day, month }) => ({
