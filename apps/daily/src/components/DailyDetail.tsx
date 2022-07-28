@@ -5,7 +5,6 @@ import { format } from 'date-fns'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { type Daily } from 'contentlayer/generated'
 
-import { Months } from 'src/lib/contentlayer'
 import { headerTitleComponents } from './HeaderTitleMDXComponents'
 import { titleComponents } from './TitleMDXComponents'
 import { quoteComponents } from './QuoteMDXComponents'
@@ -25,11 +24,7 @@ export default function DailyDetail({ daily }: Props) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const ref = useRef<any>()
-
   const [show, initialOpacity, isLoading] = useShowBackButton(ref)
-
-  const today = new Date()
-  const currentMonth = Months[today.getMonth()].toLowerCase()
 
   const dateFormat = format(new Date(`${daily.month} ${daily.day}`), 'LLLL do')
 
@@ -71,7 +66,7 @@ export default function DailyDetail({ daily }: Props) {
       <Footer>
         {!isLoading ? (
           <FooterIconButton
-            href={`/${currentMonth}`}
+            href={`/${daily.month.toLowerCase()}`}
             initial={{ opacity: initialOpacity }}
             animate={{
               opacity: show || initialOpacity === 1 ? 1 : DEFAULT_OPACITY,
