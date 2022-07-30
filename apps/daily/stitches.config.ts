@@ -80,9 +80,9 @@ export const {
   theme: {
     colors: {
       ...olive,
-      bg: olive.olive1,
-      textColor: olive.olive12,
-      selection: olive.olive5,
+      bg: '$olive1',
+      textColor: '$olive12',
+      selection: '$olive5',
     },
     fonts: {
       serif: '"EB Garamond", Georgia, "Times New Roman", Times, serif',
