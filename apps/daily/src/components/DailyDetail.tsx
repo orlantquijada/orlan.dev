@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type MutableRefObject } from 'react'
 import { useMDXComponent } from 'next-contentlayer/hooks'
-import { motion } from 'framer-motion'
 import { format } from 'date-fns'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { type Daily } from 'contentlayer/generated'
@@ -15,7 +14,7 @@ import { css, styled } from '@stitches.config'
 interface Props {
   daily: Daily
 }
-const DEFAULT_OPACITY = 0
+const HIDDEN_OPACITY = 0
 
 export default function DailyDetail({ daily }: Props) {
   const Title = useMDXComponent(daily.title.code)
@@ -67,11 +66,7 @@ export default function DailyDetail({ daily }: Props) {
         {!isLoading ? (
           <FooterIconButton
             href={`/${daily.month.toLowerCase()}`}
-            initial={{ opacity: initialOpacity }}
-            animate={{
-              opacity: show || initialOpacity === 1 ? 1 : DEFAULT_OPACITY,
-            }}
-            transition={{ duration: 0.2 }}
+            show={show || initialOpacity === 1}
           >
             <ArrowLeftIcon className={footerIconStyles()} />
           </FooterIconButton>
@@ -83,7 +78,7 @@ export default function DailyDetail({ daily }: Props) {
 
 function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
   const [showBackButton, setShowBackButton] = useState(false)
-  const [initialOpacity, setInitialOpacity] = useState(DEFAULT_OPACITY)
+  const [initialOpacity, setInitialOpacity] = useState(HIDDEN_OPACITY)
 
   // https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85#option-2-lazily-show-component-with-uselayouteffect
   const [loading, setLoading] = useState(true)
@@ -92,12 +87,16 @@ function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
   }, [])
 
   useEffect(() => {
-    const htmlClientHeight = document.querySelector('html')?.clientHeight
+    const htmlElement = document.querySelector('html')
     const contentClientHeight = contentRef.current.clientHeight
+    const TAB_WIDTH = 768
 
-    if (htmlClientHeight)
+    if (htmlElement)
       setInitialOpacity(
-        contentClientHeight < htmlClientHeight ? 1 : DEFAULT_OPACITY
+        htmlElement.clientWidth > TAB_WIDTH ||
+          contentClientHeight < htmlElement.clientHeight
+          ? 1
+          : HIDDEN_OPACITY
       )
   }, [contentRef])
 
@@ -179,15 +178,18 @@ const Footer = styled('footer', {
   left: 0,
   right: 0,
 
-  maxWidth: 'calc(var(--iconButtonSize) * 2 + var(--contentMaxWidth) + 1.5rem)',
+  $$paddingX: '1rem',
+
+  maxWidth:
+    'calc(var(--iconButtonSize) * 2 + $$paddingX * 2 + var(--contentMaxWidth))',
   mx: 'auto',
-  px: '1rem',
+  px: '$$paddingX',
 
   '@tab': {
     bottom: '2.5rem',
   },
 })
-const FooterIconButton = styled(motion.a, {
+const FooterIconButton = styled('a', {
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
@@ -200,14 +202,21 @@ const FooterIconButton = styled(motion.a, {
     'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   '-webkit-tap-highlight-color': 'transparent',
 
-  '&:hover': { backgroundColor: '$olive5', opacity: '1 !important' },
+  '&:hover': { backgroundColor: '$olive5' },
   '&:active': { backgroundColor: '$olive6' },
   '&:focus': {
     '$$ring-offset': '2px',
     outline: 'none',
     boxShadow:
       '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
-    opacity: '1 !important',
+  },
+  '&:hover, &:focus': { opacity: '1 !important' },
+
+  variants: {
+    show: {
+      true: { opacity: 1 },
+      false: { opacity: HIDDEN_OPACITY },
+    },
   },
 })
 const footerIconStyles = css({
