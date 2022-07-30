@@ -5,9 +5,11 @@ import { InferGetServerSidePropsType } from 'next'
 
 export default function Home({
   time,
+  date,
+  dateToday,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   // eslint-disable-next-line no-console
-  console.log(time)
+  console.table({ time, date, dateToday })
   return (
     <Box
       css={{
@@ -57,6 +59,8 @@ export async function getServerSideProps() {
   return {
     props: {
       time: new Date().toISOString(),
+      dateToday: new Date().getDate(),
+      date: new Date().toString(),
     },
   }
 }
