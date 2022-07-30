@@ -2,11 +2,21 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { allDailies, type Daily } from 'contentlayer/generated'
 import { Month } from 'src/lib/contentlayer'
 import DailyDetail from '@/components/DailyDetail'
+import Head from 'next/head'
 
 export default function EntryDetailPage({
   daily,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  return <DailyDetail daily={daily} />
+  return (
+    <>
+      <Head>
+        <title>{daily.title.raw}</title>
+        <meta name="description" content={daily.quote.raw} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <DailyDetail daily={daily} />
+    </>
+  )
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
