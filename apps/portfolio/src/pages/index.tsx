@@ -1,8 +1,13 @@
 import { type ComponentProps } from 'react'
 import { Text, Box, Flex } from 'ui'
 import WIPBanner from '@components/WIPBanner'
+import { InferGetServerSidePropsType } from 'next'
 
-export default function Home() {
+export default function Home({
+  time,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  // eslint-disable-next-line no-console
+  console.log(time)
   return (
     <Box
       css={{
@@ -46,4 +51,12 @@ function HeaderText({ children }: ComponentProps<'h1'>) {
       {children}
     </Text>
   )
+}
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      time: new Date().toISOString(),
+    },
+  }
 }
