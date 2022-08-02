@@ -25,7 +25,9 @@ export default function Home({
 
 export async function getServerSideProps({
   query: { timezone },
+  res,
 }: GetServerSidePropsContext) {
+  res.setHeader('Cache-Control', 'public, no-cache')
   const dailyToday = getDailyToday(timezone as string)
 
   return {
