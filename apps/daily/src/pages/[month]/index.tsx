@@ -4,13 +4,16 @@ import {
   InferGetStaticPropsType,
 } from 'next'
 import Link from 'next/link'
+import Head from 'next/head'
+import useSWR from 'swr'
+import { useRouter } from 'next/router'
 import { allDailies, type Daily } from 'contentlayer/generated'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
-import { Months, type Month } from 'src/lib/contentlayer'
 import { css } from '@stitches.config'
-import Calendar from '@/components/Calendar'
-import { useRouter } from 'next/router'
+import { Months, MonthSubjectsMap, type Month } from '@/lib/contentlayer'
+import { getNextMonth, getPreviousMonth } from '@/lib/api'
+import DailyCalendar from '@/components/DailyCalendar'
 
 export default function MonthsNavPage({
   data,
@@ -18,15 +21,33 @@ export default function MonthsNavPage({
   const { query } = useRouter()
   const currentMonth = capitalize(query.month as Lowercase<Month>)
 
-  return (
-    <div className={main()}>
-      {currentMonth}
-      {data.map((data) => (
-        <Card data={data} key={data._id} />
-      ))}
+  const { data: currentMonthData } = useSWR(currentMonth, {
+    fallbackData: data,
+  })
+  // prefetch previous and next month
+  useSWR(getPreviousMonth(currentMonth), fetcher)
+  useSWR(getNextMonth(currentMonth), fetcher)
 
-      <Calendar month={currentMonth} />
-    </div>
+  const subject = MonthSubjectsMap[currentMonth]
+
+  return (
+    <>
+      <Head>
+        <title>
+          {currentMonth} — {subject}
+        </title>
+        <meta name="description" content={subject} />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <div className={main()}>
+        {currentMonth}
+        {currentMonthData?.map((data) => (
+          <Card data={data} key={data._id} />
+        ))}
+
+        <DailyCalendar month={currentMonth} />
+      </div>
+    </>
   )
 }
 
@@ -78,4 +99,13 @@ export const getStaticProps: GetStaticProps<
 
 function capitalize<T extends string>(str: T) {
   return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>
+}
+
+async function fetcher(month: Month) {
+  const params = new URLSearchParams({
+    fields: '_id,title,url',
+    month: month,
+  })
+
+  return fetch(`/api/dailies?${params.toString()}`).then((res) => res.json())
 }
