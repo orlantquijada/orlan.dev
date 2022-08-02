@@ -31,7 +31,6 @@ export function getDailies<
 
   let dailies = allDailies
 
-  if (select) dailies = dailies.map((daily) => pickProps(daily, select))
   if (filter) {
     const { author, day, month } = filter
 
@@ -39,6 +38,7 @@ export function getDailies<
     if (day) dailies = filterByKey(dailies, 'day', day)
     if (author) dailies = filterByKey(dailies, 'author', author)
   }
+  if (select) dailies = dailies.map((daily) => pickProps(daily, select))
 
   return dailies as unknown as Result[]
 }
@@ -58,4 +58,22 @@ export function getDailyToday(timezone = 'Asia/Manila') {
   })
 
   if (dailyToday.length) return dailyToday[0]
+}
+
+export function getPreviousMonth(month: Month) {
+  const indexOfPrevMonth = Months.indexOf(month) - 1
+  return Months[
+    indexOfPrevMonth < Months.indexOf('January')
+      ? Months.indexOf('December')
+      : indexOfPrevMonth
+  ]
+}
+
+export function getNextMonth(month: Month) {
+  const indexOfNextMonth = Months.indexOf(month) + 1
+  return Months[
+    indexOfNextMonth > Months.indexOf('December')
+      ? Months.indexOf('January')
+      : indexOfNextMonth
+  ]
 }
