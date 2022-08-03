@@ -8,12 +8,15 @@ import {
   forwardRef,
   useContext,
   useState,
+  useEffect,
+  useMemo,
 } from 'react'
 import {
   add,
   eachDayOfInterval,
   endOfMonth,
   endOfWeek,
+  isSameMonth,
   startOfMonth,
   startOfWeek,
 } from 'date-fns'
@@ -31,9 +34,31 @@ function useCalendar() {
   return context
 }
 
-export function Root({ children }: { children: ReactNode }) {
+export function Root({
+  children,
+  onChangeCurrentMonthDate,
+}: {
+  children: ReactNode
+  onChangeCurrentMonthDate?: (date: Date) => void
+}) {
   const today = new Date()
-  const state = useState(startOfMonth(today))
+  const [currentMonthStartDate, setCurrentMonthStartDate] = useState(
+    startOfMonth(today)
+  )
+
+  const state = useMemo(
+    () =>
+      [currentMonthStartDate, setCurrentMonthStartDate] as [
+        Date,
+        Dispatch<SetStateAction<Date>>
+      ],
+    [currentMonthStartDate]
+  )
+
+  useEffect(() => {
+    if (onChangeCurrentMonthDate)
+      onChangeCurrentMonthDate(currentMonthStartDate)
+  }, [currentMonthStartDate, onChangeCurrentMonthDate])
 
   return (
     <CalendarContext.Provider value={state}>
@@ -90,13 +115,15 @@ export const NextMonthButton = forwardRef<
 })
 NextMonthButton.displayName = 'NextMonthButton'
 
-export function Days({
-  children,
-  includeAdjacentMonths,
-}: {
-  children: (days: Date[]) => ReactElement
-  includeAdjacentMonths?: boolean
+type DaysResult<T extends boolean> = T extends true
+  ? { value: Date; isInCurrentMonth: boolean }
+  : { value: Date }
+
+export function Days<TIncludeAdjacent extends boolean>(props: {
+  children: (days: DaysResult<TIncludeAdjacent>[]) => ReactElement
+  includeAdjacentMonths?: TIncludeAdjacent
 }) {
+  const { children, includeAdjacentMonths } = props
   const [currentMonthStartDate] = useCalendar()
   const endOfMonthDate = endOfMonth(currentMonthStartDate)
 
@@ -107,5 +134,15 @@ export function Days({
     end: includeAdjacentMonths ? endOfWeek(endOfMonthDate) : endOfMonthDate,
   })
 
-  return children(days)
+  if (includeAdjacentMonths)
+    return children(
+      days.map((day) => ({
+        value: day,
+        isInCurrentMonth: isSameMonth(day, currentMonthStartDate),
+      })) as DaysResult<true>[]
+    )
+
+  return children(
+    days.map((day) => ({ value: day })) as DaysResult<TIncludeAdjacent>[]
+  )
 }
