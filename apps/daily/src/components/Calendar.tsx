@@ -1,70 +1,111 @@
-import { Month, Months, MonthSubjectsMap } from '@/lib/contentlayer'
-import { useRouter } from 'next/router'
-import { Text } from './Text'
+import {
+  type ComponentProps,
+  type Dispatch,
+  type ReactElement,
+  type ReactNode,
+  type SetStateAction,
+  createContext,
+  forwardRef,
+  useContext,
+  useState,
+} from 'react'
+import {
+  add,
+  eachDayOfInterval,
+  endOfMonth,
+  endOfWeek,
+  startOfMonth,
+  startOfWeek,
+} from 'date-fns'
 
-export default function Calendar({ month }: { month: Month }) {
-  const router = useRouter()
+const CalendarContext = createContext<
+  [Date, Dispatch<SetStateAction<Date>>] | undefined
+>(undefined)
 
-  const handleRoute = (direction: 'next' | 'prev') => {
-    const toMonth =
-      direction === 'next' ? getNextMonth(month) : getPreviousMonth(month)
+function useCalendar() {
+  const context = useContext(CalendarContext)
 
-    // shallow is required bec data fetching will be handled client-side but
-    // calendar month state will be handled with the URL
-    router.push(`/${toMonth.toLowerCase()}`, undefined, { shallow: true })
-  }
+  if (context === undefined)
+    throw new Error('Must be used within a CalendarProvider')
+
+  return context
+}
+
+export function Root({ children }: { children: ReactNode }) {
+  const today = new Date()
+  const state = useState(startOfMonth(today))
 
   return (
-    // root
-    <div>
-      <header>
-        {/* title */}
-        <h1>{month}</h1>
-
-        <h2>{MonthSubjectsMap[month]}</h2>
-
-        <div>
-          <button onClick={() => handleRoute('prev')}>left</button>
-          <button onClick={() => handleRoute('next')}>right</button>
-        </div>
-      </header>
-
-      {/* calendar body */}
-      <div>
-        {/* weekdays container */}
-        <div>
-          <Text>Sun</Text>
-          <Text>Mon</Text>
-          <Text>Tue</Text>
-          <Text>Wed</Text>
-          <Text>Thu</Text>
-          <Text>Fri</Text>
-          <Text>Sat</Text>
-        </div>
-
-        {/* days table */}
-        <div>
-          <button>1</button>
-        </div>
-      </div>
-    </div>
+    <CalendarContext.Provider value={state}>
+      {children}
+    </CalendarContext.Provider>
   )
 }
 
-function getPreviousMonth(month: Month) {
-  const indexOfPrevMonth = Months.indexOf(month) - 1
-  return Months[
-    indexOfPrevMonth < Months.indexOf('January')
-      ? Months.indexOf('December')
-      : indexOfPrevMonth
-  ]
-}
+export const PreviousMonthButton = forwardRef<
+  HTMLButtonElement,
+  ComponentProps<'button'>
+>((props, ref) => {
+  const [, setCurrentMonthStartDate] = useCalendar()
 
-function getNextMonth(month: Month) {
-  const indexOfNextMonth = Months.indexOf(month) + 1
-  return Months[
-    indexOfNextMonth > Months.indexOf('December')
-      ? Months.indexOf('January')
-      : indexOfNextMonth
-  ]
+  const handleClick = () => {
+    setCurrentMonthStartDate((current) => add(current, { months: -1 }))
+  }
+
+  return (
+    <button
+      ref={ref}
+      {...props}
+      onClick={(e) => {
+        handleClick()
+
+        if (props.onClick) props.onClick(e)
+      }}
+    />
+  )
+})
+PreviousMonthButton.displayName = 'PreviousMonthButton'
+
+export const NextMonthButton = forwardRef<
+  HTMLButtonElement,
+  ComponentProps<'button'>
+>((props, ref) => {
+  const [, setCurrentMonthStartDate] = useCalendar()
+
+  const handleClick = () => {
+    setCurrentMonthStartDate((current) => add(current, { months: 1 }))
+  }
+
+  return (
+    <button
+      ref={ref}
+      {...props}
+      onClick={(e) => {
+        handleClick()
+
+        if (props.onClick) props.onClick(e)
+      }}
+    />
+  )
+})
+NextMonthButton.displayName = 'NextMonthButton'
+
+export function Days({
+  children,
+  includeAdjacentMonths,
+}: {
+  children: (days: Date[]) => ReactElement
+  includeAdjacentMonths?: boolean
+}) {
+  const [currentMonthStartDate] = useCalendar()
+  const endOfMonthDate = endOfMonth(currentMonthStartDate)
+
+  const days = eachDayOfInterval({
+    start: includeAdjacentMonths
+      ? startOfWeek(currentMonthStartDate)
+      : currentMonthStartDate,
+    end: includeAdjacentMonths ? endOfWeek(endOfMonthDate) : endOfMonthDate,
+  })
+
+  return children(days)
 }
