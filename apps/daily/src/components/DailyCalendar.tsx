@@ -1,12 +1,13 @@
 import { useCallback, useRef, useState } from 'react'
-import { format, isSameDay, isToday } from 'date-fns'
 import { useRouter } from 'next/router'
-import { Daily } from 'contentlayer/generated'
+import Link from 'next/link'
+import { format, isSameDay, isToday } from 'date-fns'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
+import { Daily } from 'contentlayer/generated'
 
 import { css, styled } from '@stitches.config'
 import { getNextMonth, getPreviousMonth } from '@/lib/api'
-import { Month, MonthSubjectsMap } from '@/lib/contentlayer'
+import { Month, Months, MonthSubjectsMap } from '@/lib/contentlayer'
 import { Text, textStyles } from '@/components/Text'
 import * as Calendar from '@/components/Calendar'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
@@ -118,6 +119,7 @@ function Days({ next, prev }: { next: () => void; prev: () => void }) {
             drag="x"
             dragSnapToOrigin
             dragConstraints={{ left: -10, right: 10 }}
+            dragPropagation
             onDragEnd={(_, info) => {
               const offset = info.offset.x
 
@@ -127,24 +129,32 @@ function Days({ next, prev }: { next: () => void; prev: () => void }) {
             style={{ x, opacity }}
           >
             {days.map(({ value: day, isInCurrentMonth }, index) => (
-              <Day
+              <Link
+                passHref
+                href={`/${Months[
+                  day.getMonth()
+                ].toLowerCase()}/${day.getDate()}`}
                 key={day.toString()}
-                css={
-                  index === 0
-                    ? { gridColumnStart: day.getDay() + 1 }
-                    : undefined
-                }
-                onClick={() => {
-                  setSelectedDate(day)
-
-                  //TODO: handle onclick if not in current month to set it to the adjacent month
-                }}
-                selected={isSameDay(day, selectedDate)}
-                today={isToday(day)}
-                inCurrentMonth={isInCurrentMonth}
               >
-                {format(day, 'd')}
-              </Day>
+                <Day
+                  onDragStart={(e) => e.preventDefault()}
+                  css={
+                    index === 0
+                      ? { gridColumnStart: day.getDay() + 1 }
+                      : undefined
+                  }
+                  onClick={() => {
+                    setSelectedDate(day)
+
+                    //TODO: handle onclick if not in current month to set it to the adjacent month
+                  }}
+                  selected={isSameDay(day, selectedDate)}
+                  today={isToday(day)}
+                  inCurrentMonth={isInCurrentMonth}
+                >
+                  {format(day, 'd')}
+                </Day>
+              </Link>
             ))}
           </motion.div>
         )}
@@ -202,7 +212,7 @@ const calendarButtonStyle = css({
   },
 })
 
-const Day = styled('button', {
+const Day = styled('a', {
   p: '1rem',
   border: 'none',
   borderTop: '1px solid $olive3',

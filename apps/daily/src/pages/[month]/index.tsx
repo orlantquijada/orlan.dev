@@ -3,14 +3,11 @@ import {
   GetStaticProps,
   InferGetStaticPropsType,
 } from 'next'
-import Link from 'next/link'
 import Head from 'next/head'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
 import { allDailies, type Daily } from 'contentlayer/generated'
-import { useMDXComponent } from 'next-contentlayer/hooks'
 
-import { css } from '@stitches.config'
 import { Months, MonthSubjectsMap, type Month } from '@/lib/contentlayer'
 import { getNextMonth, getPreviousMonth } from '@/lib/api'
 import DailyCalendar from '@/components/DailyCalendar'
@@ -39,33 +36,8 @@ export default function MonthsNavPage({
         <meta name="description" content={subject} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className={main()}>
-        {currentMonth}
-        {currentMonthData?.map((data) => (
-          <Card data={data} key={data._id} />
-        ))}
-
-        <DailyCalendar month={currentMonth} />
-      </div>
+      <DailyCalendar month={currentMonth} data={currentMonthData || []} />
     </>
-  )
-}
-
-const main = css({
-  maxWidth: '650px',
-  mx: 'auto',
-})
-
-function Card({ data: { title, url } }: { data: Data }) {
-  const Title = useMDXComponent(title.code)
-  return (
-    <div>
-      <Link href={url}>
-        <a>
-          <Title />
-        </a>
-      </Link>
-    </div>
   )
 }
 
