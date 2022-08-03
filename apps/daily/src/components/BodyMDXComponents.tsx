@@ -16,8 +16,8 @@ const P = styled('p', textStyles, {
 })
 
 const BlockQuote = styled('blockquote', {
-  mx: '1.5rem 1rem',
-  my: '1.5rem',
+  m: '1.5rem',
+  mr: '1rem',
   position: 'relative',
 
   '&::before': {
@@ -32,9 +32,18 @@ const BlockQuote = styled('blockquote', {
   },
 })
 
+const Ul = styled('ul', {
+  my: '1.5rem',
+  pr: '40px',
+})
+
+const Li = styled('li', textStyles)
+
 export const bodyComponents = {
   p: (props: ComponentProps<typeof P>) => <P {...props} size="xl" />,
   blockquote: (props: ComponentProps<typeof BlockQuote>) => (
     <BlockQuote {...props} />
   ),
+  ul: (props: ComponentProps<typeof Ul>) => <Ul {...props} />,
+  li: (props: ComponentProps<typeof Li>) => <Li {...props} size="xl" />,
 }
