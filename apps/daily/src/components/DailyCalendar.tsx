@@ -1,4 +1,4 @@
-import { ReactNode, useCallback, useEffect, useState } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { format, isSameDay, isToday } from 'date-fns'
 import { useRouter } from 'next/router'
 import { Daily } from 'contentlayer/generated'
@@ -12,6 +12,7 @@ import * as Calendar from '@/components/Calendar'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 type Data = Pick<Daily, '_id' | 'title' | 'url'>
+const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export default function DailyCalendar({
   month,
@@ -37,8 +38,12 @@ export default function DailyCalendar({
     router.push(`/${toMonth.toLowerCase()}`, undefined, { shallow: true })
   }
 
+  // TODO: refactor impl
+  // currently drag next and prev actions are hacks by imperatively clicking these buttons
+  const prevBtn = useRef<HTMLButtonElement>(null)
+  const nextBtn = useRef<HTMLButtonElement>(null)
+
   return (
-    // root
     <Main>
       <Calendar.Root onChangeCurrentMonthDate={onChangeCurrentMonthDate}>
         <Header>
@@ -56,12 +61,14 @@ export default function DailyCalendar({
 
           <CalendarButtonsContainer>
             <Calendar.PreviousMonthButton
+              ref={prevBtn}
               className={calendarButtonStyle()}
               onClick={() => handleRoute('prev')}
             >
               <ChevronLeftIcon />
             </Calendar.PreviousMonthButton>
             <Calendar.NextMonthButton
+              ref={nextBtn}
               className={calendarButtonStyle()}
               onClick={() => handleRoute('next')}
             >
@@ -70,78 +77,79 @@ export default function DailyCalendar({
           </CalendarButtonsContainer>
         </Header>
 
-        {/* calendar body */}
         <div>
-          {/* weekdays container */}
           <CalendarRow css={{ mb: '1rem' }}>
-            <Weekday>Sun</Weekday>
-            <Weekday>Mon</Weekday>
-            <Weekday>Tue</Weekday>
-            <Weekday>Wed</Weekday>
-            <Weekday>Thu</Weekday>
-            <Weekday>Fri</Weekday>
-            <Weekday>Sat</Weekday>
+            {weekdays.map((weekday) => (
+              <Weekday size="base" key={weekday}>
+                {weekday}
+              </Weekday>
+            ))}
           </CalendarRow>
-          <Days />
+          <Days
+            next={() => nextBtn.current?.click()}
+            prev={() => prevBtn.current?.click()}
+          />
         </div>
       </Calendar.Root>
     </Main>
   )
 }
 
-const NAVIGATION_OFFSET = 85
+const NAVIGATION_OFFSET = 100
 
-function Days() {
+function Days({ next, prev }: { next: () => void; prev: () => void }) {
   const [selectedDate, setSelectedDate] = useState(() => new Date())
-
-  const [draggable, setDraggable] = useState(false)
-
-  useEffect(() => {
-    const htmlElement = document.querySelector('html')
-    const TAB_WIDTH = 768
-
-    if (htmlElement && htmlElement.clientWidth < TAB_WIDTH) setDraggable(true)
-  }, [])
 
   const x = useMotionValue(0)
   const opacity = useTransform(
     x,
     [-NAVIGATION_OFFSET, 0, NAVIGATION_OFFSET],
-    [0, 1, 0]
+    [0.1, 1, 0.1],
+    { clamp: true }
   )
 
   return (
-    <Calendar.Days includeAdjacentMonths>
-      {(days) => (
-        <motion.div
-          className={calendarRowStyle()}
-          drag={draggable ? 'x' : false}
-          dragSnapToOrigin
-          dragConstraints={{
-            left: 0,
-            right: 0,
-          }}
-          // eslint-disable-next-line no-console
-          onDragEnd={(_, info) => console.log(info.offset.x)}
-          style={{ x, opacity }}
-        >
-          {days.map(({ value: day, isInCurrentMonth }, index) => (
-            <Day
-              key={day.toString()}
-              css={
-                index === 0 ? { gridColumnStart: day.getDay() + 1 } : undefined
-              }
-              onClick={() => setSelectedDate(day)}
-              selected={isSameDay(day, selectedDate)}
-              today={isToday(day)}
-              inCurrentMonth={isInCurrentMonth}
-            >
-              {format(day, 'd')}
-            </Day>
-          ))}
-        </motion.div>
-      )}
-    </Calendar.Days>
+    // wrapper <div> to handle translateX on the right overflow which causes everything to scale down
+    <div style={{ overflowX: 'hidden' }}>
+      <Calendar.Days includeAdjacentMonths>
+        {(days) => (
+          <motion.div
+            className={calendarRowStyle({ css: { pb: '4rem' } })}
+            drag="x"
+            dragSnapToOrigin
+            dragConstraints={{ left: -10, right: 10 }}
+            onDragEnd={(_, info) => {
+              const offset = info.offset.x
+
+              if (offset > 0 && offset > NAVIGATION_OFFSET) prev()
+              else if (offset < 0 && offset < -NAVIGATION_OFFSET) next()
+            }}
+            style={{ x, opacity }}
+          >
+            {days.map(({ value: day, isInCurrentMonth }, index) => (
+              <Day
+                key={day.toString()}
+                css={
+                  index === 0
+                    ? { gridColumnStart: day.getDay() + 1 }
+                    : undefined
+                }
+                onClick={() => {
+                  setSelectedDate(day)
+
+                  //TODO: handle onclick if not in current month to set it to the adjacent month
+                }}
+                selected={isSameDay(day, selectedDate)}
+                today={isToday(day)}
+                inCurrentMonth={isInCurrentMonth}
+              >
+                {format(day, 'd')}
+              </Day>
+            ))}
+          </motion.div>
+        )}
+      </Calendar.Days>
+    </div>
   )
 }
 
@@ -204,11 +212,11 @@ const Day = styled('button', {
   display: 'grid',
   placeItems: 'center',
   cursor: 'pointer',
+  lineHeight: 1,
 
   '@tab': {
     height: '6.25rem',
     placeItems: 'flex-start',
-
     border: '1px solid $olive3',
   },
 
@@ -227,8 +235,9 @@ const Day = styled('button', {
           zIndex: -1,
 
           '@tab': {
-            top: '0.75em',
-            left: '0.25em',
+            size: '2em',
+            top: '0.5em',
+            left: '0.5em',
           },
         },
       },
@@ -252,18 +261,9 @@ const calendarRowStyle = css({
 })
 const CalendarRow = styled('div', calendarRowStyle)
 
-function Weekday({ children }: { children: ReactNode }) {
-  return (
-    <Text
-      size="base"
-      css={{
-        textAlign: 'center',
-        color: '$olive11',
+const Weekday = styled('span', textStyles, {
+  textAlign: 'center',
+  color: '$olive11',
 
-        '@tab': { textAlign: 'left' },
-      }}
-    >
-      {children}
-    </Text>
-  )
-}
+  '@tab': { textAlign: 'left' },
+})
