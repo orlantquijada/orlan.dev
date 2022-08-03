@@ -129,7 +129,7 @@ export const defaultCreateStitchesConfig = {
     h: (v: Stitches.PropertyValue<'height'>) => ({ height: v }),
     size: (v: Stitches.PropertyValue<'width'>) => ({ height: v, width: v }),
 
-    m: (v: Stitches.PropertyValue<'margin'>) => ({ margin: v }),
+    m: (v: Stitches.PropertyValue<'margin'>) => ({ mx: v, my: v }),
     mt: (v: Stitches.PropertyValue<'margin'>) => ({ marginBlockStart: v }),
     mr: (v: Stitches.PropertyValue<'margin'>) => ({ marginInlineEnd: v }),
     mb: (v: Stitches.PropertyValue<'margin'>) => ({ marginBlockEnd: v }),
@@ -137,7 +137,7 @@ export const defaultCreateStitchesConfig = {
     mx: (v: Stitches.PropertyValue<'marginInline'>) => ({ marginInline: v }),
     my: (v: Stitches.PropertyValue<'marginBlock'>) => ({ marginBlock: v }),
 
-    p: (v: Stitches.PropertyValue<'padding'>) => ({ padding: v }),
+    p: (v: Stitches.PropertyValue<'padding'>) => ({ px: v, py: v }),
     pt: (v: Stitches.PropertyValue<'padding'>) => ({ paddingBlockStart: v }),
     pr: (v: Stitches.PropertyValue<'padding'>) => ({ paddingInlineEnd: v }),
     pb: (v: Stitches.PropertyValue<'padding'>) => ({ paddingBlockEnd: v }),
