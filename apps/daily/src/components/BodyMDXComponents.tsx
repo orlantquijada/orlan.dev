@@ -1,13 +1,13 @@
 import { type ComponentProps } from 'react'
 import { styled } from '@stitches.config'
-import { textStyles } from './Text'
+import { Text, textStyles } from './Text'
 
 const P = styled('p', textStyles, {
-  '&:not(:first-of-type)': {
+  '&:not(:first-child)': {
     textIndent: '2em',
   },
 
-  'article > &:first-of-type::first-letter': {
+  'article > &:first-child::first-letter': {
     float: 'left',
     lineHeight: '85%',
     width: '.7em',
@@ -41,6 +41,7 @@ const Li = styled('li', textStyles)
 
 export const bodyComponents = {
   p: (props: ComponentProps<typeof P>) => <P {...props} size="xl" />,
+  Text: (props: ComponentProps<typeof Text>) => <Text size="xl" {...props} />,
   blockquote: (props: ComponentProps<typeof BlockQuote>) => (
     <BlockQuote {...props} />
   ),

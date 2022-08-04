@@ -4,13 +4,13 @@ import Link from 'next/link'
 import { format, isSameDay, isToday } from 'date-fns'
 import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { Daily } from 'contentlayer/generated'
+import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 import { css, styled } from '@stitches.config'
 import { getNextMonth, getPreviousMonth } from '@/lib/api'
 import { Month, Months, MonthSubjectsMap } from '@/lib/contentlayer'
 import { Text, textStyles } from '@/components/Text'
 import * as Calendar from '@/components/Calendar'
-import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 type Data = Pick<Daily, '_id' | 'title' | 'url'>
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
@@ -22,13 +22,16 @@ export default function DailyCalendar({
   data: Data[]
 }) {
   const router = useRouter()
-
   const [currentMonthDate, setCurrentMonthDate] = useState(() => new Date())
-
   const onChangeCurrentMonthDate = useCallback(
     (date: Date) => setCurrentMonthDate(date),
     []
   )
+
+  // TODO: refactor impl
+  // currently drag next and prev actions are hacks by imperatively clicking these buttons
+  const prevBtn = useRef<HTMLButtonElement>(null)
+  const nextBtn = useRef<HTMLButtonElement>(null)
 
   const handleRoute = (direction: 'next' | 'prev') => {
     const toMonth =
@@ -38,11 +41,6 @@ export default function DailyCalendar({
     // calendar month state will be handled with the URL
     router.push(`/${toMonth.toLowerCase()}`, undefined, { shallow: true })
   }
-
-  // TODO: refactor impl
-  // currently drag next and prev actions are hacks by imperatively clicking these buttons
-  const prevBtn = useRef<HTMLButtonElement>(null)
-  const nextBtn = useRef<HTMLButtonElement>(null)
 
   return (
     <Main>
