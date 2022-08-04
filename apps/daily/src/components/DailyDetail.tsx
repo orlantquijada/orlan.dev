@@ -58,7 +58,7 @@ export default function DailyDetail({ daily }: Props) {
         >
           — {daily.author}, <em>{daily.book}</em>, {daily.section}
         </Text>
-        <Box as="article" css={{ mt: '2.5rem' }}>
+        <Box as="article" css={{ mt: '2.5rem', w: '100%' }}>
           <Body components={bodyComponents} />
         </Box>
       </Main>
