@@ -108,56 +108,51 @@ function Days({ next, prev }: { next: () => void; prev: () => void }) {
   )
 
   return (
-    // wrapper <div> to handle translateX on the right overflow which causes everything to scale down
-    <div style={{ overflowX: 'hidden' }}>
-      <Calendar.Days includeAdjacentMonths>
-        {(days) => (
-          <motion.div
-            className={calendarRowStyle({ css: { pb: '4rem' } })}
-            drag="x"
-            dragSnapToOrigin
-            dragConstraints={{ left: -10, right: 10 }}
-            dragPropagation
-            onDragEnd={(_, info) => {
-              const offset = info.offset.x
+    <Calendar.Days includeAdjacentMonths>
+      {(days) => (
+        <motion.div
+          className={calendarRowStyle({ css: { pb: '4rem' } })}
+          drag="x"
+          dragSnapToOrigin
+          dragConstraints={{ left: -10, right: 10 }}
+          dragPropagation
+          onDragEnd={(_, info) => {
+            const offset = info.offset.x
 
-              if (offset > 0 && offset > NAVIGATION_OFFSET) prev()
-              else if (offset < 0 && offset < -NAVIGATION_OFFSET) next()
-            }}
-            style={{ x, opacity }}
-          >
-            {days.map(({ value: day, isInCurrentMonth }, index) => (
-              <Link
-                passHref
-                href={`/${Months[
-                  day.getMonth()
-                ].toLowerCase()}/${day.getDate()}`}
-                key={day.toString()}
+            if (offset > 0 && offset > NAVIGATION_OFFSET) prev()
+            else if (offset < 0 && offset < -NAVIGATION_OFFSET) next()
+          }}
+          style={{ x, opacity }}
+        >
+          {days.map(({ value: day, isInCurrentMonth }, index) => (
+            <Link
+              passHref
+              href={`/${Months[day.getMonth()].toLowerCase()}/${day.getDate()}`}
+              key={day.toString()}
+            >
+              <Day
+                onDragStart={(e) => e.preventDefault()}
+                css={
+                  index === 0
+                    ? { gridColumnStart: day.getDay() + 1 }
+                    : undefined
+                }
+                onClick={() => {
+                  setSelectedDate(day)
+
+                  //TODO: handle onclick if not in current month to set it to the adjacent month
+                }}
+                selected={isSameDay(day, selectedDate)}
+                today={isToday(day)}
+                inCurrentMonth={isInCurrentMonth}
               >
-                <Day
-                  onDragStart={(e) => e.preventDefault()}
-                  css={
-                    index === 0
-                      ? { gridColumnStart: day.getDay() + 1 }
-                      : undefined
-                  }
-                  onClick={() => {
-                    setSelectedDate(day)
-
-                    //TODO: handle onclick if not in current month to set it to the adjacent month
-                  }}
-                  selected={isSameDay(day, selectedDate)}
-                  today={isToday(day)}
-                  inCurrentMonth={isInCurrentMonth}
-                >
-                  {format(day, 'd')}
-                </Day>
-              </Link>
-            ))}
-          </motion.div>
-        )}
-      </Calendar.Days>
-    </div>
+                {format(day, 'd')}
+              </Day>
+            </Link>
+          ))}
+        </motion.div>
+      )}
+    </Calendar.Days>
   )
 }
 
@@ -170,6 +165,13 @@ const Main = styled('main', {
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
+
+  // handle days drag to the right (translateX overflow) which causes everything to scale down
+  overflowX: 'hidden',
+
+  '@tab': {
+    overflowX: 'initial',
+  },
 })
 const SubjectTitle = styled('h2', textStyles, {
   fontStyle: 'italic',
@@ -214,7 +216,7 @@ const Day = styled('a', {
   p: '1rem',
   border: 'none',
   borderTop: '1px solid $olive3',
-  background: 'none',
+  background: '$bg',
   fontSize: '$base',
   color: '$textColor',
   display: 'grid',
