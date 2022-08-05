@@ -29,3 +29,7 @@ export function pickProps<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return propsObj as any
 }
+
+export function capitalize<T extends string>(str: T) {
+  return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>
+}

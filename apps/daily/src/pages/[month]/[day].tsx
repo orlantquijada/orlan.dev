@@ -1,8 +1,10 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { allDailies, type Daily } from 'contentlayer/generated'
 import { Month } from 'src/lib/contentlayer'
 import DailyDetail from '@/components/DailyDetail'
 import Head from 'next/head'
+import { getDailies } from '@/lib/api'
+import { capitalize } from '@/lib/utils'
 
 export default function EntryDetailPage({
   daily,
@@ -19,14 +21,14 @@ export default function EntryDetailPage({
   )
 }
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export async function getStaticPaths() {
   const paths = allDailies.map(({ day, month }) => ({
     params: { month: month.toLowerCase(), day: day.toString() },
   }))
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
@@ -36,12 +38,16 @@ export const getStaticProps: GetStaticProps<
 > = async ({ params }) => {
   if (!params) return { notFound: true }
 
+  const { day, month } = params
+  const daily = getDailies({
+    filter: { day: parseInt(day, 10), month: capitalize(month) },
+  })
+
+  if (!daily.length) return { notFound: true }
+
   return {
     props: {
-      daily: allDailies.find(
-        ({ day, month }) =>
-          day.toString() === params.day && month.toLowerCase() === params.month
-      ) as Daily,
+      daily: daily[0],
     },
   }
 }

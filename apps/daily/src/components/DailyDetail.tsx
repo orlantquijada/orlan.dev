@@ -9,7 +9,7 @@ import { titleComponents } from './TitleMDXComponents'
 import { quoteComponents } from './QuoteMDXComponents'
 import { bodyComponents } from './BodyMDXComponents'
 import { Text } from '@/components/Text'
-import { css, styled } from '@stitches.config'
+import { css, fadeIn, styled } from '@stitches.config'
 
 interface Props {
   daily: Daily
@@ -102,7 +102,7 @@ function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
 
   useEffect(() => {
     const handleScrollToggle = () => {
-      const OFFSET = 80
+      const OFFSET = 65
       if (window.scrollY > OFFSET && !showBackButton) setShowBackButton(true)
       else if (window.scrollY < OFFSET && showBackButton)
         setShowBackButton(false)
@@ -124,6 +124,8 @@ const Wrapper = styled('div', {
 
   fontFamily: '"EB Garamond", serif',
   color: '$textColor',
+
+  animation: `${fadeIn} 0.6s both`,
 })
 const Main = styled('main', {
   maxWidth: 'var(--contentMaxWidth)',

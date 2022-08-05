@@ -11,6 +11,7 @@ import { allDailies, type Daily } from 'contentlayer/generated'
 import { Months, MonthSubjectsMap, type Month } from '@/lib/contentlayer'
 import { getNextMonth, getPreviousMonth } from '@/lib/api'
 import DailyCalendar from '@/components/DailyCalendar'
+import { capitalize } from '@/lib/utils'
 
 export default function MonthsNavPage({
   data,
@@ -48,7 +49,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: false,
+    fallback: 'blocking',
   }
 }
 
@@ -59,6 +60,7 @@ export const getStaticProps: GetStaticProps<
   { month: Lowercase<Month> }
 > = async ({ params }) => {
   if (!params) return { notFound: true }
+  if (!Months.includes(capitalize(params.month))) return { notFound: true }
 
   return {
     props: {
@@ -67,10 +69,6 @@ export const getStaticProps: GetStaticProps<
         .map(({ _id, title, url }) => ({ _id, title, url })),
     },
   }
-}
-
-function capitalize<T extends string>(str: T) {
-  return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>
 }
 
 async function fetcher(month: Month) {

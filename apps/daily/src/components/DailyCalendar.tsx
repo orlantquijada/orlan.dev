@@ -6,7 +6,7 @@ import { motion, useMotionValue, useTransform } from 'framer-motion'
 import { Daily } from 'contentlayer/generated'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
-import { css, styled } from '@stitches.config'
+import { css, fadeIn, styled } from '@stitches.config'
 import { getNextMonth, getPreviousMonth } from '@/lib/api'
 import { Month, Months, MonthSubjectsMap } from '@/lib/contentlayer'
 import { Text, textStyles } from '@/components/Text'
@@ -146,7 +146,7 @@ function Days({ next, prev }: { next: () => void; prev: () => void }) {
                 today={isToday(day)}
                 inCurrentMonth={isInCurrentMonth}
               >
-                {format(day, 'd')}
+                <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
               </Day>
             </Link>
           ))}
@@ -165,6 +165,8 @@ const Main = styled('main', {
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
+
+  animation: `${fadeIn} 0.6s both`,
 
   // handle days drag to the right (translateX overflow) which causes everything to scale down
   overflowX: 'hidden',
@@ -242,7 +244,6 @@ const Day = styled('a', {
           borderRadius: '999px',
           position: 'absolute',
           size: '2em',
-          zIndex: -1,
 
           '@tab': {
             size: '2em',

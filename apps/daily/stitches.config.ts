@@ -100,3 +100,8 @@ export const {
 })
 
 export type CSS = Stitches.CSS<typeof config>
+
+export const fadeIn = keyframes({
+  from: { opacity: 0 },
+  to: { opacity: 1 },
+})
