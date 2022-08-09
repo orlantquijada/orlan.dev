@@ -2,7 +2,12 @@ import { useCallback, useRef, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import { format, isSameDay, isToday } from 'date-fns'
-import { motion, useMotionValue, useTransform } from 'framer-motion'
+import {
+  motion,
+  MotionValue,
+  useMotionValue,
+  useTransform,
+} from 'framer-motion'
 import { Daily } from 'contentlayer/generated'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
@@ -12,7 +17,7 @@ import { Month, Months, MonthSubjectsMap } from '@/lib/contentlayer'
 import { Text, textStyles } from '@/components/Text'
 import * as Calendar from '@/components/Calendar'
 
-type Data = Pick<Daily, '_id' | 'title' | 'url'>
+type Data = Pick<Daily, '_id' | 'title' | 'url' | 'month' | 'day'>
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 
 export default function DailyCalendar({
@@ -32,6 +37,14 @@ export default function DailyCalendar({
   // currently drag next and prev actions are hacks by imperatively clicking these buttons
   const prevBtn = useRef<HTMLButtonElement>(null)
   const nextBtn = useRef<HTMLButtonElement>(null)
+
+  const x = useMotionValue(0)
+  const opacity = useTransform(
+    x,
+    [-NAVIGATION_OFFSET, 0, NAVIGATION_OFFSET],
+    [0.1, 1, 0.1],
+    { clamp: true }
+  )
 
   const handleRoute = (direction: 'next' | 'prev') => {
     const toMonth =
@@ -54,7 +67,10 @@ export default function DailyCalendar({
             {format(currentMonthDate, 'MMM y')}
           </Text>
 
-          <SubjectTitle size={{ '@initial': 'base', '@tab': 'xl' }} as="h2">
+          <SubjectTitle
+            size={{ '@initial': 'base', '@tab': 'xl' }}
+            style={{ opacity }}
+          >
             {MonthSubjectsMap[month]}
           </SubjectTitle>
 
@@ -87,6 +103,8 @@ export default function DailyCalendar({
           <Days
             next={() => nextBtn.current?.click()}
             prev={() => prevBtn.current?.click()}
+            x={x}
+            opacity={opacity}
           />
         </div>
       </Calendar.Root>
@@ -96,16 +114,18 @@ export default function DailyCalendar({
 
 const NAVIGATION_OFFSET = 100
 
-function Days({ next, prev }: { next: () => void; prev: () => void }) {
+function Days({
+  next,
+  prev,
+  x,
+  opacity,
+}: {
+  next: () => void
+  prev: () => void
+  x: MotionValue<number>
+  opacity: MotionValue<number>
+}) {
   const [selectedDate, setSelectedDate] = useState(() => new Date())
-
-  const x = useMotionValue(0)
-  const opacity = useTransform(
-    x,
-    [-NAVIGATION_OFFSET, 0, NAVIGATION_OFFSET],
-    [0.1, 1, 0.1],
-    { clamp: true }
-  )
 
   return (
     <Calendar.Days includeAdjacentMonths>
@@ -175,7 +195,7 @@ const Main = styled('main', {
     overflowX: 'initial',
   },
 })
-const SubjectTitle = styled('h2', textStyles, {
+const SubjectTitle = styled(motion.h2, textStyles, {
   fontStyle: 'italic',
   color: '$olive11',
   fontWeight: '$regular',

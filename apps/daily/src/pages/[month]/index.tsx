@@ -6,12 +6,12 @@ import {
 import Head from 'next/head'
 import useSWR from 'swr'
 import { useRouter } from 'next/router'
-import { allDailies, type Daily } from 'contentlayer/generated'
+import { type Daily } from 'contentlayer/generated'
 
 import { Months, MonthSubjectsMap, type Month } from '@/lib/contentlayer'
-import { getNextMonth, getPreviousMonth } from '@/lib/api'
+import { getDailies, getNextMonth, getPreviousMonth } from '@/lib/api'
 import DailyCalendar from '@/components/DailyCalendar'
-import { capitalize } from '@/lib/utils'
+import { capitalize, NonEmptyArray } from '@/lib/utils'
 
 export default function MonthsNavPage({
   data,
@@ -53,27 +53,49 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-type Data = Pick<Daily, '_id' | 'title' | 'url'>
+type Data = Pick<Daily, '_id' | 'title' | 'url' | 'month' | 'day'>
+const fields: NonEmptyArray<keyof Data> = [
+  '_id',
+  'title',
+  'url',
+  'month',
+  'day',
+]
+
+function getSelectFromFields<T extends NonEmptyArray<keyof Daily>>(f: T) {
+  type Select = { [k in keyof Daily]: true }
+  const select: Select = {} as Select
+
+  for (const key of f) {
+    select[key as T[number]] = true
+  }
+
+  return select
+}
 
 export const getStaticProps: GetStaticProps<
   { data: Data[] },
   { month: Lowercase<Month> }
 > = async ({ params }) => {
   if (!params) return { notFound: true }
-  if (!Months.includes(capitalize(params.month))) return { notFound: true }
+
+  const month = capitalize(params.month)
+
+  if (!Months.includes(month)) return { notFound: true }
 
   return {
     props: {
-      data: allDailies
-        .filter(({ month }) => month.toLowerCase() === params.month)
-        .map(({ _id, title, url }) => ({ _id, title, url })),
+      data: getDailies({
+        filter: { month },
+        select: getSelectFromFields(fields),
+      }),
     },
   }
 }
 
 async function fetcher(month: Month) {
   const params = new URLSearchParams({
-    fields: '_id,title,url',
+    fields: fields.join(','),
     month: month,
   })
 
