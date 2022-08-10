@@ -3,6 +3,8 @@ import { styled } from '@stitches.config'
 import { textStyles } from './Text'
 
 const QuoteParagraph = styled('q', textStyles, {
+  alignSelf: 'stretch',
+
   '&::before': {
     content: 'open-quote',
   },
