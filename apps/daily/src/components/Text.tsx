@@ -7,6 +7,10 @@ export const textStyles = css({
         fontSize: '$base',
         lineHeight: '1.5rem',
       },
+      lg: {
+        fontSize: '$lg',
+        lineHeight: '1.75rem',
+      },
       xl: {
         fontSize: '$xl',
         lineHeight: '1.75rem',
