@@ -102,6 +102,12 @@ export const {
 export type CSS = Stitches.CSS<typeof config>
 
 export const fadeIn = keyframes({
-  from: { opacity: 0 },
-  to: { opacity: 1 },
+  '0%': {
+    mask: 'linear-gradient(90deg, #000 25%, #000000e6 50%, #00000000) 150% 0 / 400% no-repeat',
+    opacity: 0,
+  },
+  '100%': {
+    mask: 'linear-gradient(90deg, #000 25%, #000000e6 50%, #00000000) 0 / 400% no-repeat',
+    opacity: 1,
+  },
 })

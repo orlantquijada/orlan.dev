@@ -23,13 +23,17 @@ export default function DailyDetail({ daily }: Props) {
   const Quote = useMDXComponent(daily.quote.code)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const ref = useRef<any>()
-  const [show, initialOpacity, isLoading] = useShowBackButton(ref)
+  const wrapperRef = useRef<any>()
+  const [show, initialOpacity, isLoading] = useShowBackButton(wrapperRef)
 
-  const dateFormat = format(new Date(`${daily.month} ${daily.day}`), 'LLLL do')
+  // `2022` as a year is a random year to satisfy firefox Date constructor throwing on missing year
+  const dateFormat = format(
+    new Date(`${daily.month} ${daily.day} 2022`),
+    'LLLL do'
+  )
 
   return (
-    <Wrapper ref={ref}>
+    <Wrapper>
       <header>
         <HeaderCover />
         <HeaderContentWrapper>
@@ -39,7 +43,7 @@ export default function DailyDetail({ daily }: Props) {
           </HeaderContent>
         </HeaderContentWrapper>
       </header>
-      <Main>
+      <Main ref={wrapperRef}>
         <Box
           css={{
             display: 'flex',
@@ -125,7 +129,8 @@ const Wrapper = styled('div', {
   fontFamily: '"EB Garamond", serif',
   color: '$textColor',
 
-  animation: `${fadeIn} 0.6s both`,
+  animation: `${fadeIn} 1s both`,
+  minHeight: '100vh',
 })
 const Main = styled('main', {
   maxWidth: 'var(--contentMaxWidth)',
