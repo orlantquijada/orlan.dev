@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type MutableRefObject } from 'react'
+import Link from 'next/link'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { format } from 'date-fns'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
@@ -64,12 +65,11 @@ export default function DailyDetail({ daily }: Props) {
       </Main>
       <Footer>
         {!isLoading ? (
-          <FooterIconButton
-            href={`/${daily.month.toLowerCase()}`}
-            show={show || initialOpacity === 1}
-          >
-            <ArrowLeftIcon className={footerIconStyles()} />
-          </FooterIconButton>
+          <Link href={`/${daily.month.toLowerCase()}`} passHref>
+            <FooterIconButton show={show || initialOpacity === 1}>
+              <ArrowLeftIcon className={footerIconStyles()} />
+            </FooterIconButton>
+          </Link>
         ) : null}
       </Footer>
     </Wrapper>
