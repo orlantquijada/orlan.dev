@@ -186,7 +186,7 @@ const Main = styled('main', {
   flexDirection: 'column',
   gap: '1.5rem',
 
-  animation: `${fadeIn} 0.6s both`,
+  animation: `${fadeIn} 1s both`,
 
   // handle days drag to the right (translateX overflow) which causes everything to scale down
   overflowX: 'hidden',
