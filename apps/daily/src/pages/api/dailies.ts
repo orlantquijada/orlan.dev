@@ -1,6 +1,7 @@
 import { type NextApiRequest, type NextApiResponse } from 'next'
 import { type Month } from 'src/lib/contentlayer'
 import { getDailies } from 'src/lib/api'
+import { capitalize } from '@/lib/utils'
 
 export default function handler(_req: NextApiRequest, res: NextApiResponse) {
   const { month, fields } = _req.query
@@ -11,7 +12,9 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse) {
   }
 
   const dailies = getDailies({
-    filter: { month: month as Month | undefined },
+    filter: {
+      month: month ? capitalize(month as Lowercase<Month>) : undefined,
+    },
     select,
   })
 
