@@ -76,6 +76,13 @@ export const {
       borderTopRightRadius: v,
       borderBottomRightRadius: v,
     }),
+    ring: (ringColor: Stitches.PropertyValue<'color'>) => ({
+      '$$ring-width': '2px',
+      '$$ring-color': `$colors${ringColor}`,
+      '$$ring-offset': '2px',
+      outline: 'none',
+      boxShadow: `0 0 0 $$ring-width $colors$bg, 0 0 0 calc($$ring-width + $$ring-offset) $$ring-color`,
+    }),
   },
   theme: {
     colors: {
@@ -105,4 +112,13 @@ export type CSS = Stitches.CSS<typeof config>
 export const fadeIn = keyframes({
   from: { opacity: 0 },
   to: { opacity: 1 },
+})
+
+export const shimmer = keyframes({
+  from: {
+    backgroundPosition: '200% 0',
+  },
+  to: {
+    backgroundPosition: '-200% 0',
+  },
 })
