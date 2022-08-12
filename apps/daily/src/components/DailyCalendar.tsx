@@ -1,6 +1,11 @@
-import { useCallback, useRef, useState } from 'react'
+import {
+  type Dispatch,
+  type SetStateAction,
+  useCallback,
+  useRef,
+  useState,
+} from 'react'
 import { useRouter } from 'next/router'
-import Link from 'next/link'
 import { format, isSameDay, isToday } from 'date-fns'
 import {
   motion,
@@ -8,26 +13,24 @@ import {
   useMotionValue,
   useTransform,
 } from 'framer-motion'
-import { Daily } from 'contentlayer/generated'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 import { css, fadeIn, styled } from '@stitches.config'
 import { getNextMonth, getPreviousMonth } from '@/lib/api'
-import { Month, Months, MonthSubjectsMap } from '@/lib/contentlayer'
+import { Month, MonthSubjectsMap } from '@/lib/contentlayer'
 import { Text, textStyles } from '@/components/Text'
 import * as Calendar from '@/components/Calendar'
+import PreviewToast from './PreviewToast'
 
-type Data = Pick<Daily, '_id' | 'title' | 'url' | 'month' | 'day'>
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+const NAVIGATION_OFFSET = 100
 
-export default function DailyCalendar({
-  month,
-}: {
-  month: Month
-  data: Data[]
-}) {
+export default function DailyCalendar({ month }: { month: Month }) {
   const router = useRouter()
-  const [currentMonthDate, setCurrentMonthDate] = useState(() => new Date())
+  const [currentMonthDate, setCurrentMonthDate] = useState(() => {
+    const today = new Date()
+    return new Date(`${month} 1, ${today.getFullYear()}`)
+  })
   const onChangeCurrentMonthDate = useCallback(
     (date: Date) => setCurrentMonthDate(date),
     []
@@ -42,9 +45,10 @@ export default function DailyCalendar({
   const opacity = useTransform(
     x,
     [-NAVIGATION_OFFSET, 0, NAVIGATION_OFFSET],
-    [0.1, 1, 0.1],
-    { clamp: true }
+    [0.1, 1, 0.1]
   )
+
+  const [selectedDate, setSelectedDate] = useState<Date>()
 
   const handleRoute = (direction: 'next' | 'prev') => {
     const toMonth =
@@ -57,7 +61,10 @@ export default function DailyCalendar({
 
   return (
     <Main>
-      <Calendar.Root onChangeCurrentMonthDate={onChangeCurrentMonthDate}>
+      <Calendar.Root
+        defaultCurrentMonth={currentMonthDate}
+        onChangeCurrentMonthDate={onChangeCurrentMonthDate}
+      >
         <Header>
           <Text
             size={{ '@initial': 'base', '@tab': 'xl' }}
@@ -92,8 +99,8 @@ export default function DailyCalendar({
           </CalendarButtonsContainer>
         </Header>
 
-        <div>
-          <CalendarRow css={{ mb: '1rem' }}>
+        <CalendarBody>
+          <CalendarRow>
             {weekdays.map((weekday) => (
               <Weekday size="base" key={weekday}>
                 {weekday}
@@ -105,86 +112,84 @@ export default function DailyCalendar({
             prev={() => prevBtn.current?.click()}
             x={x}
             opacity={opacity}
+            selectedDate={selectedDate}
+            setSelectedDate={setSelectedDate}
           />
-        </div>
+        </CalendarBody>
       </Calendar.Root>
+
+      <PreviewToast
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+      />
     </Main>
   )
 }
-
-const NAVIGATION_OFFSET = 100
 
 function Days({
   next,
   prev,
   x,
   opacity,
+  selectedDate,
+  setSelectedDate,
 }: {
   next: () => void
   prev: () => void
   x: MotionValue<number>
   opacity: MotionValue<number>
+  selectedDate: Date | undefined
+  setSelectedDate: Dispatch<SetStateAction<Date | undefined>>
 }) {
-  const [selectedDate, setSelectedDate] = useState(() => new Date())
-
   return (
     <Calendar.Days includeAdjacentMonths>
       {(days) => (
         <motion.div
-          className={calendarRowStyle({ css: { pb: '4rem' } })}
           drag="x"
           dragSnapToOrigin
           dragConstraints={{ left: -10, right: 10 }}
-          dragPropagation
           onDragEnd={(_, info) => {
             const offset = info.offset.x
 
             if (offset > 0 && offset > NAVIGATION_OFFSET) prev()
             else if (offset < 0 && offset < -NAVIGATION_OFFSET) next()
           }}
-          style={{ x, opacity }}
+          style={{ x, opacity, paddingBlockEnd: '5rem' }}
         >
-          {days.map(({ value: day, isInCurrentMonth }, index) => (
-            <Link
-              passHref
-              href={`/${Months[day.getMonth()].toLowerCase()}/${day.getDate()}`}
-              key={day.toString()}
-            >
-              <Day
+          <DaysContainer>
+            {days.map(({ value: day, isInCurrentMonth }) => (
+              <StyledDay
+                key={day.toString()}
                 onDragStart={(e) => e.preventDefault()}
-                css={
-                  index === 0
-                    ? { gridColumnStart: day.getDay() + 1 }
-                    : undefined
-                }
-                onClick={() => {
-                  setSelectedDate(day)
-
-                  //TODO: handle onclick if not in current month to set it to the adjacent month
-                }}
-                selected={isSameDay(day, selectedDate)}
+                onClick={() => setSelectedDate(day)}
+                selected={selectedDate && isSameDay(day, selectedDate)}
                 today={isToday(day)}
                 inCurrentMonth={isInCurrentMonth}
               >
                 <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
-              </Day>
-            </Link>
-          ))}
+              </StyledDay>
+            ))}
+          </DaysContainer>
         </motion.div>
       )}
     </Calendar.Days>
   )
 }
 
+//////////////////////////////////////////////////////////////////
+
 const Main = styled('main', {
-  maxWidth: '650px',
+  '--contentMaxWidth': '650px',
+  '--contentPaddingX': '1rem',
+  maxWidth: 'var(--contentMaxWidth)',
   mx: 'auto',
-  px: '1rem',
+  px: 'var(--contentPaddingX)',
   py: '2rem',
 
   display: 'flex',
   flexDirection: 'column',
   gap: '1.5rem',
+  alignItems: 'center',
 
   animation: `${fadeIn} 0.6s both`,
 
@@ -213,10 +218,20 @@ const CalendarButtonsContainer = styled('div', {
 const Header = styled('header', {
   display: 'flex',
   alignItems: 'center',
+  width: '100%',
 
   '@tab': {
     justifyContent: 'space-between',
   },
+})
+
+const CalendarBody = styled('div', {
+  display: 'flex',
+  flexDirection: 'column',
+
+  gap: '1rem',
+
+  width: '100%',
 })
 
 const calendarButtonStyle = css({
@@ -228,13 +243,28 @@ const calendarButtonStyle = css({
 
   display: 'grid',
   placeItems: 'center',
+  transition: 'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
+  borderRadius: '0.25rem',
 
   '&:hover': {
     color: '$olive12',
   },
+  '&:focus, &:active': {
+    ring: '$olive7',
+  },
+})
+const CalendarRow = styled('div', {
+  display: 'grid',
+  gridTemplateColumns: 'repeat(7, 1fr)',
 })
 
-const Day = styled('a', {
+const DaysContainer = styled('div', CalendarRow, {
+  '@tab': {
+    border: '1px solid $olive3',
+  },
+})
+
+const StyledDay = styled('button', {
   p: '1rem',
   border: 'none',
   borderTop: '1px solid $olive3',
@@ -245,6 +275,11 @@ const Day = styled('a', {
   placeItems: 'center',
   cursor: 'pointer',
   lineHeight: 1,
+  '-webkit-tap-highlight-color': 'transparent',
+
+  '&:focus': {
+    outlineColor: '$olive7',
+  },
 
   '@tab': {
     height: '6.25rem',
@@ -285,12 +320,6 @@ const Day = styled('a', {
     },
   },
 })
-
-const calendarRowStyle = css({
-  display: 'grid',
-  gridTemplateColumns: 'repeat(7, 1fr)',
-})
-const CalendarRow = styled('div', calendarRowStyle)
 
 const Weekday = styled('span', textStyles, {
   textAlign: 'center',
