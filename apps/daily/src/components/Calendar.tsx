@@ -37,13 +37,15 @@ function useCalendar() {
 export function Root({
   children,
   onChangeCurrentMonthDate,
+  defaultCurrentMonth: defaultValue,
 }: {
   children: ReactNode
   onChangeCurrentMonthDate?: (date: Date) => void
+  defaultCurrentMonth?: Date
 }) {
   const today = new Date()
-  const [currentMonthStartDate, setCurrentMonthStartDate] = useState(
-    startOfMonth(today)
+  const [currentMonthStartDate, setCurrentMonthStartDate] = useState(() =>
+    startOfMonth(defaultValue || today)
   )
 
   const state = useMemo(
