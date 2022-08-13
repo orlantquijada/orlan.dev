@@ -34,8 +34,6 @@ export default function PreviewToast({
     fetcher
   )
 
-  const loading = !daily && !error
-
   useEffect(() => {
     function hideOnEsc(event: KeyboardEvent) {
       if (event.code === 'Escape') setSelectedDate(undefined)
@@ -46,11 +44,12 @@ export default function PreviewToast({
     return () => window.removeEventListener('keydown', hideOnEsc)
   }, [setSelectedDate])
 
+  const loading = !daily && !error
+
   return (
     <AnimatePresence exitBeforeEnter>
       {selectedDate && (
         <Container
-          as={motion.div}
           variants={variants}
           // react magic: unmount component on `selectedDate` change
           key={selectedDate.toString()}
@@ -58,14 +57,6 @@ export default function PreviewToast({
           animate="show"
           exit="hide"
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-          css={{
-            $$padding: 'calc(var(--contentPaddingX) * 2)',
-            width: 'calc(100% - $$padding)',
-            position: 'fixed',
-            bottom: 'var(--contentPaddingY)',
-            right: '50%',
-            maxWidth: 'calc(var(--contentMaxWidth) - $$padding)',
-          }}
         >
           {loading ? (
             <LoadingTitleSkeleton />
@@ -96,7 +87,7 @@ const LoadingTitleSkeleton = styled('div', {
     'linear-gradient(270deg, $$skeletonColor, $$shineColor, $$skeletonColor)',
   backgroundSize: '400% 100%',
   width: '15rem',
-  height: '1rem',
+  height: '1.5rem',
   borderRadius: '0.5rem',
   animation: `${shimmer} 8s ease-in-out infinite`,
 })
@@ -115,7 +106,7 @@ function ToastTitle({ title }: Pick<Daily, 'title'>) {
 
 //////////////////////////////////////////////////////////////////
 
-const Container = styled('div', {
+const Container = styled(motion.div, {
   borderRadius: '0.5rem',
   border: '1px solid $olive6',
   display: 'flex',
@@ -124,6 +115,14 @@ const Container = styled('div', {
   gap: '1rem',
   px: '0.75rem',
   py: '0.5rem',
+
+  $$viewportPadding: 'calc(var(--contentPaddingX) * 2)',
+  width: 'calc(100% - $$viewportPadding)',
+  height: '3.25rem',
+  position: 'fixed',
+  bottom: 'var(--contentPaddingY)',
+  right: '50%',
+  maxWidth: 'calc(var(--contentMaxWidth) - $$viewportPadding)',
 
   '@tab': {
     px: '1rem',
