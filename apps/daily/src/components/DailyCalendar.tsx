@@ -117,7 +117,6 @@ export default function DailyCalendar({ month }: { month: Month }) {
           />
         </CalendarBody>
       </Calendar.Root>
-
       <PreviewToast
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -181,10 +180,12 @@ function Days({
 const Main = styled('main', {
   '--contentMaxWidth': '650px',
   '--contentPaddingX': '1rem',
+  '--contentPaddingY': '2rem',
   maxWidth: 'var(--contentMaxWidth)',
   mx: 'auto',
   px: 'var(--contentPaddingX)',
-  py: '2rem',
+  py: 'var(--contentPaddingY)',
+  minHeight: '100vh',
 
   display: 'flex',
   flexDirection: 'column',

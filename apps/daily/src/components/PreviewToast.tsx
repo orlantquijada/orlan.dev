@@ -14,9 +14,8 @@ import { shimmer, styled } from '@stitches.config'
 import { Months } from '@/lib/contentlayer'
 import { Text } from './Text'
 
-const VIEWPORT_PADDING = 32
 const variants: Variants = {
-  hide: { y: `calc(100% + ${VIEWPORT_PADDING}px)`, x: '50%' },
+  hide: { y: 'calc(100% + var(--contentPaddingY))', x: '50%' },
   show: { y: 0, x: '50%' },
 }
 
@@ -63,7 +62,7 @@ export default function PreviewToast({
             $$padding: 'calc(var(--contentPaddingX) * 2)',
             width: 'calc(100% - $$padding)',
             position: 'fixed',
-            bottom: VIEWPORT_PADDING,
+            bottom: 'var(--contentPaddingY)',
             right: '50%',
             maxWidth: 'calc(var(--contentMaxWidth) - $$padding)',
           }}
