@@ -142,9 +142,6 @@ function Days({
 }) {
   const today = new Date()
 
-  // eslint-disable-next-line no-console
-  console.log(today)
-
   return (
     <Calendar.Days includeAdjacentMonths>
       {(days) => (
