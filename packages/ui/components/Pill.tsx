@@ -14,11 +14,13 @@ export const pillStyles = css({
     size: {
       '1': {
         fontSize: '$xs',
-        p: '$1 $2',
+        py: '$1',
+        px: '$2',
       },
       '2': {
         fontSize: '$xs',
-        p: '$2 $3',
+        py: '$2',
+        px: '$3',
       },
     },
     variant: {
