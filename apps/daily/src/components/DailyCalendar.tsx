@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react'
 import { useRouter } from 'next/router'
-import { format, isSameDay, isToday, startOfToday } from 'date-fns'
+import { format, isSameDay } from 'date-fns'
 import {
   motion,
   MotionValue,
@@ -140,75 +140,43 @@ function Days({
   selectedDate: Date | undefined
   setSelectedDate: Dispatch<SetStateAction<Date | undefined>>
 }) {
-  return (
-    <>
-      <Calendar.Days includeAdjacentMonths>
-        {(days) => (
-          <motion.div
-            drag="x"
-            dragSnapToOrigin
-            dragConstraints={{ left: -10, right: 10 }}
-            onDragEnd={(_, info) => {
-              const offset = info.offset.x
-
-              if (offset > 0 && offset > NAVIGATION_OFFSET) prev()
-              else if (offset < 0 && offset < -NAVIGATION_OFFSET) next()
-            }}
-            style={{ x, opacity, paddingBlockEnd: '5rem' }}
-          >
-            <DaysContainer>
-              {days.map(({ value: day, isInCurrentMonth }) => (
-                <Day
-                  key={day.toString()}
-                  day={day}
-                  isInCurrentMonth={isInCurrentMonth}
-                  selectedDate={selectedDate}
-                  setSelectedDate={setSelectedDate}
-                />
-              ))}
-            </DaysContainer>
-          </motion.div>
-        )}
-      </Calendar.Days>
-      <div>{startOfToday().toString()}</div>
-    </>
-  )
-}
-
-function Day({
-  day,
-  isInCurrentMonth,
-  selectedDate,
-  setSelectedDate,
-}: {
-  day: Date
-  isInCurrentMonth: boolean
-  selectedDate: Date | undefined
-  setSelectedDate: Dispatch<SetStateAction<Date | undefined>>
-}) {
   const today = new Date()
 
-  return (
-    <StyledDay
-      onDragStart={(e) => e.preventDefault()}
-      onClick={() => setSelectedDate(day)}
-      selected={selectedDate && isSameDay(day, selectedDate)}
-      today={isToday(day)}
-      inCurrentMonth={isInCurrentMonth}
-    >
-      <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
-      <Text css={{ position: 'absolute', bottom: 0, right: 0 }}>
-        {isSameDay2(day, today) ? 't' : 'f'}
-      </Text>
-    </StyledDay>
-  )
-}
+  // eslint-disable-next-line no-console
+  console.log(today)
 
-function isSameDay2(day1: Date, day2: Date) {
   return (
-    day1.getDate() === day2.getDate() &&
-    day1.getMonth() === day2.getMonth() &&
-    day1.getFullYear() === day2.getFullYear()
+    <Calendar.Days includeAdjacentMonths>
+      {(days) => (
+        <motion.div
+          drag="x"
+          dragSnapToOrigin
+          dragConstraints={{ left: -10, right: 10 }}
+          onDragEnd={(_, info) => {
+            const offset = info.offset.x
+
+            if (offset > 0 && offset > NAVIGATION_OFFSET) prev()
+            else if (offset < 0 && offset < -NAVIGATION_OFFSET) next()
+          }}
+          style={{ x, opacity, paddingBlockEnd: '5rem' }}
+        >
+          <DaysContainer>
+            {days.map(({ value: day, isInCurrentMonth }) => (
+              <StyledDay
+                key={day.toString()}
+                onDragStart={(e) => e.preventDefault()}
+                onClick={() => setSelectedDate(day)}
+                selected={selectedDate && isSameDay(day, selectedDate)}
+                today={isSameDay(day, today)}
+                inCurrentMonth={isInCurrentMonth}
+              >
+                <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
+              </StyledDay>
+            ))}
+          </DaysContainer>
+        </motion.div>
+      )}
+    </Calendar.Days>
   )
 }
 
