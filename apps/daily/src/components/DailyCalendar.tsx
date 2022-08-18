@@ -6,7 +6,7 @@ import {
   useState,
 } from 'react'
 import { useRouter } from 'next/router'
-import { format, isSameDay, isToday } from 'date-fns'
+import { format, isSameDay } from 'date-fns'
 import {
   motion,
   MotionValue,
@@ -140,6 +140,8 @@ function Days({
   selectedDate: Date | undefined
   setSelectedDate: Dispatch<SetStateAction<Date | undefined>>
 }) {
+  const today = new Date()
+
   return (
     <Calendar.Days includeAdjacentMonths>
       {(days) => (
@@ -162,7 +164,7 @@ function Days({
                 onDragStart={(e) => e.preventDefault()}
                 onClick={() => setSelectedDate(day)}
                 selected={selectedDate && isSameDay(day, selectedDate)}
-                today={isToday(day)}
+                today={isSameDay(day, today)}
                 inCurrentMonth={isInCurrentMonth}
               >
                 <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
