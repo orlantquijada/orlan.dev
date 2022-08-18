@@ -158,16 +158,13 @@ function Days({
           >
             <DaysContainer>
               {days.map(({ value: day, isInCurrentMonth }) => (
-                <StyledDay
+                <Day
                   key={day.toString()}
-                  onDragStart={(e) => e.preventDefault()}
-                  onClick={() => setSelectedDate(day)}
-                  selected={selectedDate && isSameDay(day, selectedDate)}
-                  today={isToday(day)}
-                  inCurrentMonth={isInCurrentMonth}
-                >
-                  <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
-                </StyledDay>
+                  day={day}
+                  isInCurrentMonth={isInCurrentMonth}
+                  selectedDate={selectedDate}
+                  setSelectedDate={setSelectedDate}
+                />
               ))}
             </DaysContainer>
           </motion.div>
@@ -175,6 +172,43 @@ function Days({
       </Calendar.Days>
       <div>{startOfToday().toString()}</div>
     </>
+  )
+}
+
+function Day({
+  day,
+  isInCurrentMonth,
+  selectedDate,
+  setSelectedDate,
+}: {
+  day: Date
+  isInCurrentMonth: boolean
+  selectedDate: Date | undefined
+  setSelectedDate: Dispatch<SetStateAction<Date | undefined>>
+}) {
+  const today = new Date()
+
+  return (
+    <StyledDay
+      onDragStart={(e) => e.preventDefault()}
+      onClick={() => setSelectedDate(day)}
+      selected={selectedDate && isSameDay(day, selectedDate)}
+      today={isToday(day)}
+      inCurrentMonth={isInCurrentMonth}
+    >
+      <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
+      <Text css={{ position: 'absolute', bottom: 0, right: 0 }}>
+        {isSameDay2(day, today) ? 't' : 'f'}
+      </Text>
+    </StyledDay>
+  )
+}
+
+function isSameDay2(day1: Date, day2: Date) {
+  return (
+    day1.getDate() === day2.getDate() &&
+    day1.getMonth() === day2.getMonth() &&
+    day1.getFullYear() === day2.getFullYear()
   )
 }
 
