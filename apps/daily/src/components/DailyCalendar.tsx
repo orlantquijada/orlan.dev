@@ -4,6 +4,7 @@ import {
   useCallback,
   useRef,
   useState,
+  useEffect,
 } from 'react'
 import { useRouter } from 'next/router'
 import { format, isSameDay } from 'date-fns'
@@ -142,6 +143,14 @@ function Days({
 }) {
   const today = new Date()
 
+  const [jsLoaded, setJsLoaded] = useState(false)
+  useEffect(() => {
+    setJsLoaded(true)
+  }, [])
+
+  // eslint-disable-next-line no-console
+  console.log(jsLoaded)
+
   return (
     <Calendar.Days includeAdjacentMonths>
       {(days) => (
@@ -164,7 +173,7 @@ function Days({
                 onDragStart={(e) => e.preventDefault()}
                 onClick={() => setSelectedDate(day)}
                 selected={selectedDate && isSameDay(day, selectedDate)}
-                today={isSameDay(day, today)}
+                today={jsLoaded && isSameDay(day, today)}
                 inCurrentMonth={isInCurrentMonth}
               >
                 <span style={{ zIndex: 1 }}>{format(day, 'd')}</span>
