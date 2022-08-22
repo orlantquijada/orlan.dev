@@ -148,9 +148,6 @@ function Days({
     setJsLoaded(true)
   }, [])
 
-  // eslint-disable-next-line no-console
-  console.log(jsLoaded)
-
   return (
     <Calendar.Days includeAdjacentMonths>
       {(days) => (
