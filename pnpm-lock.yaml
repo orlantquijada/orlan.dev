@@ -30,7 +30,7 @@ importers:
       framer-motion: ^6.5.1
       next: 12.2.4
       next-contentlayer: ^0.2.6
-      next-pwa: 5.5.4
+      next-pwa: 5.6.0
       react: 18.2.0
       react-dom: 18.1.0
       remark-smartypants: ^2.0.0
@@ -40,13 +40,13 @@ importers:
     dependencies:
       '@radix-ui/react-icons': 1.1.1_react@18.2.0
       '@stitches/react': 1.2.8_react@18.2.0
-      contentlayer: 0.2.6
+      contentlayer: 0.2.6_date-fns@2.29.1
       date-fns: 2.29.1
       date-fns-tz: 1.3.6_date-fns@2.29.1
       framer-motion: 6.5.1_3cfkrkynzts6qfsozcm5ednswi
       next: 12.2.4_3cfkrkynzts6qfsozcm5ednswi
-      next-contentlayer: 0.2.6_52uqlhbop2hh2d3jtdubkm3jma
-      next-pwa: 5.5.4_next@12.2.4
+      next-contentlayer: 0.2.6_2wb43nuc6fhknbnybizldbj5ua
+      next-pwa: 5.6.0_next@12.2.4
       react: 18.2.0
       react-dom: 18.1.0_react@18.2.0
       remark-smartypants: 2.0.0
@@ -1324,12 +1324,37 @@ packages:
       - supports-color
     dev: false
 
+  /@contentlayer/cli/0.2.6_date-fns@2.29.1:
+    resolution: {integrity: sha512-+vml9srC+Y3pwi6vqDcqYSX7A2it6vwV5WZVe3hQfjx/TAGgA5sYwPHjbjdMiMWyqaI0keA3AQIkO03yAH97xw==}
+    dependencies:
+      '@contentlayer/core': 0.2.6_date-fns@2.29.1
+      '@contentlayer/utils': 0.2.6
+      clipanion: 3.2.0-rc.11
+      typanion: 3.9.0
+    transitivePeerDependencies:
+      - '@effect-ts/otel-node'
+      - date-fns
+      - markdown-wasm
+      - supports-color
+    dev: false
+
   /@contentlayer/client/0.2.6:
     resolution: {integrity: sha512-ONzIi18+gHzXqins8s+RpEa6AIBnBPXK5jb//q8v97ZF5DeVwjwj/Ci18/qNzfjBamhVb5ZdxaWjXhY/YNWPVQ==}
     dependencies:
       '@contentlayer/core': 0.2.6
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
+      - markdown-wasm
+      - supports-color
+    dev: false
+
+  /@contentlayer/client/0.2.6_date-fns@2.29.1:
+    resolution: {integrity: sha512-ONzIi18+gHzXqins8s+RpEa6AIBnBPXK5jb//q8v97ZF5DeVwjwj/Ci18/qNzfjBamhVb5ZdxaWjXhY/YNWPVQ==}
+    dependencies:
+      '@contentlayer/core': 0.2.6_date-fns@2.29.1
+    transitivePeerDependencies:
+      - '@effect-ts/otel-node'
+      - date-fns
       - markdown-wasm
       - supports-color
     dev: false
@@ -1365,6 +1390,38 @@ packages:
       - supports-color
     dev: false
 
+  /@contentlayer/core/0.2.6_date-fns@2.29.1:
+    resolution: {integrity: sha512-HStutEpmVdRCBZPa/KgnuZYoLCyP2hT+C8KVMGUlehU35Y4FsgyaCHyiCY8LB2Ezr3rv2tSbwUug3SWj9RNgYg==}
+    peerDependencies:
+      date-fns: 2.x
+      markdown-wasm: 1.x
+    peerDependenciesMeta:
+      date-fns:
+        optional: true
+      esbuild:
+        optional: true
+      markdown-wasm:
+        optional: true
+    dependencies:
+      '@contentlayer/utils': 0.2.6
+      camel-case: 4.1.2
+      comment-json: 4.2.2
+      date-fns: 2.29.1
+      esbuild: 0.14.42
+      gray-matter: 4.0.3
+      mdx-bundler: 9.0.1_esbuild@0.14.42
+      rehype-stringify: 9.0.3
+      remark-frontmatter: 4.0.1
+      remark-parse: 10.0.1
+      remark-rehype: 10.1.0
+      source-map-support: 0.5.21
+      type-fest: 2.13.0
+      unified: 10.1.2
+    transitivePeerDependencies:
+      - '@effect-ts/otel-node'
+      - supports-color
+    dev: false
+
   /@contentlayer/source-files/0.2.6:
     resolution: {integrity: sha512-reTqrBJi2aclzF6OuMyxvQfz25J4T7ho9YWFoVIdPKvUoFcTWiUi9YA/IfxmV2h0NI4MfEfWqLiIy4BQASgK8g==}
     peerDependenciesMeta:
@@ -1372,6 +1429,31 @@ packages:
         optional: true
     dependencies:
       '@contentlayer/core': 0.2.6
+      '@contentlayer/utils': 0.2.6
+      chokidar: 3.5.3
+      date-fns: 2.29.1
+      date-fns-tz: 1.3.6_date-fns@2.29.1
+      fast-glob: 3.2.11
+      gray-matter: 4.0.3
+      micromatch: 4.0.5
+      ts-pattern: 4.0.2
+      unified: 10.1.2
+      yaml: 1.10.2
+    transitivePeerDependencies:
+      - '@effect-ts/otel-node'
+      - markdown-wasm
+      - supports-color
+    dev: false
+
+  /@contentlayer/source-files/0.2.6_date-fns@2.29.1:
+    resolution: {integrity: sha512-reTqrBJi2aclzF6OuMyxvQfz25J4T7ho9YWFoVIdPKvUoFcTWiUi9YA/IfxmV2h0NI4MfEfWqLiIy4BQASgK8g==}
+    peerDependencies:
+      date-fns: 2.x
+    peerDependenciesMeta:
+      date-fns:
+        optional: true
+    dependencies:
+      '@contentlayer/core': 0.2.6_date-fns@2.29.1
       '@contentlayer/utils': 0.2.6
       chokidar: 3.5.3
       date-fns: 2.29.1
@@ -3104,6 +3186,24 @@ packages:
       '@contentlayer/utils': 0.2.6
     transitivePeerDependencies:
       - '@effect-ts/otel-node'
+      - markdown-wasm
+      - supports-color
+    dev: false
+
+  /contentlayer/0.2.6_date-fns@2.29.1:
+    resolution: {integrity: sha512-nBvUipLxD5HLG++17/Tluz7In42VLiRTZCpRkLa2zsOVmu9v5t2AsiOTERRete+k4P7uaqbRs+mSI3zy/OHLiw==}
+    engines: {node: '>=14.18'}
+    hasBin: true
+    requiresBuild: true
+    dependencies:
+      '@contentlayer/cli': 0.2.6_date-fns@2.29.1
+      '@contentlayer/client': 0.2.6_date-fns@2.29.1
+      '@contentlayer/core': 0.2.6_date-fns@2.29.1
+      '@contentlayer/source-files': 0.2.6_date-fns@2.29.1
+      '@contentlayer/utils': 0.2.6
+    transitivePeerDependencies:
+      - '@effect-ts/otel-node'
+      - date-fns
       - markdown-wasm
       - supports-color
     dev: false
@@ -5587,6 +5687,26 @@ packages:
   /natural-compare/1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
 
+  /next-contentlayer/0.2.6_2wb43nuc6fhknbnybizldbj5ua:
+    resolution: {integrity: sha512-4k1mkW7P0vpvJ/XngJH23ZJAupKrhIS44y8eoGRQF8mEX+G+IhLlI7T95BsxB8U6I8JYOA2L6m8yxol4P6CCLQ==}
+    peerDependencies:
+      next: ^12
+      react: '*'
+      react-dom: '*'
+    dependencies:
+      '@contentlayer/core': 0.2.6_date-fns@2.29.1
+      '@contentlayer/utils': 0.2.6
+      next: 12.2.4_3cfkrkynzts6qfsozcm5ednswi
+      react: 18.2.0
+      react-dom: 18.1.0_react@18.2.0
+      rxjs: 7.5.5
+    transitivePeerDependencies:
+      - '@effect-ts/otel-node'
+      - date-fns
+      - markdown-wasm
+      - supports-color
+    dev: false
+
   /next-contentlayer/0.2.6_45agcmq65snpvuwd4zeycnaysa:
     resolution: {integrity: sha512-4k1mkW7P0vpvJ/XngJH23ZJAupKrhIS44y8eoGRQF8mEX+G+IhLlI7T95BsxB8U6I8JYOA2L6m8yxol4P6CCLQ==}
     peerDependencies:
@@ -5606,27 +5726,8 @@ packages:
       - supports-color
     dev: false
 
-  /next-contentlayer/0.2.6_52uqlhbop2hh2d3jtdubkm3jma:
-    resolution: {integrity: sha512-4k1mkW7P0vpvJ/XngJH23ZJAupKrhIS44y8eoGRQF8mEX+G+IhLlI7T95BsxB8U6I8JYOA2L6m8yxol4P6CCLQ==}
-    peerDependencies:
-      next: ^12
-      react: '*'
-      react-dom: '*'
-    dependencies:
-      '@contentlayer/core': 0.2.6
-      '@contentlayer/utils': 0.2.6
-      next: 12.2.4_3cfkrkynzts6qfsozcm5ednswi
-      react: 18.2.0
-      react-dom: 18.1.0_react@18.2.0
-      rxjs: 7.5.5
-    transitivePeerDependencies:
-      - '@effect-ts/otel-node'
-      - markdown-wasm
-      - supports-color
-    dev: false
-
-  /next-pwa/5.5.4_next@12.2.4:
-    resolution: {integrity: sha512-EgB2MQWGR8oZDzY6US+/D0LOCUhPZYCgeqRVBYDxQWNi0N6XfQOoZPw2COIrg/eMt/rB0M+/mquhAQACs5v4Ag==}
+  /next-pwa/5.6.0_next@12.2.4:
+    resolution: {integrity: sha512-XV8g8C6B7UmViXU8askMEYhWwQ4qc/XqJGnexbLV68hzKaGHZDMtHsm2TNxFcbR7+ypVuth/wwpiIlMwpRJJ5A==}
     peerDependencies:
       next: '>=9.0.0'
     dependencies:
