@@ -29,15 +29,14 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse) {
     },
   })
 
-  res.setHeader(
-    'Cache-Control',
-    'public, s-maxage=604800, stale-while-revalidate=86400'
-  )
-
-  if (!daily.length)
+  if (daily.length) {
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=604800, stale-while-revalidate=86400'
+    )
+    res.status(200).json(daily[0])
+  } else
     res
       .status(404)
       .json(`No entry found for ${capitalizedMonth}, ${parsedDay}.`)
-
-  res.status(200).json(daily[0])
 }
