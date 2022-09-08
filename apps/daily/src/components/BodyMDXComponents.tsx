@@ -16,7 +16,8 @@ const P = styled('p', textStyles, {
 })
 
 const BlockQuote = styled('blockquote', {
-  m: '1.5rem',
+  ml: '1.5rem',
+  my: '2rem',
   mr: '1rem',
   position: 'relative',
 
