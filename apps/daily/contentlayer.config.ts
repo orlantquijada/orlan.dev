@@ -13,7 +13,13 @@ export const Daily = defineDocumentType(() => ({
     },
     author: {
       type: 'enum',
-      options: ['Marcus Aurelius', 'Seneca', 'Epictetus', 'Musonius Rufus'],
+      options: [
+        'Marcus Aurelius',
+        'Seneca',
+        'Epictetus',
+        'Musonius Rufus',
+        'Diogenes Laertius',
+      ],
       required: true,
     },
     book: {
