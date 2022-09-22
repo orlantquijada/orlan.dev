@@ -154,6 +154,7 @@ const Action = styled('a', {
   placeItems: 'center',
   transition: 'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
   fontSize: '$base',
+  '-webkit-tap-highlight-color': 'transparent',
 
   '&:focus': {
     outline: 'none',
