@@ -14,9 +14,13 @@ import { shimmer, styled } from '@stitches.config'
 import { Months } from '@/lib/contentlayer'
 import { Text } from './Text'
 
+// const variants: Variants = {
+//   hide: { y: 'calc(100% + var(--contentPaddingY))', x: '50%' },
+//   show: { y: 0, x: '50%' },
+// }
 const variants: Variants = {
-  hide: { y: 'calc(100% + var(--contentPaddingY))', x: '50%' },
-  show: { y: 0, x: '50%' },
+  hide: { y: '30%', x: '50%', opacity: 0 },
+  show: { y: 0, x: '50%', opacity: 1 },
 }
 
 export default function PreviewToast({
