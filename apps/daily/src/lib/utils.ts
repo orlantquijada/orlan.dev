@@ -1,3 +1,5 @@
+import { Daily } from 'contentlayer/generated'
+
 export type FilterFalseProps<K extends Record<string, boolean | undefined>> =
   NonNullable<
     {
@@ -32,6 +34,23 @@ export function pickProps<
 
 export function capitalize<T extends string>(str: T) {
   return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>
+}
+
+export function getSocialMediaImage(daily: Daily) {
+  const { author, title, month, day } = daily
+  const params = new URLSearchParams({
+    preset: 'smhutch',
+    logo: '',
+    domain: author,
+    title: title.raw,
+    subtitle: `${month} ${day}`,
+    bgOverlay: 'rgba(252,253,252,1)',
+  })
+
+  const api = 'https://i.microlink.io/'
+  const cardUrl = `https://cards.microlink.io/?${params}`
+
+  return `${api}${encodeURIComponent(cardUrl)}`
 }
 
 export type NonEmptyArray<T> = [T, ...T[]]
