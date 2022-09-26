@@ -1,3 +1,5 @@
+import Head from 'next/head'
+
 type Props = {
   title: string
   description: string
@@ -10,9 +12,11 @@ export default function MetaTags(props: Props) {
   const url = `${process.env.VERCEL_URL || 'localhost:3000'}${props.url}`
 
   return (
-    <>
+    <Head>
+      <link rel="icon" href="/favicon.ico" />
+
       {/* Primary Meta Tags  */}
-      <title>{title}</title>
+      <title key="title">{title}</title>
       <meta name="title" content={title} />
       <meta name="description" content={description} />
       <meta property="image" content={image} />
@@ -31,6 +35,6 @@ export default function MetaTags(props: Props) {
       <meta property="twitter:title" content={title} />
       <meta property="twitter:description" content={description} />
       <meta property="twitter:image" content={image} />
-    </>
+    </Head>
   )
 }
