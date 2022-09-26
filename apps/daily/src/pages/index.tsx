@@ -2,7 +2,6 @@ import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next'
-import Head from 'next/head'
 import { Daily } from 'contentlayer/generated'
 
 import { getDailyToday } from '@/lib/api'
@@ -18,15 +17,12 @@ export default function Home({
 
   return (
     <>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <MetaTags
-          description={daily.quote.raw}
-          title={daily.title.raw}
-          image={image}
-          url="/"
-        />
-      </Head>
+      <MetaTags
+        description={daily.quote.raw}
+        title={daily.title.raw}
+        image={image}
+        url="/"
+      />
       <DailyDetail daily={daily} />
     </>
   )

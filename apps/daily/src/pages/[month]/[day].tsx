@@ -1,5 +1,4 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
-import Head from 'next/head'
 import { allDailies, type Daily } from 'contentlayer/generated'
 import { Month } from 'src/lib/contentlayer'
 
@@ -16,15 +15,12 @@ export default function EntryDetailPage({
 
   return (
     <>
-      <Head>
-        <link rel="icon" href="/favicon.ico" />
-        <MetaTags
-          description={daily.quote.raw}
-          title={daily.title.raw}
-          image={image}
-          url={`/${daily.month}/${daily.day}`}
-        />
-      </Head>
+      <MetaTags
+        description={daily.quote.raw}
+        title={daily.title.raw}
+        image={image}
+        url={`/${daily.month}/${daily.day}`}
+      />
       <DailyDetail daily={daily} />
     </>
   )

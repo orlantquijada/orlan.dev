@@ -1,5 +1,4 @@
 import { type GetStaticPaths, GetStaticProps } from 'next'
-import Head from 'next/head'
 import { useRouter } from 'next/router'
 
 import { Months, MonthSubjectsMap, type Month } from '@/lib/contentlayer'
@@ -20,19 +19,12 @@ export default function MonthsNavPage() {
 
   return (
     <>
-      <Head>
-        <title>
-          {currentMonth} — {subject}
-        </title>
-        <meta name="description" content={subject} />
-        <link rel="icon" href="/favicon.ico" />
-        <MetaTags
-          description={subject}
-          title={`${currentMonth} — ${subject}`}
-          image={image}
-          url={`/${currentMonth}`}
-        />
-      </Head>
+      <MetaTags
+        description={subject}
+        title={`${currentMonth} — ${subject}`}
+        image={image}
+        url={`/${currentMonth}`}
+      />
       <DailyCalendar month={currentMonth} />
     </>
   )
