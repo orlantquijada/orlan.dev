@@ -19,6 +19,7 @@ export const Daily = defineDocumentType(() => ({
         'Epictetus',
         'Musonius Rufus',
         'Diogenes Laertius',
+        'Zeno',
       ],
       required: true,
     },
