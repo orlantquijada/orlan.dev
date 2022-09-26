@@ -36,19 +36,36 @@ export function capitalize<T extends string>(str: T) {
   return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>
 }
 
-export function getSocialMediaImage(daily: Daily) {
-  const { author, title, month, day } = daily
-  const params = new URLSearchParams({
+export function getDetailSocialMediaImage<TType extends 'detail' | 'month'>(
+  type: TType,
+  data: TType extends 'detail' ? Daily : Pick<Daily, 'month' | 'monthSubject'>
+) {
+  let params: Record<string, string> = {}
+  if (type === 'detail' && 'author' in data) {
+    const { author, title, month, day } = data
+    params = {
+      domain: author,
+      title: title.raw,
+      subtitle: `${month} ${day}`,
+    }
+  } else {
+    const { month, monthSubject } = data
+    params = {
+      domain: capitalize(month),
+      title: monthSubject,
+      subtitle: '',
+    }
+  }
+
+  const URLParams = new URLSearchParams({
     preset: 'smhutch',
     logo: '',
-    domain: author,
-    title: title.raw,
-    subtitle: `${month} ${day}`,
     bgOverlay: 'rgba(252,253,252,1)',
+    ...params,
   })
 
   const api = 'https://i.microlink.io/'
-  const cardUrl = `https://cards.microlink.io/?${params}`
+  const cardUrl = `https://cards.microlink.io/?${URLParams}`
 
   return `${api}${encodeURIComponent(cardUrl)}`
 }

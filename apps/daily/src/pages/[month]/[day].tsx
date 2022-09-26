@@ -1,28 +1,29 @@
 import type { GetStaticProps, InferGetStaticPropsType } from 'next'
+import Head from 'next/head'
 import { allDailies, type Daily } from 'contentlayer/generated'
 import { Month } from 'src/lib/contentlayer'
-import DailyDetail from '@/components/DailyDetail'
-import Head from 'next/head'
+
 import { getDailies } from '@/lib/api'
-import { capitalize, getSocialMediaImage } from '@/lib/utils'
+import { capitalize, getDetailSocialMediaImage } from '@/lib/utils'
+
+import DailyDetail from '@/components/DailyDetail'
+import MetaTags from '@/components/MetaTags'
 
 export default function EntryDetailPage({
   daily,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const image = getSocialMediaImage(daily)
+  const image = getDetailSocialMediaImage('detail', daily)
 
   return (
     <>
       <Head>
-        <title>{daily.title.raw}</title>
-        <meta name="description" content={daily.quote.raw} />
         <link rel="icon" href="/favicon.ico" />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="image" content={image} />
-        <meta itemProp="image" content={image} />
-        <meta name="twitter:image" content={image} />
-        <meta property="og:image" content={image} />
+        <MetaTags
+          description={daily.quote.raw}
+          title={daily.title.raw}
+          image={image}
+          url={`/${daily.month}/${daily.day}`}
+        />
       </Head>
       <DailyDetail daily={daily} />
     </>
