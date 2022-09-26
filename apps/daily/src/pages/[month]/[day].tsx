@@ -19,7 +19,7 @@ export default function EntryDetailPage({
         description={daily.quote.raw}
         title={daily.title.raw}
         image={image}
-        url={`/${daily.month}/${daily.day}`}
+        url={`/${daily.month.toLowerCase()}/${daily.day}`}
       />
       <DailyDetail daily={daily} />
     </>

@@ -21,7 +21,7 @@ export default function Home({
         description={daily.quote.raw}
         title={daily.title.raw}
         image={image}
-        url="/"
+        url=""
       />
       <DailyDetail daily={daily} />
     </>
