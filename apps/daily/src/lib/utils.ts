@@ -51,7 +51,7 @@ export function getDetailSocialMediaImage<TType extends 'detail' | 'month'>(
   } else {
     const { month, monthSubject } = data
     params = {
-      domain: capitalize(month),
+      domain: month,
       title: monthSubject,
       subtitle: '',
     }
