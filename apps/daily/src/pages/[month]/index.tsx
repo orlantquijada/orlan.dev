@@ -10,10 +10,10 @@ import MetaTags from '@/components/MetaTags'
 export default function MonthsNavPage() {
   const { query } = useRouter()
   const month = query.month as Lowercase<Month>
-  const currentMonth = capitalize(month)
-  const subject = MonthSubjectsMap[currentMonth]
+  const capitalizedMonth = capitalize(month)
+  const subject = MonthSubjectsMap[capitalizedMonth]
   const image = getDetailSocialMediaImage('month', {
-    month,
+    month: capitalizedMonth,
     monthSubject: subject,
   })
 
@@ -21,11 +21,11 @@ export default function MonthsNavPage() {
     <>
       <MetaTags
         description={subject}
-        title={`${currentMonth} — ${subject}`}
+        title={`${capitalizedMonth} — ${subject}`}
         image={image}
-        url={`/${currentMonth}`}
+        url={`/${month}`}
       />
-      <DailyCalendar month={currentMonth} />
+      <DailyCalendar month={capitalizedMonth} />
     </>
   )
 }
