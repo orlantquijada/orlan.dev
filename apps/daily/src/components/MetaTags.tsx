@@ -12,7 +12,7 @@ export default function MetaTags(props: Props) {
   return (
     <>
       {/* Primary Meta Tags  */}
-      <title>Meta Tags — Preview, Edit and Generate</title>
+      <title>{title}</title>
       <meta name="title" content={title} />
       <meta name="description" content={description} />
       <meta property="image" content={image} />
