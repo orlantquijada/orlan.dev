@@ -12,6 +12,7 @@ const P = styled('p', textStyles, {
     lineHeight: '85%',
     width: '.7em',
     fontSize: '325%',
+    fontStyle: 'initial',
   },
 })
 
