@@ -14,20 +14,40 @@ const { title } = Astro.props
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link
+      rel="preload"
+      href="/fonts/Inter-Medium.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Inter-Medium.woff"
+      as="font"
+      type="font/woff"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
     <slot />
     <style is:global>
       /* add global styles + reset */
+      @font-face {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-display: swap;
+        src: url('/fonts/Inter-Medium.woff2') format('woff2'),
+          url('/fonts/Inter-Medium.woff') format('woff');
+      }
+
       :root {
       }
-      html {
-        font-family: system-ui, sans-serif;
-        background: white;
-      }
-      code {
-        font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-          DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
+      html,
+      body,
+      main {
+        height: 100%;
       }
     </style>
   </body>
