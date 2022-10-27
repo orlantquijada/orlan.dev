@@ -9,6 +9,9 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev --parallel",
+    "dev:d": "turbo run dev --filter=daily",
+    "dev:p": "turbo run dev --filter=portfolio",
+    "dev:p2": "turbo run dev --filter=portfolio-2.0",
     "lint": "turbo run lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\"",
     "prepare": "husky install"
