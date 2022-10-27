@@ -1,0 +1,58 @@
+---
+import Wave from './Wave.astro'
+---
+
+<div
+  class="flex flex-col items-start gap-12 h-fit dark:text-white w-full max-w-screen-md px-6 mx-auto z-10"
+>
+  <h2 class="text-2xl">
+    I'm <span class="font-redaction italic"><Wave title="Orlan" /></span> — A product-focused
+    Fullstack Engineer based in the <a
+      href="https://en.wikipedia.org/wiki/Philippines"
+      target="_blank"
+      class="hover:underline">🇵🇭Philippines</a
+    >.
+  </h2>
+  <p class="text-2xl">
+    You can learn more about me by reading
+    <a href="/blog" class="link">my blog</a>, perusing my personal wiki of <u
+      class="link">public notes</u
+    > and <u class="link">bookmarks.</u>
+  </p>
+  <button
+    class="transition-colors underline hover:no-underline rounded-full text-2xl px-3 -mx-3 h-10 hover:bg-[var(--accent)] hover:text-[var(--selection-color)]"
+    >Say hi</button
+  >
+</div>
+
+<style>
+  svg {
+    height: 32px;
+    width: 32px;
+  }
+  path {
+    fill: white;
+  }
+  button,
+  a,
+  u {
+    text-underline-offset: 4px;
+  }
+
+  button {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .link {
+    text-decoration: underline;
+  }
+
+  .link:hover,
+  .link:focus-within {
+    color: var(--selection-color);
+    background-color: var(--accent);
+    text-decoration-line: underline;
+    text-decoration-style: wavy;
+    outline: none;
+  }
+</style>
