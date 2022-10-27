@@ -1,4 +1,8 @@
 ---
+import Footer from '../components/Footer.astro'
+import Header from '../components/Header.astro'
+import BaseLayout from './BaseLayout.astro'
+
 export interface Props {
   title: string
 }
@@ -6,49 +10,74 @@ export interface Props {
 const { title } = Astro.props
 ---
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <link
-      rel="preload"
-      href="/fonts/Inter-Medium.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/Inter-Medium.woff"
-      as="font"
-      type="font/woff"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body>
+<BaseLayout title={title}>
+  <main class="grid place-items-center">
+    <div class="gradient"></div>
+    <Header />
     <slot />
-    <style is:global>
-      /* add global styles + reset */
-      @font-face {
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 500;
-        font-display: swap;
-        src: url('/fonts/Inter-Medium.woff2') format('woff2'),
-          url('/fonts/Inter-Medium.woff') format('woff');
-      }
+    <Footer />
+  </main>
+</BaseLayout>
 
-      :root {
-      }
-      html,
-      body,
-      main {
-        height: 100%;
-      }
-    </style>
-  </body>
-</html>
+<style>
+  main {
+    padding-block: 150px;
+
+    height: 100%;
+    width: 100%;
+  }
+  main::before,
+  main::after,
+  .gradient {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    inset: 0;
+  }
+  main::before {
+    background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, var(--gray1) 100%);
+    content: '';
+    z-index: -1;
+  }
+  main::after {
+    z-index: -2;
+    background-image: url('/grid.svg');
+    opacity: 0.4;
+    content: '';
+    filter: invert(1);
+  }
+  @media (prefers-color-scheme: dark) {
+    main::after {
+      opacity: 0.2;
+      filter: unset;
+    }
+  }
+  .gradient {
+    /* might be good to tweek */
+    /* mix-blend-mode: difference; */
+    /* mix-blend-mode: hard-light; */
+
+    content: '';
+    z-index: -3;
+    width: 100%;
+    height: 100%;
+    filter: saturate(150%);
+    opacity: 0.2;
+    background-image: radial-gradient(
+        at 27% 37%,
+        hsla(215, 98%, 61%, 1) 0px,
+        transparent 50%
+      ),
+      radial-gradient(at 97% 21%, hsla(256, 98%, 72%, 1) 0px, transparent 50%),
+      radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
+      radial-gradient(at 10% 29%, hsla(133, 96%, 67%, 1) 0px, transparent 50%),
+      radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
+      radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
+      radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+  }
+  @media (prefers-color-scheme: dark) {
+    .gradient {
+      opacity: 0.1;
+    }
+  }
+</style>
