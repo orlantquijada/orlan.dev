@@ -7,7 +7,7 @@ import { type Daily } from 'contentlayer/generated'
 
 import { headerTitleComponents } from './HeaderTitleMDXComponents'
 import { titleComponents } from './TitleMDXComponents'
-import { quoteComponents } from './QuoteMDXComponents'
+import { Quote, quoteComponents } from './QuoteMDXComponents'
 import { bodyComponents } from './BodyMDXComponents'
 import { Text } from '@/components/Text'
 import { css, fadeIn, styled } from '@stitches.config'
@@ -20,7 +20,7 @@ const HIDDEN_OPACITY = 0
 export default function DailyDetail({ daily }: Props) {
   const Title = useMDXComponent(daily.title.code)
   const Body = useMDXComponent(daily.body.code)
-  const Quote = useMDXComponent(daily.quote.code)
+  const QuoteMDX = useMDXComponent(daily.quote.code)
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const wrapperRef = useRef<any>()
@@ -56,7 +56,9 @@ export default function DailyDetail({ daily }: Props) {
           <Text>{dateFormat}</Text>
           <Title components={titleComponents} />
         </Box>
-        <Quote components={quoteComponents} />
+        <Quote>
+          <QuoteMDX components={quoteComponents} />
+        </Quote>
         <Text
           as="address"
           css={{ alignSelf: 'flex-end', mt: '0.5rem', fontStyle: 'normal' }}
