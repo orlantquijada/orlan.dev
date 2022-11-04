@@ -5,7 +5,7 @@ import { Icon } from 'astro-icon'
 <footer
   class="fixed bottom-10 left-0 right-0 flex justify-end z-10 px-6 max-w-screen-md mx-auto"
 >
-  <ul class="flex gap-6">
+  <ul class="flex gap-6 md:gap-8">
     <li><Icon name="github" /></li>
     <li><Icon name="twitter" /></li>
     <li><Icon name="email" /></li>
@@ -14,7 +14,6 @@ import { Icon } from 'astro-icon'
 
 <style>
   svg {
-    width: 16px;
-    height: 16px;
+    @apply w-4 h-4 md:w-5 md:h-5;
   }
 </style>

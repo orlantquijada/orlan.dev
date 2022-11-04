@@ -20,6 +20,7 @@ const characters = title.split('')
     display: inline-block;
     animation: 0.8s ease-in-out calc(var(--character) * -0.1s) infinite
       alternate both wave;
+    will-change: transform;
   }
 
   @keyframes wave {

@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ['Inter', ...defaultTheme.fontFamily.sans],
-        redaction: ['Redaction10', ...defaultTheme.fontFamily.sans],
+        redaction: ['Redaction', ...defaultTheme.fontFamily.sans],
       },
     },
   },
