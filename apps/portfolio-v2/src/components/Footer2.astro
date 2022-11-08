@@ -5,7 +5,7 @@ import LogoIcon from './LogoIcon.astro'
 <footer
   class="flex flex-col gap-4 justify-center px-6 pb-24 max-w-screen-md mx-auto"
 >
-  <div class="w-full h-4 overflow-clip mb-6 divider dark:filter-none"></div>
+  <div class="w-full h-4 overflow-clip mb-6 divider"></div>
 
   <ul class="flex gap-3">
     <li>
@@ -44,5 +44,9 @@ import LogoIcon from './LogoIcon.astro'
 
   .divider {
     background: url('/waves2.svg');
+  }
+
+  html.dark .divider {
+    filter: unset;
   }
 </style>

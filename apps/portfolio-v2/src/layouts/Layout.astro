@@ -47,8 +47,7 @@ const { title } = Astro.props
     content: '';
     filter: invert(1);
   }
-  .dark,
-  main::after {
+  html.dark main::after {
     filter: unset;
   }
 
@@ -75,8 +74,7 @@ const { title } = Astro.props
       radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
       radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
   }
-  .dark,
-  .gradient {
+  html.dark .gradient {
     opacity: 0.1;
   }
 </style>
