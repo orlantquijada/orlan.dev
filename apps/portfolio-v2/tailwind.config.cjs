@@ -1,7 +1,7 @@
-/** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line @typescript-eslint/no-var-requires, no-undef
 const defaultTheme = require('tailwindcss/defaultTheme')
 
+/** @type {import('tailwindcss').Config} */
 // eslint-disable-next-line no-undef
 module.exports = {
   content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
@@ -13,5 +13,6 @@ module.exports = {
       },
     },
   },
+  darkMode: 'class',
   plugins: [],
 }
