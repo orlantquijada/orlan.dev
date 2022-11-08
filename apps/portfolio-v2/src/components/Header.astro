@@ -1,8 +1,18 @@
 ---
+import Button from './Button.astro'
 ---
 
-<header class="fixed top-10 left-0 right-0 z-10 px-6 max-w-screen-md mx-auto">
+<header
+  class="fixed top-10 left-0 right-0 z-10 px-6 max-w-screen-md mx-auto flex justify-between items-center"
+>
   <a href="/">
     <h1 class="dark:text-white md:text-lg font-medium">Orlan Quijada</h1>
   </a>
+  <Button className="text-sm text-[var(--gray12)] flex items-center gap-3">
+    <svg viewBox="0 0 24 24" class="w-[1em] h-[1em] stroke-[var(--gray10)]">
+      <path d="M1 8H23" stroke-width="2" stroke-linecap="round"></path>
+      <path d="M1 16H23" stroke-width="2" stroke-linecap="round"></path>
+    </svg>
+    Menu
+  </Button>
 </header>
