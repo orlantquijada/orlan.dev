@@ -112,17 +112,27 @@ importers:
 
   apps/portfolio-v2:
     specifiers:
+      '@astrojs/react': ^1.2.2
       '@astrojs/tailwind': ^2.1.1
+      '@types/react': ^18.0.21
+      '@types/react-dom': ^18.0.6
       astro: ^1.5.1
       astro-compress: 1.1.1
       astro-icon: '0.8'
       eslint-config-custom: workspace:*
+      react: ^18.0.0
+      react-dom: ^18.0.0
       svgo: '2.8'
       tailwindcss: ^3.0.24
     dependencies:
+      '@astrojs/react': 1.2.2_dkhcq44b2spykuwif5itkslvtq
       '@astrojs/tailwind': 2.1.1_tailwindcss@3.2.0
+      '@types/react': 18.0.25
+      '@types/react-dom': 18.0.8
       astro: 1.5.1
       astro-icon: 0.8.0
+      react: 18.2.0
+      react-dom: 18.1.0_react@18.2.0
       tailwindcss: 3.2.0
     devDependencies:
       astro-compress: 1.1.1
@@ -270,6 +280,25 @@ packages:
       prismjs: 1.29.0
     dev: false
 
+  /@astrojs/react/1.2.2_dkhcq44b2spykuwif5itkslvtq:
+    resolution: {integrity: sha512-ab9fYvzkC74J7N+M3DWQuZgwu7sYjW0aLO3sEAdCX/jZZz+0BhrqS8m9QjtGJyQK/niF4tgJjpPfadopxKc56g==}
+    engines: {node: ^14.18.0 || >=16.12.0}
+    peerDependencies:
+      '@types/react': ^17.0.50 || ^18.0.21
+      '@types/react-dom': ^17.0.17 || ^18.0.6
+      react: ^17.0.2 || ^18.0.0
+      react-dom: ^17.0.2 || ^18.0.0
+    dependencies:
+      '@babel/core': 7.19.0
+      '@babel/plugin-transform-react-jsx': 7.19.0_@babel+core@7.19.0
+      '@types/react': 18.0.25
+      '@types/react-dom': 18.0.8
+      react: 18.2.0
+      react-dom: 18.1.0_react@18.2.0
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@astrojs/tailwind/2.1.1_tailwindcss@3.2.0:
     resolution: {integrity: sha512-Il6FODtu4AlwadleJS3VWmAOOmeCDKvAo3iof46p4iHtdeWLClyuH9kJXWrlzCS+QOfBSIfXxvwPJ3cbK5COlA==}
     peerDependencies:
@@ -373,7 +402,7 @@ packages:
       '@babel/compat-data': 7.19.0
       '@babel/core': 7.19.0
       '@babel/helper-validator-option': 7.18.6
-      browserslist: 4.21.2
+      browserslist: 4.21.4
       semver: 6.3.0
 
   /@babel/helper-create-class-features-plugin/7.18.9_@babel+core@7.19.0:
@@ -2659,13 +2688,18 @@ packages:
 
   /@types/prop-types/15.7.5:
     resolution: {integrity: sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==}
-    dev: true
 
   /@types/react-dom/18.0.5:
     resolution: {integrity: sha512-OWPWTUrY/NIrjsAPkAk1wW9LZeIjSvkXRhclsFO8CZcZGCOg2G0YZy4ft+rOyYxy8B7ui5iZzi9OkDebZ7/QSA==}
     dependencies:
       '@types/react': 18.0.10
     dev: true
+
+  /@types/react-dom/18.0.8:
+    resolution: {integrity: sha512-C3GYO0HLaOkk9dDAz3Dl4sbe4AKUGTCfFIZsz3n/82dPNN8Du533HzKatDxeUYWu24wJgMP1xICqkWk1YOLOIw==}
+    dependencies:
+      '@types/react': 18.0.25
+    dev: false
 
   /@types/react/18.0.10:
     resolution: {integrity: sha512-dIugadZuIPrRzvIEevIu7A1smqOAjkSMv8qOfwPt9Ve6i6JT/FQcCHyk2qIAxwsQNKZt5/oGR0T4z9h2dXRAkg==}
@@ -2674,6 +2708,14 @@ packages:
       '@types/scheduler': 0.16.2
       csstype: 3.1.0
     dev: true
+
+  /@types/react/18.0.25:
+    resolution: {integrity: sha512-xD6c0KDT4m7n9uD4ZHi02lzskaiqcBxf4zi+tXZY98a04wvc0hi/TcCPC2FOESZi51Nd7tlUeOJY8RofL799/g==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.2
+      csstype: 3.1.0
+    dev: false
 
   /@types/resolve/1.17.1:
     resolution: {integrity: sha512-yy7HuzQhj0dhGpD8RLXSZWEkLsV9ibvxvi6EiJ3bkqLAO1RGo0WbkWQiwpRlSFymTJRz0d3k5LM3kkx8ArDbLw==}
@@ -2687,7 +2729,6 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
-    dev: true
 
   /@types/trusted-types/2.0.2:
     resolution: {integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==}
@@ -3465,6 +3506,7 @@ packages:
       electron-to-chromium: 1.4.284
       node-releases: 2.0.6
       update-browserslist-db: 1.0.10_browserslist@4.21.2
+    dev: false
 
   /browserslist/4.21.4:
     resolution: {integrity: sha512-CBHJJdDmgjl3daYjN5Cp5kbTf1mUhZoS+beLklHIvkOWscs83YAhLlF3Wsh/lciQYAcbBJgTOD44VtG31ZM4Hw==}
@@ -3475,7 +3517,6 @@ packages:
       electron-to-chromium: 1.4.284
       node-releases: 2.0.6
       update-browserslist-db: 1.0.10_browserslist@4.21.4
-    dev: false
 
   /buffer-from/1.1.2:
     resolution: {integrity: sha512-E+XQCRwSbaaiChtv6k6Dwgc+bx+Bs6vuKJHHl5kox/BaKbhiXzqQOwK4cO22yElGp2OCmjwVhT3HmxgyPGnJfQ==}
@@ -3913,7 +3954,6 @@ packages:
 
   /csstype/3.1.0:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
-    dev: true
 
   /damerau-levenshtein/1.0.8:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
@@ -9905,6 +9945,7 @@ packages:
       browserslist: 4.21.2
       escalade: 3.1.1
       picocolors: 1.0.0
+    dev: false
 
   /update-browserslist-db/1.0.10_browserslist@4.21.4:
     resolution: {integrity: sha512-OztqDenkfFkbSG+tRxBeAnCVPckDBcvibKd35yDONx6OU8N7sqgwc7rCbkJ/WcYtVRZ4ba68d6byhC21GFh7sQ==}
@@ -9915,7 +9956,6 @@ packages:
       browserslist: 4.21.4
       escalade: 3.1.1
       picocolors: 1.0.0
-    dev: false
 
   /uri-js/4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
