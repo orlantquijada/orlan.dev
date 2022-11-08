@@ -1,4 +1,5 @@
 ---
+import Colors from '../components/Colors.astro'
 import Fonts from '../components/Fonts.astro'
 
 export interface Props {
@@ -20,6 +21,7 @@ const { title } = Astro.props
   </head>
   <body>
     <slot />
+    <Colors />
     <style is:global>
       /* add global styles + reset */
       *,
@@ -28,112 +30,6 @@ const { title } = Astro.props
         box-sizing: border-box;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
-      }
-
-      :root {
-        /* gradient background values */
-        /* --accent-purple: hsla(256, 98%, 72%, 1);
-        --accent-red: hsla(354, 98%, 61%, 1);
-        --accent-green: hsla(133, 96%, 67%, 1);
-        --accent-yellow: hsla(38, 60%, 74%, 1);
-        --accent-blue: hsla(222, 67%, 73%, 1);
-        --accent-pink: hsla(343, 68%, 79%, 1); */
-
-        /* limeA10 dark */
-        --accent: hsla(75, 99.8%, 63.7%, 0.936);
-
-        --selection-bg: var(--accent);
-        /* lime12 */
-        --selection-color: hsl(78, 70%, 11.5%);
-
-        /* radix colors */
-        --gray1: hsl(0, 0%, 99%);
-        --gray2: hsl(0, 0%, 97.3%);
-        --gray3: hsl(0, 0%, 95.1%);
-        --gray4: hsl(0, 0%, 93%);
-        --gray5: hsl(0, 0%, 90.9%);
-        --gray6: hsl(0, 0%, 88.7%);
-        --gray7: hsl(0, 0%, 85.8%);
-        --gray8: hsl(0, 0%, 78%);
-        --gray9: hsl(0, 0%, 56.1%);
-        --gray10: hsl(0, 0%, 52.3%);
-        --gray11: hsl(0, 0%, 43.5%);
-        --gray12: hsl(0, 0%, 9%);
-
-        --grayA1: hsla(0, 0%, 0%, 0.012);
-        --grayA2: hsla(0, 0%, 0%, 0.027);
-        --grayA3: hsla(0, 0%, 0%, 0.047);
-        --grayA4: hsla(0, 0%, 0%, 0.071);
-        --grayA5: hsla(0, 0%, 0%, 0.09);
-        --grayA6: hsla(0, 0%, 0%, 0.114);
-        --grayA7: hsla(0, 0%, 0%, 0.141);
-        --grayA8: hsla(0, 0%, 0%, 0.22);
-        --grayA9: hsla(0, 0%, 0%, 0.439);
-        --grayA10: hsla(0, 0%, 0%, 0.478);
-        --grayA11: hsla(0, 0%, 0%, 0.565);
-        --grayA12: hsla(0, 0%, 0%, 0.91);
-
-        --lime1: hsl(85, 50%, 98.7%);
-        --lime2: hsl(85, 66.7%, 96.5%);
-        --lime3: hsl(85, 76%, 92.3%);
-        --lime4: hsl(84, 75.3%, 87.5%);
-        --lime5: hsl(84, 71.5%, 81.9%);
-        --lime6: hsl(82, 65%, 74.6%);
-        --lime7: hsl(79, 53.2%, 61.8%);
-        --lime8: hsl(76, 61.7%, 45.1%);
-        --lime9: hsl(81, 67%, 50%);
-        --lime10: hsl(80, 68.3%, 46.9%);
-        --lime11: hsl(75, 80%, 26%);
-        --lime12: hsl(78, 70%, 11.5%);
-      }
-
-      @media (prefers-color-scheme: dark) {
-        :root {
-          --accent: hsl(75, 85%, 60%);
-
-          /* radix colors */
-          --gray1: hsl(0, 0%, 8.5%);
-          --gray2: hsl(0, 0%, 11%);
-          --gray3: hsl(0, 0%, 13.6%);
-          --gray4: hsl(0, 0%, 15.8%);
-          --gray5: hsl(0, 0%, 17.9%);
-          --gray6: hsl(0, 0%, 20.5%);
-          --gray7: hsl(0, 0%, 24.3%);
-          --gray8: hsl(0, 0%, 31.2%);
-          --gray9: hsl(0, 0%, 43.9%);
-          --gray10: hsl(0, 0%, 49.4%);
-          --gray11: hsl(0, 0%, 62.8%);
-          --gray12: hsl(0, 0%, 93%);
-
-          --grayA1: hsla(0, 0%, 100%, 0);
-          --grayA2: hsla(0, 0%, 100%, 0.026);
-          --grayA3: hsla(0, 0%, 100%, 0.056);
-          --grayA4: hsla(0, 0%, 100%, 0.077);
-          --grayA5: hsla(0, 0%, 100%, 0.103);
-          --grayA6: hsla(0, 0%, 100%, 0.129);
-          --grayA7: hsla(0, 0%, 100%, 0.172);
-          --grayA8: hsla(0, 0%, 100%, 0.249);
-          --grayA9: hsla(0, 0%, 100%, 0.386);
-          --grayA10: hsla(0, 0%, 100%, 0.446);
-          --grayA11: hsla(0, 0%, 100%, 0.592);
-          --grayA12: hsla(0, 0%, 100%, 0.923);
-
-          --lime1: hsl(75, 55%, 6%);
-          --lime2: hsl(74, 56.8%, 7.3%);
-          --lime3: hsl(78, 50.2%, 9.9%);
-          --lime4: hsl(79, 50.3%, 12.1%);
-          --lime5: hsl(79, 52.6%, 14.2%);
-          --lime6: hsl(78, 55.7%, 16.7%);
-          --lime7: hsl(77, 59.7%, 20.1%);
-          --lime8: hsl(75, 64.8%, 24.5%);
-          --lime9: hsl(81, 67%, 50%);
-          --lime10: hsl(75, 85%, 60%);
-          --lime11: hsl(81, 70%, 43.8%);
-          --lime12: hsl(84, 79%, 92.6%);
-        }
-        html {
-          color-scheme: dark;
-        }
       }
       ::selection {
         /* background-color: var(--violetA5);
@@ -154,5 +50,8 @@ const { title } = Astro.props
         height: 100%;
       }
     </style>
+    <script>
+      import '../utils/theme-toggle'
+    </script>
   </body>
 </html>

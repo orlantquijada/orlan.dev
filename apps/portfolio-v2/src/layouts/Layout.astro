@@ -1,5 +1,5 @@
 ---
-import Footer from '../components/Footer.astro'
+import Footer2 from '../components/Footer2.astro'
 import Header from '../components/Header.astro'
 import BaseLayout from './BaseLayout.astro'
 
@@ -16,7 +16,7 @@ const { title } = Astro.props
     <div class="gradient"></div>
     <slot />
   </main>
-  <Footer />
+  <Footer2 />
 </BaseLayout>
 
 <style>
@@ -47,11 +47,11 @@ const { title } = Astro.props
     content: '';
     filter: invert(1);
   }
-  @media (prefers-color-scheme: dark) {
-    main::after {
-      filter: unset;
-    }
+  .dark,
+  main::after {
+    filter: unset;
   }
+
   .gradient {
     /* might be good to tweek */
     /* mix-blend-mode: difference; */
@@ -75,9 +75,8 @@ const { title } = Astro.props
       radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
       radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
   }
-  @media (prefers-color-scheme: dark) {
-    .gradient {
-      opacity: 0.1;
-    }
+  .dark,
+  .gradient {
+    opacity: 0.1;
   }
 </style>
