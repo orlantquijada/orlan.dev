@@ -7,4 +7,9 @@ import react from '@astrojs/react'
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), react(), compress()],
+  vite: {
+    ssr: {
+      noExternal: ['@radix-ui/react-dialog'],
+    },
+  },
 })
