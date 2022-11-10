@@ -1,5 +1,5 @@
 ---
-import Footer2 from '../components/Footer2.astro'
+import Footer from '../components/Footer.astro'
 import Header from '../components/Header.astro'
 import BaseLayout from './BaseLayout.astro'
 
@@ -16,7 +16,7 @@ const { title } = Astro.props
     <div class="gradient"></div>
     <slot />
   </main>
-  <Footer2 />
+  <Footer />
 </BaseLayout>
 
 <style>
