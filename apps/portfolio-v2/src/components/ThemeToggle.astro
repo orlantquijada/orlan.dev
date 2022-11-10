@@ -29,12 +29,16 @@
     }, 1)
   }
 
-  const getTheme = () => {
-    const theme = localStorage.getItem(storageKey)
-    if (theme) return theme
+  const getDefaultTheme = () => {
     return window.matchMedia('(prefers-color-scheme: dark)').matches
       ? 'dark'
       : 'light'
+  }
+
+  const getTheme = () => {
+    const theme = localStorage.getItem(storageKey)
+    if (theme) return theme
+    return getDefaultTheme()
   }
 
   const setTheme = (theme) => {
@@ -50,6 +54,7 @@
   }
 
   //////////////////////////////////////////////////////////////////////
+
   // set early so no page flashes / CSS is made aware
   const theme = getTheme()
   setTheme(theme)
@@ -70,4 +75,11 @@
       const theme = isDark ? 'dark' : 'light'
       setTheme(theme)
     })
+
+  // sync across tabs
+  window.addEventListener('storage', (e) => {
+    if (e.key !== storageKey) return
+
+    setTheme(e.newValue)
+  })
 </script>
