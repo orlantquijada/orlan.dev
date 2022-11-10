@@ -41,10 +41,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
                 className={buttonStyles({
                   className: 'flex items-center gap-2',
                 })}
-                target="_blank  const copyEmail = async () => {
-                  try {
-                  } catch (e) {}
-                }"
+                target="_blank"
                 rel="noopener noreferrer"
               >
                 <Send className={styles.icon} />
@@ -89,7 +86,7 @@ function StyledA(props: ComponentProps<'a'>) {
   return (
     <a
       {...props}
-      className="hover:bg-grayA3 p-1 pr-2 rounded-full transition-colors flex gap-1 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
+      className="hover:bg-grayA3 p-1 pr-2 rounded-full transition-colors flex items-center gap-1 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
       href={href}
       target="_blank"
       rel="noopener noreferrer"
