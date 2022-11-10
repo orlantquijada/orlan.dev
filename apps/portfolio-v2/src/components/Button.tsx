@@ -3,7 +3,7 @@ import { cva } from 'cva'
 import styles from './Button.module.css'
 
 export const buttonStyles = cva([
-  'h-10 px-3 rounded-lg transition-all border border-gray7 dark:border-gray6 bg-gray1 hover:bg-gray3 dark:bg-grayA3 hover:dark:bg-grayA4 active:scale-95',
+  'h-10 px-3 rounded-lg transition-all border border-gray7 dark:border-gray6 bg-gray1 hover:bg-gray3 dark:bg-grayA3 hover:dark:bg-grayA4',
   styles.button,
 ])
 

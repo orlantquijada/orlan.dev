@@ -1,8 +1,10 @@
+---
+import { query, storageKey } from '@/lib/theme-toggle'
+---
+
 <!-- inline is necessary to avoid FOUC 
      flash happens on dark mode default -->
-<script is:inline>
-  const storageKey = 'theme-preference'
-
+<script is:inline define:vars={{ query, storageKey }}>
   ////////////////////////////// Util fns //////////////////////////////
 
   const disableTransitionOnThemeChange = (callback) => {
@@ -45,7 +47,7 @@
     disableTransitionOnThemeChange(() => {
       localStorage.setItem(storageKey, theme)
       document.documentElement.className = theme
-      document.querySelector('#theme-toggle')?.setAttribute('aria-label', theme)
+      document.querySelector(query)?.setAttribute('aria-label', theme)
     })
   }
 
@@ -63,9 +65,7 @@
     const theme = getTheme()
     setTheme(theme)
 
-    document
-      .querySelector('#theme-toggle')
-      ?.addEventListener('click', toggleTheme)
+    document.querySelector(query)?.addEventListener('click', toggleTheme)
   })
 
   // sync with system changes

@@ -41,6 +41,9 @@ module.exports = {
         // Misc
         overlay: 'var(--overlay)',
         accent: 'var(--accent)',
+        'accent-blue': 'var(--accent-blue)',
+        'accent-pink': 'var(--accent-pink)',
+        'accent-violet': 'var(--accent-violet)',
         selectionColor: 'var(--selection-color)',
       },
       keyframes: {
