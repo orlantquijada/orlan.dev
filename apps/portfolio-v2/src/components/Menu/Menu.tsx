@@ -18,9 +18,7 @@ const contentStyles = cva([
   // 'data-[state=open]:motion-safe:animate-showContent data-[state=closed]:motion-safe:animate-hideContent',
 ])
 
-const menuItemStyles = cva([
-  'grid grid-cols-[1.25rem_1fr] items-center gap-2 py-1',
-])
+const menuItemStyles = cva(['grid grid-cols-[1.25rem_1fr] items-center gap-2'])
 const bulletStyles = cva(['w-2 h-2 rounded-full justify-self-center'])
 
 export function Menu() {
@@ -98,11 +96,18 @@ const links: Array<{
 function Nav() {
   return (
     <nav>
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col">
         {links.map((link) => (
-          <li key={link.label} className={menuItemStyles()}>
-            <span className={bulletStyles({ className: link.color })}></span>
-            <span>{link.label}</span>
+          <li key={link.label}>
+            <a
+              href={link.href}
+              className={menuItemStyles({
+                className: 'font-medium',
+              })}
+            >
+              <span className={bulletStyles({ className: link.color })}></span>
+              {link.label}
+            </a>
           </li>
         ))}
       </ul>
