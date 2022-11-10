@@ -1,0 +1,9 @@
+.button {
+  --shadowColor: 0 0 0;
+  box-shadow: 0 3px 2px -2px rgba(var(--shadowColor) / 0.1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+:global(.dark) .button {
+  --shadowColor: 255 255 255;
+}
