@@ -50,6 +50,9 @@
   }
 
   //////////////////////////////////////////////////////////////////////
+  // set early so no page flashes / CSS is made aware
+  const theme = getTheme()
+  setTheme(theme)
 
   window.addEventListener('load', () => {
     const theme = getTheme()
