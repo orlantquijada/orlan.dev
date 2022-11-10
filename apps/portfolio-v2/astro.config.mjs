@@ -11,7 +11,7 @@ export default defineConfig({
   vite: {
     plugins: [svgr()],
     ssr: {
-      noExternal: ['@radix-ui/react-dialog'],
+      noExternal: ['@radix-ui/react-dialog', '@radix-ui/react-popover'],
     },
   },
 })
