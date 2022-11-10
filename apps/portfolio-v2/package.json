@@ -21,7 +21,8 @@
     "cva": "npm:class-variance-authority@^0.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "tailwindcss": "^3.0.24"
+    "tailwindcss": "^3.0.24",
+    "vite-plugin-svgr": "^2.2.2"
   },
   "devDependencies": {
     "astro-compress": "1.1.1",
