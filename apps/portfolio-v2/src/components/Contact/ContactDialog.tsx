@@ -40,6 +40,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
                 href={`mailto:${email}`}
                 className={buttonStyles({
                   className: 'flex items-center gap-2 active:scale-95',
+                  translucent: true,
                 })}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -50,6 +51,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
               <Button
                 className="flex items-center gap-2 active:scale-95"
                 onClick={copyEmail}
+                translucent
               >
                 {!copied ? (
                   <Copy className={styles.icon} />

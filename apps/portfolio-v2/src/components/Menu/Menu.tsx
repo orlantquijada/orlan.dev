@@ -15,12 +15,27 @@ import { buttonStyles } from '../Button'
 import styles from './styles.module.css'
 import type { ReactNode } from 'react'
 
-const contentStyles = cva([
-  'w-screen max-w-[300px] max-h-[80vh] p-8 pb-0 overflow-hidden',
-  'bg-gray1 dark:bg-gray3 border border-gray7 dark:border-gray6 shadow-sm rounded-lg',
-  // 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
-  styles.content,
-])
+const contentStyles = cva(
+  [
+    'w-screen max-w-[300px] max-h-[80vh] p-8 pb-0 overflow-hidden',
+    'bg-gray1 border border-gray7 dark:border-gray6 shadow-sm rounded-lg',
+    styles.content,
+  ],
+  {
+    variants: {
+      translucent: {
+        true: [
+          'dark:bg-grayA3',
+          'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
+        ],
+        false: ['dark:bg-gray3'],
+      },
+    },
+    defaultVariants: {
+      translucent: false,
+    },
+  }
+)
 
 const menuItemStyles = cva(
   ['grid grid-cols-[1.25rem_auto_1fr] items-center gap-2'],
@@ -43,7 +58,8 @@ export function Menu() {
     <PopoverPrimitive.Root>
       <PopoverPrimitive.Trigger
         className={buttonStyles({
-          className: ['flex items-center gap-3 dark:bg-gray3', styles.trigger],
+          className: ['flex items-center gap-3', styles.trigger],
+          translucent: false,
         })}
       >
         <svg viewBox="0 0 24 24" className="w-[1em] h-[1em] stroke-gray10">
@@ -54,7 +70,10 @@ export function Menu() {
       </PopoverPrimitive.Trigger>
       <PopoverPrimitive.Portal>
         <PopoverPrimitive.Content
-          className={contentStyles({ className: 'flex flex-col gap-8' })}
+          className={contentStyles({
+            className: 'flex flex-col gap-8',
+            translucent: false,
+          })}
           align="end"
           alignOffset={-1}
           sideOffset={-40}
