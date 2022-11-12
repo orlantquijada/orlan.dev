@@ -83,7 +83,6 @@ export function Menu() {
                 <motion.div
                   variants={panelVariants}
                   initial="closed"
-                  // animate={open ? 'open' : 'closed'}
                   animate="open"
                   exit="closed"
                   style={{
