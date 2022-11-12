@@ -1,6 +1,5 @@
 import { ComponentProps, ReactNode, useState } from 'react'
 
-// import { ReactComponens as Send send } from '@/icons/send.svg'
 import { ReactComponent as Send } from '@/icons/send.svg'
 import { ReactComponent as Copy } from '@/icons/copy.svg'
 import { ReactComponent as Check } from '@/icons/check.svg'
@@ -12,14 +11,14 @@ import { Button, buttonStyles } from '../Button'
 import * as Dialog from '../Dialog'
 
 import styles from './ContactDialog.module.css'
-
-const email = 'orlanq@pm.me'
+import { EMAIL } from '@/utils/constants'
 
 export default function ContactDialog({ children }: { children: ReactNode }) {
   const [copied, setCopied] = useState(false)
 
+  // NOTE: does not work on mobile & localhost (permission problem)
   const copyEmail = async () => {
-    await navigator.clipboard.writeText(email)
+    await navigator.clipboard.writeText(EMAIL)
     setCopied(true)
     setTimeout(() => {
       setCopied(false)
@@ -34,10 +33,10 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
         </Dialog.Title>
 
         <div className="flex flex-col gap-8 text-sm md:text-base">
-          <ContactDetail title="Email" description={email}>
+          <ContactDetail title="Email" description={EMAIL}>
             <div className="flex gap-2">
               <a
-                href={`mailto:${email}`}
+                href={`mailto:${EMAIL}`}
                 className={buttonStyles({
                   className: 'flex items-center gap-2 active:scale-95',
                   translucent: true,
