@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react'
-import { motion, MotionConfig, Variants } from 'framer-motion'
+import { AnimatePresence, motion, MotionConfig, Variants } from 'framer-motion'
 import { cva } from 'cva'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 
@@ -36,60 +36,69 @@ export function Menu() {
 
   return (
     <MotionConfig transition={transitions.punchy}>
-      <div>
-        <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
-          <div className="relative flex">
-            <PopoverPrimitive.Trigger asChild>
-              <motion.button
-                variants={buttonVariants}
-                initial="closed"
-                animate={open ? 'open' : 'closed'}
-                style={{
-                  border: 'none',
-                  background: 'none',
-                  boxShadow: 'none',
-                }}
-                className={buttonStyles({
-                  className: 'flex items-center gap-3 z-10',
-                  motionSafe: false,
-                })}
-              >
-                <MenuIcon />
-                {open ? 'Close' : 'Menu'}
-              </motion.button>
-            </PopoverPrimitive.Trigger>
-            <PopoverPrimitive.Anchor asChild>
-              <div
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                ref={containerRef as any}
-                id="portal-container"
-                className={buttonStyles({ className: 'absolute inset-0' })}
-              />
-            </PopoverPrimitive.Anchor>
-          </div>
-          <PopoverPrimitive.Portal container={containerRef.current} forceMount>
-            <PopoverPrimitive.Content
-              align="end"
-              alignOffset={-1}
-              sideOffset={-40}
-              asChild
+      <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
+        <div className="relative flex">
+          <PopoverPrimitive.Trigger asChild>
+            <motion.button
+              variants={buttonVariants}
+              initial="closed"
+              animate={open ? 'open' : 'closed'}
+              style={{
+                border: 'none',
+                background: 'none',
+                boxShadow: 'none',
+              }}
+              className={buttonStyles({
+                className: 'flex items-center gap-3 z-10',
+                motionSafe: false,
+              })}
             >
-              <motion.div
-                variants={panelVariants}
-                initial="closed"
-                animate={open ? 'open' : 'closed'}
-                style={{
-                  transformOrigin:
-                    'var(--radix-popover-content-transform-origin)',
-                }}
-                className={contentStyles()}
+              <MenuIcon />
+              {open ? 'Close' : 'Menu'}
+            </motion.button>
+          </PopoverPrimitive.Trigger>
+          <PopoverPrimitive.Anchor asChild>
+            <div
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              ref={containerRef as any}
+              id="portal-container"
+              className={buttonStyles({ className: 'absolute inset-0' })}
+            />
+          </PopoverPrimitive.Anchor>
+        </div>
+
+        <AnimatePresence>
+          {open && (
+            <PopoverPrimitive.Portal
+              container={containerRef.current}
+              key="portal"
+              forceMount
+            >
+              <PopoverPrimitive.Content
+                align="end"
+                alignOffset={-1}
+                sideOffset={-40}
+                asChild
               >
-                <MenuPanel />
-              </motion.div>
-            </PopoverPrimitive.Content>
-          </PopoverPrimitive.Portal>
-        </PopoverPrimitive.Root>
-      </div>
+                <motion.div
+                  variants={panelVariants}
+                  initial="closed"
+                  // animate={open ? 'open' : 'closed'}
+                  animate="open"
+                  exit="closed"
+                  style={{
+                    transformOrigin:
+                      'var(--radix-popover-content-transform-origin)',
+                  }}
+                  className={contentStyles()}
+                >
+                  <MenuPanel />
+                </motion.div>
+              </PopoverPrimitive.Content>
+            </PopoverPrimitive.Portal>
+          )}
+        </AnimatePresence>
+      </PopoverPrimitive.Root>
     </MotionConfig>
   )
 }
