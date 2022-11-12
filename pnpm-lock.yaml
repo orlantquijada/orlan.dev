@@ -123,6 +123,7 @@ importers:
       astro-icon: '0.8'
       cva: npm:class-variance-authority@^0.3.0
       eslint-config-custom: workspace:*
+      framer-motion: ^7.6.6
       react: ^18.0.0
       react-dom: ^18.0.0
       svgo: '2.8'
@@ -138,6 +139,7 @@ importers:
       astro: 1.5.1
       astro-icon: 0.8.0
       cva: /class-variance-authority/0.3.0
+      framer-motion: 7.6.6_3cfkrkynzts6qfsozcm5ednswi
       react: 18.2.0
       react-dom: 18.1.0_react@18.2.0
       tailwindcss: 3.2.0
@@ -2084,6 +2086,17 @@ packages:
 
   /@motionone/dom/10.12.0:
     resolution: {integrity: sha512-UdPTtLMAktHiqV0atOczNYyDd/d8Cf5fFsd1tua03PqTwwCe/6lwhLSQ8a7TbnQ5SN0gm44N1slBfj+ORIhrqw==}
+    dependencies:
+      '@motionone/animation': 10.13.1
+      '@motionone/generators': 10.13.1
+      '@motionone/types': 10.13.0
+      '@motionone/utils': 10.13.1
+      hey-listen: 1.0.8
+      tslib: 2.4.0
+    dev: false
+
+  /@motionone/dom/10.13.1:
+    resolution: {integrity: sha512-zjfX+AGMIt/fIqd/SL1Lj93S6AiJsEA3oc5M9VkUr+Gz+juRmYN1vfvZd6MvEkSqEjwPQgcjN7rGZHrDB9APfQ==}
     dependencies:
       '@motionone/animation': 10.13.1
       '@motionone/generators': 10.13.1
@@ -6448,8 +6461,32 @@ packages:
       '@emotion/is-prop-valid': 0.8.8
     dev: false
 
+  /framer-motion/7.6.6_3cfkrkynzts6qfsozcm5ednswi:
+    resolution: {integrity: sha512-7ti5mEzhTRBFCMlKs8Zxu9dWtVattpj2jPCNc4jaz4d7bDFekClALaBzmi1pGOKzsOWJsKMeV5ckIkD1DLI9lw==}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+    dependencies:
+      '@motionone/dom': 10.13.1
+      framesync: 6.1.2
+      hey-listen: 1.0.8
+      popmotion: 11.0.5
+      react: 18.2.0
+      react-dom: 18.1.0_react@18.2.0
+      style-value-types: 5.1.2
+      tslib: 2.4.0
+    optionalDependencies:
+      '@emotion/is-prop-valid': 0.8.8
+    dev: false
+
   /framesync/6.0.1:
     resolution: {integrity: sha512-fUY88kXvGiIItgNC7wcTOl0SNRCVXMKSWW2Yzfmn7EKNc+MpCzcz9DhdHcdjbrtN3c6R4H5dTY2jiCpPdysEjA==}
+    dependencies:
+      tslib: 2.4.0
+    dev: false
+
+  /framesync/6.1.2:
+    resolution: {integrity: sha512-jBTqhX6KaQVDyus8muwZbBeGGP0XgujBRbQ7gM7BRdS3CadCZIHiawyzYLnafYcvZIh5j8WE7cxZKFn7dXhu9g==}
     dependencies:
       tslib: 2.4.0
     dev: false
@@ -8874,6 +8911,15 @@ packages:
       tslib: 2.4.0
     dev: false
 
+  /popmotion/11.0.5:
+    resolution: {integrity: sha512-la8gPM1WYeFznb/JqF4GiTkRRPZsfaj2+kCxqQgr2MJylMmIKUwBfWW8Wa5fml/8gmtlD5yI01MP1QCZPWmppA==}
+    dependencies:
+      framesync: 6.1.2
+      hey-listen: 1.0.8
+      style-value-types: 5.1.2
+      tslib: 2.4.0
+    dev: false
+
   /postcss-import/14.1.0_postcss@8.4.18:
     resolution: {integrity: sha512-flwI+Vgm4SElObFVPpTIT7SU7R3qk2L7PyduMcokiaVKuWv9d/U+Gm/QAd8NDLuykTWTkcrjOeD2Pp1rMeBTGw==}
     engines: {node: '>=10.0.0'}
@@ -10000,6 +10046,13 @@ packages:
 
   /style-value-types/5.0.0:
     resolution: {integrity: sha512-08yq36Ikn4kx4YU6RD7jWEv27v4V+PUsOGa4n/as8Et3CuODMJQ00ENeAVXAeydX4Z2j1XHZF1K2sX4mGl18fA==}
+    dependencies:
+      hey-listen: 1.0.8
+      tslib: 2.4.0
+    dev: false
+
+  /style-value-types/5.1.2:
+    resolution: {integrity: sha512-Vs9fNreYF9j6W2VvuDTP7kepALi7sk0xtk2Tu8Yxi9UoajJdEVpNpCov0HsLTqXvNGKX+Uv09pkozVITi1jf3Q==}
     dependencies:
       hey-listen: 1.0.8
       tslib: 2.4.0
