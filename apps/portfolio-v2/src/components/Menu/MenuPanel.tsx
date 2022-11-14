@@ -20,7 +20,7 @@ export function MenuPanel() {
       <Nav />
 
       <div>
-        <h4 className="text-gray10 mb-3">Connect</h4>
+        <h4 className="text-gray11 mb-3">Connect</h4>
         <div className="flex flex-col">
           <ConnectLink
             Icon={<Twitter className="w-5 h-5" />}
@@ -108,7 +108,7 @@ const links: Array<{
 }> = [
   { href: '/writing', label: 'Writing', color: 'bg-accent-pink' },
   { href: '/bookmarks', label: 'Bookmarks', color: 'bg-accent-violet' },
-  { href: '/tools', label: 'Tools', color: 'bg-accent-blue' },
+  { href: '/notes', label: 'Notes', color: 'bg-accent-blue' },
 ]
 
 function Nav() {

@@ -1,0 +1,49 @@
+---
+import { cva, VariantProps } from 'cva'
+
+const className = cva(
+  [
+    'border rounded-full grid place-items-center leading-none cursor-pointer transition-colors',
+  ],
+  {
+    variants: {
+      size: {
+        sm: 'h-6 px-2 text-xs min-w-[2.5rem]',
+        md: 'h-7 px-3 text-sm min-w-[3rem]',
+        lg: 'h-8 px-4',
+        responsive:
+          'h-6 px-2 text-xs min-w-[2.5rem] md:h-7 md:px-3 md:text-sm md:min-w-[3rem]',
+      },
+      color: {
+        gray: 'border-gray3 bg-gray1 hover:bg-gray3 dark:bg-gray3 hover:dark:bg-gray4 dark:border-gray6 text-gray11',
+        // gray: 'border-gray6 bg-gray3 hover:bg-gray4 text-gray11',
+        // transluscent: 'border-grayA5 bg-grayA5 hover:bg-grayA6 text-gray12',
+        transluscent:
+          'dark:border-grayA3 dark:bg-grayA3 dark:hover:bg-grayA4 text-gray12',
+      },
+      selected: {
+        true: 'border-gray12 bg-gray12 hover:bg-gray12 text-gray1',
+      },
+    },
+    defaultVariants: {
+      size: 'responsive',
+      color: 'gray',
+      selected: false,
+    },
+  }
+)
+
+export type Props = VariantProps<typeof className>
+// default variants
+const { color = 'gray', selected = false, size = 'responsive' } = Astro.props
+---
+
+<span class={className({ color: selected ? null : color, size, selected })}
+  ><slot />
+</span>
+
+<style>
+  span {
+    -webkit-tap-highlight-color: transparent;
+  }
+</style>

@@ -62,7 +62,10 @@ export function Menu() {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               ref={containerRef as any}
               id="portal-container"
-              className={buttonStyles({ className: 'absolute inset-0' })}
+              className={buttonStyles({
+                className: 'absolute inset-0',
+                translucent: true,
+              })}
             />
           </PopoverPrimitive.Anchor>
         </div>
@@ -89,7 +92,7 @@ export function Menu() {
                     transformOrigin:
                       'var(--radix-popover-content-transform-origin)',
                   }}
-                  className={contentStyles()}
+                  className={contentStyles({ translucent: true })}
                 >
                   <MenuPanel />
                 </motion.div>
@@ -150,7 +153,8 @@ const contentStyles = cva(
       translucent: {
         true: [
           'dark:bg-grayA3',
-          'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
+          // 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
+          'dark:backdrop-blur-md dark:backdrop-brightness-75',
         ],
         false: ['dark:bg-gray3'],
       },
