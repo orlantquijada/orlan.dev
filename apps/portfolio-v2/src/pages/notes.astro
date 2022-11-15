@@ -29,10 +29,7 @@ const tags = [
   <div class="flex flex-wrap gap-2 md:gap-3 mt-6 md:max-w-[85%] justify-center">
     {
       tags.map((tag) => (
-        // <Chip selected={tag.selected} color="transluscent">
-        <Chip selected={tag.selected} color="gray">
-          {tag.label}
-        </Chip>
+        <Chip color={tag.selected ? 'primary' : 'gray'}>{tag.label}</Chip>
       ))
     }
   </div>
@@ -55,11 +52,11 @@ const tags = [
       description="Useful snippets for working in your terminal."
     />
     <NoteCard href="/" title="Typography" description="Shapes and forms." />
-    <NoteCard href="/" title="CSS Resets" />
     <NoteCard
       href="/"
       title="Quotes"
       description="A collection of passages that have stuck with me, and that I like to come back to when I need some inspiration."
     />
+    <NoteCard href="/" title="CSS Resets" />
   </div>
 </Layout>

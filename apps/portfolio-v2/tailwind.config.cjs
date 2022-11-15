@@ -56,12 +56,12 @@ module.exports = {
           to: { opacity: 0 },
         },
         showContent: {
-          from: { opacity: 0, transform: 'translate(-50%, -48%) scale(.96)' },
+          from: { opacity: 0, transform: 'translate(-50%, -45%) scale(.96)' },
           to: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
         },
         hideContent: {
           from: { opacity: 1, transform: 'translate(-50%, -50%) scale(1)' },
-          to: { opacity: 0, transform: 'translate(-50%, -48%) scale(.96)' },
+          to: { opacity: 0, transform: 'translate(-50%, -45%) scale(.96)' },
         },
       },
       animation: {
