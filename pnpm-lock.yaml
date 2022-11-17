@@ -117,6 +117,7 @@ importers:
       '@nanostores/react': ^0.4.0
       '@radix-ui/react-dialog': ^1.0.2
       '@radix-ui/react-popover': ^1.0.2
+      '@radix-ui/react-slot': ^1.0.1
       '@types/react': ^18.0.21
       '@types/react-dom': ^18.0.6
       '@typescript-eslint/parser': ^5.27.0
@@ -143,6 +144,7 @@ importers:
       '@nanostores/react': 0.4.0_7riphphz3j2h2zpa6bvo3lxuhy
       '@radix-ui/react-dialog': 1.0.2_zofv5mc2tee5xatsmb5hbhmhmu
       '@radix-ui/react-popover': 1.0.2_zofv5mc2tee5xatsmb5hbhmhmu
+      '@radix-ui/react-slot': 1.0.1_react@18.2.0
       '@types/react': 18.0.25
       '@types/react-dom': 18.0.8
       astro: 1.5.1
