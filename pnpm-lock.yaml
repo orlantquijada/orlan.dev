@@ -128,6 +128,7 @@ importers:
       eslint-plugin-astro: ^0.21.0
       eslint-plugin-jsx-a11y: ^6.6.1
       framer-motion: ^7.6.6
+      nanostores: ^0.7.1
       prettier: ^2.7.1
       prettier-plugin-astro: ^0.7.0
       react: ^18.0.0
@@ -146,6 +147,7 @@ importers:
       astro-icon: 0.8.0
       cva: /class-variance-authority/0.3.0
       framer-motion: 7.6.6_3cfkrkynzts6qfsozcm5ednswi
+      nanostores: 0.7.1
       react: 18.2.0
       react-dom: 18.1.0_react@18.2.0
       tailwindcss: 3.2.0
@@ -8520,6 +8522,11 @@ packages:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
+
+  /nanostores/0.7.1:
+    resolution: {integrity: sha512-7HenoVpZOjRudHCmAVWKloBTk3+Ozw49KuRWq/pNlEIIVS3x9dID+I5z3Rhjxl1muhHwv4dFhpT+0FebT9jvaA==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+    dev: false
 
   /napi-build-utils/1.0.2:
     resolution: {integrity: sha512-ONmRUqK7zj7DWX0D9ADe03wbwOBZxNAfF20PlGfCWQcD3+/MakShIHrMqx9YwPTfxDdF1zLeL+RGZiR9kGMLdg==}
