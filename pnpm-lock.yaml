@@ -114,6 +114,7 @@ importers:
     specifiers:
       '@astrojs/react': ^1.2.2
       '@astrojs/tailwind': ^2.1.1
+      '@nanostores/react': ^0.4.0
       '@radix-ui/react-dialog': ^1.0.2
       '@radix-ui/react-popover': ^1.0.2
       '@types/react': ^18.0.21
@@ -139,6 +140,7 @@ importers:
     dependencies:
       '@astrojs/react': 1.2.2_dkhcq44b2spykuwif5itkslvtq
       '@astrojs/tailwind': 2.1.1_tailwindcss@3.2.0
+      '@nanostores/react': 0.4.0_7riphphz3j2h2zpa6bvo3lxuhy
       '@radix-ui/react-dialog': 1.0.2_zofv5mc2tee5xatsmb5hbhmhmu
       '@radix-ui/react-popover': 1.0.2_zofv5mc2tee5xatsmb5hbhmhmu
       '@types/react': 18.0.25
@@ -2188,6 +2190,20 @@ packages:
       '@motionone/types': 10.13.0
       hey-listen: 1.0.8
       tslib: 2.4.0
+    dev: false
+
+  /@nanostores/react/0.4.0_7riphphz3j2h2zpa6bvo3lxuhy:
+    resolution: {integrity: sha512-u7Y3s1B4hwsBxpIxClx0F/Q7TF1AsCU/F7Tt3n+tWeCebQ0cs2spthmskJY689XIMTRJXfBZF83kJDaDZeavVA==}
+    engines: {node: ^14.0.0 || ^16.0.0 || >=18.0.0}
+    peerDependencies:
+      nanostores: ^0.7.0
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
+    dependencies:
+      nanostores: 0.7.1
+      react: 18.2.0
+      react-dom: 18.1.0_react@18.2.0
+      use-sync-external-store: 1.2.0_react@18.2.0
     dev: false
 
   /@next/env/12.2.2:
