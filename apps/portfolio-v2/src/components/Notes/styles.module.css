@@ -1,0 +1,45 @@
+.notesList {
+  @apply flex flex-col flex-wrap content-between h-full sm:h-[500px] md:h-[400px];
+}
+
+.notesList > * {
+  @apply w-full sm:w-[49%] md:w-[32%] mb-3 order-1;
+}
+
+@media (min-width: 640px) {
+  .notesList::after {
+    content: '';
+    flex-basis: 100%;
+    width: 0;
+    order: 1;
+  }
+
+  .notesList > *:nth-child(2n + 1) {
+    order: 1;
+  }
+
+  .notesList > *:nth-child(2n) {
+    order: 2;
+  }
+}
+
+@media (min-width: 768px) {
+  .notesList::before,
+  .notesList::after {
+    content: '';
+    flex-basis: 100%;
+    width: 0;
+    order: 2;
+  }
+  .notesList > *:nth-child(3n + 1) {
+    order: 1;
+  }
+
+  .notesList > *:nth-child(3n + 2) {
+    order: 2;
+  }
+
+  .notesList > *:nth-child(3n) {
+    order: 3;
+  }
+}
