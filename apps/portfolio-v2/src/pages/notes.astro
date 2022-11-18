@@ -1,20 +1,35 @@
 ---
-import Chip from '@/components/Chip.astro'
-import NoteCard from '@/components/NoteCard.astro'
+import NotesList from '@/components/Notes/NotesList'
+import NoteTagsList from '@/components/NoteTagsList'
 import Layout from '@/layouts/Layout.astro'
 
+// const tags = [
+//   { label: 'all', selected: true },
+//   { label: 'html', selected: false },
+//   { label: 'design', selected: false },
+//   { label: 'js', selected: false },
+//   { label: 'react', selected: false },
+//   { label: 'css', selected: false },
+//   { label: 'web dev', selected: false },
+//   { label: 'vim', selected: false },
+//   { label: 'git', selected: false },
+//   { label: 'linux', selected: false },
+//   { label: 'state', selected: false },
+//   { label: 'misc', selected: false },
+// ]
 const tags = [
-  { label: 'all', selected: true },
-  { label: 'html', selected: false },
-  { label: 'design', selected: false },
-  { label: 'js', selected: false },
-  { label: 'react', selected: false },
-  { label: 'css', selected: false },
-  { label: 'web dev', selected: false },
-  { label: 'vim', selected: false },
-  { label: 'git', selected: false },
-  { label: 'linux', selected: false },
-  { label: 'state', selected: false },
+  'all',
+  'html',
+  'design',
+  'js',
+  'react',
+  'css',
+  'web dev',
+  'vim',
+  'git',
+  'linux',
+  'state',
+  'misc',
 ]
 ---
 
@@ -26,37 +41,9 @@ const tags = [
   <p class="mt-2 text-xl md:max-w-[480px] text-center">
     A personal wiki of notes, code snippets, and more stuff on the internet.
   </p>
-  <div class="flex flex-wrap gap-2 md:gap-3 mt-6 md:max-w-[85%] justify-center">
-    {
-      tags.map((tag) => (
-        <Chip color={tag.selected ? 'primary' : 'gray'}>{tag.label}</Chip>
-      ))
-    }
-  </div>
+  <NoteTagsList tags={tags} client:load />
 
-  <div class="columns-1 sm:columns-2 md:columns-3 w-full mt-14">
-    <NoteCard
-      href="/"
-      title="Design tokens"
-      description="The most atomic design decisions that make up a larger design system."
-    />
-    <NoteCard
-      href="/"
-      title="React hooks"
-      description="Handy utilities for React projects."
-    />
-    <NoteCard href="/" title="CSS Variables" />
-    <NoteCard
-      href="/"
-      title="The command line"
-      description="Useful snippets for working in your terminal."
-    />
-    <NoteCard href="/" title="Typography" description="Shapes and forms." />
-    <NoteCard
-      href="/"
-      title="Quotes"
-      description="A collection of passages that have stuck with me, and that I like to come back to when I need some inspiration."
-    />
-    <NoteCard href="/" title="CSS Resets" />
+  <div class="mt-14">
+    <NotesList client:load />
   </div>
 </Layout>
