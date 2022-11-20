@@ -5,6 +5,7 @@ import * as PopoverPrimitive from '@radix-ui/react-popover'
 
 import { transitions } from '@/utils/motion'
 
+import styles from './styles.module.css'
 import { buttonStyles } from '../Button'
 import { MenuPanel } from './MenuPanel'
 
@@ -145,8 +146,9 @@ function MenuIcon() {
 
 const contentStyles = cva(
   [
-    'w-screen max-w-[325px] max-h-[80vh] p-8 pb-0 overflow-hidden',
+    'max-h-[80vh] p-8 pb-0 overflow-hidden',
     'bg-gray1 border border-gray7 dark:border-gray6 shadow-sm rounded-lg',
+    styles.menuContent,
   ],
   {
     variants: {
