@@ -1,7 +1,8 @@
-import { ComponentProps, ReactNode, useState } from 'react'
+import { type ComponentProps, type ReactNode, useState } from 'react'
+import { cva } from 'cva'
 
-import { ReactComponent as Send } from '@/icons/send.svg'
-import { ReactComponent as Copy } from '@/icons/copy.svg'
+import { ReactComponent as Send } from '@/icons/send-filled.svg'
+import { ReactComponent as Copy } from '@/icons/copy-filled.svg'
 import { ReactComponent as Check } from '@/icons/check.svg'
 import { ReactComponent as GitHub } from '@/icons/github.svg'
 import { ReactComponent as Twitter } from '@/icons/twitter.svg'
@@ -44,7 +45,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <Send className={styles.icon} />
+                <Send className={iconStyles()} />
                 Compose
               </a>
               <Button
@@ -53,9 +54,9 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
                 translucent
               >
                 {!copied ? (
-                  <Copy className={styles.icon} />
+                  <Copy className={iconStyles()} />
                 ) : (
-                  <Check className={styles.icon} />
+                  <Check className={iconStyles()} />
                 )}
                 Copy
               </Button>
@@ -69,14 +70,14 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
             description="I'm more active on twitter"
           >
             <div className="flex gap-4">
-              <StyledA href="https://github.com/orlantquijada">
-                <GitHub className="fill-current text-gray11 h-6 w-6 grid place-items-center" />
+              <Social href="https://github.com/orlantquijada">
+                <GitHub className={iconStyles({ size: 'md' })} />
                 GitHub
-              </StyledA>
-              <StyledA href="https://twitter.com/orlantquijada">
-                <Twitter className="fill-current text-gray11 h-6 w-6 grid place-items-center" />
+              </Social>
+              <Social href="https://twitter.com/orlantquijada">
+                <Twitter className={iconStyles({ size: 'md' })} />
                 Twitter
-              </StyledA>
+              </Social>
             </div>
           </ContactDetail>
         </div>
@@ -85,15 +86,25 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
   )
 }
 
-function StyledA(props: ComponentProps<'a'>) {
-  const { href } = props
+function Social(props: ComponentProps<'a'>) {
   return (
     <a
       {...props}
       className="hover:bg-grayA3 p-1 pr-2 rounded-full transition-colors flex items-center gap-1 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
-      href={href}
       target="_blank"
       rel="noopener noreferrer"
     />
   )
 }
+
+const iconStyles = cva([styles.icon], {
+  variants: {
+    size: {
+      sm: 'h-4 w-4',
+      md: 'h-6 w-6',
+    },
+  },
+  defaultVariants: {
+    size: 'sm',
+  },
+})
