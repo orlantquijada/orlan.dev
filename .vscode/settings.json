@@ -5,6 +5,7 @@
     "javascript",
     "javascriptreact",
     "astro", // Enable .astro
+    "mdx",
     "typescript", // Enable .ts
     "typescriptreact" // Enable .tsx
   ],
