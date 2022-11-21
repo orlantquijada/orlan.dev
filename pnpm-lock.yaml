@@ -126,6 +126,7 @@ importers:
       astro-compress: 1.1.1
       astro-icon: '0.8'
       cva: npm:class-variance-authority@^0.3.0
+      date-fns: ^2.29.1
       eslint: ^8.27.0
       eslint-config-custom: workspace:*
       eslint-plugin-astro: ^0.21.0
@@ -152,6 +153,7 @@ importers:
       astro: 1.6.10
       astro-icon: 0.8.0
       cva: /class-variance-authority/0.3.0
+      date-fns: 2.29.1
       framer-motion: 7.6.6_3cfkrkynzts6qfsozcm5ednswi
       nanostores: 0.7.1
       react: 18.2.0
