@@ -10,7 +10,7 @@ export default function NoteTagsList(props: Props) {
   const { tags } = props
 
   return (
-    <div className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:max-w-[85%] justify-center">
+    <div className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:max-w-[85%] justify-start">
       {tags.map((tag) => (
         <Tag key={tag} tag={tag} />
       ))}
