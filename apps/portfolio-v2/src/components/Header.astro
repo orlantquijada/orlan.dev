@@ -1,9 +1,18 @@
 ---
 import { Menu } from './Menu/Menu'
+
+type Props = {
+  class?: string
+}
+
+const { class: className } = Astro.props
 ---
 
 <header
-  class="sticky top-10 left-0 right-0 px-6 max-w-screen-md mx-auto flex justify-between items-center z-10 mt-10"
+  class:list={[
+    'sticky top-10 left-0 right-0 px-6 flex justify-between items-center z-10 mt-10',
+    className,
+  ]}
 >
   <a href="/">
     <h1 class="md:text-lg font-medium">Orlan Quijada</h1>

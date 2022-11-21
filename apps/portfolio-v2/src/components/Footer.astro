@@ -1,9 +1,15 @@
 ---
 import LogoIcon from './LogoIcon.astro'
+
+type Props = {
+  class?: string
+}
+
+const { class: className } = Astro.props
 ---
 
 <footer
-  class="flex flex-col gap-4 justify-center px-6 pb-24 max-w-screen-md mx-auto"
+  class:list={['flex flex-col gap-4 justify-center px-6 pb-24', className]}
 >
   <div class="w-full h-4 overflow-clip mb-6 divider"></div>
 
