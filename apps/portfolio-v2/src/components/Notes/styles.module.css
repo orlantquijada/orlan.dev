@@ -1,6 +1,7 @@
 .notesList {
-  @apply flex flex-col flex-wrap content-between h-full sm:h-[500px] md:h-[400px];
+  @apply flex flex-col flex-wrap content-between;
 }
+
 
 .notesList > * {
   @apply w-full sm:w-[49%] md:w-[32%] mb-3 order-1;
