@@ -1,0 +1,80 @@
+---
+import type { MDXInstance } from 'astro'
+import { Icon } from 'astro-icon'
+import { format } from 'date-fns'
+import { components } from '@/components/Notes/NoteDetailComponents/components.astro'
+import MetaData from '@/components/Notes/NoteDetailComponents/MetaData.astro'
+import { DEFAULT_DATE_FORMAT } from '@/utils/constants'
+import type { NoteFrontmatter } from '@/lib/notes'
+import Layout from './Layout.astro'
+
+type Props = MDXInstance<NoteFrontmatter>
+
+const { frontmatter, Content } = Astro.props
+---
+
+<Layout title={frontmatter.title}>
+  <div class="grid place-items-start gap-2">
+    <h1 class="text-3xl font-medium">
+      {frontmatter.title}
+    </h1>
+    {
+      frontmatter.description ? (
+        <p class="md:max-w-[80%]">{frontmatter.description}</p>
+      ) : null
+    }
+  </div>
+
+  <div class="flex gap-6">
+    <MetaData>
+      <Icon name="tag" slot="icon" />
+
+      <ul class="flex items-center">
+        <!-- TODO filter notes by tag link -->
+        {
+          frontmatter.tags.map((tag) => (
+            <li class="tag">
+              <a href="/notes" class="hover:underline">
+                {tag}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </MetaData>
+
+    <MetaData>
+      <Icon name="clock" slot="icon" />
+      <span
+        >{format(new Date(frontmatter.publishedAt), DEFAULT_DATE_FORMAT)}</span
+      >
+    </MetaData>
+  </div>
+
+  <hr class="border-t-grayA4 border-t-2 my-8 w-full" />
+
+  <article>
+    <Content components={components} />
+  </article>
+</Layout>
+
+<style lang="css">
+  [astro-icon] {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  :global([astro-icon] path) {
+    @apply fill-gray11;
+  }
+
+  .tag {
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+
+  .tag:not(:last-of-type)::after {
+    content: '·';
+    margin-inline: 0.25rem;
+  }
+</style>
