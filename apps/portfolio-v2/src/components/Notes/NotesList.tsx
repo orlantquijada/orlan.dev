@@ -1,20 +1,27 @@
 import { LayoutGroup } from 'framer-motion'
 import { useStore } from '@nanostores/react'
+import { cx } from 'cva'
 
-import styles from './styles.module.css'
 import { selectedTags } from '@/stores/notes'
-import { MotionNoteCard, type MotionNoteCardProps } from '../NoteCard/NoteCard'
+import type { NoteFrontmatter } from '@/lib/notes'
+import { MotionNoteCard } from '../NoteCard/NoteCard'
+import styles from './styles.module.css'
 
-type Note = Omit<MotionNoteCardProps, 'isSelecting'>
+type Note = NoteFrontmatter & { selected: boolean; href: string }
+type Props = { notes: Omit<Note, 'selected'>[]; className?: string }
 
-export default function NotesList() {
+// estimated height per note
+const HEIGHT = 100
+
+export default function NotesList(props: Props) {
+  const { notes, className } = props
   const _selectedTags = useStore(selectedTags)
 
   const isSelecting = Boolean(_selectedTags.length)
 
   const filtered: Note[] = []
   const rest: Note[] = []
-  for (const note of list) {
+  for (const note of notes) {
     if (
       isSelecting &&
       _selectedTags.every((selectedTag) => note.tags.includes(selectedTag))
@@ -23,8 +30,18 @@ export default function NotesList() {
     else rest.push({ ...note, selected: false })
   }
 
+  // fixed height is needed (relative height will cause for the container to assume 100% height for its height)
+  const smHeight = `${Math.ceil(notes.length / 2) * HEIGHT}px`
+  const mdHeight = `${Math.ceil(notes.length / 3) * HEIGHT}px`
+
   return (
-    <div className={styles.notesList}>
+    <div
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      style={{ '--smHeight': smHeight, '--mdHeight': mdHeight } as any}
+      className={cx(className, styles.notesList, [
+        'h-full sm:h-[var(--smHeight)] md:h-[var(--mdHeight)]',
+      ])}
+    >
       <LayoutGroup>
         {filtered.map((note) => (
           <MotionNoteCard
@@ -44,52 +61,3 @@ export default function NotesList() {
     </div>
   )
 }
-
-const list = [
-  {
-    href: '/',
-    title: 'Design tokens',
-    description:
-      'The most atomic design decisions that make up a larger design system.',
-    tags: ['design', 'css'],
-  },
-
-  {
-    href: '/',
-    title: 'React hooks',
-    description: 'Handy utilities for React projects.',
-    tags: ['react'],
-  },
-
-  {
-    href: '/',
-    title: 'CSS Variables',
-    tags: ['css'],
-  },
-
-  {
-    href: '/',
-    title: 'The command line',
-    description: 'Useful snippets for working in your terminal.',
-    tags: ['linux'],
-  },
-
-  {
-    href: '/',
-    title: 'Typography',
-    description: 'Shapes and forms.',
-    tags: ['design'],
-  },
-  {
-    href: '/',
-    title: 'Quotes',
-    description:
-      'A collection of passages that have stuck with me, and that I like to come back to when I need some inspiration.',
-    tags: ['misc'],
-  },
-  {
-    href: '/',
-    title: 'CSS Resets',
-    tags: ['css'],
-  },
-]

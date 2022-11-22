@@ -1,9 +1,8 @@
 import { motion } from 'framer-motion'
 import { noteCardStyles } from './styles'
+import type { NoteFrontmatter } from '@/lib/notes'
 
-export type NoteCardProps = {
-  title: string
-  description?: string | undefined
+export type NoteCardProps = NoteFrontmatter & {
   href: string
 }
 
