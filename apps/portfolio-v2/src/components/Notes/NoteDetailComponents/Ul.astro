@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'ul'>
+
+const props = Astro.props
+---
+
+<ul {...props}>
+  <slot />
+</ul>
+
+<style>
+  ul li::before {
+    content: '— ';
+  }
+</style>

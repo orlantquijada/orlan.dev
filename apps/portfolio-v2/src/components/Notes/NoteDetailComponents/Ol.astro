@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'ol'>
+
+const props = Astro.props
+---
+
+<ol {...props}>
+  <slot />
+</ol>
+
+<style>
+  ol {
+    list-style: decimal;
+  }
+</style>
