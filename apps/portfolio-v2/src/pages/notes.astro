@@ -16,7 +16,7 @@ const t = [...new Set(notesData.map((note) => note.frontmatter.tags).flat())]
 
 <Layout title="🌱 Notes — Orlan Quijada">
   <h1 class="text-3xl font-medium">Notes</h1>
-  <p class="mt-2 text-xl max-w-[480px] text-start">
+  <p class="mt-2 text-xl max-w-md">
     A personal wiki of notes, code snippets, and more stuff on the internet.
   </p>
   <NoteTagsList tags={t} client:load />

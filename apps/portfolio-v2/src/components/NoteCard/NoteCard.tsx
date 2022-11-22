@@ -36,7 +36,7 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
       href={href}
       className={noteCardStyles()}
     >
-      <h3 className="font-medium">{title}</h3>
+      <h2 className="font-medium">{title}</h2>
       {description ? (
         <p className="text-sm text-gray10 dark:text-gray11">{description}</p>
       ) : null}
