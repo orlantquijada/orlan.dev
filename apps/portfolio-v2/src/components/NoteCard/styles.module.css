@@ -3,6 +3,13 @@
   position: relative;
 }
 
+.noteCard p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .noteCard:nth-child(1n):where(:focus-within, :hover) {
   border-color: var(--accent);
 }
