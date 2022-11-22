@@ -2,48 +2,24 @@
 import NotesList from '@/components/Notes/NotesList'
 import NoteTagsList from '@/components/NoteTagsList'
 import Layout from '@/layouts/Layout.astro'
+import { getNoteFilename, NoteFrontmatter } from '@/lib/notes'
 
-// const tags = [
-//   { label: 'all', selected: true },
-//   { label: 'html', selected: false },
-//   { label: 'design', selected: false },
-//   { label: 'js', selected: false },
-//   { label: 'react', selected: false },
-//   { label: 'css', selected: false },
-//   { label: 'web dev', selected: false },
-//   { label: 'vim', selected: false },
-//   { label: 'git', selected: false },
-//   { label: 'linux', selected: false },
-//   { label: 'state', selected: false },
-//   { label: 'misc', selected: false },
-// ]
-const tags = [
-  'all',
-  'html',
-  'design',
-  'js',
-  'react',
-  'css',
-  'web dev',
-  'vim',
-  'git',
-  'linux',
-  'state',
-  'misc',
-]
+const notesData = await Astro.glob<NoteFrontmatter>('../data/notes/*.mdx')
+
+const notes = notesData.map((note) => ({
+  ...note.frontmatter,
+  href: `/notes/${getNoteFilename(note.url || '')}`,
+}))
+
+const t = [...new Set(notesData.map((note) => note.frontmatter.tags).flat())]
 ---
 
-<Layout
-  title="🌱 Notes — Orlan Quijada"
-  className="max-w-screen-md mx-auto px-6 pb-24 grid place-items-center"
->
-  <h1 class="mt-6 text-3xl font-medium">Notes</h1>
-  <p class="mt-2 text-xl md:max-w-[480px] text-center">
+<Layout title="🌱 Notes — Orlan Quijada">
+  <h1 class="text-3xl font-medium">Notes</h1>
+  <p class="mt-2 text-xl max-w-[480px] text-start">
     A personal wiki of notes, code snippets, and more stuff on the internet.
   </p>
-  <NoteTagsList tags={tags} client:load />
+  <NoteTagsList tags={t} client:load />
 
-  <div class="mt-14">
-    <NotesList client:load />
-  </div>
+  <NotesList notes={notes} className="mt-14" client:load />
 </Layout>
