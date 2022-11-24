@@ -8,6 +8,7 @@ export type ChipVariantProps = VariantProps<typeof chipStyles>
 
 type Props = ChipVariantProps & {
   children: ReactNode
+  className?: string
   asChild?: boolean
 }
 
@@ -18,12 +19,13 @@ export default function Chip(props: Props) {
     transluscent = true,
     children,
     asChild,
+    className,
   } = props
 
   const Comp = asChild ? Slot : 'button'
 
   return (
-    <Comp className={chipStyles({ color, size, transluscent })}>
+    <Comp className={chipStyles({ color, size, transluscent, className })}>
       {children}
     </Comp>
   )
