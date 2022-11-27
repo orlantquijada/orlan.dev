@@ -1,8 +1,9 @@
 ---
 import NotesList from '@/components/Notes/NotesList'
-import NoteTagsList from '@/components/NoteTagsList'
+import NoteTagsList from '@/components/Notes/NoteTagsList'
 import Layout from '@/layouts/Layout.astro'
 import { getNoteFilename, NoteFrontmatter } from '@/lib/notes'
+import { buildTagMap } from '@/lib/notes'
 
 const notesData = await Astro.glob<NoteFrontmatter>('../data/notes/*.mdx')
 
@@ -11,7 +12,10 @@ const notes = notesData.map((note) => ({
   href: `/notes/${getNoteFilename(note.url || '')}`,
 }))
 
-const t = [...new Set(notesData.map((note) => note.frontmatter.tags).flat())]
+const tags = [...new Set(notesData.map((note) => note.frontmatter.tags).flat())]
+
+const tagsMap = buildTagMap(...notesData.map((n) => n.frontmatter.tags))
+// console.log({tagsMap})
 ---
 
 <Layout title="🌱 Notes — Orlan Quijada">
@@ -19,7 +23,6 @@ const t = [...new Set(notesData.map((note) => note.frontmatter.tags).flat())]
   <p class="mt-2 text-xl max-w-md">
     A personal wiki of notes, code snippets, and more stuff on the internet.
   </p>
-  <NoteTagsList tags={t} client:load />
-
+  <NoteTagsList tags={tags} tagsMap={tagsMap} client:load />
   <NotesList notes={notes} className="mt-14" client:load />
 </Layout>
