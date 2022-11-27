@@ -1,3 +1,12 @@
+.icon {
+  width: 0.75rem;
+  width: 0.75rem;
+}
+
+.icon path {
+  fill: var(--gray11);
+}
+
 .notesList {
   @apply flex flex-col flex-wrap content-between;
 }
