@@ -12,3 +12,7 @@ export const removeTag = action(
   (store, tagToRemove) =>
     store.set(store.get().filter((tag) => tagToRemove !== tag))
 )
+
+export const clearTags = action(selectedTags, 'clearTags', (store) =>
+  store.set([])
+)
