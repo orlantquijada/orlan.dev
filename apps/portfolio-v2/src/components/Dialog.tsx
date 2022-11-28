@@ -4,7 +4,7 @@ import * as DialogPrimitive from '@radix-ui/react-dialog'
 
 const contentStyles = cva(
   [
-    'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[90vw] max-w-[570px] max-h-[80vh] p-8',
+    'fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100vw-(24px*2))] max-w-[570px] max-h-[80vh] p-8',
     'shadow-sm rounded-2xl border',
     'z-50',
     'data-[state=open]:motion-safe:animate-showContent data-[state=closed]:motion-safe:animate-hideContent',
