@@ -46,14 +46,14 @@ export default function NotesList(props: Props) {
         {filtered.map((note) => (
           <MotionNoteCard
             {...note}
-            key={`${note.title}1`}
+            key={note.title}
             isSelecting={isSelecting}
           />
         ))}
         {rest.map((note) => (
           <MotionNoteCard
             {...note}
-            key={`${note.title}2`}
+            key={note.title}
             isSelecting={isSelecting}
           />
         ))}
