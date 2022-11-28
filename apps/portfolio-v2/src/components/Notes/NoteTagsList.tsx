@@ -17,18 +17,17 @@ const variants: Variants = {
 
 type Props = {
   tags: string[]
-  tagsMap: TagMap
+  tagsGraph: TagMap
 }
 
 export default function NoteTagsList(props: Props) {
-  const { tags, tagsMap } = props
+  const { tags, tagsGraph } = props
   const _selectedTags = useStore(selectedTags)
   const isSelecting = Boolean(_selectedTags.length)
 
-  // ! TO FIX
-  const choices2 = [
-    ...new Set(_selectedTags.map((t) => [...(tagsMap.get(t) || '')]).flat()),
-  ]
+  const visibleTags = [
+    ...new Set(_selectedTags.flatMap((tag) => [...(tagsGraph.get(tag) || '')])),
+  ].filter((tag) => !_selectedTags.includes(tag))
 
   return (
     <div className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:max-w-[85%] justify-start">
@@ -70,7 +69,7 @@ export default function NoteTagsList(props: Props) {
                   <Tag tag={tag} initial={{ opacity: 1 }} />
                 </motion.span>
               ))
-            : choices2.map((tag) => (
+            : visibleTags.map((tag) => (
                 <motion.span layoutId={tag} key={tag + 1}>
                   <Tag tag={tag} />
                 </motion.span>

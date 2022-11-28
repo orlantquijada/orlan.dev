@@ -12,25 +12,23 @@ export function getNoteFilename(file: string) {
 
 export type TagMap = Map<string, Set<string>>
 
-// ! TO FIX
-export function buildTagMap(...noteTags: string[][]): TagMap {
-  const categoryGraph: TagMap = new Map()
+export function buildTagGraph(...noteTags: string[][]): TagMap {
+  const tagGraph: TagMap = new Map()
 
   for (const tags of noteTags) {
     for (const tag of tags) {
-      const _tag = categoryGraph.get(tag)
+      const node = tagGraph.get(tag)
 
-      // build nodes
-      if (!_tag) categoryGraph.set(tag, new Set(tags.filter((t) => t !== tag)))
+      if (!node) tagGraph.set(tag, new Set(tags.filter((_tag) => _tag !== tag)))
       else {
-        for (const t of tags) {
-          if (t !== tag) _tag.add(t)
+        for (const _tag of tags) {
+          if (_tag !== tag) node.add(_tag)
         }
       }
     }
   }
 
-  return categoryGraph
+  return tagGraph
 }
 
 export function intersectionSet<T>(s1: Set<T>, s2: Set<T>): Set<T> {
