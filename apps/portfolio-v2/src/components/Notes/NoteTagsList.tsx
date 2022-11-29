@@ -1,4 +1,4 @@
-import type { ComponentProps } from 'react'
+import { ComponentProps, forwardRef } from 'react'
 import { useStore } from '@nanostores/react'
 import { AnimatePresence, LayoutGroup, motion, Variants } from 'framer-motion'
 import { ReactComponent as Close } from '@/icons/cross.svg'
@@ -12,6 +12,18 @@ import styles from './styles.module.css'
 const variants: Variants = {
   fadeOut: {
     opacity: 0,
+  },
+  slideIn: {
+    // x: -32,
+    x: -4,
+    marginLeft: -32,
+    justifyContent: 'flex-end',
+  },
+}
+
+const tagTextVariants: Variants = {
+  slideIn: {
+    paddingLeft: 28,
   },
 }
 
@@ -30,7 +42,7 @@ export default function NoteTagsList(props: Props) {
   ].filter((tag) => !_selectedTags.includes(tag))
 
   return (
-    <div className="flex flex-wrap gap-2 sm:gap-3 mt-6 sm:max-w-[85%] justify-start">
+    <div className="flex flex-wrap gap-2 mt-6 sm:max-w-[85%] justify-start">
       <LayoutGroup>
         <AnimatePresence mode="popLayout">
           {isSelecting ? (
@@ -51,28 +63,44 @@ export default function NoteTagsList(props: Props) {
             </Chip>
           )}
 
-          {_selectedTags.map((tag) => (
-            <motion.span layoutId={tag} key={tag + 2}>
-              <Tag tag={tag} />
-            </motion.span>
-          ))}
+          {_selectedTags.map((tag, index) =>
+            index === 0 ? (
+              <Tag
+                tag={tag}
+                variants={variants}
+                layoutId={tag}
+                key={tag}
+                style={{ zIndex: 5 - index }}
+              />
+            ) : (
+              <Tag
+                tag={tag}
+                layoutId={tag}
+                variants={variants}
+                animate="slideIn"
+                key={tag}
+                style={{
+                  backgroundColor: 'var(--gray11)',
+                  borderColor: 'var(--gray12)',
+                  zIndex: 5 - index,
+                }}
+              />
+            )
+          )}
 
           {!isSelecting
             ? tags.map((tag) => (
-                <motion.span
+                <Tag
+                  tag={tag}
+                  initial={{ opacity: 1 }}
                   layoutId={tag}
                   key={tag}
                   variants={variants}
-                  initial={{ opacity: 1 }}
                   exit="fadeOut"
-                >
-                  <Tag tag={tag} initial={{ opacity: 1 }} />
-                </motion.span>
+                />
               ))
             : visibleTags.map((tag) => (
-                <motion.span layoutId={tag} key={tag + 1}>
-                  <Tag tag={tag} />
-                </motion.span>
+                <Tag tag={tag} variants={variants} layoutId={tag} key={tag} />
               ))}
         </AnimatePresence>
       </LayoutGroup>
@@ -80,7 +108,10 @@ export default function NoteTagsList(props: Props) {
   )
 }
 
-function Tag(props: { tag: string } & ComponentProps<typeof motion.button>) {
+const Tag = forwardRef<
+  HTMLButtonElement,
+  { tag: string } & ComponentProps<typeof motion.button>
+>((props, ref) => {
   const { tag, ...rest } = props
   const _selectedTags = useStore(selectedTags)
   const isSelected = _selectedTags.includes(tag)
@@ -93,15 +124,14 @@ function Tag(props: { tag: string } & ComponentProps<typeof motion.button>) {
     >
       <motion.button
         {...rest}
-        onClick={(e) => {
+        ref={ref}
+        onClick={() => {
           if (isSelected) removeTag(tag)
           else addTag(tag)
-
-          if (rest.onClick) rest.onClick(e)
         }}
       >
-        {tag}
+        <motion.span variants={tagTextVariants}>{tag}</motion.span>
       </motion.button>
     </Chip>
   )
-}
+})
