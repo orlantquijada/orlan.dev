@@ -117,6 +117,10 @@ const Tag = forwardRef<
     >
       <motion.button
         {...rest}
+        style={{
+          borderRadius: 999,
+          ...rest.style,
+        }}
         ref={ref}
         onClick={() => {
           if (isSelected) removeTag(tag)
