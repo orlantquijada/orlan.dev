@@ -13,9 +13,9 @@ const variants: Variants = {
   fadeOut: {
     opacity: 0,
   },
-  slideIn: {
-    x: -4,
-  },
+  slideIn: (custom) => ({
+    x: -4 * custom,
+  }),
 }
 
 type Props = {
@@ -65,13 +65,12 @@ export default function NoteTagsList(props: Props) {
           ) : (
             <Tag
               tag={tag}
+              custom={index}
               layoutId={tag}
               variants={variants}
               animate="slideIn"
               key={tag}
               style={{
-                backgroundColor: 'var(--gray11)',
-                borderColor: 'var(--gray12)',
                 zIndex: 5 - index,
 
                 paddingLeft: 36,
