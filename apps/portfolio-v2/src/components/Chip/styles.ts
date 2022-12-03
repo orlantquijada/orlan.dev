@@ -16,7 +16,7 @@ export const chipStyles = cva(
       color: {
         gray: 'border-gray6 hover:border-gray7 bg-gray1 hover:bg-gray3 text-gray11',
         primary:
-          'border-gray10 bg-gray12 dark:bg-gray12 hover:bg-gray12 dark:hover:bg-gray11 text-gray1',
+          'border-gray12 bg-gray12 dark:bg-gray12 hover:bg-gray12 dark:hover:bg-gray11 text-gray1',
       },
       transluscent: {
         true: 'dark:border-grayA4 dark:bg-grayA3 dark:hover:bg-grayA3 dark:hover:border-grayA10 dark:text-gray12',

@@ -35,6 +35,8 @@ export function intersectionSet<T>(s1: Set<T>, s2: Set<T>): Set<T> {
   return new Set([...s1].filter((x) => s2.has(x)))
 }
 
+// Node Neighborhood Intersection
+// http://olizardo.bol.ucla.edu/classes/soc-111/lessons-winter-2022/2-lesson-graph-theory.html#node-neighborhood-intersection
 export function getNeighborhoodsIntersection(
   graph: TagGraphMap,
   nodes: string[]
