@@ -121,6 +121,8 @@ const Tag = forwardRef<
       <motion.button
         {...rest}
         style={{
+          // fix to distorition on animation (border-radius distorts if size animates)
+          // solution is to set style inline
           borderRadius: 999,
           ...rest.style,
         }}
