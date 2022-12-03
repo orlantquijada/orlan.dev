@@ -5,7 +5,7 @@ import { ReactComponent as Close } from '@/icons/cross.svg'
 
 import Chip from '../Chip/Chip'
 import { addTag, clearTags, removeTag, selectedTags } from '@/stores/notes'
-import type { TagMap } from '@/lib/notes'
+import { getNeighborhoodsIntersection, type TagGraphMap } from '@/lib/notes'
 
 import styles from './styles.module.css'
 
@@ -20,7 +20,7 @@ const variants: Variants = {
 
 type Props = {
   tags: string[]
-  tagsGraph: TagMap
+  tagsGraph: TagGraphMap
 }
 
 export default function NoteTagsList(props: Props) {
@@ -28,12 +28,10 @@ export default function NoteTagsList(props: Props) {
   const _selectedTags = useStore(selectedTags)
   const isSelecting = Boolean(_selectedTags.length)
 
-  const visibleTags = [
-    ...new Set(_selectedTags.flatMap((tag) => [...(tagsGraph.get(tag) || '')])),
-  ].filter((tag) => !_selectedTags.includes(tag))
+  const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags)
 
   return (
-    <div className="flex flex-wrap gap-2 mt-6 sm:max-w-[85%] justify-start">
+    <div className="flex flex-wrap gap-2 md:gap-y-3 mt-6 sm:max-w-[85%] justify-start">
       <AnimatePresence mode="popLayout">
         {isSelecting ? (
           <Chip asChild>
@@ -93,7 +91,13 @@ export default function NoteTagsList(props: Props) {
               />
             ))
           : visibleTags.map((tag) => (
-              <Tag tag={tag} variants={variants} layoutId={tag} key={tag} />
+              <Tag
+                tag={tag}
+                variants={variants}
+                layoutId={tag}
+                key={tag}
+                exit="fadeOut"
+              />
             ))}
       </AnimatePresence>
     </div>

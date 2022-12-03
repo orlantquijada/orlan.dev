@@ -1,10 +1,10 @@
-import type { NoteFrontmatter, TagMap } from '@/lib/notes'
+import type { NoteFrontmatter, TagGraphMap } from '@/lib/notes'
 import NotesList from './NotesList'
 import NoteTagsList from './NoteTagsList'
 
 type Props = {
   tags: string[]
-  tagsGraph: TagMap
+  tagsGraph: TagGraphMap
   notes: Array<NoteFrontmatter & { href: string }>
 }
 

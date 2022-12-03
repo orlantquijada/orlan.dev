@@ -10,10 +10,10 @@ export function getNoteFilename(file: string) {
   return split[split.length - 1]?.split('.')[0]
 }
 
-export type TagMap = Map<string, Set<string>>
+export type TagGraphMap = Map<string, Set<string>>
 
-export function buildTagGraph(...noteTags: string[][]): TagMap {
-  const tagGraph: TagMap = new Map()
+export function buildTagGraph(...noteTags: string[][]): TagGraphMap {
+  const tagGraph: TagGraphMap = new Map()
 
   for (const tags of noteTags) {
     for (const tag of tags) {
@@ -33,4 +33,18 @@ export function buildTagGraph(...noteTags: string[][]): TagMap {
 
 export function intersectionSet<T>(s1: Set<T>, s2: Set<T>): Set<T> {
   return new Set([...s1].filter((x) => s2.has(x)))
+}
+
+export function getNeighborhoodsIntersection(
+  graph: TagGraphMap,
+  nodes: string[]
+) {
+  if (nodes.length === 0) return []
+
+  let intersection = graph.get(nodes[0] as string) as Set<string>
+  for (const node of nodes) {
+    intersection = intersectionSet(intersection, graph.get(node) as Set<string>)
+  }
+
+  return [...intersection]
 }
