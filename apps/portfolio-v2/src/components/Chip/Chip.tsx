@@ -8,7 +8,7 @@ export type ChipVariantProps = VariantProps<typeof chipStyles>
 
 type Props = ChipVariantProps & {
   children: ReactNode
-  className?: string
+  className?: string | undefined
   asChild?: boolean
 }
 

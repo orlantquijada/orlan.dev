@@ -53,3 +53,7 @@
     order: 3;
   }
 }
+
+.chip:not(:last-of-type) {
+  box-shadow: 0 0 0 1px var(--gray1);
+}
