@@ -13,7 +13,7 @@
 
 
 .notesList > * {
-  @apply w-full sm:w-[49%] md:w-[32%] mb-3 order-1;
+  @apply w-full sm:w-[49%] md:w-[32%] mb-[var(--mason-mb)] order-1;
 }
 
 @media (min-width: 640px) {

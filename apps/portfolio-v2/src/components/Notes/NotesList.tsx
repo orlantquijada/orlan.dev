@@ -12,6 +12,9 @@ type Props = { notes: Omit<Note, 'selected'>[]; className?: string }
 
 // estimated height per note
 const HEIGHT = 100
+const CARD_MARGIN_BOTTOM = 12
+
+const toRem = (num: number) => `${num / 16}rem`
 
 export default function NotesList(props: Props) {
   const { notes, className } = props
@@ -31,13 +34,23 @@ export default function NotesList(props: Props) {
   }
 
   // fixed height is needed (relative height will cause for the container to assume 100% height for its height)
-  const smHeight = `${Math.ceil(notes.length / 2) * HEIGHT}px`
-  const mdHeight = `${Math.ceil(notes.length / 3) * HEIGHT}px`
+  const smHeight = toRem(
+    Math.ceil(notes.length / 2) * (HEIGHT + CARD_MARGIN_BOTTOM)
+  )
+  const mdHeight = toRem(
+    Math.ceil(notes.length / 3) * (HEIGHT + CARD_MARGIN_BOTTOM)
+  )
 
   return (
     <div
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      style={{ '--smHeight': smHeight, '--mdHeight': mdHeight } as any}
+      style={
+        {
+          '--smHeight': smHeight,
+          '--mdHeight': mdHeight,
+          '--mason-mb': toRem(CARD_MARGIN_BOTTOM),
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } as any
+      }
       className={cx(className, styles.notesList, [
         'h-full sm:h-[var(--smHeight)] md:h-[var(--mdHeight)]',
       ])}
