@@ -131,7 +131,7 @@ importers:
       eslint-config-custom: workspace:*
       eslint-plugin-astro: ^0.21.0
       eslint-plugin-jsx-a11y: ^6.6.1
-      framer-motion: ^7.6.6
+      framer-motion: ^7.6.18
       nanostores: ^0.7.1
       prettier: ^2.7.1
       prettier-plugin-astro: ^0.7.0
@@ -154,7 +154,7 @@ importers:
       astro-icon: 0.8.0
       cva: /class-variance-authority/0.3.0
       date-fns: 2.29.1
-      framer-motion: 7.6.6_3cfkrkynzts6qfsozcm5ednswi
+      framer-motion: 7.6.18_3cfkrkynzts6qfsozcm5ednswi
       nanostores: 0.7.1
       react: 18.2.0
       react-dom: 18.1.0_react@18.2.0
@@ -6794,8 +6794,8 @@ packages:
       '@emotion/is-prop-valid': 0.8.8
     dev: false
 
-  /framer-motion/7.6.6_3cfkrkynzts6qfsozcm5ednswi:
-    resolution: {integrity: sha512-7ti5mEzhTRBFCMlKs8Zxu9dWtVattpj2jPCNc4jaz4d7bDFekClALaBzmi1pGOKzsOWJsKMeV5ckIkD1DLI9lw==}
+  /framer-motion/7.6.18_3cfkrkynzts6qfsozcm5ednswi:
+    resolution: {integrity: sha512-+njLqmMZBqf+GpIMRkuC7s9A9KrvOfMXm+B/yscKG+/SKAA+qdQFl/3ACU2tAhN7UFau1HuB/vBa/jrWBKVvDg==}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -6803,7 +6803,6 @@ packages:
       '@motionone/dom': 10.13.1
       framesync: 6.1.2
       hey-listen: 1.0.8
-      popmotion: 11.0.5
       react: 18.2.0
       react-dom: 18.1.0_react@18.2.0
       style-value-types: 5.1.2
@@ -9250,15 +9249,6 @@ packages:
       framesync: 6.0.1
       hey-listen: 1.0.8
       style-value-types: 5.0.0
-      tslib: 2.4.0
-    dev: false
-
-  /popmotion/11.0.5:
-    resolution: {integrity: sha512-la8gPM1WYeFznb/JqF4GiTkRRPZsfaj2+kCxqQgr2MJylMmIKUwBfWW8Wa5fml/8gmtlD5yI01MP1QCZPWmppA==}
-    dependencies:
-      framesync: 6.1.2
-      hey-listen: 1.0.8
-      style-value-types: 5.1.2
       tslib: 2.4.0
     dev: false
 
