@@ -135,6 +135,7 @@ importers:
       nanostores: ^0.7.1
       prettier: ^2.7.1
       prettier-plugin-astro: ^0.7.0
+      prettier-plugin-tailwindcss: ^0.2.0
       react: ^18.0.0
       react-dom: ^18.0.0
       svgo: '2.8'
@@ -169,6 +170,7 @@ importers:
       eslint-plugin-jsx-a11y: 6.6.1_eslint@8.27.0
       prettier: 2.7.1
       prettier-plugin-astro: 0.7.0
+      prettier-plugin-tailwindcss: 0.2.0_prettier@2.7.1
       svgo: 2.8.0
 
   packages/eslint-config:
@@ -9400,6 +9402,15 @@ packages:
       prettier: 2.7.1
       sass-formatter: 0.7.5
       synckit: 0.8.4
+
+  /prettier-plugin-tailwindcss/0.2.0_prettier@2.7.1:
+    resolution: {integrity: sha512-Ruqig/mdWCSpqdq9WK44nrmqM4BFWTzBPhPGwC5NK3coV9eZntEQPB84MGZbjAg0XQU02jVRHXNRPREBzxvM+A==}
+    engines: {node: '>=12.17.0'}
+    peerDependencies:
+      prettier: '>=2.2.0'
+    dependencies:
+      prettier: 2.7.1
+    dev: true
 
   /prettier/2.7.1:
     resolution: {integrity: sha512-ujppO+MkdPqoVINuDFDRLClm7D78qbDt0/NR+wp5FqEZOoTNAjPHWj17QRhu7geIHJfcNhRk1XVQmF8Bp3ye+g==}
