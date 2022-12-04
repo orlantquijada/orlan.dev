@@ -31,7 +31,7 @@ export default function NoteTagsList(props: Props) {
   const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags)
 
   return (
-    <div className="flex flex-wrap gap-2 md:gap-y-3 mt-6 sm:max-w-[85%] justify-start">
+    <div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
       <AnimatePresence mode="popLayout">
         {isSelecting ? (
           <Chip asChild>
