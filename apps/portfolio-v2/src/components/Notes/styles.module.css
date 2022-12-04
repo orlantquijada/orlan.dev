@@ -54,6 +54,6 @@
   }
 }
 
-.chip:not(:last-of-type) {
-  box-shadow: 0 0 0 1px var(--gray1);
+.chip[data-selected]:not(:last-of-type) {
+  box-shadow: 0 0 0 2px var(--gray1);
 }
