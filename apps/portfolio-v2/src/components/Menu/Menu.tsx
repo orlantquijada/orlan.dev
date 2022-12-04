@@ -50,7 +50,7 @@ export function Menu() {
                 boxShadow: 'none',
               }}
               className={buttonStyles({
-                className: 'flex items-center gap-3 z-10',
+                className: 'z-10 flex items-center gap-3',
                 motionSafe: false,
               })}
             >
@@ -127,7 +127,7 @@ function MenuIcon() {
   }, [])
 
   return (
-    <svg viewBox="0 0 24 24" className="w-[1em] h-[1em] stroke-gray10">
+    <svg viewBox="0 0 24 24" className="h-[1em] w-[1em] stroke-gray10">
       <motion.path
         d="M1 8H23"
         strokeWidth="2"

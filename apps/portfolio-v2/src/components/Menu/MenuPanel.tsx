@@ -16,19 +16,19 @@ import styles from './styles.module.css'
 
 export function MenuPanel() {
   return (
-    <div className="flex flex-col gap-8 mt-10">
+    <div className="mt-10 flex flex-col gap-8">
       <Nav />
 
       <div>
-        <h4 className="text-gray10 dark:text-gray11 mb-3">Connect</h4>
+        <h4 className="mb-3 text-gray10 dark:text-gray11">Connect</h4>
         <div className="flex flex-col">
           <ConnectLink
-            Icon={<Twitter className="w-5 h-5" />}
+            Icon={<Twitter className="h-5 w-5" />}
             label="Twitter"
             href="https://twitter.com/orlantquijada"
           />
           <ConnectLink
-            Icon={<GitHub className="w-5 h-5" />}
+            Icon={<GitHub className="h-5 w-5" />}
             label="GitHub"
             href="https://github.com/orlantquijada"
           />
@@ -37,14 +37,14 @@ export function MenuPanel() {
 
       <button
         className={menuItemStyles({
-          className: 'text-sm text-left transition-all hover:translate-x-1',
+          className: 'text-left text-sm transition-all hover:translate-x-1',
         })}
         onClick={() => {
           if (isBrowser) toggleTheme()
         }}
       >
         <div className="flex justify-center">
-          <Logo className="w-4 h-4" />
+          <Logo className="h-4 w-4" />
         </div>
         Toggle Theme
       </button>
@@ -60,7 +60,7 @@ function SendButton() {
       <button
         className={menuItemStyles({
           className:
-            '-mx-8 px-8 text-left border-t border-gray7 transition-colors hover:bg-grayA3',
+            '-mx-8 border-t border-gray7 px-8 text-left transition-colors hover:bg-grayA3',
           intent: 'sendBtn',
         })}
       >
@@ -81,7 +81,7 @@ function MenuItem(props: { Icon: ReactNode; children: ReactNode }) {
       })}
     >
       {children}
-      <div className="transition-all opacity-0 -mx-2 group-hover:translate-x-1 group-hover:opacity-100">
+      <div className="-mx-2 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
         {Icon}
       </div>
     </div>
@@ -93,7 +93,7 @@ function ConnectLink(props: { href: string; label: string; Icon: ReactNode }) {
 
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
-      <MenuItem Icon={<ArrowTopRight className={`${styles.icon} w-4 h-4`} />}>
+      <MenuItem Icon={<ArrowTopRight className={`${styles.icon} h-4 w-4`} />}>
         {Icon}
         {label}
       </MenuItem>
@@ -121,7 +121,7 @@ function Nav() {
               <MenuItem
                 Icon={
                   <ArrowRight
-                    className={`text-gray10 w-4 h-4 ${styles.icon}`}
+                    className={`h-4 w-4 text-gray10 ${styles.icon}`}
                   />
                 }
               >

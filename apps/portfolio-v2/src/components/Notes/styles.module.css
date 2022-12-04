@@ -11,9 +11,8 @@
   @apply flex flex-col flex-wrap content-between;
 }
 
-
 .notesList > * {
-  @apply w-full sm:w-[49%] md:w-[32%] mb-[var(--mason-mb)] order-1;
+  @apply order-1 mb-[var(--mason-mb)] w-full sm:w-[49%] md:w-[32%];
 }
 
 @media (min-width: 640px) {

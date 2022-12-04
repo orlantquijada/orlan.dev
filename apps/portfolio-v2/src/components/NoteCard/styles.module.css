@@ -24,7 +24,7 @@
 }
 
 .noteCard::before {
-  @apply transition-opacity opacity-0 absolute inset-0 rounded-[inherit];
+  @apply absolute inset-0 rounded-[inherit] opacity-0 transition-opacity;
   content: '';
   --shadow-color: 0deg 0% 60%;
   --shadow: 0px 1px 1.5px hsl(var(--shadow-color) / 0),

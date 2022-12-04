@@ -29,7 +29,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
   return (
     <Dialog.Root trigger={children}>
       <div className="flex flex-col gap-6 md:gap-8">
-        <Dialog.Title className="text-xl md:text-2xl font-medium">
+        <Dialog.Title className="text-xl font-medium md:text-2xl">
           Contact
         </Dialog.Title>
 
@@ -63,7 +63,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
             </div>
           </ContactDetail>
 
-          <div className="w-full h-auto border border-gray6" />
+          <div className="h-auto w-full border border-gray6" />
 
           <ContactDetail
             title="Stay in touch"
@@ -90,7 +90,7 @@ function Social(props: ComponentProps<'a'>) {
   return (
     <a
       {...props}
-      className="hover:bg-grayA3 p-1 pr-2 rounded-full transition-colors flex items-center gap-1 outline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
+      className="flex items-center gap-1 rounded-full p-1 pr-2 outline-offset-2 transition-colors hover:bg-grayA3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
       target="_blank"
       rel="noopener noreferrer"
     />
