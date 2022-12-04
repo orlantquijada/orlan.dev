@@ -26,7 +26,7 @@
     "astro-icon": "0.8",
     "cva": "npm:class-variance-authority@^0.3.0",
     "date-fns": "^2.29.1",
-    "framer-motion": "^7.6.6",
+    "framer-motion": "^7.6.18",
     "nanostores": "^0.7.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
