@@ -121,6 +121,7 @@ const Tag = forwardRef<
       <motion.button
         {...rest}
         className={_selectedTags.length > 1 ? styles.chip : ''}
+        data-selected={isSelected}
         style={{
           // fix to distorition on animation (border-radius distorts if size animates)
           // solution is to set style inline
