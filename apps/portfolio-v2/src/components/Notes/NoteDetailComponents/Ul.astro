@@ -6,12 +6,17 @@ type Props = HTMLAttributes<'ul'>
 const props = Astro.props
 ---
 
-<ul {...props}>
+<ul {...props} class:list={['ul', props.class]}>
   <slot />
 </ul>
 
 <style>
-  ul li::before {
+  :global(.ul li) {
+    @apply pl-8 relative;
+  }
+
+  :global(.ul li::before) {
     content: '— ';
+    @apply text-gray11 absolute left-0 top-0;
   }
 </style>

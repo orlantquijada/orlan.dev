@@ -6,12 +6,26 @@ type Props = HTMLAttributes<'ol'>
 const props = Astro.props
 ---
 
-<ol {...props}>
+<ol {...props} class:list={['ol', props.class]}>
   <slot />
 </ol>
 
 <style>
-  ol {
-    list-style: decimal;
+  :global(.ol) {
+    list-style: none;
+    counter-reset: counts;
+
+    @apply flex flex-col gap-2;
+  }
+
+  :global(.ol > li) {
+    @apply pl-8 relative;
+  }
+
+  :global(.ol li::before) {
+    content: counter(counts) '. ';
+    counter-increment: counts;
+
+    @apply text-gray11 absolute left-0 top-0;
   }
 </style>
