@@ -77,4 +77,8 @@ const { frontmatter, Content } = Astro.props
     content: '·';
     margin-inline: 0.25rem;
   }
+
+  :global(article > :where(:not(:last-child))) {
+    margin-bottom: 1rem;
+  }
 </style>
