@@ -1,0 +1,59 @@
+---
+title: Arc-inspired lines thingy
+tags: ['css', 'snippets']
+publishedAt: 2022-12-1
+---
+
+import Demo from '@/playgrounds/notes/arc/Demo.astro'
+
+<Demo />
+
+```css
+.arc-lines-thing {
+  --stripe-1: #fafafa;
+  --stripe-2: #050505;
+
+  background-image: linear-gradient(
+    -45deg,
+    var(--stripe-1) 25%,
+    var(--stripe-2) 25%,
+    var(--stripe-2) 50%,
+    var(--stripe-1) 50%,
+    var(--stripe-1) 75%,
+    var(--stripe-2) 75%,
+    var(--stripe-2) 100%
+  );
+  background-size: 4px 4px;
+}
+```
+ 
+# Layout Changes
+
+A layout change happens when an element on the page changes position in a way that affects other elements on the page. For example, changing the width or height of an element is a layout change because any neighbouring element has to move to make room for the element's new size:
+
+- hey
+- hey
+- you
+- you
+
+# Animating With CSS
+
+So how would we animate layout changes? One way is by animating the property directly using something like CSS transitions:
+
+To be honest, in many cases, we can end the post here!
+
+But there are two main downsides with CSS animations that we should be aware of:
+
+1. You can't animate everything. For example, you can't animate a change in justify-content because justify-content is not an animatable property.
+2. There may be a performance trade-off. CSS animations that involve layout changes are generally more expensive than transform-based animations, so you might find that your animations are not as smooth on lower-end devices.
+
+Let's talk about the performance problem for a second.
+
+## Performance 
+
+But there are two main downsides with CSS animations that we should be aware of:
+
+1. You can't animate everything. For example, you can't animate a change in justify-content because justify-content is not an animatable property.
+2. There may be a performance trade-off. CSS animations that involve layout changes are generally more expensive than transform-based animations, so you might find that your animations are not as smooth on lower-end devices.
+
+Let's talk about the performance problem for a second.
