@@ -11,6 +11,7 @@ import { Quote, quoteComponents } from './QuoteMDXComponents'
 import { bodyComponents } from './BodyMDXComponents'
 import { Text } from '@/components/Text'
 import { css, fadeIn, styled } from '@stitches.config'
+import LikeWrapper from './LikeWrapper'
 
 interface Props {
   daily: Daily
@@ -33,55 +34,57 @@ export default function DailyDetail({ daily }: Props) {
   )
 
   return (
-    <Wrapper>
-      <header>
-        <HeaderCover />
-        <HeaderContentWrapper>
-          <HeaderContent>
-            <Title components={headerTitleComponents} />
-            <Text css={{ flexShrink: 0 }}>{dateFormat}</Text>
-          </HeaderContent>
-        </HeaderContentWrapper>
-      </header>
-      <Main ref={wrapperRef}>
-        <Box
-          css={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            alignSelf: 'center',
-            mb: '2rem',
-          }}
-        >
-          <Text>{dateFormat}</Text>
-          <Title components={titleComponents} />
-        </Box>
-        <Quote>
-          <QuoteMDX components={quoteComponents} />
-        </Quote>
-        <Text
-          as="address"
-          css={{ alignSelf: 'flex-end', mt: '0.5rem', fontStyle: 'normal' }}
-        >
-          — {daily.author}, <em>{daily.book}</em>, {daily.section}
-        </Text>
-        <Box as="article" css={{ mt: '2.5rem', w: '100%' }}>
-          <Body components={bodyComponents} />
-        </Box>
-      </Main>
-      <Footer>
-        {!isLoading ? (
-          <Link href={`/${daily.month.toLowerCase()}`} passHref>
-            <FooterIconButton
-              show={show || initialOpacity === 1}
-              aria-label="Go Back"
-            >
-              <ArrowLeftIcon className={footerIconStyles()} />
-            </FooterIconButton>
-          </Link>
-        ) : null}
-      </Footer>
-    </Wrapper>
+    <LikeWrapper>
+      <Wrapper>
+        <header>
+          <HeaderCover />
+          <HeaderContentWrapper>
+            <HeaderContent>
+              <Title components={headerTitleComponents} />
+              <Text css={{ flexShrink: 0 }}>{dateFormat}</Text>
+            </HeaderContent>
+          </HeaderContentWrapper>
+        </header>
+        <Main ref={wrapperRef}>
+          <Box
+            css={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              alignSelf: 'center',
+              mb: '2rem',
+            }}
+          >
+            <Text>{dateFormat}</Text>
+            <Title components={titleComponents} />
+          </Box>
+          <Quote>
+            <QuoteMDX components={quoteComponents} />
+          </Quote>
+          <Text
+            as="address"
+            css={{ alignSelf: 'flex-end', mt: '0.5rem', fontStyle: 'normal' }}
+          >
+            — {daily.author}, <em>{daily.book}</em>, {daily.section}
+          </Text>
+          <Box as="article" css={{ mt: '2.5rem', w: '100%' }}>
+            <Body components={bodyComponents} />
+          </Box>
+        </Main>
+        <Footer>
+          {!isLoading ? (
+            <Link href={`/${daily.month.toLowerCase()}`} passHref>
+              <FooterIconButton
+                show={show || initialOpacity === 1}
+                aria-label="Go Back"
+              >
+                <ArrowLeftIcon className={footerIconStyles()} />
+              </FooterIconButton>
+            </Link>
+          ) : null}
+        </Footer>
+      </Wrapper>
+    </LikeWrapper>
   )
 }
 
