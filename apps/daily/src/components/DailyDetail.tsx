@@ -72,7 +72,10 @@ export default function DailyDetail({ daily }: Props) {
       <Footer>
         {!isLoading ? (
           <Link href={`/${daily.month.toLowerCase()}`} passHref>
-            <FooterIconButton show={show || initialOpacity === 1}>
+            <FooterIconButton
+              show={show || initialOpacity === 1}
+              aria-label="Go Back"
+            >
               <ArrowLeftIcon className={footerIconStyles()} />
             </FooterIconButton>
           </Link>
