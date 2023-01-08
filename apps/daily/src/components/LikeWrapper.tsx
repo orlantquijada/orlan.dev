@@ -3,11 +3,17 @@ import { ReactNode, useRef, useState } from 'react'
 import Image from 'next/image'
 import Heart from '../../public/heart.png'
 import { motion } from 'framer-motion'
+import { likeDaily } from '@/lib/like'
+import { Daily } from 'contentlayer/generated'
 
 const DELAY = 300
 const HEART_SIZE = 130
 
-export default function LikeWrapper({ children }: { children: ReactNode }) {
+export default function LikeWrapper({
+  children,
+  month,
+  day,
+}: { children: ReactNode } & Pick<Daily, 'month' | 'day'>) {
   const timer = useRef<NodeJS.Timer | null>(null)
 
   const [open, setOpen] = useState<
@@ -28,6 +34,7 @@ export default function LikeWrapper({ children }: { children: ReactNode }) {
             rotate: 0,
             key: new Date().getTime(),
           })
+          likeDaily({ month, day })
         } else {
           timer.current = setTimeout(() => {
             timer.current = null

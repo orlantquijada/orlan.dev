@@ -34,7 +34,7 @@ export default function DailyDetail({ daily }: Props) {
   )
 
   return (
-    <LikeWrapper>
+    <LikeWrapper day={daily.day} month={daily.month}>
       <Wrapper>
         <header>
           <HeaderCover />
