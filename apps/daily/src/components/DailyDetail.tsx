@@ -4,6 +4,7 @@ import { useMDXComponent } from 'next-contentlayer/hooks'
 import { format } from 'date-fns'
 import { ArrowLeftIcon } from '@radix-ui/react-icons'
 import { type Daily } from 'contentlayer/generated'
+import Heart from '@/components/HeartSvg'
 
 import { headerTitleComponents } from './HeaderTitleMDXComponents'
 import { titleComponents } from './TitleMDXComponents'
@@ -41,7 +42,12 @@ export default function DailyDetail({ daily }: Props) {
           <HeaderContentWrapper>
             <HeaderContent>
               <Title components={headerTitleComponents} />
-              <Text css={{ flexShrink: 0 }}>{dateFormat}</Text>
+              <Box css={{ display: 'flex', alignItems: 'center' }}>
+                <Text css={{ flexShrink: 0 }}>{dateFormat}</Text>
+                <Box css={{ display: 'flex' }}>
+                  <Heart />
+                </Box>
+              </Box>
             </HeaderContent>
           </HeaderContentWrapper>
         </header>

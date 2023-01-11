@@ -2,12 +2,14 @@ import { styled } from '@stitches.config'
 import { ReactNode, useRef, useState } from 'react'
 import Image from 'next/image'
 import Heart from '../../public/heart.png'
+// import Heart from '../../public/heart.svg'
 import { motion } from 'framer-motion'
 import { likeDaily } from '@/lib/like'
 import { Daily } from 'contentlayer/generated'
 
 const DELAY = 300
 const HEART_SIZE = 130
+const SKEW_DEG = 30
 
 export default function LikeWrapper({
   children,
@@ -52,7 +54,7 @@ export default function LikeWrapper({
             top: open.y,
             left: open.x,
             position: 'absolute',
-            rotate: `${getRandomInt(-25, 25)}deg`,
+            rotate: `${getRandomInt(-SKEW_DEG, SKEW_DEG)}deg`,
           }}
           css={{ width: HEART_SIZE, height: HEART_SIZE }}
           animate={{
