@@ -11,6 +11,7 @@ import { Quote, quoteComponents } from './QuoteMDXComponents'
 import { bodyComponents } from './BodyMDXComponents'
 import { Text } from '@/components/Text'
 import { css, fadeIn, styled } from '@stitches.config'
+import { Month, Months } from '@/lib/contentlayer'
 
 interface Props {
   daily: Daily
@@ -26,9 +27,11 @@ export default function DailyDetail({ daily }: Props) {
   const wrapperRef = useRef<any>()
   const [show, initialOpacity, isLoading] = useShowBackButton(wrapperRef)
 
-  // `2022` as a year is a random year to satisfy firefox Date constructor throwing on missing year
+  const year = new Date().getFullYear()
   const dateFormat = format(
-    new Date(`${daily.month} ${daily.day} 2022`),
+    new Date(
+      `${Months.indexOf(daily.month as Month) + 1}/${daily.day}/${year}`
+    ),
     'LLLL do'
   )
 
