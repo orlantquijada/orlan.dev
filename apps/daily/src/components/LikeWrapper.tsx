@@ -58,12 +58,14 @@ export default function LikeWrapper({
           }}
           css={{ width: HEART_SIZE, height: HEART_SIZE }}
           animate={{
-            scale: [1, 0.85, 1],
+            scale: [1, 0.85, 1, 1, 1.3],
             y: -120,
-            // opacity: 0.2,
             opacity: 0,
           }}
-          transition={{ scale: { duration: 0.2, delay: 0 }, delay: 0.3 }}
+          transition={{
+            scale: { delay: 0, times: [0, 0.15, 0.3, 0.5, 1] },
+            delay: 0.5,
+          }}
           key={open.key}
         >
           <Image
