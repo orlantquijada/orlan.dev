@@ -1,28 +1,24 @@
 ---
-import type { MDXInstance } from 'astro'
+import type { CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon'
 import { format } from 'date-fns'
 import { components } from '@/components/Notes/NoteDetailComponents/components.astro'
 import MetaData from '@/components/Notes/NoteDetailComponents/MetaData.astro'
 import { DEFAULT_DATE_FORMAT } from '@/utils/constants'
-import type { NoteFrontmatter } from '@/lib/notes'
 import Layout from './Layout.astro'
 
-type Props = MDXInstance<NoteFrontmatter>
+type Props = CollectionEntry<'notes'>
 
-const { frontmatter, Content } = Astro.props
+const { render, data } = Astro.props
+const { Content } = await render()
 ---
 
-<Layout title={frontmatter.title}>
+<Layout title={data.title}>
   <div class="grid place-items-start gap-2">
     <h1 class="text-3xl font-medium">
-      {frontmatter.title}
+      {data.title}
     </h1>
-    {
-      frontmatter.description ? (
-        <p class="md:max-w-[80%]">{frontmatter.description}</p>
-      ) : null
-    }
+    {data.description ? <p class="md:max-w-[80%]">{data.description}</p> : null}
   </div>
 
   <div class="flex gap-6">
@@ -32,7 +28,7 @@ const { frontmatter, Content } = Astro.props
       <ul class="flex items-center">
         <!-- TODO filter notes by tag link -->
         {
-          frontmatter.tags.map((tag) => (
+          data.tags.map((tag) => (
             <li class="tag">
               <a href="/notes" class="hover:underline">
                 {tag}
@@ -45,9 +41,7 @@ const { frontmatter, Content } = Astro.props
 
     <MetaData>
       <Icon name="clock" slot="icon" />
-      <span
-        >{format(new Date(frontmatter.publishedAt), DEFAULT_DATE_FORMAT)}</span
-      >
+      <span>{format(data.publishedAt, DEFAULT_DATE_FORMAT)}</span>
     </MetaData>
   </div>
 

@@ -1,0 +1,10 @@
+---
+title: Pull Changes from Template
+tags: ['git']
+publishedAt: 2022-12-26
+---
+
+1. `git remote add template [URL of the template repo]`
+2. `git fetch --all`
+3. `git merge --allow-unrelated-histories template/[branch to merge]`
+4. fix merge conflicts if there are any.
