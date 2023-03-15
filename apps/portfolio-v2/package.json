@@ -36,13 +36,14 @@
   "devDependencies": {
     "@typescript-eslint/parser": "^5.27.0",
     "astro-compress": "1.1.35",
-    "eslint": "^8.27.0",
+    "astro-eslint-parser": "^0.12.0",
+    "eslint": "^8.36.0",
     "eslint-config-custom": "workspace:*",
     "eslint-plugin-astro": "^0.24.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
-    "prettier": "^2.7.1",
+    "prettier": "^2.8.4",
     "prettier-plugin-astro": "^0.8.0",
-    "prettier-plugin-tailwindcss": "^0.2.0",
+    "prettier-plugin-tailwindcss": "^0.2.4",
     "svgo": "2.8"
   }
 }

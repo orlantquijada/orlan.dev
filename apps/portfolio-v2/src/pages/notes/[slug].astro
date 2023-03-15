@@ -1,22 +1,19 @@
 ---
-import type { MDXInstance } from 'astro'
-import { getNoteFilename, type NoteFrontmatter } from '@/lib/notes'
+import type { InferGetStaticPropsType } from 'astro'
 import NotesLayout from '@/layouts/NotesLayout.astro'
+import { getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
-  const notes = await Astro.glob<NoteFrontmatter>('../../data/notes/*.mdx')
+  const notes = await getCollection('notes')
   return notes.map((note) => ({
     params: {
-      slug: getNoteFilename(note.file),
+      slug: note.slug,
     },
     props: { note },
   }))
 }
 
-type Props = {
-  note: MDXInstance<NoteFrontmatter>
-}
-
+type Props = InferGetStaticPropsType<typeof getStaticPaths>
 const { note } = Astro.props
 ---
 
