@@ -1,17 +1,16 @@
 ---
 import NotesWrapper from '@/components/Notes/NotesWrapper'
 import Layout from '@/layouts/Layout.astro'
-import { getNoteFilename, NoteFrontmatter } from '@/lib/notes'
 import { buildTagGraph } from '@/lib/notes'
+import { getCollection } from 'astro:content'
 
-const notesData = await Astro.glob<NoteFrontmatter>('../data/notes/*.mdx')
+const notesData = await getCollection('notes')
 
 const notes = notesData.map((note) => ({
-  ...note.frontmatter,
-  href: `/notes/${getNoteFilename(note.url || '')}`,
+  ...note.data,
+  href: `/notes/${note.slug}`,
 }))
-
-const tagsPerNote = notesData.map((note) => note.frontmatter.tags)
+const tagsPerNote = notesData.map((note) => note.data.tags)
 
 const tags = [...new Set(tagsPerNote.flat())]
 const tagsGraph = buildTagGraph(...tagsPerNote)
