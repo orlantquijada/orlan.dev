@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type MutableRefObject } from 'react'
-import Link from 'next/link'
+// import Link from 'next/link'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 import { format } from 'date-fns'
-import { ArrowLeftIcon } from '@radix-ui/react-icons'
+import { ArrowLeftIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 import { type Daily } from 'contentlayer/generated'
 import Heart from '@/components/HeartSvg'
+import Share from '@/components/ShareSvg'
 
 import { headerTitleComponents } from './HeaderTitleMDXComponents'
 import { titleComponents } from './TitleMDXComponents'
@@ -14,6 +15,7 @@ import { Text } from '@/components/Text'
 import { css, fadeIn, styled } from '@stitches.config'
 import LikeWrapper from './LikeWrapper'
 import { Month, Months } from '@/lib/contentlayer'
+// import { isDailyLiked } from '@/lib/like'
 
 interface Props {
   daily: Daily
@@ -27,7 +29,8 @@ export default function DailyDetail({ daily }: Props) {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const wrapperRef = useRef<any>()
-  const [show, initialOpacity, isLoading] = useShowBackButton(wrapperRef)
+  // const [show, initialOpacity, isLoading] = useShowBackButton(wrapperRef)
+  const [, , isLoading] = useShowBackButton(wrapperRef)
 
   const year = new Date().getFullYear()
   const dateFormat = format(
@@ -36,6 +39,9 @@ export default function DailyDetail({ daily }: Props) {
     ),
     'LLLL do'
   )
+
+  // if (typeof localStorage === 'object')
+  // console.log(isDailyLiked({ day: daily.day, month: daily.month }))
 
   return (
     <LikeWrapper day={daily.day} month={daily.month}>
@@ -82,14 +88,39 @@ export default function DailyDetail({ daily }: Props) {
         </Main>
         <Footer>
           {!isLoading ? (
-            <Link href={`/${daily.month.toLowerCase()}`} passHref>
-              <FooterIconButton
-                show={show || initialOpacity === 1}
-                aria-label="Go Back"
+            <>
+              <Actions
+                css={{
+                  width: '4rem',
+                  borderRadius: '.5rem',
+                  backgroundColor: '$olive4',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
               >
-                <ArrowLeftIcon className={footerIconStyles()} />
-              </FooterIconButton>
-            </Link>
+                <SmallerFooterIconButton css={{ mt: '0.5rem' }}>
+                  <Heart className={footerIconStyles()} />
+                </SmallerFooterIconButton>
+                <SmallerFooterIconButton>
+                  <Share className={footerIconStyles()} />
+                </SmallerFooterIconButton>
+                <SmallerFooterIconButton css={{ mb: '0.5rem' }}>
+                  <ArrowLeftIcon className={footerIconStyles()} />
+                </SmallerFooterIconButton>
+                <SmallerFooterIconButton css={{ size: '4rem' }}>
+                  <DotsHorizontalIcon className={footerIconStyles()} />
+                </SmallerFooterIconButton>
+              </Actions>
+              {/* <Link href={`/${daily.month.toLowerCase()}`} passHref> */}
+              {/*   <FooterIconButton */}
+              {/*     show={show || initialOpacity === 1} */}
+              {/*     aria-label="Go Back" */}
+              {/*   > */}
+              {/*     <ArrowLeftIcon className={footerIconStyles()} /> */}
+              {/*   </FooterIconButton> */}
+              {/* </Link> */}
+            </>
           ) : null}
         </Footer>
       </Wrapper>
@@ -195,8 +226,7 @@ const HeaderContent = styled('div', {
 
 const Footer = styled('footer', {
   display: 'flex',
-  justifyContent: 'space-between',
-
+  flexDirection: 'column',
   position: 'fixed',
   bottom: '1rem',
   left: 0,
@@ -213,39 +243,49 @@ const Footer = styled('footer', {
     bottom: '2.5rem',
   },
 })
-const FooterIconButton = styled('a', {
+// const FooterIconButton = styled('a', {
+//   cursor: 'pointer',
+//   display: 'flex',
+//   alignItems: 'center',
+//   justifyContent: 'center',
+//   border: 'none',
+//   borderRadius: '0.5rem',
+//   size: 'var(--iconButtonSize)',
+//   backgroundColor: '$olive4',
+//   transition:
+//     'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+//   '-webkit-tap-highlight-color': 'transparent',
+
+//   '&:hover': { backgroundColor: '$olive5' },
+//   '&:active': { backgroundColor: '$olive6' },
+//   '&:focus': {
+//     '$$ring-offset': '2px',
+//     outline: 'none',
+//     boxShadow:
+//       '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
+//   },
+//   '&:hover, &:focus': { opacity: '1 !important' },
+
+//   variants: {
+//     show: {
+//       true: { opacity: 1 },
+//       false: { opacity: HIDDEN_OPACITY },
+//     },
+//   },
+// })
+const footerIconStyles = css({
+  color: '$textColor',
+  size: '1.25rem',
+})
+const Actions = styled('div', {})
+const SmallerFooterIconButton = styled('a', {
   cursor: 'pointer',
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
   border: 'none',
   borderRadius: '0.5rem',
-  size: 'var(--iconButtonSize)',
-  backgroundColor: '$olive4',
-  transition:
-    'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-  '-webkit-tap-highlight-color': 'transparent',
-
-  '&:hover': { backgroundColor: '$olive5' },
-  '&:active': { backgroundColor: '$olive6' },
-  '&:focus': {
-    '$$ring-offset': '2px',
-    outline: 'none',
-    boxShadow:
-      '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
-  },
-  '&:hover, &:focus': { opacity: '1 !important' },
-
-  variants: {
-    show: {
-      true: { opacity: 1 },
-      false: { opacity: HIDDEN_OPACITY },
-    },
-  },
-})
-const footerIconStyles = css({
-  color: '$textColor',
-  size: '1.25rem',
+  size: '3rem',
 })
 
 const Box = styled('div', {})

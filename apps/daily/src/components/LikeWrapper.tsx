@@ -56,7 +56,7 @@ export default function LikeWrapper({
             position: 'absolute',
             rotate: `${getRandomInt(-SKEW_DEG, SKEW_DEG)}deg`,
           }}
-          css={{ width: HEART_SIZE, height: HEART_SIZE }}
+          css={{ width: HEART_SIZE, height: HEART_SIZE, userSelect: 'none' }}
           animate={{
             scale: [1, 0.85, 1, 1, 1.3],
             y: -120,
