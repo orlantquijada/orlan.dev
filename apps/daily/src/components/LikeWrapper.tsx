@@ -1,21 +1,22 @@
 import { styled } from '@stitches.config'
-import { ReactNode, useRef, useState } from 'react'
+import { PropsWithChildren, useRef, useState } from 'react'
 import Image from 'next/image'
 import Heart from '../../public/heart.png'
 // import Heart from '../../public/heart.svg'
 import { motion } from 'framer-motion'
-import { likeDaily } from '@/lib/like'
+import { like } from '@/lib/like'
 import { Daily } from 'contentlayer/generated'
 
 const DELAY = 300
 const HEART_SIZE = 130
 const SKEW_DEG = 30
 
-export default function LikeWrapper({
-  children,
-  month,
-  day,
-}: { children: ReactNode } & Pick<Daily, 'month' | 'day'>) {
+type Props = PropsWithChildren<{
+  onLike?: () => void
+}> &
+  Pick<Daily, 'month' | 'day'>
+
+export default function LikeWrapper({ children, month, day, onLike }: Props) {
   const timer = useRef<NodeJS.Timer | null>(null)
 
   const [open, setOpen] = useState<
@@ -36,7 +37,8 @@ export default function LikeWrapper({
             rotate: 0,
             key: new Date().getTime(),
           })
-          likeDaily({ month, day })
+          like({ month, day })
+          onLike?.()
         } else {
           timer.current = setTimeout(() => {
             timer.current = null
