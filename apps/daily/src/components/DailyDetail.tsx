@@ -61,12 +61,7 @@ export default function DailyDetail({ daily }: Props) {
           <HeaderContentWrapper>
             <HeaderContent>
               <Title components={headerTitleComponents} />
-              <Box css={{ display: 'flex', alignItems: 'center' }}>
-                <Text css={{ flexShrink: 0 }}>{dateFormat}</Text>
-                <Box css={{ display: 'flex' }}>
-                  <Heart />
-                </Box>
-              </Box>
+              <Text css={{ flexShrink: 0 }}>{dateFormat}</Text>
             </HeaderContent>
           </HeaderContentWrapper>
         </header>
