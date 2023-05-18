@@ -68,6 +68,7 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
             scale: { delay: 0, times: [0, 0.15, 0.3, 0.5, 1] },
             delay: 0.5,
           }}
+          onAnimationComplete={() => setOpen(false)}
           key={open.key}
         >
           <Image
