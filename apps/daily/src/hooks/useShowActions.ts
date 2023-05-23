@@ -6,9 +6,7 @@ const PAGE_OFFSET = 65
 export function useShowActions() {
   const show = useShowOnScroll(PAGE_OFFSET)
   const [ref, isContentScrollable] = useIsContentScrollable()
-  const isOnTabDimensions = useIsTabDimensions()
-
-  const showActions = isContentScrollable && isOnTabDimensions ? show : true
+  const showActions = isContentScrollable ? show : true
   return [ref, showActions] as const
 }
 
@@ -45,7 +43,7 @@ function useIsContentScrollable() {
 
 const TAB_WIDTH = 768
 
-function useIsTabDimensions() {
+export function useIsTabDimensions() {
   const [isTabDimensions, setIsTabDimensions] = useState<boolean>()
 
   useIsomorphicLayoutEffect(() => {
@@ -53,5 +51,7 @@ function useIsTabDimensions() {
     if (htmlElement) setIsTabDimensions(htmlElement.clientWidth < TAB_WIDTH)
   }, [])
 
-  return Boolean(isTabDimensions)
+  const loading = isTabDimensions === undefined
+
+  return [isTabDimensions, loading] as const
 }

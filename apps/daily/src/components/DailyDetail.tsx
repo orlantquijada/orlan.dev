@@ -1,14 +1,23 @@
-import { useEffect, useRef, useState, type MutableRefObject } from 'react'
-// import Link from 'next/link'
+import {
+  ComponentProps,
+  PropsWithChildren,
+  ReactNode,
+  useRef,
+  useState,
+} from 'react'
+import Link from 'next/link'
 import { useMDXComponent } from 'next-contentlayer/hooks'
-import { motion } from 'framer-motion'
+import { motion, useIsomorphicLayoutEffect } from 'framer-motion'
 import { format } from 'date-fns'
 import { ArrowLeftIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 
 import { type Daily } from 'contentlayer/generated'
 import { css, fadeIn, styled } from '@stitches.config'
 import { Month, Months } from '@/lib/contentlayer'
-import { getIsLiked, like, removeLike } from '@/lib/like'
+import { like, removeLike } from '@/lib/like'
+import { useIsTabDimensions, useShowActions } from '@/hooks/useShowActions'
+import { useIsLiked } from '@/hooks/useIsLiked'
+import { useClickOutside } from '@/hooks/useClickOutside'
 
 import { Text } from '@/components/Text'
 import Heart from '@/components/HeartSvg'
@@ -23,17 +32,13 @@ import LikeWrapper from './LikeWrapper'
 interface Props {
   daily: Daily
 }
-const HIDDEN_OPACITY = 0
 
 export default function DailyDetail({ daily }: Props) {
   const Title = useMDXComponent(daily.title.code)
   const Body = useMDXComponent(daily.body.code)
   const QuoteMDX = useMDXComponent(daily.quote.code)
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const wrapperRef = useRef<any>()
-  // const [show, initialOpacity, isLoading] = useShowBackButton(wrapperRef)
-  const [, , isLoading] = useShowBackButton(wrapperRef)
+  const [wrapperRef, shouldShow] = useShowActions()
 
   const year = new Date().getFullYear()
   const dateFormat = format(
@@ -43,11 +48,7 @@ export default function DailyDetail({ daily }: Props) {
     'LLLL do'
   )
 
-  const [isLiked, setIsLiked] = useState(() => {
-    if (typeof localStorage === 'object') {
-      return getIsLiked(daily)
-    }
-  })
+  const [isLiked, setIsLiked] = useIsLiked(daily)
 
   return (
     <LikeWrapper
@@ -92,117 +93,142 @@ export default function DailyDetail({ daily }: Props) {
           </Box>
         </Main>
         <Footer>
-          {!isLoading ? (
-            <>
-              <Actions>
-                <FooterButton
-                  css={{ mt: '0.25rem' }}
-                  size="small"
-                  onClick={() => {
-                    if (isLiked) {
-                      removeLike(daily)
-                      setIsLiked(false)
-                    } else {
-                      like(daily)
-                      setIsLiked(true)
-                    }
-                  }}
-                >
-                  <motion.div
-                    initial={false}
-                    animate={
-                      isLiked
-                        ? {
-                            scale: [0.8, 1.3, 1],
-                            transition: { duration: 0.5 },
-                          }
-                        : {}
-                    }
-                    whileTap={{
-                      scale: 0.8,
-                      transition: {
-                        type: 'spring',
-                        stiffness: 400,
-                        damping: 17,
-                      },
-                    }}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      display: 'grid',
-                      placeItems: 'center',
-                    }}
-                  >
-                    <Heart
-                      className={footerIconStyles({
-                        css: isLiked ? { color: '#F8312F' } : undefined,
-                      })}
-                    />
-                  </motion.div>
-                </FooterButton>
-                <FooterButton size="small">
-                  <Share className={footerIconStyles()} />
-                </FooterButton>
-                <FooterButton css={{ mb: '0.25rem' }} size="small">
+          <Actions shouldShow={shouldShow}>
+            <Link href={`/${daily.month.toLowerCase()}`} passHref>
+              <FooterButton as={motion.a} size="small" aria-label="Go Back">
+                <IconMotionWrapper>
                   <ArrowLeftIcon className={footerIconStyles()} />
-                </FooterButton>
-                <FooterButton css={{ size: 'var(--iconButtonSize)' }}>
-                  <DotsHorizontalIcon className={footerIconStyles()} />
-                </FooterButton>
-              </Actions>
-              {/* <Link href={`/${daily.month.toLowerCase()}`} passHref> */}
-              {/*   <FooterIconButton */}
-              {/*     show={show || initialOpacity === 1} */}
-              {/*     aria-label="Go Back" */}
-              {/*   > */}
-              {/*     <ArrowLeftIcon className={footerIconStyles()} /> */}
-              {/*   </FooterIconButton> */}
-              {/* </Link> */}
-            </>
-          ) : null}
+                </IconMotionWrapper>
+              </FooterButton>
+            </Link>
+            <FooterButton size="small">
+              <IconMotionWrapper>
+                <Share className={footerIconStyles()} />
+              </IconMotionWrapper>
+            </FooterButton>
+            <FooterButton
+              css={{ mt: '0.25rem' }}
+              size="small"
+              onClick={() => {
+                if (isLiked) {
+                  removeLike(daily)
+                  setIsLiked(false)
+                } else {
+                  like(daily)
+                  setIsLiked(true)
+                }
+              }}
+            >
+              <IconMotionWrapper
+                animate={
+                  isLiked
+                    ? {
+                        scale: [0.8, 1.3, 1],
+                        transition: {
+                          duration: 0.5,
+                          type: 'spring',
+                          stiffness: 400,
+                          damping: 17,
+                        },
+                      }
+                    : {}
+                }
+              >
+                <Heart
+                  className={footerIconStyles({
+                    css: isLiked ? { color: '#F8312F' } : {},
+                  })}
+                />
+              </IconMotionWrapper>
+            </FooterButton>
+          </Actions>
         </Footer>
       </Wrapper>
     </LikeWrapper>
   )
 }
 
-function useShowBackButton(contentRef: MutableRefObject<HTMLDivElement>) {
-  const [showBackButton, setShowBackButton] = useState(false)
-  const [initialOpacity, setInitialOpacity] = useState(HIDDEN_OPACITY)
+const list = {
+  visible: {
+    height: '100%',
+    transition: { staggerChildren: 0.125 },
+  },
+  hidden: { height: 'var(--iconButtonSize)' },
+}
 
-  // https://gist.github.com/gaearon/e7d97cdf38a2907924ea12e4ebdf3c85#option-2-lazily-show-component-with-uselayouteffect
-  const [loading, setLoading] = useState(true)
-  useEffect(() => {
-    setLoading(false)
-  }, [])
+function Actions({
+  children,
+  shouldShow,
+}: {
+  children: ReactNode
+  shouldShow: boolean
+}) {
+  const [isOnTabDimensions, loading] = useIsTabDimensions()
+  const [open, setOpen] = useState<boolean>()
+  const ref = useRef<HTMLDivElement>(null)
 
-  useEffect(() => {
-    const htmlElement = document.querySelector('html')
-    const contentClientHeight = contentRef.current.clientHeight
-    const TAB_WIDTH = 768
+  useClickOutside(ref, () => {
+    if (isOnTabDimensions) setOpen(false)
+  })
 
-    if (htmlElement)
-      setInitialOpacity(
-        htmlElement.clientWidth > TAB_WIDTH ||
-          contentClientHeight < htmlElement.clientHeight
-          ? 1
-          : HIDDEN_OPACITY
-      )
-  }, [contentRef])
+  useIsomorphicLayoutEffect(() => {
+    if (!loading) setOpen(!isOnTabDimensions)
+  }, [loading])
 
-  useEffect(() => {
-    const handleScrollToggle = () => {
-      const OFFSET = 65
-      if (window.scrollY > OFFSET && !showBackButton) setShowBackButton(true)
-      else if (window.scrollY < OFFSET && showBackButton)
-        setShowBackButton(false)
-    }
-    window.addEventListener('scroll', handleScrollToggle)
+  if (loading) return null
 
-    return () => window.removeEventListener('scroll', handleScrollToggle)
-  }, [showBackButton])
+  return (
+    <StyledActions
+      initial={open ? 'visible' : 'hidden'}
+      animate={open ? 'visible' : 'hidden'}
+      variants={list}
+      show={shouldShow}
+      ref={ref}
+    >
+      <FooterButton
+        css={{ mb: '0.25rem', mt: '.5rem' }}
+        size="small"
+        onClick={() => {
+          if (open) setOpen(false)
+          else setOpen(true)
+        }}
+      >
+        <IconMotionWrapper>
+          <DotsHorizontalIcon className={footerIconStyles()} />
+        </IconMotionWrapper>
+      </FooterButton>
 
-  return [showBackButton, initialOpacity, loading] as const
+      {children}
+    </StyledActions>
+  )
+}
+
+function IconMotionWrapper({
+  children,
+  ...props
+}: PropsWithChildren<ComponentProps<(typeof motion)['div']>>) {
+  return (
+    <motion.div
+      whileTap={{
+        scale: 0.8,
+        transition: {
+          type: 'spring',
+          stiffness: 400,
+          damping: 17,
+        },
+      }}
+      style={{
+        scale: 1,
+        width: '100%',
+        height: '100%',
+        display: 'grid',
+        placeItems: 'center',
+      }}
+      {...props}
+    >
+      {children}
+    </motion.div>
+  )
 }
 
 const Wrapper = styled('div', {
@@ -286,7 +312,7 @@ const Footer = styled('footer', {
     bottom: '2.5rem',
   },
 })
-const FooterButton = styled('button', {
+const FooterButton = styled(motion.button, {
   padding: 0,
   cursor: 'pointer',
   display: 'flex',
@@ -298,22 +324,14 @@ const FooterButton = styled('button', {
   transition:
     'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
   '-webkit-tap-highlight-color': 'transparent',
+  flexShrink: 0,
 
-  // '&:hover': { backgroundColor: '$olive5' },
-  // '&:active': { backgroundColor: '$olive6' },
-  // '&:focus': {
-  //   '$$ring-offset': '2px',
-  //   outline: 'none',
-  //   boxShadow:
-  //     '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
-  // },
-  // '&:hover, &:focus': { opacity: '1 !important' },
+  '&:hover, &:focus': {
+    backgroundColor: '$olive2',
+    outline: 'none',
+  },
 
   variants: {
-    show: {
-      true: { opacity: 1 },
-      false: { opacity: HIDDEN_OPACITY },
-    },
     size: {
       small: {
         size: 'calc(var(--iconButtonSize) - 0.5rem)',
@@ -337,54 +355,50 @@ const footerIconStyles = css({
     size: '1.5rem',
   },
 })
-const Actions = styled('div', {
-  opacity: 0.75,
+
+const TAB_TRANSPARENCY = 0.75
+
+// FIX: dili in-proper order ang pag tab sa mga buttons
+const StyledActions = styled(motion.div, {
+  opacity: 1,
   width: 'var(--iconButtonSize)',
   borderRadius: '0.5rem',
-  backgroundColor: 'transparent',
+  backgroundColor: '$olive4',
   display: 'flex',
-  flexDirection: 'column',
   alignItems: 'center',
-  transition: 'background-color 150ms ease, opacity 150ms ease',
+  transition:
+    'background-color 150ms ease, opacity 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
 
-  '&:hover': {
+  overflow: 'hidden',
+  justifyContent: 'flex-start',
+  flexDirection: 'column-reverse',
+
+  '@tab': {
+    opacity: TAB_TRANSPARENCY,
+    backgroundColor: 'transparent',
+  },
+
+  '&:focus-within': {
+    '$$ring-offset': '2px',
+    outline: 'none',
+    boxShadow:
+      '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
+  },
+
+  '&:hover, &:focus-within': {
     backgroundColor: '$olive4',
     opacity: 1,
+  },
 
-    [`& ${FooterButton}:hover`]: {
-      backgroundColor: '$olive2',
+  variants: {
+    show: {
+      true: {
+        opacity: 1,
+        '@tab': { opacity: TAB_TRANSPARENCY },
+      },
+      false: { opacity: 0 },
     },
   },
 })
 
 const Box = styled('div', {})
-// const FooterIconButton = styled('a', {
-//   cursor: 'pointer',
-//   display: 'flex',
-//   alignItems: 'center',
-//   justifyContent: 'center',
-//   border: 'none',
-//   borderRadius: '0.5rem',
-//   size: 'var(--iconButtonSize)',
-//   backgroundColor: '$olive4',
-//   transition:
-//     'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-//   '-webkit-tap-highlight-color': 'transparent',
-
-//   '&:hover': { backgroundColor: '$olive5' },
-//   '&:active': { backgroundColor: '$olive6' },
-//   '&:focus': {
-//     '$$ring-offset': '2px',
-//     outline: 'none',
-//     boxShadow:
-//       '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
-//   },
-//   '&:hover, &:focus': { opacity: '1 !important' },
-
-//   variants: {
-//     show: {
-//       true: { opacity: 1 },
-//       false: { opacity: HIDDEN_OPACITY },
-//     },
-//   },
-// })
