@@ -64,6 +64,7 @@ const StyledA = styled('a', {
   flexDirection: 'column',
   py: '1rem',
   px: '0.5rem',
+  mx: '-0.5rem',
   transition: 'all 150ms ease',
 
   '@tab': {
