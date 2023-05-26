@@ -45,13 +45,20 @@ function LikedCard({ daily }: { daily: Daily }) {
 }
 
 const StyledDate = styled('span', {
+  gridArea: 'date',
+  display: 'flex',
+  justifyContent: 'flex-end',
+  alignItems: 'flex-end',
+
   color: '$olive9',
 
   '@tab': {
-    width: '5rem',
+    justifyContent: 'flex-start',
   },
 })
 const StyledAuthor = styled('span', {
+  gridArea: 'author',
+
   color: '$olive11',
   flexShrink: 0,
 
@@ -69,16 +76,22 @@ const StyledLi = styled('li', {
   },
 })
 const StyledA = styled('a', {
-  display: 'flex',
-  flexDirection: 'column',
+  display: 'grid',
+  gridTemplateAreas: `
+    "title title"
+    "author date"
+  `,
+
   py: '1rem',
   px: '0.5rem',
   mx: '-0.5rem',
   transition: 'all 150ms ease',
 
   '@tab': {
-    flexDirection: 'row',
-    alignItems: 'center',
+    gridTemplateAreas: `
+      "date title author"
+    `,
+    gridTemplateColumns: '5rem auto auto',
   },
 
   '&:hover': {
@@ -86,6 +99,8 @@ const StyledA = styled('a', {
   },
 })
 const StyledTitle = styled('p', textStyles, {
+  gridArea: 'title',
+
   color: '$olive11',
   fontWeight: '$bold',
 
@@ -93,8 +108,6 @@ const StyledTitle = styled('p', textStyles, {
   whiteSpace: 'nowrap',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-
-  marginTop: '0.5rem',
 
   '@tab': {
     marginTop: 0,
