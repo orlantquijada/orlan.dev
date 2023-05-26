@@ -11,6 +11,7 @@ import DailyCalendar from '@/components/DailyCalendar'
 import MetaTags from '@/components/MetaTags'
 import { LikesList } from '@/components/Likes'
 import { Daily } from 'contentlayer/generated'
+import { textStyles } from '@/components/Text'
 
 export default function MonthsNavPage() {
   const { query } = useRouter()
@@ -54,7 +55,9 @@ function Likes({ likes, month }: { likes: Daily[]; month: Month }) {
           transition={{ duration: 0.15 }}
           key={month}
         >
-          <SectionTitle>Liked</SectionTitle>
+          <SectionTitle size={{ '@initial': 'xl', '@tab': '2xl' }}>
+            Liked
+          </SectionTitle>
 
           <LikesList likes={likes} />
         </LikesContainer>
@@ -76,7 +79,7 @@ const LikesContainer = styled(motion.section, {
   // },
 })
 
-const SectionTitle = styled('h2', {
+const SectionTitle = styled('h2', textStyles, {
   color: '$olive11',
 })
 
