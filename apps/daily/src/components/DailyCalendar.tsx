@@ -16,7 +16,7 @@ import {
 } from 'framer-motion'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
-import { css, fadeIn, styled } from '@stitches.config'
+import { css, styled } from '@stitches.config'
 import { getNextMonth, getPreviousMonth } from '@/lib/api'
 import { Month, MonthSubjectsMap } from '@/lib/contentlayer'
 import { Text, textStyles } from '@/components/Text'
@@ -61,7 +61,7 @@ export default function DailyCalendar({ month }: { month: Month }) {
   }
 
   return (
-    <Main>
+    <>
       <Calendar.Root
         defaultCurrentMonth={currentMonthDate}
         onChangeCurrentMonthDate={onChangeCurrentMonthDate}
@@ -122,7 +122,7 @@ export default function DailyCalendar({ month }: { month: Month }) {
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
       />
-    </Main>
+    </>
   )
 }
 
@@ -185,30 +185,6 @@ function Days({
 
 //////////////////////////////////////////////////////////////////
 
-const Main = styled('main', {
-  '--contentMaxWidth': '650px',
-  '--contentPaddingX': '1rem',
-  '--contentPaddingY': '2rem',
-  maxWidth: 'var(--contentMaxWidth)',
-  mx: 'auto',
-  px: 'var(--contentPaddingX)',
-  py: 'var(--contentPaddingY)',
-  minHeight: '100vh',
-
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1.5rem',
-  alignItems: 'center',
-
-  animation: `${fadeIn} 1s both`,
-
-  // handle days drag to the right (translateX overflow) which causes everything to scale down
-  overflowX: 'hidden',
-
-  '@tab': {
-    overflowX: 'initial',
-  },
-})
 const SubjectTitle = styled(motion.h2, textStyles, {
   fontStyle: 'italic',
   color: '$olive11',
@@ -275,6 +251,9 @@ const DaysContainer = styled('div', CalendarRow, {
 
 const StyledDay = styled('button', {
   p: '1rem',
+  // px: '1rem',
+  // height: '4rem',
+
   border: 'none',
   borderTop: '1px solid $olive3',
   background: '$bg',

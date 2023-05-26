@@ -1,11 +1,16 @@
 import { type GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { Months, MonthSubjectsMap, type Month } from '@/lib/contentlayer'
 import { capitalize, getDetailSocialMediaImage } from '@/lib/utils'
+import { fadeIn, styled } from '@stitches.config'
+import { useLikes } from '@/hooks/useLikes'
 
 import DailyCalendar from '@/components/DailyCalendar'
 import MetaTags from '@/components/MetaTags'
+import { LikesList } from '@/components/Likes'
+import { Daily } from 'contentlayer/generated'
 
 export default function MonthsNavPage() {
   const { query } = useRouter()
@@ -17,6 +22,11 @@ export default function MonthsNavPage() {
     monthSubject: subject,
   })
 
+  const likes = useLikes()
+  const likesThisMonth = likes.filter(
+    (daily) => daily.month === capitalizedMonth
+  )
+
   return (
     <>
       <MetaTags
@@ -25,10 +35,78 @@ export default function MonthsNavPage() {
         image={image}
         url={`/${month}`}
       />
-      <DailyCalendar month={capitalizedMonth} />
+      <Main>
+        <DailyCalendar month={capitalizedMonth} />
+        <Likes likes={likesThisMonth} month={capitalizedMonth} />
+      </Main>
     </>
   )
 }
+
+function Likes({ likes, month }: { likes: Daily[]; month: Month }) {
+  return (
+    <AnimatePresence exitBeforeEnter>
+      {likes.length ? (
+        <LikesContainer
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          key={month}
+        >
+          <SectionTitle>Liked</SectionTitle>
+
+          <LikesList likes={likes} />
+        </LikesContainer>
+      ) : null}
+    </AnimatePresence>
+  )
+}
+
+const LikesContainer = styled(motion.section, {
+  width: '100%',
+
+  // '@tab': {
+  //   opacity: 0.75,
+  //   transition: 'all 200ms ease',
+
+  //   '&:hover, &:focus-within': {
+  //     opacity: 1,
+  //   },
+  // },
+})
+
+const SectionTitle = styled('h2', {
+  color: '$olive11',
+})
+
+const Main = styled('main', {
+  '--contentMaxWidth': '650px',
+  '--contentPaddingX': '1rem',
+  '--contentPaddingY': '2rem',
+  '--toastHeight': '4rem',
+
+  maxWidth: 'var(--contentMaxWidth)',
+  mx: 'auto',
+  px: 'var(--contentPaddingX)',
+  pt: 'var(--contentPaddingY)',
+  pb: 'calc(var(--contentPaddingY) + var(--toastHeight) + 1rem)',
+  minHeight: '100vh',
+
+  display: 'flex',
+  flexDirection: 'column',
+  gap: '1.5rem',
+  alignItems: 'center',
+
+  animation: `${fadeIn} 1s both`,
+
+  // handle days drag to the right (translateX overflow) which causes everything to scale down
+  overflowX: 'hidden',
+
+  '@tab': {
+    overflowX: 'initial',
+  },
+})
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const paths = Months.map((month) => ({
