@@ -37,6 +37,7 @@ function LikedCard({ daily }: { daily: Daily }) {
             {daily.month.slice(0, 3)} {daily.day}
           </StyledDate>
           <Title components={likedTitleComponents} />
+          <StyledAuthor>{daily.author}</StyledAuthor>
         </StyledA>
       </Link>
     </StyledLi>
@@ -44,10 +45,18 @@ function LikedCard({ daily }: { daily: Daily }) {
 }
 
 const StyledDate = styled('span', {
-  color: '$olive10',
+  color: '$olive9',
 
   '@tab': {
     width: '5rem',
+  },
+})
+const StyledAuthor = styled('span', {
+  color: '$olive11',
+  flexShrink: 0,
+
+  '@tab': {
+    ml: 'auto',
   },
 })
 const StyledLikesList = styled('ol', {
