@@ -252,7 +252,7 @@ const DaysContainer = styled('div', CalendarRow, {
 const StyledDay = styled('button', {
   p: '1rem',
   // px: '1rem',
-  // height: '4rem',
+  height: '4rem',
 
   border: 'none',
   borderTop: '1px solid $olive3',
