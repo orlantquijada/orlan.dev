@@ -111,27 +111,23 @@ function ToastTitle({ title }: Pick<Daily, 'title'>) {
 //////////////////////////////////////////////////////////////////
 
 const Container = styled(motion.div, {
+  backgroundColor: '$olive1',
   borderRadius: '0.5rem',
   border: '1px solid $olive6',
   display: 'flex',
   justifyContent: 'space-between',
   alignItems: 'center',
   gap: '1rem',
-  px: '0.75rem',
-  py: '0.5rem',
+  p: '0.75rem',
+  zIndex: 1,
 
   $$viewportPadding: 'calc(var(--contentPaddingX) * 2)',
   width: 'calc(100% - $$viewportPadding)',
-  height: '3.25rem',
+  height: 'var(--toastHeight)',
   position: 'fixed',
   bottom: 'var(--contentPaddingY)',
   right: '50%',
   maxWidth: 'calc(var(--contentMaxWidth) - $$viewportPadding)',
-
-  '@tab': {
-    px: '1rem',
-    py: '0.75rem',
-  },
 })
 
 const Title = styled(Text, {
@@ -145,16 +141,21 @@ const Title = styled(Text, {
 })
 
 const Action = styled('a', {
-  backgroundColor: '$olive3',
+  backgroundColor: 'transparent',
   color: '$olive11',
   borderRadius: '4px',
+  height: '100%',
   px: '0.5rem',
-  py: '0.25rem',
   display: 'grid',
   placeItems: 'center',
-  transition: 'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
+  transition:
+    'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1)',
   fontSize: '$base',
   '-webkit-tap-highlight-color': 'transparent',
+
+  '&:hover, &:focus': {
+    backgroundColor: '$olive3',
+  },
 
   '&:focus': {
     outline: 'none',
@@ -164,7 +165,6 @@ const Action = styled('a', {
   '@tab': {
     fontSize: '$lg',
     px: '0.75rem',
-    py: '0.25rem',
   },
 })
 
