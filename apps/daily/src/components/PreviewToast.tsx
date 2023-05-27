@@ -19,8 +19,8 @@ import { Text } from './Text'
 //   show: { y: 0, x: '50%' },
 // }
 const variants: Variants = {
-  hide: { y: '30%', x: '50%', opacity: 0 },
-  show: { y: 0, x: '50%', opacity: 1 },
+  hide: { y: '30%', opacity: 0 },
+  show: { y: 0, opacity: 1 },
 }
 
 export default function PreviewToast({
@@ -121,12 +121,14 @@ const Container = styled(motion.div, {
   p: '0.75rem',
   zIndex: 1,
 
-  $$viewportPadding: 'calc(var(--contentPaddingX) * 2)',
-  width: 'calc(100% - $$viewportPadding)',
   height: 'var(--toastHeight)',
   position: 'fixed',
   bottom: 'var(--contentPaddingY)',
-  right: '50%',
+  left: 0,
+  right: 0,
+  mx: 'auto',
+  $$viewportPadding: 'calc(var(--contentPaddingX) * 2)',
+  width: 'calc(100% - $$viewportPadding)',
   maxWidth: 'calc(var(--contentMaxWidth) - $$viewportPadding)',
 })
 

@@ -28,6 +28,7 @@ import { titleComponents } from './TitleMDXComponents'
 import { Quote, quoteComponents } from './QuoteMDXComponents'
 import { bodyComponents } from './BodyMDXComponents'
 import LikeWrapper from './LikeWrapper'
+import { CopiedLinkToast } from './CopiedLinkToast'
 // import InstallButton from './InstallButton'
 
 interface Props {
@@ -50,6 +51,8 @@ export default function DailyDetail({ daily }: Props) {
   )
 
   const [isLiked, setIsLiked] = useIsLiked(daily)
+
+  const toastRef = useRef<CopiedLinkToast>(null)
 
   return (
     <LikeWrapper
@@ -102,7 +105,18 @@ export default function DailyDetail({ daily }: Props) {
                 </IconMotionWrapper>
               </FooterButton>
             </Link>
-            <FooterButton size="small">
+            <FooterButton
+              size="small"
+              onClick={() => {
+                navigator.clipboard
+                  .writeText(
+                    `daily.orlan.dev/${daily.month.toLowerCase()}/${daily.day}`
+                  )
+                  .then(() => {
+                    toastRef.current?.open()
+                  })
+              }}
+            >
               <IconMotionWrapper>
                 <Share className={footerIconStyles()} />
               </IconMotionWrapper>
@@ -145,6 +159,7 @@ export default function DailyDetail({ daily }: Props) {
           </Actions>
         </Footer>
 
+        <CopiedLinkToast ref={toastRef} />
         {/* <InstallButton */}
         {/*   css={{ */}
         {/*     height: 'var(--iconButtonSize)', */}
