@@ -28,6 +28,7 @@ import { titleComponents } from './TitleMDXComponents'
 import { Quote, quoteComponents } from './QuoteMDXComponents'
 import { bodyComponents } from './BodyMDXComponents'
 import LikeWrapper from './LikeWrapper'
+// import InstallButton from './InstallButton'
 
 interface Props {
   daily: Daily
@@ -143,6 +144,20 @@ export default function DailyDetail({ daily }: Props) {
             </FooterButton>
           </Actions>
         </Footer>
+
+        {/* <InstallButton */}
+        {/*   css={{ */}
+        {/*     height: 'var(--iconButtonSize)', */}
+        {/*     position: 'absolute', */}
+        {/*     bottom: '1rem', */}
+        {/*     right: '1rem', */}
+
+        {/*     '@tab': { */}
+        {/*       bottom: '2.5rem', */}
+        {/*       right: '2.5rem', */}
+        {/*     }, */}
+        {/*   }} */}
+        {/* /> */}
       </Wrapper>
     </LikeWrapper>
   )
@@ -349,7 +364,6 @@ const footerIconStyles = css({
   // color: '$textColor',
   color: '$olive11',
   size: '1.25rem',
-  transition: 'color 150ms ease',
 
   '@tab': {
     size: '1.5rem',

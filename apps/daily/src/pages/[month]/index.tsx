@@ -12,6 +12,7 @@ import MetaTags from '@/components/MetaTags'
 import { LikesList } from '@/components/Likes'
 import { Daily } from 'contentlayer/generated'
 import { textStyles } from '@/components/Text'
+// import InstallButton from '@/components/InstallButton'
 
 export default function MonthsNavPage() {
   const { query } = useRouter()
@@ -39,6 +40,19 @@ export default function MonthsNavPage() {
       <Main>
         <DailyCalendar month={capitalizedMonth} />
         <Likes likes={likesThisMonth} month={capitalizedMonth} />
+
+        {/* <InstallButton */}
+        {/*   css={{ */}
+        {/*     height: 'var(--toastHeight)', */}
+        {/*     position: 'fixed', */}
+        {/*     bottom: 'var(--contentPaddingY)', */}
+        {/*     right: 'var(--contentPaddingX)', */}
+
+        {/*     '@tab': { */}
+        {/*       right: 'var(--contentPaddingY)', */}
+        {/*     }, */}
+        {/*   }} */}
+        {/* /> */}
       </Main>
     </>
   )
