@@ -12,17 +12,17 @@ const { title, className } = Astro.props
 ---
 
 <BaseLayout title={title}>
-  <Header class="container" />
-  <main class:list={['py-24 container', className]}>
+  <Header class="layout-container" />
+  <main class:list={['py-24 layout-container', className]}>
     <div class="gradient"></div>
     <slot />
   </main>
-  <Footer class="container" />
+  <Footer class="layout-container" />
 </BaseLayout>
 
 <style>
-  .container {
-    @apply mx-auto max-w-screen-md px-6;
+  .layout-container {
+    @apply mx-auto w-full max-w-screen-md px-6;
   }
 
   main {
