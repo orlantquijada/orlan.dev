@@ -1,20 +1,22 @@
 ---
-import type { InferGetStaticPropsType } from 'astro'
+import { components } from '@/components/Notes/NoteDetailComponents/components.astro'
 import NotesLayout from '@/layouts/NotesLayout.astro'
-import { getCollection } from 'astro:content'
+import { CollectionEntry, getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes')
   return notes.map((note) => ({
-    params: {
-      slug: note.slug,
-    },
-    props: { note },
+    params: { slug: note.slug },
+    props: note,
   }))
 }
 
-type Props = InferGetStaticPropsType<typeof getStaticPaths>
-const { note } = Astro.props
+type Props = CollectionEntry<'notes'>
+
+const note = Astro.props
+const { Content } = await note.render()
 ---
 
-<NotesLayout {...note} />
+<NotesLayout {...note.data}>
+  <Content components={components} />
+</NotesLayout>

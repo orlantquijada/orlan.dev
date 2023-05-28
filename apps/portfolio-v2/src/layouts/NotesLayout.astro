@@ -2,15 +2,13 @@
 import type { CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon'
 import { format } from 'date-fns'
-import { components } from '@/components/Notes/NoteDetailComponents/components.astro'
 import MetaData from '@/components/Notes/NoteDetailComponents/MetaData.astro'
 import { DEFAULT_DATE_FORMAT } from '@/utils/constants'
 import Layout from './Layout.astro'
 
-type Props = CollectionEntry<'notes'>
+type Props = CollectionEntry<'notes'>['data']
 
-const { render, data } = Astro.props
-const { Content } = await render()
+const data = Astro.props
 ---
 
 <Layout title={data.title}>
@@ -48,7 +46,7 @@ const { Content } = await render()
   <hr class="my-8 w-full border-t-2 border-t-grayA4" />
 
   <article>
-    <Content components={components} />
+    <slot />
   </article>
 </Layout>
 
