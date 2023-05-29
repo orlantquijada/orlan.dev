@@ -1,4 +1,7 @@
+import type { CollectionEntry } from 'astro:content'
+
 export type TagGraphMap = Map<string, Set<string>>
+export type NoteFrontmatter = CollectionEntry<'notes'>['data']
 
 export function buildTagGraph(...noteTags: string[][]): TagGraphMap {
   const tagGraph: TagGraphMap = new Map()
