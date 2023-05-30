@@ -25,9 +25,9 @@ export default function MonthsNavPage() {
   })
 
   const likes = useLikes()
-  const likesThisMonth = likes.filter(
-    (daily) => daily.month === capitalizedMonth
-  )
+  const likesThisMonth = likes
+    .filter((daily) => daily.month === capitalizedMonth)
+    .sort((current, next) => current.day - next.day)
 
   return (
     <>
