@@ -1,6 +1,7 @@
 import type { VariantProps } from 'cva'
 import type { ReactNode } from 'react'
 import { Slot } from '@radix-ui/react-slot'
+import { twMerge } from 'tailwind-merge'
 
 import { chipStyles } from './styles'
 
@@ -25,7 +26,9 @@ export default function Chip(props: Props) {
   const Comp = asChild ? Slot : 'button'
 
   return (
-    <Comp className={chipStyles({ color, size, transluscent, className })}>
+    <Comp
+      className={twMerge(chipStyles({ color, size, transluscent, className }))}
+    >
       {children}
     </Comp>
   )

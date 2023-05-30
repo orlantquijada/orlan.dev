@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
-import { noteCardStyles } from './styles'
+import { twMerge } from 'tailwind-merge'
+
 import type { NoteFrontmatter } from '@/lib/notes'
+import { noteCardStyles } from './styles'
 
 export type NoteCardProps = NoteFrontmatter & {
   href: string
@@ -10,7 +12,7 @@ export default function NoteCard(props: NoteCardProps) {
   const { title, description, href } = props
 
   return (
-    <a href={href} className={noteCardStyles()}>
+    <a href={href} className={twMerge(noteCardStyles())}>
       <h3 className="font-medium">{title}</h3>
       {description ? (
         <p className="text-sm text-gray10 dark:text-gray11">{description}</p>
@@ -34,7 +36,7 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
       layoutId={title}
       animate={isSelecting ? { opacity: !selected ? 0.3 : 1 } : {}}
       href={href}
-      className={noteCardStyles()}
+      className={twMerge(noteCardStyles())}
     >
       <h2 className="font-medium">{title}</h2>
       {description ? (

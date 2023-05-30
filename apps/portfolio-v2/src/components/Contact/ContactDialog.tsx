@@ -1,5 +1,6 @@
 import { type ComponentProps, type ReactNode, useState } from 'react'
 import { cva } from 'cva'
+import { twMerge } from 'tailwind-merge'
 
 import { ReactComponent as Send } from '@/icons/send-filled.svg'
 import { ReactComponent as Copy } from '@/icons/copy-filled.svg'
@@ -38,10 +39,12 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
             <div className="flex gap-2">
               <a
                 href={`mailto:${EMAIL}`}
-                className={buttonStyles({
-                  className: 'flex items-center gap-2 active:scale-95',
-                  translucent: true,
-                })}
+                className={twMerge(
+                  buttonStyles({
+                    className: 'flex items-center gap-2 active:scale-95',
+                    translucent: true,
+                  })
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
               >

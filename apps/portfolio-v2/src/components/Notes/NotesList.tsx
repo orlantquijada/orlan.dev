@@ -1,9 +1,11 @@
 import { LayoutGroup } from 'framer-motion'
 import { useStore } from '@nanostores/react'
 import { cx } from 'cva'
+import { twMerge } from 'tailwind-merge'
 
 import { selectedTags } from '@/stores/notes'
 import type { NoteFrontmatter } from '@/lib/notes'
+
 import { MotionNoteCard } from '../NoteCard/NoteCard'
 import styles from './styles.module.css'
 
@@ -51,9 +53,11 @@ export default function NotesList(props: Props) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } as any
       }
-      className={cx(className, styles.notesList, [
-        'h-full sm:h-[var(--smHeight)] md:h-[var(--mdHeight)]',
-      ])}
+      className={twMerge(
+        cx(className, styles.notesList, [
+          'h-full sm:h-[var(--smHeight)] md:h-[var(--mdHeight)]',
+        ])
+      )}
     >
       <LayoutGroup>
         {filtered.map((note) => (

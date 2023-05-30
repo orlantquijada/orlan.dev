@@ -2,6 +2,7 @@ import { useMemo, useRef, useState } from 'react'
 import { AnimatePresence, motion, MotionConfig, Variants } from 'framer-motion'
 import { cva } from 'cva'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
+import { twMerge } from 'tailwind-merge'
 
 import { transitions } from '@/utils/motion'
 
@@ -49,10 +50,12 @@ export function Menu() {
                 background: 'none',
                 boxShadow: 'none',
               }}
-              className={buttonStyles({
-                className: 'z-10 flex items-center gap-3',
-                motionSafe: false,
-              })}
+              className={twMerge(
+                buttonStyles({
+                  className: 'z-10 flex items-center gap-3',
+                  motionSafe: false,
+                })
+              )}
             >
               <MenuIcon />
               {open ? 'Close' : 'Menu'}
@@ -63,10 +66,12 @@ export function Menu() {
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               ref={containerRef as any}
               id="portal-container"
-              className={buttonStyles({
-                className: 'absolute inset-0',
-                translucent: true,
-              })}
+              className={twMerge(
+                buttonStyles({
+                  className: 'absolute inset-0',
+                  translucent: true,
+                })
+              )}
             />
           </PopoverPrimitive.Anchor>
         </div>
@@ -93,7 +98,7 @@ export function Menu() {
                     transformOrigin:
                       'var(--radix-popover-content-transform-origin)',
                   }}
-                  className={contentStyles({ translucent: true })}
+                  className={twMerge(contentStyles({ translucent: true }))}
                 >
                   <MenuPanel />
                 </motion.div>

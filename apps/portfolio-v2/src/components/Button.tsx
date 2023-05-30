@@ -1,4 +1,5 @@
 import { ComponentProps, forwardRef } from 'react'
+import { twMerge } from 'tailwind-merge'
 import { cva, VariantProps } from 'cva'
 import styles from './Button.module.css'
 
@@ -49,7 +50,7 @@ export const Button = forwardRef<
     <button
       {...props}
       ref={ref}
-      className={buttonStyles({ className, translucent: translucent })}
+      className={twMerge(buttonStyles({ className, translucent: translucent }))}
     >
       {children}
     </button>

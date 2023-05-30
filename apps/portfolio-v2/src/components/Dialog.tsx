@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { cva } from 'cva'
+import { twMerge } from 'tailwind-merge'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 
 const contentStyles = cva(
@@ -46,7 +47,7 @@ export function Root(props: Props) {
       <DialogPrimitive.Portal>
         <DialogPrimitive.Overlay className={overlayStyles()} />
         <DialogPrimitive.Content
-          className={contentStyles({ transluscent: true })}
+          className={twMerge(contentStyles({ transluscent: true }))}
         >
           {children}
         </DialogPrimitive.Content>
