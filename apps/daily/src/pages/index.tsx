@@ -13,7 +13,11 @@ import MetaTags from '@/components/MetaTags'
 export default function Home({
   daily,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const image = getDetailSocialMediaImage('detail', daily)
+  const image = getDetailSocialMediaImage({
+    title: daily.title.raw,
+    subtitle: `${daily.month} ${daily.day}`,
+    author: daily.author,
+  })
 
   return (
     <>

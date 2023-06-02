@@ -1,3 +1,4 @@
+import { BASE_URL } from '@/lib/constants'
 import Head from 'next/head'
 
 type Props = {
@@ -9,11 +10,7 @@ type Props = {
 
 export default function MetaTags(props: Props) {
   const { description, title, image } = props
-  const url = `${
-    process.env.NODE_ENV === 'production'
-      ? `https://${process.env.NEXT_PUBLIC_VERCEL_URL}`
-      : 'http://localhost:3000'
-  }${props.url}`
+  const url = `${BASE_URL}${props.url}`
 
   return (
     <Head>

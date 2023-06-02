@@ -11,7 +11,11 @@ import MetaTags from '@/components/MetaTags'
 export default function EntryDetailPage({
   daily,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const image = getDetailSocialMediaImage('detail', daily)
+  const image = getDetailSocialMediaImage({
+    title: daily.title.raw,
+    subtitle: `${daily.month} ${daily.day}`,
+    author: daily.author,
+  })
 
   return (
     <>
