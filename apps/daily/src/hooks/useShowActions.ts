@@ -6,6 +6,11 @@ const PAGE_OFFSET = 65
 export function useShowActions() {
   const show = useShowOnScroll(PAGE_OFFSET)
   const [ref, isContentScrollable] = useIsContentScrollable()
+  const [loading, isTabDimensions] = useIsMinWidthTabDimensions()
+
+  // always show on desktop
+  if (!loading && !isTabDimensions) return [ref, true] as const
+
   const showActions = isContentScrollable ? show : true
   return [ref, showActions] as const
 }
@@ -43,7 +48,7 @@ function useIsContentScrollable() {
 
 const TAB_WIDTH = 768
 
-export function useIsTabDimensions() {
+export function useIsMinWidthTabDimensions() {
   const [isTabDimensions, setIsTabDimensions] = useState<boolean>()
 
   useIsomorphicLayoutEffect(() => {
