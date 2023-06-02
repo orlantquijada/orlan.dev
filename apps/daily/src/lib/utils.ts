@@ -1,4 +1,4 @@
-import { Daily } from 'contentlayer/generated'
+import { BASE_URL } from './constants'
 
 export type FilterFalseProps<K extends Record<string, boolean | undefined>> =
   NonNullable<
@@ -36,38 +36,14 @@ export function capitalize<T extends string>(str: T) {
   return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>
 }
 
-export function getDetailSocialMediaImage<TType extends 'detail' | 'month'>(
-  type: TType,
-  data: TType extends 'detail' ? Daily : Pick<Daily, 'month' | 'monthSubject'>
-) {
-  let params: Record<string, string> = {}
-  if (type === 'detail' && 'author' in data) {
-    const { author, title, month, day } = data
-    params = {
-      domain: author,
-      title: title.raw,
-      subtitle: `${month} ${day}`,
-    }
-  } else {
-    const { month, monthSubject } = data
-    params = {
-      domain: month,
-      title: monthSubject,
-      subtitle: '',
-    }
-  }
+export function getDetailSocialMediaImage(params: {
+  title: string
+  subtitle: string
+  author: string
+}) {
+  const URLParams = new URLSearchParams(params)
 
-  const URLParams = new URLSearchParams({
-    preset: 'smhutch',
-    logo: '',
-    bgOverlay: 'rgba(252,253,252,1)',
-    ...params,
-  })
-
-  const api = 'https://i.microlink.io/'
-  const cardUrl = `https://cards.microlink.io/?${URLParams}`
-
-  return `${api}${encodeURIComponent(cardUrl)}`
+  return `${BASE_URL}/api/og?${URLParams}`
 }
 
 export type NonEmptyArray<T> = [T, ...T[]]

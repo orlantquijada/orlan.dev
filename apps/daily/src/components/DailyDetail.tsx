@@ -15,7 +15,10 @@ import { type Daily } from 'contentlayer/generated'
 import { css, fadeIn, styled } from '@stitches.config'
 import { Month, Months } from '@/lib/contentlayer'
 import { like, removeLike } from '@/lib/like'
-import { useIsTabDimensions, useShowActions } from '@/hooks/useShowActions'
+import {
+  useIsMinWidthTabDimensions,
+  useShowActions,
+} from '@/hooks/useShowActions'
 import { useIsLiked } from '@/hooks/useIsLiked'
 import { useClickOutside } from '@/hooks/useClickOutside'
 
@@ -193,7 +196,7 @@ function Actions({
   children: ReactNode
   shouldShow: boolean
 }) {
-  const [isOnTabDimensions, loading] = useIsTabDimensions()
+  const [isOnTabDimensions, loading] = useIsMinWidthTabDimensions()
   const [open, setOpen] = useState<boolean>()
   const ref = useRef<HTMLDivElement>(null)
 

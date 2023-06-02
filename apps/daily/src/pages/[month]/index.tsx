@@ -19,9 +19,10 @@ export default function MonthsNavPage() {
   const month = query.month as Lowercase<Month>
   const capitalizedMonth = capitalize(month)
   const subject = MonthSubjectsMap[capitalizedMonth]
-  const image = getDetailSocialMediaImage('month', {
-    month: capitalizedMonth,
-    monthSubject: subject,
+  const image = getDetailSocialMediaImage({
+    title: subject,
+    subtitle: capitalizedMonth,
+    author: '',
   })
 
   const likes = useLikes()
