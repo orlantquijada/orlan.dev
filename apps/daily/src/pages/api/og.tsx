@@ -9,7 +9,7 @@ const ibmFont = fetch(
   new URL('../../../public/fonts/IBMPlexMono-Regular.ttf', import.meta.url)
 ).then((res) => res.arrayBuffer())
 const interFont = fetch(
-  new URL('../../../public/fonts/Inter-ExtraBold.ttf', import.meta.url)
+  new URL('../../../public/fonts/Inter-ExtraBold.otf', import.meta.url)
 ).then((res) => res.arrayBuffer())
 
 export default async function handler(request: NextRequest) {
