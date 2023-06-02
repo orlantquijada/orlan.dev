@@ -1,9 +1,8 @@
 import { ImageResponse } from '@vercel/og'
 
-// WARN: config below causes dev to not run
-// export const config = {
-//   runtime: 'edge',
-// }
+export const config = {
+  runtime: 'experimental-edge',
+}
 
 export default function () {
   return new ImageResponse(
