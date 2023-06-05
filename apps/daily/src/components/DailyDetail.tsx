@@ -21,6 +21,7 @@ import {
 } from '@/hooks/useShowActions'
 import { useIsLiked } from '@/hooks/useIsLiked'
 import { useClickOutside } from '@/hooks/useClickOutside'
+import { BASE_URL } from '@/lib/constants'
 
 import { Text } from '@/components/Text'
 import Heart from '@/components/HeartSvg'
@@ -113,7 +114,7 @@ export default function DailyDetail({ daily }: Props) {
               onClick={() => {
                 navigator.clipboard
                   .writeText(
-                    `daily.orlan.dev/${daily.month.toLowerCase()}/${daily.day}`
+                    `${BASE_URL}/${daily.month.toLowerCase()}/${daily.day}`
                   )
                   .then(() => {
                     toastRef.current?.open()
