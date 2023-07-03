@@ -1,13 +1,14 @@
-import { styled } from '@stitches.config'
-import { PropsWithChildren, useRef, useState } from 'react'
-import Image from 'next/image'
-import Heart from '../../public/heart.png'
-// import Heart from '../../public/heart.svg'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
+import { PropsWithChildren, useState } from 'react'
+
+import { useDoubleClick } from '@/hooks/useDoubleClick'
 import { like } from '@/lib/like'
+import { styled } from '@stitches.config'
 import { Daily } from 'contentlayer/generated'
 
-const DELAY = 300
+import Heart from '../../public/heart.png'
+
 const HEART_SIZE = 130
 const SKEW_DEG = 30
 
@@ -17,34 +18,47 @@ type Props = PropsWithChildren<{
   Pick<Daily, 'month' | 'day'>
 
 export default function LikeWrapper({ children, month, day, onLike }: Props) {
-  const timer = useRef<NodeJS.Timer | null>(null)
-
   const [open, setOpen] = useState<
     false | { y: number; x: number; rotate: number; key: number }
   >(false)
 
+  const handler = useDoubleClick(
+    (e) => {
+      setOpen({
+        x: e.pageX,
+        y: e.pageY,
+        rotate: 0,
+        key: new Date().getTime(),
+      })
+      like({ month, day })
+      onLike?.()
+    },
+    { delay: 300 }
+  )
+
   return (
     <Container
-      onClick={(e) => {
-        if (timer.current) {
-          clearTimeout(timer.current)
-          timer.current = null
-
-          // do something
-          setOpen({
-            x: e.pageX,
-            y: e.pageY,
-            rotate: 0,
-            key: new Date().getTime(),
-          })
-          like({ month, day })
-          onLike?.()
-        } else {
-          timer.current = setTimeout(() => {
-            timer.current = null
-          }, DELAY)
-        }
-      }}
+      onClick={handler}
+      /* onClick={(e) => { */
+      /*   if (timer.current) { */
+      /*     clearTimeout(timer.current) */
+      /*     timer.current = null */
+      /**/
+      /*     // do something */
+      /*     setOpen({ */
+      /*       x: e.pageX, */
+      /*       y: e.pageY, */
+      /*       rotate: 0, */
+      /*       key: new Date().getTime(), */
+      /*     }) */
+      /*     like({ month, day }) */
+      /*     onLike?.() */
+      /*   } else { */
+      /*     timer.current = setTimeout(() => { */
+      /*       timer.current = null */
+      /*     }, DELAY) */
+      /*   } */
+      /* }} */
     >
       {children}
 
