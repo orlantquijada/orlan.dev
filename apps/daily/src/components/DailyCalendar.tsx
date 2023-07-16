@@ -156,7 +156,8 @@ function Days({
         <motion.div
           drag="x"
           dragSnapToOrigin
-          dragConstraints={{ left: -10, right: 10 }}
+          dragConstraints={{ left: 0, right: 0 }}
+          dragElastic={0.3}
           onDragEnd={(_, info) => {
             const offset = info.offset.x
 
