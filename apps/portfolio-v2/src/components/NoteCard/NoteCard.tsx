@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { twMerge } from 'tailwind-merge'
 
-import type { NoteFrontmatter } from '@/lib/notes'
+import { getViewTransitionName, type NoteFrontmatter } from '@/lib/notes'
 import { noteCardStyles } from './styles'
 
 export type NoteCardProps = NoteFrontmatter & {
@@ -38,7 +38,16 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
       href={href}
       className={twMerge(noteCardStyles())}
     >
-      <h2 className="font-medium">{title}</h2>
+      <h1
+        className="font-medium"
+        style={{
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore sdfsdfsdf
+          viewTransitionName: getViewTransitionName(title),
+        }}
+      >
+        {title}
+      </h1>
       {description ? (
         <p className="text-sm text-gray10 dark:text-gray11">{description}</p>
       ) : null}

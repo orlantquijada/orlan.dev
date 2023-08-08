@@ -1,10 +1,12 @@
 ---
+import { ViewTransitions } from 'astro:transitions'
 import type { CollectionEntry } from 'astro:content'
 import { Icon } from 'astro-icon'
 import { format } from 'date-fns'
 import MetaData from '@/components/Notes/NoteDetailComponents/MetaData.astro'
 import { DEFAULT_DATE_FORMAT } from '@/utils/constants'
 import Layout from './Layout.astro'
+import { getViewTransitionName } from '@/lib/notes'
 
 type Props = CollectionEntry<'notes'>['data']
 
@@ -12,8 +14,12 @@ const data = Astro.props
 ---
 
 <Layout title={data.title}>
+  <ViewTransitions slot="head" />
   <div class="grid place-items-start gap-2">
-    <h1 class="text-3xl font-medium">
+    <h1
+      class="text-3xl font-medium"
+      style={`view-transition-name:${getViewTransitionName(data.title)}`}
+    >
       {data.title}
     </h1>
     {data.description ? <p class="md:max-w-[80%]">{data.description}</p> : null}
