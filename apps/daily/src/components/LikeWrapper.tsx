@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from 'react'
 import Head from 'next/head'
-import Image from 'next/image'
+// import Image from 'next/image'
 import { motion } from 'framer-motion'
 
 import { useDoubleClick } from '@/hooks/useDoubleClick'
@@ -9,7 +9,7 @@ import { styled } from '@stitches.config'
 import { Daily } from 'contentlayer/generated'
 
 // import Heart from '../../public/heart.png'
-import Heart from '../../public/heart.webp'
+// import Heart from '../../public/heart.webp'
 
 const HEART_SIZE = 130
 const SKEW_DEG = 30
@@ -93,25 +93,25 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
             key={open.key}
           >
             {/* <HeartImage /> */}
-            {/* <picture> */}
-            {/*   <img */}
-            {/*     src="heart.webp" */}
-            {/*     // src="heart.svg" */}
-            {/*     style={{ objectFit: 'fill' }} */}
-            {/*     height={HEART_SIZE} */}
-            {/*     width={HEART_SIZE} */}
-            {/*     alt="asd" */}
-            {/*   /> */}
-            {/* </picture> */}
-            <Image
-              // src="/heart.png"
-              src={Heart}
-              alt="Heart"
-              objectFit="fill"
-              width={HEART_SIZE}
-              height={HEART_SIZE}
-              priority
-            />
+            <picture>
+              <img
+                src="heart.webp"
+                // src="heart.svg"
+                style={{ objectFit: 'fill' }}
+                height={HEART_SIZE}
+                width={HEART_SIZE}
+                alt="asd"
+              />
+            </picture>
+            {/* <Image */}
+            {/*   // src="/heart.png" */}
+            {/*   src={Heart} */}
+            {/*   alt="Heart" */}
+            {/*   objectFit="fill" */}
+            {/*   width={HEART_SIZE} */}
+            {/*   height={HEART_SIZE} */}
+            {/*   priority */}
+            {/* /> */}
           </Box>
         ) : null}
       </Container>
