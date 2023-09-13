@@ -14,7 +14,4 @@ export default defineConfig({
       noExternal: ['@radix-ui/*'],
     },
   },
-  experimental: {
-    viewTransitions: true,
-  },
 })
