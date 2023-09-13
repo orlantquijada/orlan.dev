@@ -37,10 +37,10 @@ export default function NotesList(props: Props) {
 
   // fixed height is needed (relative height will cause for the container to assume 100% height for its height)
   const smHeight = toRem(
-    Math.ceil(notes.length / 2) * (HEIGHT + CARD_MARGIN_BOTTOM)
+    Math.ceil(notes.length / 2) * (HEIGHT + CARD_MARGIN_BOTTOM),
   )
   const mdHeight = toRem(
-    Math.ceil(notes.length / 3) * (HEIGHT + CARD_MARGIN_BOTTOM)
+    Math.ceil(notes.length / 3) * (HEIGHT + CARD_MARGIN_BOTTOM),
   )
 
   return (
@@ -56,7 +56,7 @@ export default function NotesList(props: Props) {
       className={twMerge(
         cx(className, styles.notesList, [
           'h-full sm:h-[var(--smHeight)] md:h-[var(--mdHeight)]',
-        ])
+        ]),
       )}
     >
       <LayoutGroup>
