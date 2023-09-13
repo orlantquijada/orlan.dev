@@ -30,7 +30,7 @@ export function intersectionSet<T>(s1: Set<T>, s2: Set<T>): Set<T> {
 // http://olizardo.bol.ucla.edu/classes/soc-111/lessons-winter-2022/2-lesson-graph-theory.html#node-neighborhood-intersection
 export function getNeighborhoodsIntersection(
   graph: TagGraphMap,
-  nodes: string[]
+  nodes: string[],
 ) {
   if (nodes.length === 0) return []
 

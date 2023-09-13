@@ -16,5 +16,5 @@ export const noteCardStyles = cva(
       color: 'gray',
       transluscent: true,
     },
-  }
+  },
 )

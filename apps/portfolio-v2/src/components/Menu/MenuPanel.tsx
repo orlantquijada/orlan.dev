@@ -150,6 +150,6 @@ const menuItemStyles = cva(
     defaultVariants: {
       intent: 'default',
     },
-  }
+  },
 )
 const bulletStyles = cva(['w-2 h-2 rounded-full justify-self-center'])

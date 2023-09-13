@@ -1,6 +1,7 @@
-import { ComponentProps, forwardRef } from 'react'
+import type { ComponentProps } from 'react'
+import { forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
-import { cva, VariantProps } from 'cva'
+import { cva, type VariantProps } from 'cva'
 import styles from './Button.module.css'
 
 export const buttonStyles = cva(
@@ -37,7 +38,7 @@ export const buttonStyles = cva(
       translucent: false,
       motionSafe: true,
     },
-  }
+  },
 )
 
 export const Button = forwardRef<

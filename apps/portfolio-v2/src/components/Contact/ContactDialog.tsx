@@ -43,7 +43,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
                   buttonStyles({
                     className: 'flex items-center gap-2 active:scale-95',
                     translucent: true,
-                  })
+                  }),
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
