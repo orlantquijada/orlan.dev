@@ -8,7 +8,6 @@ import { like } from '@/lib/like'
 import { styled } from '@stitches.config'
 import { Daily } from 'contentlayer/generated'
 
-// import Heart from '../../public/heart.png'
 // import Heart from '../../public/heart.webp'
 
 const HEART_SIZE = 130
@@ -92,26 +91,7 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
             onAnimationComplete={() => setOpen(false)}
             key={open.key}
           >
-            {/* <HeartImage /> */}
-            <picture>
-              <img
-                src="heart.webp"
-                // src="heart.svg"
-                style={{ objectFit: 'fill' }}
-                height={HEART_SIZE}
-                width={HEART_SIZE}
-                alt="asd"
-              />
-            </picture>
-            {/* <Image */}
-            {/*   // src="/heart.png" */}
-            {/*   src={Heart} */}
-            {/*   alt="Heart" */}
-            {/*   objectFit="fill" */}
-            {/*   width={HEART_SIZE} */}
-            {/*   height={HEART_SIZE} */}
-            {/*   priority */}
-            {/* /> */}
+            <HeartImage />
           </Box>
         ) : null}
       </Container>
@@ -119,19 +99,31 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
   )
 }
 
-// function HeartImage() {
-//   return (
-//     <Image
-//       // src="/heart.png"
-//       src={Heart}
-//       alt="Heart"
-//       objectFit="fill"
-//       width={HEART_SIZE}
-//       height={HEART_SIZE}
-//       priority
-//     />
-//   )
-// }
+function HeartImage() {
+  // return (
+  //   <Image
+  //     // src="/heart.png"
+  //     src={Heart}
+  //     alt="Heart"
+  //     objectFit="fill"
+  //     width={HEART_SIZE}
+  //     height={HEART_SIZE}
+  //     priority
+  //   />
+  // )
+  return (
+    <picture>
+      <img
+        src="heart.webp"
+        // src="heart.svg"
+        style={{ objectFit: 'fill' }}
+        height={HEART_SIZE}
+        width={HEART_SIZE}
+        alt="Heart"
+      />
+    </picture>
+  )
+}
 
 const Container = styled('div', {
   position: 'relative',
