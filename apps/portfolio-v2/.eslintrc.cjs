@@ -1,11 +1,15 @@
 module.exports = {
   root: true,
   // ...
+  parser: '@typescript-eslint/parser',
+  plugins: ['@typescript-eslint', 'prettier'],
   extends: [
     // ...
-    'custom',
+    'eslint:recommended',
     'plugin:astro/jsx-a11y-recommended',
     'plugin:astro/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
   ],
   // ...
   overrides: [
@@ -29,4 +33,11 @@ module.exports = {
     },
     // ...
   ],
+  rules: {
+    '@typescript-eslint/consistent-type-imports': 'error',
+    'no-alert': 2,
+    'no-console': [2, { allow: ['warn', 'error'] }],
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-unused-vars': [2, { argsIgnorePattern: '^_' }],
+  },
 }
