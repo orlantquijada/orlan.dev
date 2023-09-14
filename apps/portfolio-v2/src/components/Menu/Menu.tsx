@@ -1,5 +1,10 @@
 import { useMemo, useRef, useState } from 'react'
-import { AnimatePresence, motion, MotionConfig, Variants } from 'framer-motion'
+import {
+  AnimatePresence,
+  motion,
+  MotionConfig,
+  type Variants,
+} from 'framer-motion'
 import { cva } from 'cva'
 import * as PopoverPrimitive from '@radix-ui/react-popover'
 import { twMerge } from 'tailwind-merge'
@@ -54,7 +59,7 @@ export function Menu() {
                 buttonStyles({
                   className: 'z-10 flex items-center gap-3',
                   motionSafe: false,
-                })
+                }),
               )}
             >
               <MenuIcon />
@@ -70,7 +75,7 @@ export function Menu() {
                 buttonStyles({
                   className: 'absolute inset-0',
                   translucent: true,
-                })
+                }),
               )}
             />
           </PopoverPrimitive.Anchor>
@@ -169,5 +174,5 @@ const contentStyles = cva(
     defaultVariants: {
       translucent: false,
     },
-  }
+  },
 )

@@ -1,7 +1,7 @@
 ---
 import { components } from '@/components/Notes/NoteDetailComponents/components.astro'
 import NotesLayout from '@/layouts/NotesLayout.astro'
-import { CollectionEntry, getCollection } from 'astro:content'
+import { type CollectionEntry, getCollection } from 'astro:content'
 
 export async function getStaticPaths() {
   const notes = await getCollection('notes')

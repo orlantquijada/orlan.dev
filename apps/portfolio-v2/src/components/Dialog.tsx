@@ -24,7 +24,7 @@ const contentStyles = cva(
       transluscent: false,
       color: 'gray',
     },
-  }
+  },
 )
 
 const overlayStyles = cva([

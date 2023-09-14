@@ -14,7 +14,7 @@ const { title, className } = Astro.props
 <BaseLayout title={title}>
   <slot name="head" slot="head" />
   <Header class="layout-container" />
-  <main class:list={['py-24 layout-container', className]}>
+  <main class:list={['layout-container py-24', className]}>
     <div class="gradient"></div>
     <slot />
   </main>
