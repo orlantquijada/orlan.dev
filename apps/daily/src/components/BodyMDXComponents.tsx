@@ -13,6 +13,8 @@ const P = styled('p', textStyles, {
     width: '.7em',
     fontSize: '325%',
     fontStyle: 'initial',
+
+    paddingInlineEnd: '1rem',
   },
 })
 
