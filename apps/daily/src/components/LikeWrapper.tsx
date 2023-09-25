@@ -40,7 +40,7 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
   return (
     <>
       <Head>
-        <link rel="preload" href="heart.webp" as="image" />
+        <link rel="preload" href="/heart.webp" as="image" />
       </Head>
       <Container
         onClick={handler}
@@ -114,7 +114,7 @@ function HeartImage() {
   return (
     <picture>
       <img
-        src="heart.webp"
+        src="/heart.webp"
         // src="heart.svg"
         style={{ objectFit: 'fill' }}
         height={HEART_SIZE}
