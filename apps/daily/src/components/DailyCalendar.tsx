@@ -7,7 +7,7 @@ import {
   useEffect,
 } from 'react'
 import { useRouter } from 'next/router'
-import { format, isSameDay } from 'date-fns'
+import { format, isSameDay, isThisMonth } from 'date-fns'
 import {
   motion,
   MotionValue,
@@ -17,13 +17,14 @@ import {
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
 import { css, styled } from '@stitches.config'
-import { getNextMonth, getPreviousMonth } from '@/lib/api'
+import { getMonthToday, getNextMonth, getPreviousMonth } from '@/lib/api'
 import { Month, MonthSubjectsMap } from '@/lib/contentlayer'
 
 import { Text, textStyles } from '@/components/Text'
 import * as Calendar from '@/components/Calendar'
 
 import PreviewToast from './PreviewToast'
+import UTurnLeftIcon from './UTurnLeftIcon'
 
 const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
 const NAVIGATION_OFFSET = 100
@@ -36,7 +37,7 @@ export default function DailyCalendar({ month }: { month: Month }) {
   })
   const onChangeCurrentMonthDate = useCallback(
     (date: Date) => setCurrentMonthDate(date),
-    []
+    [],
   )
 
   // TODO: refactor impl
@@ -48,14 +49,16 @@ export default function DailyCalendar({ month }: { month: Month }) {
   const opacity = useTransform(
     x,
     [-NAVIGATION_OFFSET, 0, NAVIGATION_OFFSET],
-    [0.1, 1, 0.1]
+    [0.1, 1, 0.1],
   )
 
   const [selectedDate, setSelectedDate] = useState<Date>()
 
-  const handleRoute = (direction: 'next' | 'prev') => {
-    const toMonth =
-      direction === 'next' ? getNextMonth(month) : getPreviousMonth(month)
+  const handleRoute = (direction: 'next' | 'prev' | 'reset') => {
+    let toMonth = ''
+    if (direction === 'reset') toMonth = getMonthToday()
+    else if (direction === 'next') toMonth = getNextMonth(month)
+    else if (direction === 'prev') toMonth = getPreviousMonth(month)
 
     // shallow is required bec data fetching will be handled client-side but
     // calendar month state will be handled with the URL
@@ -85,6 +88,14 @@ export default function DailyCalendar({ month }: { month: Month }) {
           </SubjectTitle>
 
           <CalendarButtonsContainer>
+            {isThisMonth(currentMonthDate) ? null : (
+              <Calendar.ResetToTodayButton
+                className={calendarButtonStyle()}
+                onClick={() => handleRoute('reset')}
+              >
+                <UTurnLeftIcon />
+              </Calendar.ResetToTodayButton>
+            )}
             <Calendar.PreviousMonthButton
               ref={prevBtn}
               className={calendarButtonStyle()}

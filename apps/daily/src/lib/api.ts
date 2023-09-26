@@ -11,7 +11,7 @@ type BetterTypedDaily = Daily & { month: Month }
 function filterByKey<Key extends FilterKeys>(
   dailies: Daily[],
   key: Key,
-  value: BetterTypedDaily[Key]
+  value: BetterTypedDaily[Key],
 ) {
   return dailies.filter((daily) => daily[key] === value)
 }
@@ -20,12 +20,12 @@ export function getDailies<
   Flags extends KeysFlag<Daily> = { [Key in keyof Daily]: true },
   Result = [FilterFalseProps<Flags>] extends [keyof Daily]
     ? Pick<Daily, FilterFalseProps<Flags>>
-    : Daily
+    : Daily,
 >(
   options: {
     select?: Flags
     filter?: Partial<Pick<BetterTypedDaily, FilterKeys>>
-  } = {}
+  } = {},
 ): Result[] {
   const { select, filter } = options
 
@@ -50,7 +50,7 @@ export function getDailyToday(timezone = 'Asia/Manila') {
   const today = parse(
     formatInTimeZone(new Date(), timezone, format),
     format,
-    new Date()
+    new Date(),
   )
 
   const dailyToday = getDailies({
@@ -76,4 +76,9 @@ export function getNextMonth(month: Month) {
       ? Months.indexOf('January')
       : indexOfNextMonth
   ]
+}
+
+export function getMonthToday() {
+  const today = new Date()
+  return Months[today.getMonth()]
 }
