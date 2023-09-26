@@ -45,16 +45,16 @@ export function Root({
 }) {
   const today = new Date()
   const [currentMonthStartDate, setCurrentMonthStartDate] = useState(() =>
-    startOfMonth(defaultValue || today)
+    startOfMonth(defaultValue || today),
   )
 
   const state = useMemo(
     () =>
       [currentMonthStartDate, setCurrentMonthStartDate] as [
         Date,
-        Dispatch<SetStateAction<Date>>
+        Dispatch<SetStateAction<Date>>,
       ],
-    [currentMonthStartDate]
+    [currentMonthStartDate],
   )
 
   useEffect(() => {
@@ -117,6 +117,30 @@ export const NextMonthButton = forwardRef<
 })
 NextMonthButton.displayName = 'NextMonthButton'
 
+export const ResetToTodayButton = forwardRef<
+  HTMLButtonElement,
+  ComponentProps<'button'>
+>((props, ref) => {
+  const [, setCurrentMonthStartDate] = useCalendar()
+
+  const handleClick = () => {
+    setCurrentMonthStartDate(startOfMonth(new Date()))
+  }
+
+  return (
+    <button
+      ref={ref}
+      {...props}
+      onClick={(e) => {
+        handleClick()
+
+        if (props.onClick) props.onClick(e)
+      }}
+    />
+  )
+})
+ResetToTodayButton.displayName = 'ResetToTodayButton'
+
 type DaysResult<T extends boolean> = T extends true
   ? { value: Date; isInCurrentMonth: boolean }
   : { value: Date }
@@ -141,10 +165,10 @@ export function Days<TIncludeAdjacent extends boolean>(props: {
       days.map((day) => ({
         value: day,
         isInCurrentMonth: isSameMonth(day, currentMonthStartDate),
-      })) as DaysResult<true>[]
+      })) as DaysResult<true>[],
     )
 
   return children(
-    days.map((day) => ({ value: day })) as DaysResult<TIncludeAdjacent>[]
+    days.map((day) => ({ value: day })) as DaysResult<TIncludeAdjacent>[],
   )
 }
