@@ -93,7 +93,9 @@ export default function DailyCalendar({ month }: { month: Month }) {
                 className={calendarButtonStyle()}
                 onClick={() => handleRoute('reset')}
               >
-                <UTurnLeftIcon />
+                <span>
+                  <UTurnLeftIcon />
+                </span>
               </Calendar.ResetToTodayButton>
             )}
             <Calendar.PreviousMonthButton
@@ -101,14 +103,18 @@ export default function DailyCalendar({ month }: { month: Month }) {
               className={calendarButtonStyle()}
               onClick={() => handleRoute('prev')}
             >
-              <ChevronLeftIcon />
+              <span>
+                <ChevronLeftIcon />
+              </span>
             </Calendar.PreviousMonthButton>
             <Calendar.NextMonthButton
               ref={nextBtn}
               className={calendarButtonStyle()}
               onClick={() => handleRoute('next')}
             >
-              <ChevronRightIcon />
+              <span>
+                <ChevronRightIcon />
+              </span>
             </Calendar.NextMonthButton>
           </CalendarButtonsContainer>
         </Header>
@@ -240,8 +246,9 @@ const calendarButtonStyle = css({
   background: 'none',
   cursor: 'pointer',
 
-  display: 'grid',
-  placeItems: 'center',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
   transition: 'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
   borderRadius: '0.25rem',
 
