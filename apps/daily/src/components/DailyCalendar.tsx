@@ -252,6 +252,12 @@ const calendarButtonStyle = css({
   transition: 'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
   borderRadius: '0.25rem',
 
+  '& span': {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
   '&:hover': {
     color: '$olive12',
   },
