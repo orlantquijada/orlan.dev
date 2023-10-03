@@ -18,11 +18,6 @@ export default function MetaTags(props: Props) {
 
       {/* status bars */}
       <meta name="theme-color" content="#fcfdfc" />
-      <meta name="apple-mobile-web-app-capable" content="yes" />
-      <meta
-        name="apple-mobile-web-app-status-bar-style"
-        content="black-translucent"
-      />
 
       {/* Primary Meta Tags  */}
       <title key="title">{title}</title>
