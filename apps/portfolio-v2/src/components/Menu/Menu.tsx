@@ -90,7 +90,7 @@ export function Menu() {
             >
               <PopoverPrimitive.Content
                 align="end"
-                alignOffset={-1}
+                // 40 = button height
                 sideOffset={-40}
                 asChild
               >
