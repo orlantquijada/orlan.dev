@@ -1,0 +1,22 @@
+---
+title: range()
+tags: ['snippets', 'js', 'typescript']
+publishedAt: 2023-10-23
+---
+
+```typescript
+function range(start: number, end?: number, step = 1) {
+  const output: number[] = []
+
+  if (typeof end === 'undefined') {
+    end = start
+    start = 0
+  }
+
+  for (let i = start; i < end; i += step) {
+    output.push(i)
+  }
+
+  return output
+}
+```
