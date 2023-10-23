@@ -3,5 +3,5 @@
 }
 
 .menuContent {
-  width: min(325px, calc(100vw - (24px * 2)));
+  width: min(375px, calc(100vw - (24px * 2)));
 }
