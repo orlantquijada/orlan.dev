@@ -8,7 +8,7 @@ const DAILY_KEY = '__daily_/'
 const getKey = ({ day, month }: Pick<Daily, 'month' | 'day'>) =>
   `${DAILY_KEY}${month}/${day}`
 const parseKey = <T extends string = `${typeof DAILY_KEY}${Month}/${string}`>(
-  key: T
+  key: T,
 ) => {
   const [, month, _day] = key.split('/')
 
@@ -50,7 +50,7 @@ export const getAllLiked = () => {
   })
   return likes.map((like) =>
     allDailies.find(
-      ({ month, day }) => month === like.month && day === like.day
-    )
+      ({ month, day }) => month === like.month && day === like.day,
+    ),
   ) as Daily[]
 }

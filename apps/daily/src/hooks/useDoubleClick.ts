@@ -10,7 +10,7 @@ export function useDoubleClick(
   }: {
     delay?: number
     onSingleClick?: React.MouseEventHandler<HTMLElement>
-  } = {}
+  } = {},
 ) {
   const timer = React.useRef<NodeJS.Timer | null>(null)
 
@@ -28,6 +28,6 @@ export function useDoubleClick(
         }, delay)
       }
     },
-    [delay, onDoubleClick, onSingleClick]
+    [delay, onDoubleClick, onSingleClick],
   )
 }

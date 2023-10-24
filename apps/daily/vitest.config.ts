@@ -11,7 +11,7 @@ export default defineConfig({
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
       'contentlayer/generated': fileURLToPath(
-        new URL('./.contentlayer/generated', import.meta.url)
+        new URL('./.contentlayer/generated', import.meta.url),
       ),
     },
   },
