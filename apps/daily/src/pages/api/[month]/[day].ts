@@ -32,7 +32,7 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse) {
   if (daily.length) {
     res.setHeader(
       'Cache-Control',
-      'public, s-maxage=604800, stale-while-revalidate=86400'
+      'public, s-maxage=604800, stale-while-revalidate=86400',
     )
     res.status(200).json(daily[0])
   } else

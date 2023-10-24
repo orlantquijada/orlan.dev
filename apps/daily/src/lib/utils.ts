@@ -16,10 +16,10 @@ export function pickProps<
   Flags extends KeysFlag<Obj>,
   PickedProps = FilterFalseProps<Flags> extends keyof Obj
     ? Pick<Obj, FilterFalseProps<Flags>>
-    : never
+    : never,
 >(
   obj: Obj,
-  keysFlag: Flags
+  keysFlag: Flags,
 ): Flags extends Record<string, never | false> ? Obj : PickedProps {
   const keysList = Object.entries(keysFlag)
     .filter(([, value]) => value)

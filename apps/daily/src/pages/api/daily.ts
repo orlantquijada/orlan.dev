@@ -22,7 +22,7 @@ function transformData(data: Daily) {
 
 export default function handler(
   { query: { timezone } }: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   const dailyToday = getDailyToday(timezone as string)
 
