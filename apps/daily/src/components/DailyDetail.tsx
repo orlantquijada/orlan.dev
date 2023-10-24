@@ -49,9 +49,9 @@ export default function DailyDetail({ daily }: Props) {
   const year = new Date().getFullYear()
   const dateFormat = format(
     new Date(
-      `${Months.indexOf(daily.month as Month) + 1}/${daily.day}/${year}`
+      `${Months.indexOf(daily.month as Month) + 1}/${daily.day}/${year}`,
     ),
-    'LLLL do'
+    'LLLL do',
   )
 
   const [isLiked, setIsLiked] = useIsLiked(daily)
@@ -114,7 +114,7 @@ export default function DailyDetail({ daily }: Props) {
               onClick={() => {
                 navigator.clipboard
                   .writeText(
-                    `${BASE_URL}/${daily.month.toLowerCase()}/${daily.day}`
+                    `${BASE_URL}/${daily.month.toLowerCase()}/${daily.day}`,
                   )
                   .then(() => {
                     toastRef.current?.open()

@@ -35,7 +35,7 @@ export default function PreviewToast({
       selectedDate
         ? `api/${Months[selectedDate.getMonth()]}/${selectedDate.getDate()}`
         : null,
-    fetcher
+    fetcher,
   )
 
   useEffect(() => {

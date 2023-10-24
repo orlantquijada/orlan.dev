@@ -34,7 +34,7 @@ export const Tag = forwardRef<HTMLSpanElement, ComponentProps<typeof Text>>(
       }}
       ref={ref}
     />
-  )
+  ),
 )
 
 export const Title = forwardRef<
@@ -63,5 +63,5 @@ export const Close = forwardRef<HTMLButtonElement, ComponentProps<typeof Pill>>(
       }}
       ref={ref}
     />
-  )
+  ),
 )

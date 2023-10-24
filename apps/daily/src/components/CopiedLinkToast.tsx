@@ -25,7 +25,7 @@ export const CopiedLinkToast = forwardRef<Ref>((_, ref) => {
         },
       }
     },
-    []
+    [],
   )
 
   return (
