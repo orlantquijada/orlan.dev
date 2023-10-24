@@ -8,6 +8,7 @@ import {
   type ThemeKeys,
 } from '@/lib/theme-toggle'
 
+// NOTE: dead code
 export function useTheme() {
   const [loading, setLoading] = useState(true)
   const [theme, setTheme] = useState<ThemeKeys>()
