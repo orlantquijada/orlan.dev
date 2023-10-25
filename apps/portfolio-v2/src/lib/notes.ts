@@ -43,5 +43,9 @@ export function getNeighborhoodsIntersection(
 }
 
 export function getViewTransitionName(title: NoteFrontmatter['title']) {
-  return title.toLowerCase().replaceAll(' ', '-').replaceAll('()', '')
+  return title
+    .toLowerCase()
+    .replaceAll(' ', '-')
+    .replaceAll('()', '')
+    .replaceAll('`', '')
 }
