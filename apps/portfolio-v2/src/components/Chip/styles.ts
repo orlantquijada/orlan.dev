@@ -31,7 +31,7 @@ export const chipStyles = cva(
       {
         color: 'gray',
         transluscent: true,
-        className: 'dark:bg-grayA3 dark:text-gray12',
+        className: 'dark:bg-grayA3 dark:text-gray12 bg-[hsla(0,0%,99%,0.4)]',
       },
       {
         color: 'gray',
