@@ -103,6 +103,10 @@ export function Menu() {
                     transformOrigin:
                       'var(--radix-popover-content-transform-origin)',
                   }}
+                  transition={{
+                    type: 'tween',
+                    duration: 0.2,
+                  }}
                   className={twMerge(contentStyles({ translucent: true }))}
                 >
                   <MenuPanel />
