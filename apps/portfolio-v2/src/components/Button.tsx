@@ -16,7 +16,7 @@ export const buttonStyles = cva(
       },
       translucent: {
         true: [
-          'dark:bg-grayA3',
+          'dark:bg-grayA3 bg-[hsla(0,0%,99%,0.4)]',
           // 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
         ],
         false: ['dark:bg-gray3'],

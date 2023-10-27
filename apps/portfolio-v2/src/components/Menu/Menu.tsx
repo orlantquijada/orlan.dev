@@ -166,7 +166,7 @@ const contentStyles = cva(
         true: [
           'dark:bg-grayA3',
           // 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
-          'dark:backdrop-blur-md dark:backdrop-brightness-75',
+          'backdrop-blur-md dark:backdrop-brightness-75 bg-[hsla(0,0%,99%,0.4)]',
         ],
         false: ['dark:bg-gray3'],
       },
