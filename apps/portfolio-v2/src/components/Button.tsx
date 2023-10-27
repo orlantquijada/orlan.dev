@@ -45,11 +45,11 @@ export const Button = forwardRef<
   HTMLButtonElement,
   ComponentProps<'button'> & VariantProps<typeof buttonStyles>
 >((props, ref) => {
-  const { className, children, translucent = null } = props
+  const { className, children, translucent = null, ..._props } = props
 
   return (
     <button
-      {...props}
+      {..._props}
       ref={ref}
       className={twMerge(buttonStyles({ className, translucent: translucent }))}
     >
