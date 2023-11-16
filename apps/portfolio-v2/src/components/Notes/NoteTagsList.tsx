@@ -116,6 +116,7 @@ const Tag = forwardRef<
     <Chip
       key={tag}
       color={isSelected || tag === 'all' ? 'primary' : 'gray'}
+      className="will-change-[opacity,transform]"
       asChild
     >
       <motion.button
