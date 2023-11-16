@@ -36,7 +36,9 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
       layoutId={title}
       animate={isSelecting ? { opacity: !selected ? 0.3 : 1 } : {}}
       href={href}
-      className={twMerge(noteCardStyles())}
+      className={twMerge(
+        noteCardStyles({ className: 'will-change-[opacity,transform]' }),
+      )}
     >
       <h1
         className="font-medium"
