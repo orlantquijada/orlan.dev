@@ -44,7 +44,7 @@ export function Menu() {
   return (
     <MotionConfig transition={transitions.punchy}>
       <PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
-        <div className="relative flex">
+        <div className="relative ml-auto flex">
           <PopoverPrimitive.Trigger asChild>
             <motion.button
               variants={buttonVariants}
