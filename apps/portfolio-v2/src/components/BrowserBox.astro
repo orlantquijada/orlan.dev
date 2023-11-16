@@ -1,0 +1,30 @@
+---
+import { cx } from 'cva'
+type Props = {
+  title: string
+  className?: string
+  aspect: 'phone' | 'desktop'
+}
+
+const props = Astro.props
+---
+
+<div
+  class:list={[
+    'w-full overflow-hidden rounded-lg border border-gray5 shadow-[0px_3px_10px_rgba(0,0,0,0.15)] shadow-black/[0.15] transition-transform hover:-translate-y-1',
+    props.className,
+  ]}
+>
+  <div class="flex h-6 items-center justify-center bg-gray2">
+    <span class="text-[.625rem] text-gray11">{props.title}</span>
+  </div>
+
+  <div
+    class:list={[
+      'aspect-[.75] w-full bg-gray3',
+      cx(props.aspect === 'phone' ? 'md:aspect-[.75]' : 'md:aspect-[1.75]'),
+    ]}
+  >
+    <slot />
+  </div>
+</div>
