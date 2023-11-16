@@ -1,0 +1,26 @@
+---
+import BrowserBox from './BrowserBox.astro'
+---
+
+<section class="mt-8 w-full">
+  <h3 class="mb-6 text-sm text-gray11">Projects</h3>
+
+  <div
+    class="relative flex aspect-[.30] w-full flex-col gap-8 md:isolate md:aspect-[1.1]"
+  >
+    <a
+      href="https://daily.orlan.dev"
+      target="_blank"
+      class="sticky left-0 top-[6rem] w-full md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg"
+    >
+      <BrowserBox title="Daily Stoic" aspect="desktop" />
+    </a>
+    <!-- TODO: replace with correct link -->
+    <a
+      href="https://daily.orlan.dev"
+      class="sticky left-0 top-[6rem] w-full md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10"
+    >
+      <BrowserBox title="Money Manager" aspect="phone" />
+    </a>
+  </div>
+</section>
