@@ -1,4 +1,4 @@
-import { type ComponentProps, forwardRef } from 'react'
+import { type ComponentProps, forwardRef, useState, useEffect } from 'react'
 import { useStore } from '@nanostores/react'
 import { AnimatePresence, motion, type Variants } from 'framer-motion'
 import { ReactComponent as Close } from '@/icons/cross.svg'
