@@ -30,6 +30,8 @@ export default function NoteTagsList(props: Props) {
 
   const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags)
 
+  const initialOpacity = useTagsInitialOpacity()
+
   return (
     <div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
       <AnimatePresence mode="popLayout">
@@ -83,7 +85,8 @@ export default function NoteTagsList(props: Props) {
           ? tags.map((tag) => (
               <Tag
                 tag={tag}
-                initial={{ opacity: 1 }}
+                initial={{ opacity: initialOpacity }}
+                animate={{ opacity: 1 }}
                 layoutId={tag}
                 key={tag}
                 variants={variants}
@@ -102,6 +105,16 @@ export default function NoteTagsList(props: Props) {
       </AnimatePresence>
     </div>
   )
+}
+
+function useTagsInitialOpacity() {
+  const [initialOpacity, setInitialOpacity] = useState(1)
+
+  useEffect(() => {
+    setInitialOpacity(0)
+  }, [])
+
+  return initialOpacity
 }
 
 const Tag = forwardRef<
