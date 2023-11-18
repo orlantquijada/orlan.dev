@@ -15,7 +15,7 @@ const props = Astro.props
     props.className,
   ]}
 >
-  <div class="flex h-6 items-center justify-center bg-gray2">
+  <div class="titlebar flex h-6 items-center justify-center bg-gray2">
     <span class="text-[.625rem] text-gray11">{props.title}</span>
   </div>
 
@@ -28,3 +28,13 @@ const props = Astro.props
     <slot />
   </div>
 </div>
+
+<style>
+  .titlebar {
+    background-image: url(/traffic-lights.svg), url(/globe.svg);
+    background-position:
+      8px center,
+      right 8px center;
+    background-repeat: no-repeat, no-repeat;
+  }
+</style>
