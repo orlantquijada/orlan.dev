@@ -11,15 +11,33 @@ import BrowserBox from './BrowserBox.astro'
     <a
       href="https://daily.orlan.dev"
       target="_blank"
-      class="sticky left-0 top-[6rem] w-full md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg"
+      class="w-full md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg"
     >
       <BrowserBox title="Daily Stoic" aspect="desktop" />
     </a>
     <a
       href="https://github.com/orlantquijada/money-manager"
-      class="sticky left-0 top-[6rem] w-full md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10"
+      class="w-full md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10"
+      style={{ '--stack': 1 }}
     >
       <BrowserBox title="Money Manager" aspect="phone" />
     </a>
   </div>
 </section>
+
+<style>
+  a {
+    --header-height: 2.5rem;
+    --header-gap: 2.5rem;
+    --content-gap: 1rem;
+    --stack: 0;
+    --top: calc(
+      var(--header-gap) + var(--header-height) + var(--content-gap) +
+        (var(--stack) * 0.5rem)
+    );
+
+    position: sticky;
+    left: 0;
+    top: var(--top);
+  }
+</style>
