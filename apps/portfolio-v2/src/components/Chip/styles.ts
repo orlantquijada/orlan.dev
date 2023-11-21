@@ -14,7 +14,7 @@ export const chipStyles = cva(
           'h-6 min-w-[2.5rem] px-2 text-xs md:h-7 md:min-w-[3rem] md:px-3 md:text-sm',
       },
       color: {
-        gray: 'border-gray6 bg-gray1 text-gray11 hover:border-gray7 hover:bg-gray3',
+        gray: 'border-gray6 bg-gray1 text-gray11 hover:border-gray7 hover:bg-gray3 focus-within:border-gray7 focus-within:bg-gray3',
         primary: 'border-gray12 bg-gray12 text-gray1 focus-visible:bg-grayA11',
       },
       transluscent: {
