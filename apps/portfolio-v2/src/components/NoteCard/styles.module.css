@@ -23,6 +23,19 @@
   border-color: var(--accent-blue);
 }
 
+.noteCard:nth-child(1n)::before {
+  --shadow-color: var(--lime);
+}
+.noteCard:nth-child(2n)::before {
+  --shadow-color: var(--violet);
+}
+.noteCard:nth-child(3n)::before {
+  --shadow-color: var(--pink);
+}
+.noteCard:nth-child(4n)::before {
+  --shadow-color: var(--blue);
+}
+
 .noteCard::before {
   @apply absolute inset-0 rounded-[inherit] opacity-0 transition-opacity;
   content: '';
