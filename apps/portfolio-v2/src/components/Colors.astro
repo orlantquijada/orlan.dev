@@ -8,11 +8,16 @@
         --accent-blue: hsla(222, 67%, 73%, 1);
         --accent-pink: hsla(343, 68%, 79%, 1); */
 
+    --lime: 75deg 99.8% 63.7%;
+    --pink: 343deg 68% 79%;
+    --violet: 256deg 99% 72%;
+    --blue: 222deg 67% 73%;
+
     /* limeA10 dark */
-    --accent: hsla(75, 99.8%, 63.7%, 0.936);
-    --accent-pink: hsla(343, 68%, 79%, 1);
-    --accent-violet: hsla(256, 99%, 72%, 1);
-    --accent-blue: hsla(222, 67%, 73%, 1);
+    --accent: hsla(var(--lime) / 0.936);
+    --accent-pink: hsla(var(--pink) / 1);
+    --accent-violet: hsla(var(--violet) / 1);
+    --accent-blue: hsla(var(--blue) / 1);
 
     --overlay: var(--grayA9);
 
