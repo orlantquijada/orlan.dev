@@ -1,5 +1,5 @@
 import type { VariantProps } from 'cva'
-import type { ReactNode } from 'react'
+import { forwardRef, type ReactNode } from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { twMerge } from 'tailwind-merge'
 
@@ -7,13 +7,13 @@ import { chipStyles } from './styles'
 
 export type ChipVariantProps = VariantProps<typeof chipStyles>
 
-type Props = ChipVariantProps & {
+type ChipProps = ChipVariantProps & {
   children: ReactNode
   className?: string | undefined
   asChild?: boolean
 }
 
-export default function Chip(props: Props) {
+const Chip = forwardRef<HTMLElement, ChipProps>((props, ref) => {
   const {
     color = 'gray',
     size = 'responsive',
@@ -28,8 +28,10 @@ export default function Chip(props: Props) {
   return (
     <Comp
       className={twMerge(chipStyles({ color, size, transluscent, className }))}
+      ref={ref}
     >
       {children}
     </Comp>
   )
-}
+})
+export default Chip
