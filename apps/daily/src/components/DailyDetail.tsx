@@ -102,7 +102,11 @@ export default function DailyDetail({ daily }: Props) {
         </Main>
         <Footer>
           <Actions shouldShow={shouldShow}>
-            <Link href={`/${daily.month.toLowerCase()}`} passHref>
+            <Link
+              href={`/${daily.month.toLowerCase()}`}
+              passHref
+              legacyBehavior
+            >
               <FooterButton as={motion.a} size="small" aria-label="Go Back">
                 <IconMotionWrapper>
                   <ArrowLeftIcon className={footerIconStyles()} />
