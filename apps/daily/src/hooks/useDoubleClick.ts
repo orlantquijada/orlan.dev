@@ -12,7 +12,7 @@ export function useDoubleClick(
     onSingleClick?: React.MouseEventHandler<HTMLElement>
   } = {},
 ) {
-  const timer = React.useRef<NodeJS.Timer | null>(null)
+  const timer = React.useRef<NodeJS.Timeout | null>(null)
 
   return React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
