@@ -31,6 +31,7 @@ function LikedCard({ daily }: { daily: Daily }) {
           },
         }}
         passHref
+        legacyBehavior
       >
         <StyledA>
           <StyledDate>

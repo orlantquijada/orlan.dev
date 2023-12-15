@@ -73,7 +73,7 @@ export default function PreviewToast({
           )}
 
           {daily ? (
-            <Link passHref href={daily ? daily.url : '/'}>
+            <Link passHref href={daily ? daily.url : '/'} legacyBehavior>
               <Action>View</Action>
             </Link>
           ) : null}
