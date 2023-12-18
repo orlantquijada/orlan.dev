@@ -1,25 +1,25 @@
-import { css, styled } from '@stitches.config'
+import { defineRecipe } from '@pandacss/dev'
 
-export const textStyles = css({
+export const textRecipe = defineRecipe({
+  className: 'text',
   variants: {
     size: {
       base: {
-        fontSize: '$base',
+        fontSize: 'base',
         lineHeight: '1.5rem',
       },
       lg: {
-        fontSize: '$lg',
+        fontSize: 'lg',
         lineHeight: '1.75rem',
       },
       xl: {
-        fontSize: '$xl',
+        fontSize: 'xl',
         lineHeight: '1.75rem',
       },
       '2xl': {
-        fontSize: '$2xl',
+        fontSize: '2xl',
         lineHeight: '2rem',
       },
     },
   },
 })
-export const Text = styled('span', textStyles)

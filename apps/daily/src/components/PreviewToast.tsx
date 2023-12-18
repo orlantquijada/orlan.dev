@@ -10,9 +10,10 @@ import { Daily } from 'contentlayer/generated'
 import { AnimatePresence, motion, Variants } from 'framer-motion'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
-import { shimmer, styled } from '@stitches.config'
+import { text } from 'styled-system/recipes'
+import { styled } from 'styled-system/jsx'
+import { cva } from 'styled-system/css'
 import { Months } from '@/lib/contentlayer'
-import { Text } from './Text'
 
 // const variants: Variants = {
 //   hide: { y: 'calc(100% + var(--contentPaddingY))', x: '50%' },
@@ -53,7 +54,7 @@ export default function PreviewToast({
   return (
     <AnimatePresence exitBeforeEnter>
       {selectedDate && (
-        <Container
+        <motion.div
           variants={variants}
           // react magic: unmount component on `selectedDate` change
           key={selectedDate.toString()}
@@ -61,13 +62,14 @@ export default function PreviewToast({
           animate="show"
           exit="hide"
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className={container()}
         >
           {loading ? (
             <LoadingTitleSkeleton />
           ) : daily ? (
             <ToastTitle title={daily.title} />
           ) : (
-            <Title size={{ '@initial': 'base', '@tab': 'lg' }}>
+            <Title className={text({ size: { base: 'base', md: 'lg' } })}>
               No content yet!
             </Title>
           )}
@@ -77,28 +79,30 @@ export default function PreviewToast({
               <Action>View</Action>
             </Link>
           ) : null}
-        </Container>
+        </motion.div>
       )}
     </AnimatePresence>
   )
 }
 
 const LoadingTitleSkeleton = styled('div', {
-  $$skeletonColor: '$colors$olive5',
-  $$shineColor: '$colors$olive2',
+  base: {
+    '--skeletonColor': 'colors.olive.5',
+    '--shineColor': 'colors.olive.2',
 
-  backgroundImage:
-    'linear-gradient(270deg, $$skeletonColor, $$shineColor, $$skeletonColor)',
-  backgroundSize: '400% 100%',
-  width: '15rem',
-  height: '1.5rem',
-  borderRadius: '0.5rem',
-  animation: `${shimmer} 8s ease-in-out infinite`,
+    backgroundImage:
+      'linear-gradient(270deg, var(--skeletonColor), var(--shineColor), var(--skeletonColor))',
+    backgroundSize: '400% 100%',
+    width: '15rem',
+    height: '1.5rem',
+    borderRadius: '0.5rem',
+    animation: 'shimmer 8s ease-in-out infinite',
+  },
 })
 
 const toastTitleComponents = {
   p: (props: ComponentProps<typeof Title>) => (
-    <Title {...props} size={{ '@initial': 'base', '@tab': 'lg' }} />
+    <Title {...props} className={text({ size: { base: 'base', md: 'lg' } })} />
   ),
 }
 
@@ -110,63 +114,71 @@ function ToastTitle({ title }: Pick<Daily, 'title'>) {
 
 //////////////////////////////////////////////////////////////////
 
-const Container = styled(motion.div, {
-  backgroundColor: '$olive1',
-  borderRadius: '0.5rem',
-  border: '1px solid $olive6',
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  gap: '1rem',
-  p: '0.75rem',
-  zIndex: 1,
+const container = cva({
+  base: {
+    backgroundColor: 'olive.1',
+    borderRadius: '0.5rem',
+    border: '1px solid',
+    borderColor: 'olive.6',
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    gap: '1rem',
+    p: '0.75rem',
+    zIndex: 1,
 
-  height: 'var(--toastHeight)',
-  position: 'fixed',
-  bottom: 'var(--contentPaddingY)',
-  left: 0,
-  right: 0,
-  mx: 'auto',
-  $$viewportPadding: 'calc(var(--contentPaddingX) * 2)',
-  width: 'calc(100% - $$viewportPadding)',
-  maxWidth: 'calc(var(--contentMaxWidth) - $$viewportPadding)',
+    height: 'var(--toastHeight)',
+    position: 'fixed',
+    bottom: 'var(--contentPaddingY)',
+    left: 0,
+    right: 0,
+    mx: 'auto',
+    '--viewportPadding': 'calc(var(--contentPaddingX) * 2)',
+    width: 'calc(100% - var(--viewportPadding))',
+    maxWidth: 'calc(var(--contentMaxWidth) - var(--viewportPadding))',
+  },
 })
 
-const Title = styled(Text, {
-  color: '$olive11',
-  fontWeight: '$bold',
-
-  display: 'block',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
+const Title = styled('span', {
+  base: {
+    color: 'olive.11',
+    fontWeight: 'bold',
+    display: 'block',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+  },
 })
 
 const Action = styled('a', {
-  backgroundColor: 'transparent',
-  color: '$olive11',
-  borderRadius: '4px',
-  height: '100%',
-  px: '0.5rem',
-  display: 'grid',
-  placeItems: 'center',
-  transition:
-    'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1)',
-  fontSize: '$base',
-  '-webkit-tap-highlight-color': 'transparent',
+  base: {
+    backgroundColor: 'transparent',
+    color: 'olive.11',
+    borderRadius: '4px',
+    height: 'full',
+    px: '0.5rem',
+    display: 'grid',
+    placeItems: 'center',
+    transition:
+      'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1)',
+    fontSize: 'base',
+    WebkitTapHighlightColor: 'transparent',
 
-  '&:hover, &:focus': {
-    backgroundColor: '$olive3',
-  },
+    _hover: { backgroundColor: 'olive.3' },
+    _focus: {
+      backgroundColor: 'olive.3',
+      outline: 'none',
+      '--ring-width': '2px',
+      '--ring-offset': '2px',
+      '--ring-color': 'colors.olive.7',
+      boxShadow:
+        '0 0 0 var(--ring-width) var(--colors-bg), 0 0 0 calc(var(--ring-width) + var(--ring-offset)) var(--ring-color)',
+    },
 
-  '&:focus': {
-    outline: 'none',
-    ring: '$olive7',
-  },
-
-  '@tab': {
-    fontSize: '$lg',
-    px: '0.75rem',
+    md: {
+      fontSize: 'lg',
+      px: '0.75rem',
+    },
   },
 })
 
