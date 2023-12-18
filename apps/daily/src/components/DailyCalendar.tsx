@@ -16,11 +16,12 @@ import {
 } from 'framer-motion'
 import { ChevronLeftIcon, ChevronRightIcon } from '@radix-ui/react-icons'
 
-import { css, styled } from '@stitches.config'
+import { text } from 'styled-system/recipes'
+import { css, cva, cx } from 'styled-system/css'
+import { styled } from 'styled-system/jsx'
 import { getMonthToday, getNextMonth, getPreviousMonth } from '@/lib/api'
 import { Month, MonthSubjectsMap } from '@/lib/contentlayer'
 
-import { Text, textStyles } from '@/components/Text'
 import * as Calendar from '@/components/Calendar'
 
 import PreviewToast from './PreviewToast'
@@ -72,16 +73,17 @@ export default function DailyCalendar({ month }: { month: Month }) {
         onChangeCurrentMonthDate={onChangeCurrentMonthDate}
       >
         <Header>
-          <Text
-            size={{ '@initial': 'base', '@tab': 'xl' }}
-            as="h1"
-            css={{ fontWeight: '$regular' }}
+          <h1
+            className={cx(
+              text({ size: { base: 'base', md: 'xl' } }),
+              css({ fontWeight: 'regular' }),
+            )}
           >
             {format(currentMonthDate, 'MMM y')}
-          </Text>
+          </h1>
 
           <SubjectTitle
-            size={{ '@initial': 'base', '@tab': 'xl' }}
+            className={text({ size: { base: 'base', md: 'xl' } })}
             style={{ opacity }}
           >
             {MonthSubjectsMap[month]}
@@ -90,7 +92,7 @@ export default function DailyCalendar({ month }: { month: Month }) {
           <CalendarButtonsContainer>
             {isThisMonth(currentMonthDate) ? null : (
               <Calendar.ResetToTodayButton
-                className={calendarButtonStyle()}
+                className={calendarButtonStyle}
                 onClick={() => handleRoute('reset')}
               >
                 <span>
@@ -100,7 +102,7 @@ export default function DailyCalendar({ month }: { month: Month }) {
             )}
             <Calendar.PreviousMonthButton
               ref={prevBtn}
-              className={calendarButtonStyle()}
+              className={calendarButtonStyle}
               onClick={() => handleRoute('prev')}
             >
               <span>
@@ -109,7 +111,7 @@ export default function DailyCalendar({ month }: { month: Month }) {
             </Calendar.PreviousMonthButton>
             <Calendar.NextMonthButton
               ref={nextBtn}
-              className={calendarButtonStyle()}
+              className={calendarButtonStyle}
               onClick={() => handleRoute('next')}
             >
               <span>
@@ -122,7 +124,7 @@ export default function DailyCalendar({ month }: { month: Month }) {
         <CalendarBody>
           <CalendarRow>
             {weekdays.map((weekday) => (
-              <Weekday size="base" key={weekday}>
+              <Weekday className={text({ size: 'base' })} key={weekday}>
                 {weekday}
               </Weekday>
             ))}
@@ -205,118 +207,145 @@ function Days({
 
 //////////////////////////////////////////////////////////////////
 
-const SubjectTitle = styled(motion.h2, textStyles, {
-  fontStyle: 'italic',
-  color: '$olive11',
-  fontWeight: '$regular',
+const SubjectTitle = styled(motion.h2, {
+  base: {
+    fontStyle: 'italic',
+    color: 'olive.11',
+    fontWeight: 'regular',
 
-  ml: '0.625rem',
+    ml: '0.625rem',
 
-  '@tab': { ml: 'initial' },
+    md: { ml: 'initial' },
+  },
 })
 const CalendarButtonsContainer = styled('div', {
-  display: 'flex',
-  ml: 'auto',
+  base: {
+    display: 'flex',
+    ml: 'auto',
 
-  '@tab': { ml: 'initial' },
+    md: { ml: 'initial' },
+  },
 })
 const Header = styled('header', {
-  display: 'flex',
-  alignItems: 'center',
-  width: '100%',
+  base: {
+    display: 'flex',
+    alignItems: 'center',
+    width: 'full',
 
-  '@tab': {
-    justifyContent: 'space-between',
+    md: {
+      justifyContent: 'space-between',
+    },
   },
 })
 
 const CalendarBody = styled('div', {
-  display: 'flex',
-  flexDirection: 'column',
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
 
-  gap: '1rem',
+    gap: '1rem',
 
-  width: '100%',
+    width: 'full',
+  },
 })
 
 const calendarButtonStyle = css({
-  size: '2rem',
-  color: '$olive11',
-  border: 'none',
-  background: 'none',
-  cursor: 'pointer',
+  base: {
+    w: '2rem',
+    h: '2rem',
+    color: 'olive.11',
+    border: 'none',
+    background: 'none',
+    cursor: 'pointer',
 
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  transition: 'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
-  borderRadius: '0.25rem',
-
-  '& span': {
     display: 'flex',
-    alignItems: 'center',
     justifyContent: 'center',
-  },
+    alignItems: 'center',
+    transition: 'box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
+    borderRadius: '0.25rem',
 
-  '&:hover': {
-    color: '$olive12',
-  },
-  '&:focus, &:active': {
-    ring: '$olive7',
+    '& span': {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+
+    _hover: {
+      color: 'olive.12',
+    },
+    '&:focus-within, &:active': {
+      outline: 'none',
+      '--ring-width': '2px',
+      '--ring-offset': '2px',
+      '--ring-color': 'colors.olive.7',
+      boxShadow:
+        '0 0 0 var(--ring-width) var(--colors-bg), 0 0 0 calc(var(--ring-width) + var(--ring-offset)) var(--ring-color)',
+    },
   },
 })
-const CalendarRow = styled('div', {
-  display: 'grid',
-  gridTemplateColumns: 'repeat(7, 1fr)',
-})
 
-const DaysContainer = styled('div', CalendarRow, {
-  '@tab': {
-    border: '1px solid $olive3',
+const calendarGrid = cva({
+  base: {
+    display: 'grid',
+    gridTemplateColumns: '7',
+  },
+})
+const CalendarRow = styled('div', calendarGrid)
+const DaysContainer = styled('div', {
+  base: {
+    ...calendarGrid.raw(),
+
+    md: {
+      border: '1px solid',
+      borderColor: 'olive.3',
+    },
   },
 })
 
 const StyledDay = styled('button', {
-  p: '1rem',
-  // px: '1rem',
-  height: '4rem',
+  base: {
+    p: '1rem',
+    // px: '1rem',
+    height: '4rem',
 
-  border: 'none',
-  borderTop: '1px solid $olive3',
-  background: '$bg',
-  fontSize: '$base',
-  color: '$textColor',
-  display: 'grid',
-  placeItems: 'center',
-  cursor: 'pointer',
-  lineHeight: 1,
-  '-webkit-tap-highlight-color': 'transparent',
+    border: 'none',
+    borderTop: '1px solid',
+    borderTopColor: 'olive.3',
+    background: 'bg',
+    fontSize: 'base',
+    color: 'textColor',
+    display: 'grid',
+    placeItems: 'center',
+    cursor: 'pointer',
+    lineHeight: 1,
+    WebkitTapHighlightColor: 'transparent',
 
-  '&:focus': {
-    outlineColor: '$olive7',
+    _focus: {
+      outlineColor: 'olive.7',
+    },
+
+    md: {
+      height: '6.25rem',
+      placeItems: 'flex-start',
+      border: '1px solid',
+      borderColor: 'olive.3',
+    },
   },
-
-  '@tab': {
-    height: '6.25rem',
-    placeItems: 'flex-start',
-    border: '1px solid $olive3',
-  },
-
   variants: {
     today: {
       true: {
         position: 'relative',
-        color: '$olive10',
+        color: 'olive.10',
 
-        '&::before': {
-          content: '',
-          backgroundColor: '$olive3',
+        _before: {
+          content: "''",
+          backgroundColor: 'olive.3',
           borderRadius: '999px',
           position: 'absolute',
-          size: '2em',
+          w: '2em',
+          h: '2em',
 
-          '@tab': {
-            size: '2em',
+          md: {
             top: '0.5em',
             left: '0.5em',
           },
@@ -330,15 +359,17 @@ const StyledDay = styled('button', {
     },
     inCurrentMonth: {
       false: {
-        color: '$olive8',
+        color: 'olive.8',
       },
     },
   },
 })
 
-const Weekday = styled('span', textStyles, {
-  textAlign: 'center',
-  color: '$olive11',
+const Weekday = styled('span', {
+  base: {
+    textAlign: 'center',
+    color: 'olive.11',
 
-  '@tab': { textAlign: 'left' },
+    md: { textAlign: 'left' },
+  },
 })

@@ -1,44 +1,62 @@
 import { type ReactNode, type ComponentProps } from 'react'
-import { styled } from '@stitches.config'
-import { textStyles } from './Text'
+import { css } from 'styled-system/css'
+import { styled } from 'styled-system/jsx'
+import { text } from 'styled-system/recipes'
 
 const Q = styled('q', {
-  alignSelf: 'stretch',
+  base: {
+    alignSelf: 'stretch',
 
-  '& > :first-child::before': {
-    content: 'open-quote',
-  },
-  '& > :last-child:not(ol)::after': {
-    content: 'close-quote',
-  },
-  '& > :last-child:where(ol)': {
-    '& li:last-of-type::after': {
+    '& > :first-child::before': {
+      content: 'open-quote',
+    },
+    '& > :last-child:not(ol)::after': {
       content: 'close-quote',
     },
+    '& > :last-child:where(ol)': {
+      '& li:last-of-type::after': {
+        content: 'close-quote',
+      },
+    },
+
+    _before: {
+      content: "''",
+    },
+    _after: {
+      content: "''",
+    },
   },
-  '&::before, &::after': { content: '' },
 })
 
-const P = styled('p', textStyles)
-
-const COUNTER_NAME = 'asd'
+const COUNTER_NAME = 'list-counter'
 const Ol = styled('ol', {
-  pl: '1.5rem',
-  counterReset: COUNTER_NAME,
+  base: {
+    pl: '1.5rem',
+    counterReset: COUNTER_NAME,
+  },
 })
-const Li = styled('li', textStyles, {
-  pl: '0.5rem',
-  counterIncrement: COUNTER_NAME,
+const Li = styled('li', {
+  base: {
+    pl: '0.5rem',
+    counterIncrement: COUNTER_NAME,
 
-  '&::marker': {
-    content: `counter(${COUNTER_NAME}) ")"`,
+    '&::marker': {
+      content: `counter(${COUNTER_NAME}) ")"`,
+    },
   },
 })
 
 export const quoteComponents = {
-  p: (props: ComponentProps<typeof P>) => <P {...props} size="xl" />,
+  p: (props: ComponentProps<'p'>) => (
+    <p {...props} className={text({ size: 'xl' })} />
+  ),
   ol: (props: ComponentProps<typeof Ol>) => <Ol {...props} />,
-  li: (props: ComponentProps<typeof Li>) => <Li {...props} size="xl" />,
+  li: (props: ComponentProps<typeof Li>) => (
+    <Li {...props} className={text({ size: 'xl' })} />
+  ),
+  em: (props: ComponentProps<'em'>) => (
+    <em {...props} className={css({ fontStyle: 'italic' })} />
+  ),
 }
 
 export function Quote({ children }: { children: ReactNode }) {

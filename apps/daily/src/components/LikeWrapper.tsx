@@ -5,8 +5,9 @@ import { motion } from 'framer-motion'
 
 import { useDoubleClick } from '@/hooks/useDoubleClick'
 import { like } from '@/lib/like'
-import { styled } from '@stitches.config'
 import { Daily } from 'contentlayer/generated'
+import { styled } from 'styled-system/jsx'
+import { css } from 'styled-system/css'
 
 // import Heart from '../../public/heart.webp'
 
@@ -69,7 +70,7 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
 
         {/* TODO: preload heart png */}
         {open ? (
-          <Box
+          <motion.div
             initial={{
               y: '-50%',
               x: '-50%',
@@ -78,7 +79,11 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
               position: 'absolute',
               rotate: `${getRandomInt(-SKEW_DEG, SKEW_DEG)}deg`,
             }}
-            css={{ width: HEART_SIZE, height: HEART_SIZE, userSelect: 'none' }}
+            className={css({
+              width: HEART_SIZE,
+              height: HEART_SIZE,
+              userSelect: 'none',
+            })}
             animate={{
               scale: [1, 0.85, 1, 1, 1.3],
               y: -120,
@@ -92,7 +97,7 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
             key={open.key}
           >
             <HeartImage />
-          </Box>
+          </motion.div>
         ) : null}
       </Container>
     </>
@@ -126,12 +131,12 @@ function HeartImage() {
 }
 
 const Container = styled('div', {
-  position: 'relative',
-  overflow: 'clip',
-  maxWidth: '100vw',
+  base: {
+    position: 'relative',
+    overflow: 'clip',
+    maxWidth: '100vw',
+  },
 })
-
-const Box = styled(motion.div, {})
 
 function getRandomInt(min: number, max: number) {
   min = Math.ceil(min)
