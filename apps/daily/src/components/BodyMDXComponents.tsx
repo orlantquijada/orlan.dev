@@ -1,54 +1,68 @@
 import { type ComponentProps } from 'react'
-import { styled } from '@stitches.config'
-import { Text, textStyles } from './Text'
+import { styled } from 'styled-system/jsx'
+import { css } from 'styled-system/css'
+import { text } from 'styled-system/recipes'
 
-const P = styled('p', textStyles, {
-  '&:not(:first-child)': {
-    textIndent: '2em',
-  },
-
-  'article > &:first-child::first-letter': {
-    float: 'left',
-    lineHeight: '85%',
-    width: '.7em',
-    fontSize: '325%',
-    fontStyle: 'initial',
-
-    paddingInlineEnd: '1rem',
+const P = styled('p', {
+  base: {
+    '&:not(:first-child)': {
+      textIndent: '2em',
+    },
   },
 })
 
 const BlockQuote = styled('blockquote', {
-  ml: '1.5rem',
-  my: '2rem',
-  mr: '1rem',
-  position: 'relative',
+  base: {
+    ml: '1.5rem',
+    my: '2rem',
+    mr: '1rem',
+    position: 'relative',
 
-  '&::before': {
-    content: 'open-quote',
-    position: 'absolute',
-    left: '-0.9ch',
-    top: '0.1ch',
-  },
+    _before: {
+      content: 'open-quote',
+      position: 'absolute',
+      left: '-0.9ch',
+      top: '0.1ch',
+    },
 
-  [`& > ${P}:last-child::after`]: {
-    content: 'close-quote',
+    [`& > p:last-child::after`]: {
+      content: 'close-quote',
+    },
   },
 })
 
 const Ul = styled('ul', {
-  my: '1.5rem',
-  pr: '40px',
+  base: {
+    my: '1.5rem',
+    px: '40px',
+
+    listStyleType: 'revert',
+  },
 })
 
-const Li = styled('li', textStyles)
+const Ol = styled('ol', {
+  base: { all: 'revert', my: 0 },
+})
 
 export const bodyComponents = {
-  p: (props: ComponentProps<typeof P>) => <P {...props} size="xl" />,
-  Text: (props: ComponentProps<typeof Text>) => <Text size="xl" {...props} />,
+  p: (props: ComponentProps<typeof P>) => (
+    <P {...props} className={text({ size: 'xl' })} />
+  ),
   blockquote: (props: ComponentProps<typeof BlockQuote>) => (
     <BlockQuote {...props} />
   ),
+  span: (props: ComponentProps<'span'>) => (
+    <span className={text({ size: 'xl' })} {...props} />
+  ),
+  em: (props: ComponentProps<'span'>) => (
+    <em className={css({ fontStyle: 'italic' })} {...props} />
+  ),
+  Text: (props: ComponentProps<'span'>) => (
+    <span {...props} className={text({ size: 'xl' })} />
+  ),
   ul: (props: ComponentProps<typeof Ul>) => <Ul {...props} />,
-  li: (props: ComponentProps<typeof Li>) => <Li {...props} size="xl" />,
+  ol: (props: ComponentProps<typeof Ol>) => <Ol {...props} />,
+  li: (props: ComponentProps<'li'>) => (
+    <li {...props} className={text({ size: 'xl' })} />
+  ),
 }

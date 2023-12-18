@@ -1,3 +1,4 @@
+import { textRecipe } from '@/components/Text'
 import { defineConfig, defineGlobalStyles } from '@pandacss/dev'
 
 const globalCss = defineGlobalStyles({
@@ -21,7 +22,7 @@ const globalCss = defineGlobalStyles({
   body: {
     backgroundColor: 'bg',
     lineHeight: 1.5,
-    '-webkit-font-smoothing': 'antialiased',
+    WebkitFontSmoothing: 'antialiased',
   },
 
   '::selection': {
@@ -73,6 +74,10 @@ export default defineConfig({
   // Useful for theme customization
   theme: {
     extend: {
+      recipes: {
+        text: textRecipe,
+      },
+
       tokens: {
         colors: {
           olive: olive,

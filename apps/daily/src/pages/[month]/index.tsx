@@ -2,16 +2,17 @@ import { type GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { AnimatePresence, motion } from 'framer-motion'
 
+import { css, cx } from 'styled-system/css'
+import { styled } from 'styled-system/jsx'
+import { text } from 'styled-system/recipes'
 import { Months, MonthSubjectsMap, type Month } from '@/lib/contentlayer'
 import { capitalize, getDetailSocialMediaImage } from '@/lib/utils'
-import { fadeIn, styled } from '@stitches.config'
 import { useLikes } from '@/hooks/useLikes'
 
 import DailyCalendar from '@/components/DailyCalendar'
 import MetaTags from '@/components/MetaTags'
 import { LikesList } from '@/components/Likes'
 import { Daily } from 'contentlayer/generated'
-import { textStyles } from '@/components/Text'
 // import InstallButton from '@/components/InstallButton'
 
 export default function MonthsNavPage() {
@@ -63,66 +64,57 @@ function Likes({ likes, month }: { likes: Daily[]; month: Month }) {
   return (
     <AnimatePresence exitBeforeEnter>
       {likes.length ? (
-        <LikesContainer
+        <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
+          className={css({ width: 'full' })}
           key={month}
         >
-          <SectionTitle size={{ '@initial': 'xl', '@tab': '2xl' }}>
+          <h2
+            className={cx(
+              text({ size: { base: 'xl', md: '2xl' } }),
+              css({ fontWeight: 'bold', color: 'olive.11' }),
+            )}
+          >
             Liked
-          </SectionTitle>
+          </h2>
 
           <LikesList likes={likes} />
-        </LikesContainer>
+        </motion.section>
       ) : null}
     </AnimatePresence>
   )
 }
 
-const LikesContainer = styled(motion.section, {
-  width: '100%',
-
-  // '@tab': {
-  //   opacity: 0.75,
-  //   transition: 'all 200ms ease',
-
-  //   '&:hover, &:focus-within': {
-  //     opacity: 1,
-  //   },
-  // },
-})
-
-const SectionTitle = styled('h2', textStyles, {
-  color: '$olive11',
-})
-
 const Main = styled('main', {
-  '--contentMaxWidth': '650px',
-  '--contentPaddingX': '1rem',
-  '--contentPaddingY': '2rem',
-  '--toastHeight': '4rem',
+  base: {
+    '--contentMaxWidth': '650px',
+    '--contentPaddingX': '1rem',
+    '--contentPaddingY': '2rem',
+    '--toastHeight': '4rem',
 
-  maxWidth: 'var(--contentMaxWidth)',
-  mx: 'auto',
-  px: 'var(--contentPaddingX)',
-  pt: 'var(--contentPaddingY)',
-  pb: 'calc(var(--contentPaddingY) + var(--toastHeight) + 1rem)',
-  minHeight: '100vh',
+    maxWidth: 'var(--contentMaxWidth)',
+    mx: 'auto',
+    px: 'var(--contentPaddingX)',
+    pt: 'var(--contentPaddingY)',
+    pb: 'calc(var(--contentPaddingY) + var(--toastHeight) + 1rem)',
+    minHeight: '100vh',
 
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1.5rem',
-  alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '1.5rem',
+    alignItems: 'center',
 
-  animation: `${fadeIn} 1s both`,
+    animation: `fadeIn 1s both`,
 
-  // handle days drag to the right (translateX overflow) which causes everything to scale down
-  overflowX: 'hidden',
+    // handle days drag to the right (translateX overflow) which causes everything to scale down
+    overflowX: 'hidden',
 
-  '@tab': {
-    overflowX: 'initial',
+    md: {
+      overflowX: 'initial',
+    },
   },
 })
 

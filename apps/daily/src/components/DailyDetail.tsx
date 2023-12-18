@@ -11,8 +11,10 @@ import { motion, useIsomorphicLayoutEffect } from 'framer-motion'
 import { format } from 'date-fns'
 import { ArrowLeftIcon, DotsHorizontalIcon } from '@radix-ui/react-icons'
 
+import { cx, css, cva } from 'styled-system/css'
+import { styled } from 'styled-system/jsx'
+import { text } from 'styled-system/recipes'
 import { type Daily } from 'contentlayer/generated'
-import { css, fadeIn, styled } from '@stitches.config'
 import { Month, Months } from '@/lib/contentlayer'
 import { like, removeLike } from '@/lib/like'
 import {
@@ -23,7 +25,6 @@ import { useIsLiked } from '@/hooks/useIsLiked'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { BASE_URL } from '@/lib/constants'
 
-import { Text } from '@/components/Text'
 import Heart from '@/components/HeartSvg'
 import Share from '@/components/ShareSvg'
 
@@ -70,35 +71,62 @@ export default function DailyDetail({ daily }: Props) {
           <HeaderContentWrapper>
             <HeaderContent>
               <Title components={headerTitleComponents} />
-              <Text css={{ flexShrink: 0 }}>{dateFormat}</Text>
+              <span
+                className={cx(text({ size: 'base' }), css({ flexShrink: 0 }))}
+              >
+                {dateFormat}
+              </span>
             </HeaderContent>
           </HeaderContentWrapper>
         </header>
         <Main ref={wrapperRef}>
-          <Box
-            css={{
+          <div
+            className={css({
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
               alignSelf: 'center',
               mb: '2rem',
-            }}
+            })}
           >
-            <Text>{dateFormat}</Text>
+            <span className={text()}>{dateFormat}</span>
             <Title components={titleComponents} />
-          </Box>
+          </div>
           <Quote>
             <QuoteMDX components={quoteComponents} />
           </Quote>
-          <Text
-            as="address"
-            css={{ alignSelf: 'flex-end', mt: '0.5rem', fontStyle: 'normal' }}
+          <address
+            className={cx(
+              text(),
+              css({
+                alignSelf: 'flex-end',
+                mt: '0.5rem',
+                fontStyle: 'normal',
+              }),
+            )}
           >
-            — {daily.author}, <em>{daily.book}</em>, {daily.section}
-          </Text>
-          <Box as="article" css={{ mt: '2.5rem', w: '100%' }}>
+            — {daily.author},{' '}
+            <em className={css({ fontStyle: 'italic' })}>{daily.book}</em>,{' '}
+            {daily.section}
+          </address>
+          <article
+            className={css({
+              mt: '2.5rem',
+              w: 'full',
+
+              '& > p:first-child::first-letter': {
+                float: 'left',
+                lineHeight: '85%',
+                width: '.7em',
+                fontSize: '325%',
+                fontStyle: 'initial',
+
+                paddingInlineEnd: '1rem',
+              },
+            })}
+          >
             <Body components={bodyComponents} />
-          </Box>
+          </article>
         </Main>
         <Footer>
           <Actions shouldShow={shouldShow}>
@@ -107,11 +135,14 @@ export default function DailyDetail({ daily }: Props) {
               passHref
               legacyBehavior
             >
-              <FooterButton as={motion.a} size="small" aria-label="Go Back">
+              <motion.a
+                className={footerButtonStyles({ size: 'small' })}
+                aria-label="Go Back"
+              >
                 <IconMotionWrapper>
                   <ArrowLeftIcon className={footerIconStyles()} />
                 </IconMotionWrapper>
-              </FooterButton>
+              </motion.a>
             </Link>
             <FooterButton
               size="small"
@@ -158,9 +189,12 @@ export default function DailyDetail({ daily }: Props) {
                 }
               >
                 <Heart
-                  className={footerIconStyles({
-                    css: isLiked ? { color: '#F8312F' } : {},
-                  })}
+                  className={css(
+                    footerIconStyles.raw(),
+                    isLiked && {
+                      color: '#F8312F',
+                    },
+                  )}
                 />
               </IconMotionWrapper>
             </FooterButton>
@@ -255,13 +289,13 @@ function IconMotionWrapper({
           damping: 17,
         },
       }}
-      style={{
+      className={css({
         scale: 1,
-        width: '100%',
-        height: '100%',
+        w: 'full',
+        h: 'full',
         display: 'grid',
         placeItems: 'center',
-      }}
+      })}
       {...props}
     >
       {children}
@@ -270,112 +304,132 @@ function IconMotionWrapper({
 }
 
 const Wrapper = styled('div', {
-  '--contentMaxWidth': '650px',
-  '--contentPX': '1rem',
-  '--headerHeight': 'min(15vw, 7rem)',
-  '--headerLayer': 10,
-  '--iconButtonSize': '4rem',
+  base: {
+    '--contentMaxWidth': '650px',
+    '--contentPX': '1rem',
+    '--headerHeight': 'min(15vw, 7rem)',
+    '--headerLayer': 10,
+    '--iconButtonSize': '4rem',
 
-  '@tab': {
-    '--iconButtonSize': '5rem',
+    md: {
+      '--iconButtonSize': '5rem',
+    },
+
+    fontFamily: 'serif',
+    color: 'textColor',
+
+    animation: `fadeIn 1s both`,
+    minHeight: '100vh',
   },
-
-  fontFamily: '"EB Garamond", serif',
-  color: '$textColor',
-
-  animation: `${fadeIn} 1s both`,
-  minHeight: '100vh',
 })
 const Main = styled('main', {
-  maxWidth: 'var(--contentMaxWidth)',
-  mx: 'auto',
-  pt: 'var(--headerHeight)',
-  pb: 'calc(2.5rem + var(--iconButtonSize))',
-  px: 'var(--contentPX)',
+  base: {
+    maxWidth: 'var(--contentMaxWidth)',
+    mx: 'auto',
+    pt: 'var(--headerHeight)',
+    pb: 'calc(2.5rem + var(--iconButtonSize))',
+    px: 'var(--contentPX)',
 
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
 })
 
 const HeaderCover = styled('div', {
-  background: '$bg',
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  right: 0,
-  height: 'var(--headerHeight)',
-  zIndex: 'calc(var(--headerLayer) + 1)',
+  base: {
+    background: 'bg',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    height: 'var(--headerHeight)',
+    zIndex: 'calc(var(--headerLayer) + 1)',
+  },
 })
 const HeaderContentWrapper = styled('div', {
-  zIndex: 'var(--headerLayer)',
-  borderBottom: '1px solid $olive6',
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  backgroundColor: '$bg',
-  height: '3rem',
-  display: 'flex',
-  alignItems: 'center',
+  base: {
+    zIndex: 'var(--headerLayer)',
+    borderBottom: '1px solid',
+    borderBottomColor: 'olive.6',
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: 'bg',
+    height: '3rem',
+    display: 'flex',
+    alignItems: 'center',
+  },
 })
 const HeaderContent = styled('div', {
-  display: 'flex',
-  justifyContent: 'space-between',
-  gap: '1rem',
+  base: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    gap: '1rem',
 
-  maxWidth: 'var(--contentMaxWidth)',
-  width: '100%',
-  mx: 'auto',
-  px: 'var(--contentPX)',
+    maxWidth: 'var(--contentMaxWidth)',
+    width: 'full',
+    mx: 'auto',
+    px: 'var(--contentPX)',
+  },
 })
 
 const Footer = styled('footer', {
-  display: 'flex',
-  flexDirection: 'column',
-  position: 'fixed',
-  bottom: '1rem',
-  left: 0,
-  right: 0,
+  base: {
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'fixed',
+    bottom: '1rem',
+    left: 0,
+    right: 0,
 
-  $$paddingX: '1rem',
+    '--paddingX': '1rem',
 
-  // paddingX * 4 to have a little breathing room between the buttons
-  maxWidth:
-    'calc(var(--iconButtonSize) * 2 + $$paddingX * 4 + var(--contentMaxWidth))',
-  mx: 'auto',
-  px: '$$paddingX',
+    // paddingX * 4 to have a little breathing room between the buttons
+    maxWidth:
+      'calc(var(--iconButtonSize) * 2 + var(--paddingX) * 4 + var(--contentMaxWidth))',
+    mx: 'auto',
+    px: 'var(--paddingX)',
 
-  '@tab': {
-    bottom: '2.5rem',
+    md: {
+      bottom: '2.5rem',
+    },
   },
 })
-const FooterButton = styled(motion.button, {
-  padding: 0,
-  cursor: 'pointer',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  border: 'none',
-  backgroundColor: 'transparent',
-  borderRadius: '0.25rem',
-  transition:
-    'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
-  '-webkit-tap-highlight-color': 'transparent',
-  flexShrink: 0,
+const footerButtonStyles = cva({
+  base: {
+    padding: 0,
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    border: 'none',
+    backgroundColor: 'transparent',
+    borderRadius: '0.25rem',
+    transition:
+      'background-color 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), opacity 200ms cubic-bezier(0.4, 0, 0.2, 1)',
+    WebkitTapHighlightColor: 'transparent',
+    flexShrink: 0,
+    w: 'var(--iconButtonSize)',
+    aspectRatio: 'square',
 
-  '&:hover, &:focus': {
-    backgroundColor: '$olive2',
-    outline: 'none',
+    _focusWithin: {
+      bgColor: 'olive.2',
+      outline: 'none',
+    },
+    _hover: {
+      bgColor: 'olive.2',
+      outline: 'none',
+    },
   },
-
   variants: {
     size: {
       small: {
-        size: 'calc(var(--iconButtonSize) - 0.5rem)',
+        w: 'calc(var(--iconButtonSize) - 0.5rem)',
       },
       normal: {
-        size: 'var(--iconButtonSize)',
+        w: 'var(--iconButtonSize)',
       },
     },
   },
@@ -383,13 +437,17 @@ const FooterButton = styled(motion.button, {
     size: 'normal',
   },
 })
-const footerIconStyles = css({
-  // color: '$textColor',
-  color: '$olive11',
-  size: '1.25rem',
+const FooterButton = styled(motion.button, footerButtonStyles)
+const footerIconStyles = cva({
+  base: {
+    color: 'olive.11',
+    '--size': '1.25rem',
+    w: 'var(--size)',
+    h: 'var(--size)',
 
-  '@tab': {
-    size: '1.5rem',
+    md: {
+      '--size': '1.5rem',
+    },
   },
 })
 
@@ -397,45 +455,48 @@ const TAB_TRANSPARENCY = 0.75
 
 // FIX: dili in-proper order ang pag tab sa mga buttons
 const StyledActions = styled(motion.div, {
-  opacity: 1,
-  width: 'var(--iconButtonSize)',
-  borderRadius: '0.5rem',
-  backgroundColor: '$olive4',
-  display: 'flex',
-  alignItems: 'center',
-  transition:
-    'background-color 150ms ease, opacity 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
-
-  overflow: 'hidden',
-  justifyContent: 'flex-start',
-  flexDirection: 'column-reverse',
-
-  '@tab': {
-    opacity: TAB_TRANSPARENCY,
-    backgroundColor: 'transparent',
-  },
-
-  '&:focus-within': {
-    '$$ring-offset': '2px',
-    outline: 'none',
-    boxShadow:
-      '0 0 0 $$ring-offset $colors$bg, 0 0 0 calc($$ring-offset + 2px) $colors$olive7',
-  },
-
-  '&:hover, &:focus-within': {
-    backgroundColor: '$olive4',
+  base: {
     opacity: 1,
-  },
+    width: 'var(--iconButtonSize)',
+    borderRadius: '0.5rem',
+    backgroundColor: 'olive.4',
+    display: 'flex',
+    alignItems: 'center',
+    transition:
+      'background-color 150ms ease, opacity 150ms ease, box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)',
 
+    overflow: 'hidden',
+    justifyContent: 'flex-start',
+    flexDirection: 'column-reverse',
+
+    md: {
+      opacity: TAB_TRANSPARENCY,
+      backgroundColor: 'transparent',
+    },
+
+    _hover: {
+      backgroundColor: 'olive.4',
+      opacity: 1,
+    },
+    _focusWithin: {
+      '--ring-offset': '2px',
+      '--ring-color': 'colors.olive.7',
+
+      outline: 'none',
+      boxShadow:
+        '0 0 0 var(--ring-offset) var(--colors-bg), 0 0 0 calc(var(--ring-offset) + 2px) var(--ring-color)',
+
+      backgroundColor: 'olive.4',
+      opacity: 1,
+    },
+  },
   variants: {
     show: {
       true: {
         opacity: 1,
-        '@tab': { opacity: TAB_TRANSPARENCY },
+        md: { opacity: TAB_TRANSPARENCY },
       },
       false: { opacity: 0 },
     },
   },
 })
-
-const Box = styled('div', {})

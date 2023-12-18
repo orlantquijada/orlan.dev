@@ -2,10 +2,10 @@ import { type ComponentProps } from 'react'
 import Link from 'next/link'
 import { useMDXComponent } from 'next-contentlayer/hooks'
 
+import { cva, cx } from 'styled-system/css'
+import { styled } from 'styled-system/jsx'
+import { text } from 'styled-system/recipes'
 import { Daily } from 'contentlayer/generated'
-import { styled } from '@stitches.config'
-
-import { textStyles } from './Text'
 
 export function LikesList({ likes }: { likes: Daily[] }) {
   return (
@@ -46,77 +46,91 @@ function LikedCard({ daily }: { daily: Daily }) {
 }
 
 const StyledDate = styled('span', {
-  gridArea: 'date',
-  display: 'flex',
-  justifyContent: 'flex-end',
-  alignItems: 'flex-end',
+  base: {
+    gridArea: 'date',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
 
-  color: '$olive9',
+    color: 'olive.9',
 
-  '@tab': {
-    justifyContent: 'flex-start',
+    md: {
+      justifyContent: 'flex-start',
+    },
   },
 })
 const StyledAuthor = styled('span', {
-  gridArea: 'author',
-
-  color: '$olive11',
-  flexShrink: 0,
-
-  '@tab': {
-    ml: 'auto',
+  base: {
+    gridArea: 'author',
+    color: 'olive.11',
+    flexShrink: 0,
+    md: {
+      ml: 'auto',
+    },
   },
 })
 const StyledLikesList = styled('ol', {
-  listStyle: 'none',
-  padding: 0,
+  base: {
+    listStyle: 'none',
+    padding: 0,
+  },
 })
 const StyledLi = styled('li', {
-  '&:not(:first-of-type)': {
-    borderTop: '1px solid $olive3',
+  base: {
+    '&:not(:first-of-type)': {
+      borderTop: '1px solid',
+      borderTopColor: 'olive.3',
+    },
   },
 })
 const StyledA = styled('a', {
-  display: 'grid',
-  gridTemplateAreas: `
-    "title title"
-    "author date"
-  `,
-
-  py: '1rem',
-  px: '0.5rem',
-  mx: '-0.5rem',
-  transition: 'all 150ms ease',
-
-  '@tab': {
+  base: {
+    display: 'grid',
     gridTemplateAreas: `
-      "date title author"
-    `,
-    gridTemplateColumns: '5rem auto auto',
-  },
+"title title"
+"author date"
+`,
 
-  '&:hover': {
-    backgroundColor: '$olive2',
+    py: '1rem',
+    px: '0.5rem',
+    mx: '-0.5rem',
+    transition: 'all 150ms ease',
+
+    md: {
+      gridTemplateAreas: `
+"date title author"
+`,
+      gridTemplateColumns: '5rem auto auto',
+    },
+
+    _hover: {
+      backgroundColor: 'olive.2',
+    },
   },
 })
-const StyledTitle = styled('p', textStyles, {
-  gridArea: 'title',
+const title = cva({
+  base: {
+    gridArea: 'title',
 
-  color: '$olive11',
-  fontWeight: '$bold',
+    color: 'olive.11',
+    fontWeight: 'bold',
 
-  display: 'block',
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  textOverflow: 'ellipsis',
+    display: 'block',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
 
-  '@tab': {
-    marginTop: 0,
+    md: {
+      marginTop: 0,
+    },
   },
 })
 
 const likedTitleComponents = {
-  p: (props: ComponentProps<typeof StyledTitle>) => (
-    <StyledTitle {...props} size={{ '@initial': 'base', '@tab': 'lg' }} />
+  p: (props: ComponentProps<'p'>) => (
+    <p
+      {...props}
+      className={cx(text({ size: { base: 'base', md: 'lg' } }), title())}
+    />
   ),
 }

@@ -1,6 +1,6 @@
 import { forwardRef, useImperativeHandle, useState } from 'react'
-import { styled } from '@stitches.config'
 import { AnimatePresence, motion } from 'framer-motion'
+import { cva } from 'styled-system/css'
 
 type Ref = {
   open: () => void
@@ -31,15 +31,16 @@ export const CopiedLinkToast = forwardRef<Ref>((_, ref) => {
   return (
     <AnimatePresence exitBeforeEnter>
       {open && (
-        <Container
+        <motion.div
           variants={variants}
           initial="hide"
           animate="show"
           exit="hide"
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className={container()}
         >
           Link Copied
-        </Container>
+        </motion.div>
       )}
     </AnimatePresence>
   )
@@ -51,24 +52,27 @@ const variants = {
   show: { y: 0, opacity: 1 },
 }
 
-const Container = styled(motion.div, {
-  backgroundColor: '$olive4',
-  color: '$olive11',
-  borderRadius: '0.5rem',
-  border: '1px solid $olive6',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  p: '0.75rem',
-  zIndex: 999,
+const container = cva({
+  base: {
+    backgroundColor: 'olive.4',
+    color: 'olive.11',
+    borderRadius: '0.5rem',
+    border: '1px solid',
+    borderColor: 'olive.6',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    p: '0.75rem',
+    zIndex: 999,
 
-  $$viewportPadding: 'calc(var(--contentPX) * 2)',
-  height: 'var(--toastHeight)',
-  position: 'fixed',
-  top: 'var(--headerHeight)',
-  left: 0,
-  right: 0,
-  mx: 'auto',
-  width: 'calc(100% - $$viewportPadding)',
-  maxWidth: 'calc(var(--contentMaxWidth) - $$viewportPadding)',
+    '--viewportPadding': 'calc(var(--contentPX) * 2)',
+    height: 'var(--toastHeight)',
+    position: 'fixed',
+    top: 'var(--headerHeight)',
+    left: 0,
+    right: 0,
+    mx: 'auto',
+    width: 'calc(100% - var(--viewportPadding))',
+    maxWidth: 'calc(var(--contentMaxWidth) - var(--viewportPadding))',
+  },
 })
