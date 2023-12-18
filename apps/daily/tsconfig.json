@@ -3,7 +3,6 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@stitches.config": ["./stitches.config"],
       "@/*": ["./src/*"],
       "contentlayer/generated": ["./.contentlayer/generated"]
     }
