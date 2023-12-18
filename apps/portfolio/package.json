@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prepare": "panda codegen"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.1.1",
@@ -19,6 +20,7 @@
     "ui": "workspace:*"
   },
   "devDependencies": {
+    "@pandacss/dev": "^0.22.1",
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.17",
