@@ -178,6 +178,7 @@ export default function DailyDetail({ daily }: Props) {
                   isLiked
                     ? {
                         scale: [0.8, 1.3, 1],
+                        rotate: [0, 25, 0],
                         transition: {
                           duration: 0.5,
                           type: 'spring',
