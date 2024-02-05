@@ -11,10 +11,14 @@ export const noteCardStyles = cva(
         false:
           'dark:border-gray3 dark:bg-gray3 dark:hover:bg-gray4 text-gray12',
       },
+      stripes: {
+        true: styles.stripes,
+      },
     },
     defaultVariants: {
       color: 'gray',
       transluscent: true,
+      stripes: false,
     },
   },
 )

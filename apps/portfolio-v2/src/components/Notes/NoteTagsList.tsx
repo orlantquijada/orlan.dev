@@ -96,6 +96,8 @@ export default function NoteTagsList(props: Props) {
           : visibleTags.map((tag) => (
               <Tag
                 tag={tag}
+                initial={{ opacity: initialOpacity }}
+                animate={{ opacity: 1 }}
                 variants={variants}
                 layoutId={tag}
                 key={tag}
