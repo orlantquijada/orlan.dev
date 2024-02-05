@@ -1,7 +1,7 @@
 ---
 import { ViewTransitions } from 'astro:transitions'
 import type { CollectionEntry } from 'astro:content'
-import { Icon } from 'astro-icon'
+import { Icon } from 'astro-icon/components'
 import { format } from 'date-fns'
 import MetaData from '@/components/Notes/NoteDetailComponents/MetaData.astro'
 import { DEFAULT_DATE_FORMAT } from '@/utils/constants'
@@ -57,13 +57,14 @@ const data = Astro.props
 </Layout>
 
 <style lang="css">
-  [astro-icon] {
+  [data-icon] {
     width: 1rem;
     height: 1rem;
   }
 
-  :global([astro-icon] path) {
-    @apply fill-gray11;
+  [data-icon='wrench'] {
+    width: 15px;
+    height: 15px;
   }
 
   .tag {
