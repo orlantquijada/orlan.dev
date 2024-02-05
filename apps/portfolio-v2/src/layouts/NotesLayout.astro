@@ -47,6 +47,15 @@ const data = Astro.props
       <Icon name="clock" slot="icon" />
       <span>{format(data.publishedAt, DEFAULT_DATE_FORMAT)}</span>
     </MetaData>
+
+    {
+      data.wip ? (
+        <MetaData>
+          <Icon name="wrench" slot="icon" />
+          <span>wip</span>
+        </MetaData>
+      ) : null
+    }
   </div>
 
   <hr class="my-8 w-full border-t-2 border-t-grayA4" />

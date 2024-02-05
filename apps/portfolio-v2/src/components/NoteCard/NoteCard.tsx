@@ -29,7 +29,7 @@ export type MotionNoteCardProps = NoteCardProps & {
 // ! temp solution cause i dont want a motion component wrapper div
 // e.g. <motion.div><NoteCard/></motion.div>
 export function MotionNoteCard(props: MotionNoteCardProps) {
-  const { title, description, href, selected, isSelecting } = props
+  const { title, description, href, selected, isSelecting, wip } = props
 
   return (
     <motion.a
@@ -37,7 +37,10 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
       animate={isSelecting ? { opacity: !selected ? 0.3 : 1 } : {}}
       href={href}
       className={twMerge(
-        noteCardStyles({ className: 'will-change-[opacity,transform]' }),
+        noteCardStyles({
+          stripes: wip,
+          className: 'will-change-[opacity,transform]',
+        }),
       )}
     >
       <h1
