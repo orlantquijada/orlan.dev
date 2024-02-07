@@ -17,12 +17,16 @@ const data = Astro.props
   <ViewTransitions slot="head" />
   <div class="grid place-items-start gap-2">
     <h1
-      class="text-3xl font-medium"
+      class="text-balance text-3xl font-medium"
       style={`view-transition-name:${getViewTransitionName(data.title)}`}
     >
       {data.title}
     </h1>
-    {data.description ? <p class="md:max-w-[80%]">{data.description}</p> : null}
+    {
+      data.description ? (
+        <p class="text-grayA11 md:max-w-[80%]">{data.description}</p>
+      ) : null
+    }
   </div>
 
   <div class="flex gap-6">
@@ -32,7 +36,7 @@ const data = Astro.props
       <ul class="flex items-center">
         <!-- TODO: filter notes by tag link -->
         {
-          data.tags.map((tag) => (
+          [...data.tags].map((tag) => (
             <li class="tag">
               <a href="/notes" class="hover:underline">
                 {tag}

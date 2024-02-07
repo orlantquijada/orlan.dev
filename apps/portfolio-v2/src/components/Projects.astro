@@ -1,32 +1,52 @@
 ---
+import { Icon } from 'astro-icon/components'
+
 import BrowserBox from './BrowserBox.astro'
+import Video from './Video.tsx'
 ---
 
-<section class="mt-8 w-full">
+<section class="mt-8 self-stretch">
   <h3 class="mb-6 text-sm text-gray11">Projects</h3>
 
   <div
     class="relative flex aspect-[.30] w-full flex-col gap-8 md:isolate md:aspect-[1.1]"
   >
-    <a
-      href="https://daily.orlan.dev"
-      target="_blank"
-      class="w-full md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg"
+    <div
+      class:list={[
+        'w-full md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg',
+        'browser-container',
+      ]}
     >
-      <BrowserBox title="Daily Stoic" aspect="desktop" />
-    </a>
-    <a
-      href="https://github.com/orlantquijada/money-manager"
-      class="w-full md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10"
+      <BrowserBox
+        title="Daily Stoic"
+        aspect="desktop"
+        href="https://daily.orlan.dev"
+        className="self-stretch relative group"
+      >
+        <Video src="Stoic demo.mp4" client:idle>
+          <Icon name="pause" slot="pausedIcon" />
+          <Icon name="play" slot="playingIcon" />
+        </Video>
+      </BrowserBox>
+    </div>
+    <div
+      class:list={[
+        'w-full md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10',
+        'browser-container',
+      ]}
       style={{ '--stack': 1 }}
     >
-      <BrowserBox title="Money Manager" aspect="phone" />
-    </a>
+      <BrowserBox
+        title="Money Manager"
+        aspect="phone"
+        href="https://github.com/orlantquijada/money-manager"
+      />
+    </div>
   </div>
 </section>
 
 <style>
-  a {
+  :where(.browser-container) {
     --header-height: 2.5rem;
     --header-gap: 2.5rem;
     --content-gap: 1rem;

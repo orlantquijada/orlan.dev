@@ -1,8 +1,11 @@
 ---
-import { cx } from 'cva'
+import { cn } from '@/lib/general'
+import { Icon } from 'astro-icon/components'
+
 type Props = {
   title: string
   className?: string
+  href?: string
   aspect: 'phone' | 'desktop'
 }
 
@@ -11,22 +14,39 @@ const props = Astro.props
 
 <div
   class:list={[
-    'w-full overflow-hidden rounded-lg border border-gray5 shadow-[0px_3px_10px_rgba(0,0,0,0.15)] shadow-black/[0.15] transition-transform hover:-translate-y-1',
+    'group relative w-full overflow-hidden rounded-lg border border-gray5 shadow-[0px_3px_10px_rgba(0,0,0,0.15)] shadow-black/[0.15] transition-transform hover:-translate-y-1',
     props.className,
   ]}
 >
-  <div class="titlebar flex h-6 items-center justify-center bg-gray2">
+  <a
+    href={props.href}
+    target="_blank"
+    class="titlebar flex h-6 items-center justify-center bg-gray2"
+  >
     <span class="text-[.625rem] text-gray11">{props.title}</span>
-  </div>
+  </a>
 
   <div
     class:list={[
       'aspect-[.75] w-full bg-gray3',
-      cx(props.aspect === 'phone' ? 'md:aspect-[.75]' : 'md:aspect-[1.75]'),
+      cn(props.aspect === 'phone' ? 'md:aspect-[.75]' : 'md:aspect-[1.75]'),
     ]}
   >
     <slot />
   </div>
+
+  {
+    props.href ? (
+      <a
+        href={props.href}
+        class={cn(
+          'absolute bottom-4 left-4 grid aspect-square h-10 translate-y-10 place-items-center rounded-full bg-grayA2 text-gray11 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 dark:bg-gray12 dark:text-gray9',
+        )}
+      >
+        <Icon name="arrow-top-right" />
+      </a>
+    ) : null
+  }
 </div>
 
 <style>

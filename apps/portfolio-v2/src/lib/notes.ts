@@ -10,7 +10,8 @@ export function buildTagGraph(...noteTags: string[][]): TagGraphMap {
     for (const tag of tags) {
       const node = tagGraph.get(tag)
 
-      if (!node) tagGraph.set(tag, new Set(tags.filter((_tag) => _tag !== tag)))
+      if (!node)
+        tagGraph.set(tag, new Set([...tags].filter((_tag) => _tag !== tag)))
       else {
         for (const _tag of tags) {
           if (_tag !== tag) node.add(_tag)
@@ -39,7 +40,12 @@ export function getNeighborhoodsIntersection(
     intersection = intersectionSet(intersection, graph.get(node) as Set<string>)
   }
 
-  return [...intersection]
+  return [...intersection].filter((tag) => {
+    const tags = graph.get(tag)
+    return nodes.every((node) => {
+      return tags?.has(node)
+    })
+  })
 }
 
 export function getViewTransitionName(title: NoteFrontmatter['title']) {

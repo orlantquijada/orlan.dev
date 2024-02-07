@@ -1,26 +1,31 @@
 ---
 import SayHi from './Contact/SayHi'
-import Wave from './Wave.astro'
 import Projects from './Projects.astro'
 ---
 
 <div class="flex flex-col items-start gap-12">
-  <h2 class="text-2xl">
-    I'm <span class="font-redaction italic"><Wave title="Orlan" /></span><span
-      >{' '}</span
-    > — A product-focused Fullstack Engineer based in the <a
-      href="https://en.wikipedia.org/wiki/Philippines"
-      target="_blank"
-      class="hover:underline">🇵🇭Philippines</a
-    >.
+  <h2
+    class="sticky top-10 z-10 flex h-10 items-center font-redaction text-base italic"
+  >
+    Orlan Quijada
   </h2>
-  <p class="text-2xl">
+  <p class="tracking-normal">
+    A <span class="font-redaction text-base italic">product-focused</span>
+     Fullstsack Engineer based in the Philippines. Currently the Lead Software
+    Engineer at <a
+      class="link"
+      href="https://play.google.com/store/apps/details?id=com.felicityincorporated.felicity&pcampaignid=web_share"
+      target="_blank">Felicity</a
+    >.
+  </p>
+  <p class="text-base">
     You can learn more about me by reading
     <a href="/blog" class="link">my blog</a>, perusing my personal wiki of <a
       href="/notes"
       class="link">public notes</a
-    > and <u class="link">bookmarks.</u>
+    > and <u class="link">bookmarks</u>.
   </p>
+
   <SayHi client:load />
 
   <Projects />
@@ -31,10 +36,16 @@ import Projects from './Projects.astro'
   a,
   u {
     text-underline-offset: 4px;
+    padding: 0 4px;
+    margin: 0 -3px;
+    border-radius: 4px;
   }
 
   .link {
+    display: inline-block;
     text-decoration: underline;
+    text-decoration-color: var(--gray9);
+    text-decoration-thickness: 1px;
   }
 
   .link:hover,

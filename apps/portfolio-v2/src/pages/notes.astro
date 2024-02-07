@@ -7,11 +7,12 @@ import { getCollection } from 'astro:content'
 
 const notesData = await getCollection('notes')
 
-const notes = notesData.map((note) => ({
+const filteredNotes = notesData.filter(({ data: { draft } }) => !draft)
+const notes = filteredNotes.map((note) => ({
   ...note.data,
   href: `/notes/${note.slug}`,
 }))
-const tagsPerNote = notesData.map((note) => note.data.tags)
+const tagsPerNote = filteredNotes.map((note) => [...note.data.tags])
 
 const tags = [...new Set(tagsPerNote.flat())]
 const tagsGraph = buildTagGraph(...tagsPerNote)
