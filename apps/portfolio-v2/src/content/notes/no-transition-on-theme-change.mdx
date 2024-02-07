@@ -1,0 +1,27 @@
+---
+title: No Transition on Theme Change
+tags: ['css', 'html', 'js']
+publishedAt: 2023-10-25
+wip: true
+---
+
+```js
+const css = document.createElement('style')
+css.type = 'text/css'
+css.appendChild(
+  document.createTextNode(
+    `* {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        -ms-transition: none !important;
+        transition: none !important;
+    }`,
+  ),
+)
+document.head.appendChild(css)
+
+// force the browser to redraw
+const _ = window.getComputedStyle(css).opacity
+document.head.removeChild(css)
+```

@@ -29,7 +29,7 @@ export default function NotesList(props: Props) {
   for (const note of notes) {
     if (
       isSelecting &&
-      _selectedTags.every((selectedTag) => note.tags.includes(selectedTag))
+      _selectedTags.every((selectedTag) => note.tags.has(selectedTag))
     )
       filtered.push({ ...note, selected: true })
     else rest.push({ ...note, selected: false })
