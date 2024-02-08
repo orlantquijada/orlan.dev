@@ -6,6 +6,7 @@ import {
   type ReactNode,
   type ElementRef,
 } from 'react'
+import { browserIconButtonStyles } from './BrowserIconButton/styles'
 
 type Props = {
   src: string
@@ -32,8 +33,15 @@ export default function Video({
         playsInline
         muted
         loop
+        controls={false}
         onLoad={(e) => {
           setState(e.currentTarget.paused ? 'paused' : 'playing')
+        }}
+        onPause={() => {
+          setState('paused')
+        }}
+        onPlay={() => {
+          setState('playing')
         }}
       >
         <source src={src} type={type} />
@@ -41,7 +49,8 @@ export default function Video({
 
       <button
         className={cn(
-          'absolute bottom-4 right-4 grid aspect-square h-10 translate-y-10 place-items-center rounded-full bg-grayA2 text-gray11 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 dark:bg-gray12 dark:text-gray9',
+          browserIconButtonStyles(),
+          'absolute bottom-4 right-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100',
           state === 'paused' && 'translate-y-0 opacity-100',
         )}
         onClick={() => {
