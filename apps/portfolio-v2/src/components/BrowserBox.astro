@@ -1,5 +1,4 @@
 ---
-import { cn } from '@/lib/general'
 import { Icon } from 'astro-icon/components'
 import BrowserIconButton from './BrowserIconButton/BrowserIconButton.astro'
 
@@ -29,8 +28,8 @@ const props = Astro.props
 
   <div
     class:list={[
-      'aspect-[.75] w-full bg-gray3',
-      cn(props.aspect === 'phone' ? 'md:aspect-[.75]' : 'md:aspect-[1.75]'),
+      'w-full bg-gray3',
+      props.aspect === 'phone' ? 'md:aspect-[.75]' : 'md:aspect-[1.75]',
     ]}
   >
     <slot />
@@ -40,6 +39,7 @@ const props = Astro.props
     props.href ? (
       <BrowserIconButton
         as="a"
+        target="_blank"
         href={props.href}
         class="absolute bottom-4 left-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
       >

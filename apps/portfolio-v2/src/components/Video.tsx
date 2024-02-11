@@ -1,18 +1,13 @@
-import { cn } from '@/lib/general'
-import {
-  useState,
-  type ComponentProps,
-  useRef,
-  type ReactNode,
-  type ElementRef,
-} from 'react'
+import type { HTMLAttributes } from 'astro/types'
+import { useState, useRef, type ReactNode, type ElementRef } from 'react'
 import { browserIconButtonStyles } from './BrowserIconButton/styles'
+import { cn } from '@/lib/general'
 
 type Props = {
   src: string
-  type?: ComponentProps<'source'>['type']
-  pausedIcon: ReactNode
-  playingIcon: ReactNode
+  type?: Exclude<HTMLAttributes<'source'>['type'], null>
+  pausedIcon?: ReactNode
+  playingIcon?: ReactNode
   children?: ReactNode
 }
 
