@@ -3,47 +3,47 @@ import { Icon } from 'astro-icon/components'
 
 import BrowserBox from './BrowserBox.astro'
 import Video from './Video.tsx'
+import ProjectsCarousel from './ProjectsCarousel.tsx'
 ---
 
-<section class="mt-8 self-stretch">
-  <h3 class="mb-6 text-sm text-gray11">Projects</h3>
+<ProjectsCarousel client:load numOfItems={2}>
+  <div
+    class:list={[
+      'w-[var(--itemWidth)]',
+      'md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg',
+    ]}
+  >
+    <BrowserBox
+      title="Daily Stoic"
+      aspect="desktop"
+      href="https://daily.orlan.dev"
+      className="self-stretch relative group"
+    >
+      <Video src="/stoic-demo.mp4" client:idle>
+        <Icon name="pause" slot="pausedIcon" />
+        <Icon name="play" slot="playingIcon" />
+      </Video>
+    </BrowserBox>
+  </div>
 
   <div
-    class="relative flex aspect-[.30] w-full flex-col gap-8 md:isolate md:aspect-[1.1]"
+    class:list={[
+      'w-[var(--itemWidth)]',
+      'md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10',
+    ]}
   >
-    <div
-      class:list={[
-        'w-full md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg',
-        'browser-container',
-      ]}
+    <BrowserBox
+      title="Money Manager"
+      aspect="phone"
+      href="https://github.com/orlantquijada/money-manager"
     >
-      <BrowserBox
-        title="Daily Stoic"
-        aspect="desktop"
-        href="https://daily.orlan.dev"
-        className="self-stretch relative group"
-      >
-        <Video src="/stoic-demo.mp4" client:idle>
-          <Icon name="pause" slot="pausedIcon" />
-          <Icon name="play" slot="playingIcon" />
-        </Video>
-      </BrowserBox>
-    </div>
-    <div
-      class:list={[
-        'w-full md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10',
-        'browser-container',
-      ]}
-      style={{ '--stack': 1 }}
-    >
-      <BrowserBox
-        title="Money Manager"
-        aspect="phone"
-        href="https://github.com/orlantquijada/money-manager"
-      />
-    </div>
+      <Video src="/stoic-demo.mp4" client:idle>
+        <Icon name="pause" slot="pausedIcon" />
+        <Icon name="play" slot="playingIcon" />
+      </Video>
+    </BrowserBox>
   </div>
-</section>
+</ProjectsCarousel>
 
 <style>
   :where(.browser-container) {
