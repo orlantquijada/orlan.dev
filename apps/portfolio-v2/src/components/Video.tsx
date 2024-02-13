@@ -1,5 +1,11 @@
 import type { HTMLAttributes } from 'astro/types'
-import { useState, useRef, type ReactNode, type ElementRef } from 'react'
+import {
+  useState,
+  useRef,
+  type ReactNode,
+  type ElementRef,
+  useEffect,
+} from 'react'
 import { browserIconButtonStyles } from './BrowserIconButton/styles'
 import { cn } from '@/lib/general'
 
@@ -20,6 +26,12 @@ export default function Video({
   const videoRef = useRef<ElementRef<'video'>>(null)
   const [state, setState] = useState<'playing' | 'paused'>()
 
+  useEffect(() => {
+    if (videoRef.current) {
+      setState(videoRef.current.paused ? 'paused' : 'playing')
+    }
+  }, [])
+
   return (
     <div className="relative">
       <video
@@ -29,9 +41,6 @@ export default function Video({
         muted
         loop
         controls={false}
-        onLoad={(e) => {
-          setState(e.currentTarget.paused ? 'paused' : 'playing')
-        }}
         onPause={() => {
           setState('paused')
         }}
