@@ -69,7 +69,22 @@ export default function Video({
           }
         }}
       >
-        {state === 'paused' ? playingIcon : pausedIcon}
+        <span
+          className={cn(
+            'absolute opacity-0',
+            state === 'paused' && 'opacity-100',
+          )}
+        >
+          {playingIcon}
+        </span>
+        <span
+          className={cn(
+            'absolute opacity-0',
+            state === 'playing' && 'opacity-100',
+          )}
+        >
+          {pausedIcon}
+        </span>
       </button>
     </div>
   )
