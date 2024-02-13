@@ -19,7 +19,7 @@ import ProjectsCarousel from './ProjectsCarousel.tsx'
       href="https://daily.orlan.dev"
       className="self-stretch relative group"
     >
-      <Video src="/stoic-demo.mp4" client:idle>
+      <Video src="/stoic-demo.mp4" client:load>
         <Icon name="pause" slot="pausedIcon" />
         <Icon name="play" slot="playingIcon" />
       </Video>
@@ -37,27 +37,10 @@ import ProjectsCarousel from './ProjectsCarousel.tsx'
       aspect="phone"
       href="https://github.com/orlantquijada/money-manager"
     >
-      <Video src="/stoic-demo.mp4" client:idle>
+      <Video src="/stoic-demo.mp4" client:load>
         <Icon name="pause" slot="pausedIcon" />
         <Icon name="play" slot="playingIcon" />
       </Video>
     </BrowserBox>
   </div>
 </ProjectsCarousel>
-
-<style>
-  :where(.browser-container) {
-    --header-height: 2.5rem;
-    --header-gap: 2.5rem;
-    --content-gap: 1rem;
-    --stack: 0;
-    --top: calc(
-      var(--header-gap) + var(--header-height) + var(--content-gap) +
-        (var(--stack) * 0.5rem)
-    );
-
-    position: sticky;
-    left: 0;
-    top: var(--top);
-  }
-</style>
