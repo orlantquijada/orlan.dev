@@ -10,6 +10,11 @@ import icon from 'astro-icon'
 export default defineConfig({
   integrations: [tailwind(), react(), mdx(), icon(), compress()],
   scopedStyleStrategy: 'where',
+  markdown: {
+    shikiConfig: {
+      theme: 'min-dark',
+    },
+  },
   vite: {
     plugins: [svgr()],
     ssr: {
