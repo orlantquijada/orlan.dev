@@ -3,6 +3,43 @@ title: React Hooks
 description: Mini react hooks that can be copy-pasted.
 tags: ['react', 'js', 'typescript']
 publishedAt: 2022-11-21
+wip: true
 ---
 
-css reset
+## `useClickOutside`
+
+
+```tsx
+import { RefObject, useCallback, useEffect } from 'react'
+
+export function useClickOutside(
+  elementRef: RefObject<HTMLElement>,
+  callback: (event: MouseEvent) => void,
+) {
+  const handleClick = useCallback(
+    (event: MouseEvent) => {
+      if (
+        elementRef.current &&
+        !elementRef.current.contains(event.target as Node)
+      )
+        callback(event)
+    },
+    [callback, elementRef],
+  )
+
+  useEffect(() => {
+    addEventListener('click', handleClick)
+    return () => removeEventListener('click', handleClick)
+  }, [handleClick])
+}
+```
+
+
+## `useIsomorphicLayoutEffect`
+
+```tsx
+import { useEffect, useLayoutEffect } from 'react'
+
+export const useIsomorphicLayoutEffect =
+  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+```
