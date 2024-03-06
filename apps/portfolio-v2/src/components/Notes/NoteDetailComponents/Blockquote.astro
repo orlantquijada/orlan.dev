@@ -1,0 +1,26 @@
+---
+import type { HTMLAttributes } from 'astro/types'
+
+type Props = HTMLAttributes<'blockquote'>
+const props = Astro.props
+---
+
+<blockquote
+  {...props}
+  class="relative text-gray11 [&_>_*]:after:absolute [&_>_*]:after:ml-0.5 [&_>_*]:after:content-[close-quote]"
+>
+  <slot />
+</blockquote>
+
+<style>
+  blockquote {
+    quotes: '“' '”' '‘' '’';
+  }
+
+  blockquote::before {
+    content: open-quote;
+    position: absolute;
+    left: -2px;
+    transform: translateX(-100%);
+  }
+</style>
