@@ -1,2 +1,2 @@
-export const EMAIL = 'orlanq@pm.me'
+export const EMAIL = 'orlantquijada@gmail.com'
 export const DEFAULT_DATE_FORMAT = 'MMM d, y'
