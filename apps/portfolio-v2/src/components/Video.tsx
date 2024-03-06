@@ -40,6 +40,7 @@ export default function Video({
         playsInline
         muted
         loop
+        preload="auto"
         controls={false}
         onPause={() => {
           setState('paused')
