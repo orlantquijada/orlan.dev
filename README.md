@@ -28,6 +28,6 @@ The website showcases my work, skills, and experience as a software engineer. It
 
 This project is a Progressive Web App (PWA) built with the following technologies:
 
-`Next.js`, `React`, `TypeScript`, `Framer Motion`, `Tailwind CSS`
+`Next.js`, `React`, `TypeScript`, `Framer Motion`, `CSS-in-JS`
 
 The PWA provides a daily quote from famous Stoic philosophers like Marcus Aurelius, Seneca, and Epictetus, along with a brief explanation of the quote. Users can also view the quotes for each day using a calendar view.
