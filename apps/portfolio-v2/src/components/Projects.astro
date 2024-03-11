@@ -9,7 +9,7 @@ import ProjectsCarousel from './ProjectsCarousel.tsx'
 <ProjectsCarousel client:load numOfItems={2}>
   <div
     class:list={[
-      'w-[var(--itemWidth)]',
+      'w-[var(--itemWidth)] md:w-full',
       'md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:max-w-lg',
     ]}
   >
@@ -17,9 +17,9 @@ import ProjectsCarousel from './ProjectsCarousel.tsx'
       title="Daily Stoic"
       aspect="desktop"
       href="https://daily.orlan.dev"
-      className="self-stretch relative group"
+      className="md:min-w-[32rem]"
     >
-      <Video src="/stoic-demo.mp4" client:load>
+      <Video src="/stoic-demo.mp4" className="md:aspect-[93/80]" client:load>
         <Icon name="pause" slot="pausedIcon" />
         <Icon name="play" slot="playingIcon" />
       </Video>
@@ -28,7 +28,7 @@ import ProjectsCarousel from './ProjectsCarousel.tsx'
 
   <div
     class:list={[
-      'w-[var(--itemWidth)]',
+      'w-[var(--itemWidth)] md:w-full',
       'md:absolute md:left-0 md:top-0 md:max-w-xs md:hover:z-10',
     ]}
   >
@@ -36,8 +36,14 @@ import ProjectsCarousel from './ProjectsCarousel.tsx'
       title="Money Manager"
       aspect="phone"
       href="https://github.com/orlantquijada/money-manager"
+      className="md:min-w-[20rem]"
     >
-      <Video src="/jamm-add-txn.mp4" type="video/mp4" client:load>
+      <Video
+        src="/jamm-add-txn.mp4"
+        className="md:aspect-[6/13]"
+        type="video/mp4"
+        client:load
+      >
         <Icon name="pause" slot="pausedIcon" />
         <Icon name="play" slot="playingIcon" />
       </Video>

@@ -15,6 +15,7 @@ type Props = {
   pausedIcon?: ReactNode
   playingIcon?: ReactNode
   children?: ReactNode
+  className?: string
 }
 
 export default function Video({
@@ -22,6 +23,7 @@ export default function Video({
   type = 'video/mp4',
   pausedIcon,
   playingIcon,
+  className,
 }: Props) {
   const videoRef = useRef<ElementRef<'video'>>(null)
   const [state, setState] = useState<'playing' | 'paused'>()
@@ -33,7 +35,7 @@ export default function Video({
   }, [])
 
   return (
-    <div className="relative">
+    <div className={cn('relative', className)}>
       <video
         ref={videoRef}
         autoPlay
