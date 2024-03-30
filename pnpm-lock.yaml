@@ -68,6 +68,9 @@ importers:
       swr:
         specifier: ^1.3.0
         version: 1.3.0(react@18.2.0)
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
     devDependencies:
       '@pandacss/dev':
         specifier: ^0.22.1
