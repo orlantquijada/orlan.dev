@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.1.1",
+    "@upstash/redis": "^1.29.0",
     "@vercel/og": "^0.5.6",
     "contentlayer": "^0.2.6",
     "date-fns": "^2.29.1",

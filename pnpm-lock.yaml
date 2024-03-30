@@ -26,6 +26,9 @@ importers:
       '@radix-ui/react-icons':
         specifier: ^1.1.1
         version: 1.1.1(react@18.2.0)
+      '@upstash/redis':
+        specifier: ^1.29.0
+        version: 1.29.0
       '@vercel/og':
         specifier: ^0.5.6
         version: 0.5.6
@@ -2050,10 +2053,6 @@ packages:
     peerDependencies:
       '@effect-ts/otel-node': '*'
     peerDependenciesMeta:
-      '@effect-ts/core':
-        optional: true
-      '@effect-ts/otel':
-        optional: true
       '@effect-ts/otel-node':
         optional: true
     dependencies:
@@ -5024,6 +5023,12 @@ packages:
   /@ungap/structured-clone@1.2.0:
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
+  /@upstash/redis@1.29.0:
+    resolution: {integrity: sha512-kbO5fgMAeUzErnA/SOtaSbAa0dguYhhBT4MZHJ1O8gVl4iK754aC9+rIYY5hsp4nlxeCGfnIDkWpof991c9jjA==}
+    dependencies:
+      crypto-js: 4.2.0
+    dev: false
+
   /@vercel/og@0.5.6:
     resolution: {integrity: sha512-C7loD/Ryt+cXgZ93KVNOIa/r/WcPVPk1JflUODGUdngFwxOJab0eCdugMrwGR2Oq85g4TXXHMBZIC2Z0C9P1NQ==}
     engines: {node: '>=16'}
@@ -6571,6 +6576,10 @@ packages:
     dependencies:
       '@types/node': 17.0.45
     dev: true
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
+    dev: false
 
   /crypto-random-string@2.0.0:
     resolution: {integrity: sha512-v1plID3y9r/lPhviJ1wrXpLeyUIGAZ2SHNYTEapm7/8A9nLPoyvVp3RK/EPFqn5kEznyWgYZNsRtYYIWbuG8KA==}
