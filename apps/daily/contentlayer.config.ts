@@ -30,7 +30,7 @@ export const Daily = defineDocumentType(() => ({
       required: true,
     },
     section: {
-      type: 'string',
+      type: 'json',
       required: true,
     },
     quote: {
