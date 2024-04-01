@@ -1,29 +1,10 @@
 import { Daily, allDailies } from 'contentlayer/generated'
-import { Month, Months } from './contentlayer'
+import { getKey, parseKey } from './api'
+import { Month } from './contentlayer'
 
 ///////////////////////// util /////////////////////////
 
 type BetterTypedDaily = Daily & { month: Month }
-const DAILY_KEY = '__daily_/'
-const getKey = ({ day, month }: Pick<Daily, 'month' | 'day'>) =>
-  `${DAILY_KEY}${month}/${day}`
-const parseKey = <T extends string = `${typeof DAILY_KEY}${Month}/${string}`>(
-  key: T,
-) => {
-  const [, month, _day] = key.split('/')
-
-  const day = parseInt(_day, 10)
-  if (Months.includes(month as Month) && !Number.isNaN(day)) {
-    return {
-      success: true,
-      data: { month: month as Month, day },
-    } as const
-  }
-
-  return {
-    success: false,
-  } as const
-}
 
 ///////////////////////// api /////////////////////////
 
@@ -41,11 +22,9 @@ export const getAllLiked = () => {
   const likes: Like[] = []
 
   Object.keys(localStorage).forEach((key) => {
-    for (const month of Months) {
-      if (key.startsWith(`${DAILY_KEY}${month}`)) {
-        const { success, data } = parseKey(key)
-        if (success) likes.push(data)
-      }
+    const parsedKey = parseKey(key)
+    if (parsedKey.success) {
+      likes.push(parsedKey.data)
     }
   })
   return likes.map((like) =>

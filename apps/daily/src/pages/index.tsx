@@ -2,9 +2,8 @@ import type {
   GetServerSidePropsContext,
   InferGetServerSidePropsType,
 } from 'next'
-import { Daily } from 'contentlayer/generated'
 
-import { getDailyToday } from '@/lib/api'
+import { getCachedOrSetReminders, getDailyToday } from '@/lib/api'
 import { getDetailSocialMediaImage } from '@/lib/utils'
 
 import DailyDetail from '@/components/DailyDetail'
@@ -12,6 +11,7 @@ import MetaTags from '@/components/MetaTags'
 
 export default function Home({
   daily,
+  reminders,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const image = getDetailSocialMediaImage({
     title: daily.title.raw,
@@ -27,7 +27,7 @@ export default function Home({
         image={image}
         url=""
       />
-      <DailyDetail daily={daily} />
+      <DailyDetail daily={daily} reminders={reminders} />
     </>
   )
 }
@@ -39,8 +39,20 @@ export async function getServerSideProps({
   res.setHeader('Cache-Control', 'public, no-cache')
   const dailyToday = getDailyToday(timezone as string)
 
+  if (!dailyToday) return { notFound: true }
+
+  const reminders = await getCachedOrSetReminders(
+    { month: dailyToday.month, day: dailyToday.day },
+    {
+      subject: dailyToday.monthSubject,
+      author: dailyToday.author,
+      title: dailyToday.title.raw,
+      quote: dailyToday.quote.raw,
+      body: dailyToday.body.raw,
+    },
+  )
+
   return {
-    props: { daily: dailyToday as Daily },
-    notFound: !dailyToday,
+    props: { daily: dailyToday, reminders },
   }
 }
