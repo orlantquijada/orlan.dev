@@ -2,6 +2,7 @@ import { type ReactNode, type ComponentProps } from 'react'
 import { css } from 'styled-system/css'
 import { styled } from 'styled-system/jsx'
 import { text } from 'styled-system/recipes'
+import { type MDXComponents } from 'mdx/types'
 
 const Q = styled('q', {
   base: {
@@ -46,17 +47,16 @@ const Li = styled('li', {
   },
 })
 
-export const quoteComponents = {
-  p: (props: ComponentProps<'p'>) => (
-    <p {...props} className={text({ size: 'xl' })} />
+export const quoteComponents: MDXComponents = {
+  p: (props) => <p {...props} className={text({ size: 'xl' })} />,
+  ol: (props) => <Ol {...(props as ComponentProps<typeof Ol>)} />,
+  li: (props) => (
+    <Li
+      {...(props as ComponentProps<typeof Li>)}
+      className={text({ size: 'xl' })}
+    />
   ),
-  ol: (props: ComponentProps<typeof Ol>) => <Ol {...props} />,
-  li: (props: ComponentProps<typeof Li>) => (
-    <Li {...props} className={text({ size: 'xl' })} />
-  ),
-  em: (props: ComponentProps<'em'>) => (
-    <em {...props} className={css({ fontStyle: 'italic' })} />
-  ),
+  em: (props) => <em {...props} className={css({ fontStyle: 'italic' })} />,
 }
 
 export function Quote({ children }: { children: ReactNode }) {

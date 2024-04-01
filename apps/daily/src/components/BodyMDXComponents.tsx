@@ -2,6 +2,7 @@ import { type ComponentProps } from 'react'
 import { styled } from 'styled-system/jsx'
 import { css } from 'styled-system/css'
 import { text } from 'styled-system/recipes'
+import { type MDXComponents } from 'mdx/types'
 
 const P = styled('p', {
   base: {
@@ -44,12 +45,15 @@ const Ol = styled('ol', {
   base: { all: 'revert', my: 0 },
 })
 
-export const bodyComponents = {
-  p: (props: ComponentProps<typeof P>) => (
-    <P {...props} className={text({ size: 'xl' })} />
+export const bodyComponents: MDXComponents = {
+  p: (props) => (
+    <P
+      {...(props as ComponentProps<typeof P>)}
+      className={text({ size: 'xl' })}
+    />
   ),
-  blockquote: (props: ComponentProps<typeof BlockQuote>) => (
-    <BlockQuote {...props} />
+  blockquote: (props) => (
+    <BlockQuote {...(props as ComponentProps<typeof BlockQuote>)} />
   ),
   span: (props: ComponentProps<'span'>) => (
     <span className={text({ size: 'xl' })} {...props} />
@@ -57,12 +61,8 @@ export const bodyComponents = {
   em: (props: ComponentProps<'span'>) => (
     <em className={css({ fontStyle: 'italic' })} {...props} />
   ),
-  Text: (props: ComponentProps<'span'>) => (
-    <span {...props} className={text({ size: 'xl' })} />
-  ),
-  ul: (props: ComponentProps<typeof Ul>) => <Ul {...props} />,
-  ol: (props: ComponentProps<typeof Ol>) => <Ol {...props} />,
-  li: (props: ComponentProps<'li'>) => (
-    <li {...props} className={text({ size: 'xl' })} />
-  ),
+  Text: (props) => <span {...props} className={text({ size: 'xl' })} />,
+  ul: (props) => <Ul {...(props as ComponentProps<typeof Ul>)} />,
+  ol: (props) => <Ol {...(props as ComponentProps<typeof Ol>)} />,
+  li: (props) => <li {...props} className={text({ size: 'xl' })} />,
 }
