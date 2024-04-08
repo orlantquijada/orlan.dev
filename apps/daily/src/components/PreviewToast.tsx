@@ -53,7 +53,7 @@ export default function PreviewToast({
   const loading = !daily && !error
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       {selectedDate && (
         <motion.div
           variants={variants}

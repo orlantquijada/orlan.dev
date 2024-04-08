@@ -80,12 +80,12 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
               userSelect: 'none',
             })}
             animate={{
-              scale: [1, 0.85, 1, 1, 1.3],
+              scale: [1, 0.85, 1, 1.3],
               y: -120,
               opacity: 0,
             }}
             transition={{
-              scale: { delay: 0, times: [0, 0.15, 0.3, 0.5, 1] },
+              scale: { delay: 0, times: [0, 0.3, 0.6, 1] },
               delay: 0.5,
             }}
             onAnimationComplete={() => setOpen(false)}

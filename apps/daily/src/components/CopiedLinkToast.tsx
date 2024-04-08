@@ -29,7 +29,7 @@ export const CopiedLinkToast = forwardRef<Ref>((_, ref) => {
   )
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       {open && (
         <motion.div
           variants={variants}
