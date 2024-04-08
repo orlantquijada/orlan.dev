@@ -13,6 +13,10 @@ export default defineConfig({
   markdown: {
     shikiConfig: {
       theme: 'min-dark',
+      themes: {
+        light: 'min-light',
+        dark: 'min-dark',
+      },
     },
   },
   vite: {

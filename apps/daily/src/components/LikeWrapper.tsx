@@ -1,9 +1,8 @@
-import { PropsWithChildren, useState } from 'react'
+import React, { PropsWithChildren, useState } from 'react'
 import Head from 'next/head'
 // import Image from 'next/image'
 import { motion } from 'framer-motion'
 
-import { useDoubleClick } from '@/hooks/useDoubleClick'
 import { like } from '@/lib/like'
 import { Daily } from 'contentlayer/generated'
 import { styled } from 'styled-system/jsx'
@@ -24,27 +23,23 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
     false | { y: number; x: number; rotate: number; key: number }
   >(false)
 
-  const handler = useDoubleClick(
-    (e) => {
-      setOpen({
-        x: e.pageX,
-        y: e.pageY,
-        rotate: 0,
-        key: new Date().getTime(),
-      })
-      like({ month, day })
-      onLike?.()
-    },
-    { delay: 300 },
-  )
-
   return (
     <>
       <Head>
         <link rel="preload" href="/heart.webp" as="image" />
       </Head>
       <Container
-        onClick={handler}
+        onDoubleClick={(e) => {
+          setOpen({
+            x: e.pageX,
+            y: e.pageY,
+            rotate: 0,
+            key: new Date().getTime(),
+          })
+          like({ month, day })
+          onLike?.()
+        }}
+        // onClick={handler}
         /* onClick={(e) => { */
         /*   if (timer.current) { */
         /*     clearTimeout(timer.current) */
@@ -85,12 +80,12 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
               userSelect: 'none',
             })}
             animate={{
-              scale: [1, 0.85, 1, 1, 1.3],
+              scale: [1, 0.85, 1, 1.3],
               y: -120,
               opacity: 0,
             }}
             transition={{
-              scale: { delay: 0, times: [0, 0.15, 0.3, 0.5, 1] },
+              scale: { delay: 0, times: [0, 0.3, 0.6, 1] },
               delay: 0.5,
             }}
             onAnimationComplete={() => setOpen(false)}

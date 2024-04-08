@@ -24,6 +24,7 @@ import {
 import { useIsLiked } from '@/hooks/useIsLiked'
 import { useClickOutside } from '@/hooks/useClickOutside'
 import { BASE_URL } from '@/lib/constants'
+import { type Reminder } from '@/lib/schema'
 
 import Heart from '@/components/HeartSvg'
 import Share from '@/components/ShareSvg'
@@ -34,13 +35,16 @@ import { Quote, quoteComponents } from './QuoteMDXComponents'
 import { bodyComponents } from './BodyMDXComponents'
 import LikeWrapper from './LikeWrapper'
 import { CopiedLinkToast } from './CopiedLinkToast'
+import Checkbox from './Checkbox'
+import SparklesSvg from './SparklesSvg'
 // import InstallButton from './InstallButton'
 
-interface Props {
+type Props = {
   daily: Daily
+  reminders: Reminder[]
 }
 
-export default function DailyDetail({ daily }: Props) {
+export default function DailyDetail({ daily, reminders }: Props) {
   const Title = useMDXComponent(daily.title.code)
   const Body = useMDXComponent(daily.body.code)
   const QuoteMDX = useMDXComponent(daily.quote.code)
@@ -127,6 +131,48 @@ export default function DailyDetail({ daily }: Props) {
           >
             <Body components={bodyComponents} />
           </article>
+
+          <section
+            className={css({
+              w: 'full',
+              display: 'flex',
+              flexDir: 'column',
+              mt: '8',
+            })}
+          >
+            <div>
+              <h2
+                className={css({
+                  fontSize: 'xl',
+                  fontWeight: 'bold',
+                  mb: '2',
+                  color: 'olive.11',
+                })}
+              >
+                Reminders
+              </h2>
+
+              <button>
+                <SparklesSvg />
+                <span>Generate reminders</span>
+              </button>
+            </div>
+
+            <div
+              className={css({
+                display: 'flex',
+                flexDir: 'column',
+                justifyContent: 'start',
+                gap: '2',
+
+                w: 'full',
+              })}
+            >
+              {reminders.map(({ actionItem }) => (
+                <Checkbox id={actionItem} label={actionItem} key={actionItem} />
+              ))}
+            </div>
+          </section>
         </Main>
         <Footer>
           <Actions shouldShow={shouldShow}>
@@ -395,6 +441,7 @@ const Footer = styled('footer', {
 
     md: {
       bottom: '2.5rem',
+      zIndex: -10,
     },
   },
 })

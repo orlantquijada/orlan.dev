@@ -2,14 +2,16 @@ import type { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { allDailies, type Daily } from 'contentlayer/generated'
 import { Month } from 'src/lib/contentlayer'
 
-import { getDailies } from '@/lib/api'
+import { getCachedOrSetReminders, getDailies } from '@/lib/api'
 import { capitalize, getDetailSocialMediaImage } from '@/lib/utils'
 
 import DailyDetail from '@/components/DailyDetail'
 import MetaTags from '@/components/MetaTags'
+import { Reminder } from '@/lib/schema'
 
 export default function EntryDetailPage({
   daily,
+  reminders,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const image = getDetailSocialMediaImage({
     title: daily.title.raw,
@@ -25,7 +27,7 @@ export default function EntryDetailPage({
         image={image}
         url={`/${daily.month.toLowerCase()}/${daily.day}`}
       />
-      <DailyDetail daily={daily} />
+      <DailyDetail daily={daily} reminders={reminders} />
     </>
   )
 }
@@ -42,21 +44,39 @@ export async function getStaticPaths() {
 }
 
 export const getStaticProps: GetStaticProps<
-  { daily: Daily },
+  { daily: Daily; reminders: Reminder[] },
   { month: Lowercase<Month>; day: string }
 > = async ({ params }) => {
   if (!params) return { notFound: true }
 
   const { day, month } = params
-  const daily = getDailies({
-    filter: { day: parseInt(day, 10), month: capitalize(month) },
-  })
+  const parsedDay = parseInt(day, 10)
+  const capitalizedMonth = capitalize(month)
 
-  if (!daily.length) return { notFound: true }
+  const daily = getDailies({
+    filter: { day: parsedDay, month: capitalizedMonth },
+  })[0]
+
+  if (!daily) return { notFound: true }
+
+  const reminders = await getCachedOrSetReminders(
+    {
+      day: daily.day,
+      month: daily.month,
+    },
+    {
+      body: daily.month,
+      quote: daily.quote.raw,
+      title: daily.title.raw,
+      author: daily.author,
+      subject: daily.monthSubject,
+    },
+  )
 
   return {
     props: {
-      daily: daily[0],
+      daily,
+      reminders,
     },
   }
 }

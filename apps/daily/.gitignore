@@ -7,3 +7,4 @@
 **/public/worker-*.js.map
 
 styled-system/
+.vercel

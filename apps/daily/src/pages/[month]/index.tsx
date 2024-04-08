@@ -62,7 +62,7 @@ export default function MonthsNavPage() {
 
 function Likes({ likes, month }: { likes: Daily[]; month: Month }) {
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       {likes.length ? (
         <motion.section
           initial={{ opacity: 0 }}

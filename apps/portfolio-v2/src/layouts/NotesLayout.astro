@@ -94,3 +94,11 @@ const data = Astro.props
     margin-bottom: 1rem;
   }
 </style>
+
+<style is:global>
+  html.dark .shiki,
+  html.dark .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+</style>

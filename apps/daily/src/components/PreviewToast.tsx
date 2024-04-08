@@ -9,6 +9,7 @@ import useSWR from 'swr'
 import { Daily } from 'contentlayer/generated'
 import { AnimatePresence, motion, Variants } from 'framer-motion'
 import { useMDXComponent } from 'next-contentlayer/hooks'
+import { type MDXComponents } from 'mdx/types'
 
 import { text } from 'styled-system/recipes'
 import { styled } from 'styled-system/jsx'
@@ -52,7 +53,7 @@ export default function PreviewToast({
   const loading = !daily && !error
 
   return (
-    <AnimatePresence exitBeforeEnter>
+    <AnimatePresence mode="wait">
       {selectedDate && (
         <motion.div
           variants={variants}
@@ -100,9 +101,12 @@ const LoadingTitleSkeleton = styled('div', {
   },
 })
 
-const toastTitleComponents = {
-  p: (props: ComponentProps<typeof Title>) => (
-    <Title {...props} className={text({ size: { base: 'base', md: 'lg' } })} />
+const toastTitleComponents: MDXComponents = {
+  p: (props) => (
+    <Title
+      {...(props as ComponentProps<typeof Title>)}
+      className={text({ size: { base: 'base', md: 'lg' } })}
+    />
   ),
 }
 
