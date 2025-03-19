@@ -1,7 +1,7 @@
 .icon path {
-  fill: var(--gray10);
+	fill: var(--gray10);
 }
 
 .menuContent {
-  width: min(375px, calc(100vw - (24px * 2)));
+	width: min(375px, calc(100vw - (24px * 2)));
 }

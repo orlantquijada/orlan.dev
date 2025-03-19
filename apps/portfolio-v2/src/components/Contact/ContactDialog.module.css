@@ -1,8 +1,8 @@
 .icon {
-  display: grid;
-  place-items: center;
+	display: grid;
+	place-items: center;
 }
 
 .icon path {
-  fill: var(--gray11);
+	fill: var(--gray11);
 }

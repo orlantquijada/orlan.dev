@@ -13,22 +13,11 @@
     "dev:p": "turbo run dev --filter=portfolio",
     "dev:p2": "turbo run dev --filter=portfolio-2.0",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "prepare": "husky install"
+    "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "husky": "^8.0.1",
-    "lint-staged": "^12.4.3",
     "prettier": "latest",
     "turbo": "^2.4.4"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix"
-    ],
-    "*.{md,json}": [
-      "prettier --write"
-    ]
   },
   "packageManager": "pnpm@10.6.4"
 }

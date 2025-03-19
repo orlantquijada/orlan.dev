@@ -1,16 +1,16 @@
 ---
-import type { CollectionEntry } from 'astro:content'
-import { ViewTransitions } from 'astro:transitions'
-import MetaData from '@/components/Notes/NoteDetailComponents/MetaData.astro'
-import { getViewTransitionName } from '@/lib/notes'
-import { DEFAULT_DATE_FORMAT } from '@/utils/constants'
-import { Icon } from 'astro-icon/components'
-import { format } from 'date-fns'
-import Layout from './Layout.astro'
+import type { CollectionEntry } from "astro:content";
+import { ViewTransitions } from "astro:transitions";
+import MetaData from "@/components/Notes/NoteDetailComponents/MetaData.astro";
+import { getViewTransitionName } from "@/lib/notes";
+import { DEFAULT_DATE_FORMAT } from "@/utils/constants";
+import { Icon } from "astro-icon/components";
+import { format } from "date-fns";
+import Layout from "./Layout.astro";
 
-type Props = CollectionEntry<'notes'>['data']
+type Props = CollectionEntry<"notes">["data"];
 
-const data = Astro.props
+const data = Astro.props;
 ---
 
 <Layout title={data.title}>

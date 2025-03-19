@@ -1,8 +1,8 @@
 ---
-import type { HTMLAttributes } from 'astro/types'
+import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<'code'>
-const props = Astro.props
+type Props = HTMLAttributes<"code">;
+const props = Astro.props;
 ---
 
 <code {...props}><slot /></code>

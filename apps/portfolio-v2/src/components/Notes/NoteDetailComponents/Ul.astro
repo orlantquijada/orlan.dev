@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from 'astro/types'
+import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<'ul'>
+type Props = HTMLAttributes<"ul">;
 
-const props = Astro.props
+const props = Astro.props;
 ---
 
 <ul {...props} class:list={['ul', props.class]}>

@@ -1,39 +1,39 @@
-import { useState } from 'react'
+import { useState } from "react";
 
-import { useIsomorphicLayoutEffect } from '@/lib/general'
+import { useIsomorphicLayoutEffect } from "@/lib/general";
 import {
-  getTheme,
-  toggleTheme as _toggleTheme,
-  setTheme as _setTheme,
-  type ThemeKeys,
-} from '@/lib/theme-toggle'
+	type ThemeKeys,
+	setTheme as _setTheme,
+	toggleTheme as _toggleTheme,
+	getTheme,
+} from "@/lib/theme-toggle";
 
 // NOTE: dead code
 export function useTheme() {
-  const [loading, setLoading] = useState(true)
-  const [theme, setTheme] = useState<ThemeKeys>()
+	const [loading, setLoading] = useState(true);
+	const [theme, setTheme] = useState<ThemeKeys>();
 
-  useIsomorphicLayoutEffect(() => {
-    setTheme(getTheme())
+	useIsomorphicLayoutEffect(() => {
+		setTheme(getTheme());
 
-    setLoading(false)
-  }, [])
+		setLoading(false);
+	}, []);
 
-  function handletoggleTheme() {
-    _toggleTheme()
-    setTheme(theme === 'dark' ? 'light' : 'dark')
-  }
+	function handletoggleTheme() {
+		_toggleTheme();
+		setTheme(theme === "dark" ? "light" : "dark");
+	}
 
-  function handleSetTheme(theme: ThemeKeys) {
-    _setTheme(theme)
-    setTheme(theme)
-  }
+	function handleSetTheme(theme: ThemeKeys) {
+		_setTheme(theme);
+		setTheme(theme);
+	}
 
-  const fns = {
-    setTheme: handleSetTheme,
-    toggleTheme: handletoggleTheme,
-  }
+	const fns = {
+		setTheme: handleSetTheme,
+		toggleTheme: handletoggleTheme,
+	};
 
-  if (loading) return { loading: true, theme: undefined, ...fns } as const
-  return { loading: false, theme: theme as ThemeKeys, ...fns } as const
+	if (loading) return { loading: true, theme: undefined, ...fns } as const;
+	return { loading: false, theme: theme as ThemeKeys, ...fns } as const;
 }

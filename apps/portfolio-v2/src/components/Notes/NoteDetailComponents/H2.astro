@@ -1,11 +1,11 @@
 ---
-import { Icon } from 'astro-icon/components'
-import type { HTMLAttributes } from 'astro/types'
-import { styles } from './heading.styles'
+import { Icon } from "astro-icon/components";
+import type { HTMLAttributes } from "astro/types";
+import { styles } from "./heading.styles";
 
-type Props = HTMLAttributes<'h3'>
+type Props = HTMLAttributes<"h3">;
 
-const props = Astro.props
+const props = Astro.props;
 ---
 
 <h3 {...props} class={styles({ tag: 'h3' })}>

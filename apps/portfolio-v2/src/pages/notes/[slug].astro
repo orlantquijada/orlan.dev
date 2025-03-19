@@ -1,20 +1,20 @@
 ---
-import { components } from '@/components/Notes/NoteDetailComponents/components.astro'
-import NotesLayout from '@/layouts/NotesLayout.astro'
-import { type CollectionEntry, getCollection } from 'astro:content'
+import { type CollectionEntry, getCollection } from "astro:content";
+import { components } from "@/components/Notes/NoteDetailComponents/components.astro";
+import NotesLayout from "@/layouts/NotesLayout.astro";
 
 export async function getStaticPaths() {
-  const notes = await getCollection('notes')
-  return notes.map((note) => ({
-    params: { slug: note.slug },
-    props: note,
-  }))
+	const notes = await getCollection("notes");
+	return notes.map((note) => ({
+		params: { slug: note.slug },
+		props: note,
+	}));
 }
 
-type Props = CollectionEntry<'notes'>
+type Props = CollectionEntry<"notes">;
 
-const note = Astro.props
-const { Content } = await note.render()
+const note = Astro.props;
+const { Content } = await note.render();
 ---
 
 <NotesLayout {...note.data}>
