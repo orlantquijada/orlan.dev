@@ -53,6 +53,22 @@ const data = Astro.props;
     </MetaData>
 
     {
+      data.updatedAt ? (
+        <MetaData>
+          <Icon name="pencil" />
+          <span>
+            {format(
+              Array.isArray(data.updatedAt)
+                ? data.updatedAt[data.updatedAt.length - 1]!
+                : data.updatedAt,
+              DEFAULT_DATE_FORMAT,
+            )}
+          </span>
+        </MetaData>
+      ) : null
+    }
+
+    {
       data.wip ? (
         <MetaData>
           <Icon name="wrench" slot="icon" />

@@ -11,6 +11,7 @@ const notes = defineCollection({
 			.string()
 			.or(z.date())
 			.transform((val) => new Date(val)),
+		updatedAt: z.array(z.date()).or(z.date()).optional(),
 		draft: z.boolean().default(false),
 		wip: z.boolean().default(false),
 	}),
