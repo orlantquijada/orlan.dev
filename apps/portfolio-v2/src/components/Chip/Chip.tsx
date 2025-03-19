@@ -1,6 +1,6 @@
-import type { VariantProps } from 'cva'
-import { forwardRef, type ReactNode } from 'react'
 import { Slot } from '@radix-ui/react-slot'
+import type { VariantProps } from 'cva'
+import { type ReactNode, forwardRef } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { chipStyles } from './styles'

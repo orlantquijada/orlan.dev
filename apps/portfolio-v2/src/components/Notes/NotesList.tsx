@@ -1,10 +1,10 @@
-import { LayoutGroup } from 'framer-motion'
 import { useStore } from '@nanostores/react'
 import { cx } from 'cva'
+import { LayoutGroup } from 'framer-motion'
 import { twMerge } from 'tailwind-merge'
 
-import { selectedTags } from '@/stores/notes'
 import type { NoteFrontmatter } from '@/lib/notes'
+import { selectedTags } from '@/stores/notes'
 
 import { MotionNoteCard } from '../NoteCard/NoteCard'
 import styles from './styles.module.css'

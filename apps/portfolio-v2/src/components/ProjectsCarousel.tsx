@@ -1,12 +1,12 @@
-import {
-  useRef,
-  type ReactNode,
-  type ElementRef,
-  useState,
-  useEffect,
-} from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
 import { cn } from '@/lib/general'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import {
+  type ElementRef,
+  type ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 
 type Props = {
   children?: ReactNode

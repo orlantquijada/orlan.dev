@@ -1,14 +1,14 @@
-import type { ReactNode } from 'react'
 import { cva } from 'cva'
+import type { ReactNode } from 'react'
 
-import { ReactComponent as Twitter } from '@/icons/twitter.svg'
+import { ReactComponent as ArrowRight } from '@/icons/arrow-right.svg'
+import { ReactComponent as ArrowTopRight } from '@/icons/arrow-top-right.svg'
 import { ReactComponent as GitHub } from '@/icons/github.svg'
 import { ReactComponent as Logo } from '@/icons/logo.svg'
-import { ReactComponent as ArrowTopRight } from '@/icons/arrow-top-right.svg'
-import { ReactComponent as ArrowRight } from '@/icons/arrow-right.svg'
+import { ReactComponent as Twitter } from '@/icons/twitter.svg'
 
-import { toggleTheme } from '@/lib/theme-toggle'
 import { isBrowser } from '@/lib/general'
+import { toggleTheme } from '@/lib/theme-toggle'
 
 import ContactDialog from '../Contact/ContactDialog'
 

@@ -1,19 +1,19 @@
-import { useMemo, useRef, useState } from 'react'
+import * as PopoverPrimitive from '@radix-ui/react-popover'
+import { cva } from 'cva'
 import {
   AnimatePresence,
-  motion,
   MotionConfig,
   type Variants,
+  motion,
 } from 'framer-motion'
-import { cva } from 'cva'
-import * as PopoverPrimitive from '@radix-ui/react-popover'
+import { useMemo, useRef, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
 import { transitions } from '@/utils/motion'
 
-import styles from './styles.module.css'
 import { buttonStyles } from '../Button'
 import { MenuPanel } from './MenuPanel'
+import styles from './styles.module.css'
 
 const panelVariants: Variants = {
   open: {

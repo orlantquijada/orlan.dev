@@ -1,5 +1,5 @@
-import { useRef, useState, type ComponentProps } from 'react'
 import * as ToggleGroup from '@radix-ui/react-toggle-group'
+import { type ComponentProps, useRef, useState } from 'react'
 
 import { Button } from '@/components/Button'
 

@@ -1,13 +1,13 @@
+import { cn } from '@/lib/general'
 import type { HTMLAttributes } from 'astro/types'
 import {
-  useState,
-  useRef,
-  type ReactNode,
   type ElementRef,
+  type ReactNode,
   useEffect,
+  useRef,
+  useState,
 } from 'react'
 import { browserIconButtonStyles } from './BrowserIconButton/styles'
-import { cn } from '@/lib/general'
 
 type Props = {
   src: string

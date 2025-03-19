@@ -1,11 +1,11 @@
-import { type ComponentProps, forwardRef, useState, useEffect } from 'react'
-import { useStore } from '@nanostores/react'
-import { AnimatePresence, motion, type Variants } from 'framer-motion'
 import { ReactComponent as Close } from '@/icons/cross.svg'
+import { useStore } from '@nanostores/react'
+import { AnimatePresence, type Variants, motion } from 'framer-motion'
+import { type ComponentProps, forwardRef, useEffect, useState } from 'react'
 
-import Chip from '../Chip/Chip'
+import { type TagGraphMap, getNeighborhoodsIntersection } from '@/lib/notes'
 import { addTag, clearTags, removeTag, selectedTags } from '@/stores/notes'
-import { getNeighborhoodsIntersection, type TagGraphMap } from '@/lib/notes'
+import Chip from '../Chip/Chip'
 
 import styles from './styles.module.css'
 

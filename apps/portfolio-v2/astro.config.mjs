@@ -1,10 +1,10 @@
-import { defineConfig } from 'astro/config'
-import compress from 'astro-compress'
-import tailwind from '@astrojs/tailwind'
-import react from '@astrojs/react'
-import svgr from 'vite-plugin-svgr'
 import mdx from '@astrojs/mdx'
+import react from '@astrojs/react'
+import tailwind from '@astrojs/tailwind'
+import compress from 'astro-compress'
 import icon from 'astro-icon'
+import { defineConfig } from 'astro/config'
+import svgr from 'vite-plugin-svgr'
 
 // https://astro.build/config
 export default defineConfig({

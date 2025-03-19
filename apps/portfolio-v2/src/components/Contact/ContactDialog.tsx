@@ -1,19 +1,19 @@
-import { type ComponentProps, type ReactNode, useState } from 'react'
 import { cva } from 'cva'
+import { type ComponentProps, type ReactNode, useState } from 'react'
 import { twMerge } from 'tailwind-merge'
 
-import { ReactComponent as Send } from '@/icons/send-filled.svg'
-import { ReactComponent as Copy } from '@/icons/copy-filled.svg'
 import { ReactComponent as Check } from '@/icons/check.svg'
+import { ReactComponent as Copy } from '@/icons/copy-filled.svg'
 import { ReactComponent as GitHub } from '@/icons/github.svg'
+import { ReactComponent as Send } from '@/icons/send-filled.svg'
 import { ReactComponent as Twitter } from '@/icons/twitter.svg'
 
-import ContactDetail from './ContactDetail'
 import { Button, buttonStyles } from '../Button'
 import * as Dialog from '../Dialog'
+import ContactDetail from './ContactDetail'
 
-import styles from './ContactDialog.module.css'
 import { EMAIL } from '@/utils/constants'
+import styles from './ContactDialog.module.css'
 
 export default function ContactDialog({ children }: { children: ReactNode }) {
   const [copied, setCopied] = useState(false)

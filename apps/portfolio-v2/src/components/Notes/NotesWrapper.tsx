@@ -1,7 +1,7 @@
 import type { CollectionEntry } from 'astro:content'
 import type { TagGraphMap } from '@/lib/notes'
-import NotesList from './NotesList'
 import NoteTagsList from './NoteTagsList'
+import NotesList from './NotesList'
 
 type Props = {
   tags: string[]
