@@ -1,18 +1,17 @@
-import { action, atom } from "nanostores";
+import { atom } from "nanostores";
 
-export const selectedTags = atom<string[]>([]);
+type Tag = string;
 
-export const addTag = action(selectedTags, "addTag", (store, tag) =>
-	store.set([...store.get(), tag]),
-);
+export const $selectedTags = atom<Tag[]>([]);
 
-export const removeTag = action(
-	selectedTags,
-	"removeTag",
-	(store, tagToRemove) =>
-		store.set(store.get().filter((tag) => tagToRemove !== tag)),
-);
+export function addTag(tag: Tag) {
+	$selectedTags.set([...$selectedTags.get(), tag]);
+}
 
-export const clearTags = action(selectedTags, "clearTags", (store) =>
-	store.set([]),
-);
+export function removeTag(tag: Tag) {
+	$selectedTags.set($selectedTags.get().filter((_tag) => tag !== _tag));
+}
+
+export function clearTags() {
+	$selectedTags.set([]);
+}

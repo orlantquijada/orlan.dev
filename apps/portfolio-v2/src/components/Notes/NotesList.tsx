@@ -4,7 +4,7 @@ import { LayoutGroup } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
 import type { NoteFrontmatter } from "@/lib/notes";
-import { selectedTags } from "@/stores/notes";
+import { $selectedTags } from "@/stores/notes";
 
 import type { CSSProperties } from "react";
 import { MotionNoteCard } from "../NoteCard/NoteCard";
@@ -21,7 +21,7 @@ const toRem = (num: number) => `${num / 16}rem`;
 
 export default function NotesList(props: Props) {
 	const { notes, className } = props;
-	const _selectedTags = useStore(selectedTags);
+	const _selectedTags = useStore($selectedTags);
 
 	const isSelecting = Boolean(_selectedTags.length);
 
@@ -30,7 +30,7 @@ export default function NotesList(props: Props) {
 	for (const note of notes) {
 		if (
 			isSelecting &&
-			_selectedTags.every((selectedTag) => note.tags.has(selectedTag))
+			_selectedTags.every((selectedTag) => note.tags.includes(selectedTag))
 		)
 			filtered.push({ ...note, selected: true });
 		else rest.push({ ...note, selected: false });

@@ -4,7 +4,7 @@ import { AnimatePresence, type Variants, motion } from "framer-motion";
 import { type ComponentProps, forwardRef, useEffect, useState } from "react";
 
 import { type TagGraphMap, getNeighborhoodsIntersection } from "@/lib/notes";
-import { addTag, clearTags, removeTag, selectedTags } from "@/stores/notes";
+import { $selectedTags, addTag, clearTags, removeTag } from "@/stores/notes";
 import Chip from "../Chip/Chip";
 
 import styles from "./styles.module.css";
@@ -25,7 +25,7 @@ type Props = {
 
 export default function NoteTagsList(props: Props) {
 	const { tags, tagsGraph } = props;
-	const _selectedTags = useStore(selectedTags);
+	const _selectedTags = useStore($selectedTags);
 	const isSelecting = Boolean(_selectedTags.length);
 
 	const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags);
@@ -124,7 +124,7 @@ const Tag = forwardRef<
 	{ tag: string } & ComponentProps<typeof motion.button>
 >((props, ref) => {
 	const { tag, ...rest } = props;
-	const _selectedTags = useStore(selectedTags);
+	const _selectedTags = useStore($selectedTags);
 	const isSelected = _selectedTags.includes(tag);
 
 	return (

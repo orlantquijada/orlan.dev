@@ -10,9 +10,9 @@ const notesData = await getCollection("notes");
 const filteredNotes = notesData.filter(({ data: { draft } }) => !draft);
 const notes = filteredNotes.map((note) => ({
 	...note.data,
-	href: `/notes/${note.slug}`,
+	href: `/notes/${note.id}`,
 }));
-const tagsPerNote = filteredNotes.map((note) => [...note.data.tags]);
+const tagsPerNote = filteredNotes.map((note) => [...new Set(note.data.tags)]);
 
 const tags = [...new Set(tagsPerNote.flat())];
 const tagsGraph = buildTagGraph(...tagsPerNote);
