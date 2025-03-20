@@ -1,4 +1,4 @@
-export {}
+export {};
 // import { styled, css, CSS } from '@stitches.config'
 // import DownloadSvg from '@/components/DownloadSvg'
 //
