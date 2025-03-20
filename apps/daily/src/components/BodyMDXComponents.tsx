@@ -3,6 +3,8 @@ import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 import { text } from "styled-system/recipes";
 
+import type { MDXComponents } from "@/lib/contentlayer";
+
 const P = styled("p", {
 	base: {
 		"&:not(:first-child)": {
@@ -65,4 +67,4 @@ export const bodyComponents = {
 	li: (props: ComponentProps<"li">) => (
 		<li {...props} className={text({ size: "xl" })} />
 	),
-};
+} as MDXComponents;

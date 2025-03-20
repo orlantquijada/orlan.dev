@@ -10,7 +10,7 @@ import {
 } from "react";
 import useSWR from "swr";
 
-import { Months } from "@/lib/contentlayer";
+import { type MDXComponents, Months } from "@/lib/contentlayer";
 import { cva } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 import { text } from "styled-system/recipes";
@@ -104,7 +104,7 @@ const toastTitleComponents = {
 	p: (props: ComponentProps<typeof Title>) => (
 		<Title {...props} className={text({ size: { base: "base", md: "lg" } })} />
 	),
-};
+} as MDXComponents;
 
 function ToastTitle({ title }: Pick<Daily, "title">) {
 	const TitleMDX = useMDXComponent(title.code);

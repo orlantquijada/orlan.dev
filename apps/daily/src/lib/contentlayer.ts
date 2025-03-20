@@ -1,3 +1,6 @@
+import type { useMDXComponent } from "next-contentlayer2/hooks";
+import type { ComponentProps } from "react";
+
 export const MonthSubjectsMap = {
 	January: "Clarity",
 	Febuary: "Passions and Emotion",
@@ -24,3 +27,7 @@ export function getDateFromPath(path: string) {
 		day: Number.parseInt(day, 10),
 	};
 }
+
+export type MDXComponents = ComponentProps<
+	ReturnType<typeof useMDXComponent>
+>["components"];

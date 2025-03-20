@@ -3,6 +3,8 @@ import { css } from "styled-system/css";
 import { styled } from "styled-system/jsx";
 import { text } from "styled-system/recipes";
 
+import type { MDXComponents } from "@/lib/contentlayer";
+
 const Q = styled("q", {
 	base: {
 		alignSelf: "stretch",
@@ -57,7 +59,7 @@ export const quoteComponents = {
 	em: (props: ComponentProps<"em">) => (
 		<em {...props} className={css({ fontStyle: "italic" })} />
 	),
-};
+} as MDXComponents;
 
 export function Quote({ children }: { children: ReactNode }) {
 	return <Q>{children}</Q>;
