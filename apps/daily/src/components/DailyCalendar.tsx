@@ -287,7 +287,7 @@ const calendarButtonStyle = css({
 const calendarGrid = cva({
 	base: {
 		display: "grid",
-		gridTemplateColumns: "7",
+		gridTemplateColumns: "repeat(7, 1fr)",
 	},
 });
 const CalendarRow = styled("div", calendarGrid);
