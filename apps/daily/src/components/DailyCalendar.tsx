@@ -250,37 +250,35 @@ const CalendarBody = styled("div", {
 });
 
 const calendarButtonStyle = css({
-	base: {
-		w: "2rem",
-		h: "2rem",
-		color: "olive.11",
-		border: "none",
-		background: "none",
-		cursor: "pointer",
+	w: "2rem",
+	h: "2rem",
+	color: "olive.11",
+	border: "none",
+	background: "none",
+	cursor: "pointer",
 
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	transition: "box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)",
+	borderRadius: "0.25rem",
+
+	"& span": {
 		display: "flex",
-		justifyContent: "center",
 		alignItems: "center",
-		transition: "box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)",
-		borderRadius: "0.25rem",
+		justifyContent: "center",
+	},
 
-		"& span": {
-			display: "flex",
-			alignItems: "center",
-			justifyContent: "center",
-		},
-
-		_hover: {
-			color: "olive.12",
-		},
-		"&:focus-within, &:active": {
-			outline: "none",
-			"--ring-width": "2px",
-			"--ring-offset": "2px",
-			"--ring-color": "colors.olive.7",
-			boxShadow:
-				"0 0 0 var(--ring-width) var(--colors-bg), 0 0 0 calc(var(--ring-width) + var(--ring-offset)) var(--ring-color)",
-		},
+	_hover: {
+		color: "olive.12",
+	},
+	"&:focus-within, &:active": {
+		outline: "none",
+		"--ring-width": "2px",
+		"--ring-offset": "2px",
+		"--ring-color": "colors.olive.7",
+		boxShadow:
+			"0 0 0 var(--ring-width) var(--colors-bg), 0 0 0 calc(var(--ring-width) + var(--ring-offset)) var(--ring-color)",
 	},
 });
 
