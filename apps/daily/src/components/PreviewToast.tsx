@@ -1,5 +1,5 @@
 import type { Daily } from "contentlayer/generated";
-import { AnimatePresence, type Variants, motion } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "motion/react";
 import { useMDXComponent } from "next-contentlayer2/hooks";
 import Link from "next/link";
 import {
@@ -52,7 +52,7 @@ export default function PreviewToast({
 	const loading = !daily && !error;
 
 	return (
-		<AnimatePresence exitBeforeEnter>
+		<AnimatePresence mode="popLayout">
 			{selectedDate && (
 				<motion.div
 					variants={variants}
