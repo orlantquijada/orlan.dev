@@ -1,12 +1,10 @@
 import { capitalize } from "@/lib/utils";
-import { allDailies } from "contentlayer/generated";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { getDailies } from "src/lib/api";
 import { type Month, Months } from "src/lib/contentlayer";
 
 export default function handler(_req: NextApiRequest, res: NextApiResponse) {
 	const { month, day, fields } = _req.query;
-	console.log("dailies", allDailies.length);
 
 	const parsedDay = Number.parseInt(day as string, 10);
 	if (Number.isNaN(parsedDay)) res.status(400).json("Invalid day value");
