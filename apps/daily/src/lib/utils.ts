@@ -28,7 +28,6 @@ export function pickProps<
 	const propsObj: { [Key in keyof Obj]?: Obj[Key] } = {};
 	for (const key of keysList) propsObj[key] = obj[key];
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	return propsObj as any;
 }
 

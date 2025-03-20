@@ -2,6 +2,8 @@ import type { ComponentProps } from "react";
 import { styled } from "styled-system/jsx";
 import { text } from "styled-system/recipes";
 
+import type { MDXComponents } from "@/lib/contentlayer";
+
 const HeaderTitleHeading = styled("h1", {
 	base: {
 		color: "textColor",
@@ -18,4 +20,4 @@ export const headerTitleComponents = {
 	p: (props: ComponentProps<typeof HeaderTitleHeading>) => (
 		<HeaderTitleHeading {...props} className={text({ size: "base" })} />
 	),
-};
+} as MDXComponents;
