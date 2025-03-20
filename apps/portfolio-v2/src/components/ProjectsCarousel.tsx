@@ -3,7 +3,7 @@ import {
 	motion,
 	useScroll,
 	useTransform,
-} from "framer-motion";
+} from "motion/react";
 import {
 	type CSSProperties,
 	type ElementRef,

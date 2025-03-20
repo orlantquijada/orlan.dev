@@ -1,6 +1,6 @@
 import { useStore } from "@nanostores/react";
 import { cx } from "cva";
-import { LayoutGroup } from "framer-motion";
+import { LayoutGroup } from "motion/react";
 import { twMerge } from "tailwind-merge";
 
 import type { NoteFrontmatter } from "@/lib/notes";

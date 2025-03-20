@@ -5,7 +5,7 @@ import {
 	MotionConfig,
 	type Variants,
 	motion,
-} from "framer-motion";
+} from "motion/react";
 import { type RefObject, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 

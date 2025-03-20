@@ -1,6 +1,6 @@
 import { ReactComponent as Close } from "@/icons/cross.svg";
 import { useStore } from "@nanostores/react";
-import { AnimatePresence, type Variants, motion } from "framer-motion";
+import { AnimatePresence, type Variants, motion } from "motion/react";
 import { type ComponentProps, forwardRef, useEffect, useState } from "react";
 
 import { type TagGraphMap, getNeighborhoodsIntersection } from "@/lib/notes";
