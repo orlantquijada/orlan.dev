@@ -10,7 +10,6 @@ import {
 import {
 	type ComponentProps,
 	type Dispatch,
-	type ReactElement,
 	type ReactNode,
 	type SetStateAction,
 	createContext,
@@ -146,7 +145,7 @@ type DaysResult<T extends boolean> = T extends true
 	: { value: Date };
 
 export function Days<TIncludeAdjacent extends boolean>(props: {
-	children: (days: DaysResult<TIncludeAdjacent>[]) => ReactElement;
+	children: (days: DaysResult<TIncludeAdjacent>[]) => ReactNode;
 	includeAdjacentMonths?: TIncludeAdjacent;
 }) {
 	const { children, includeAdjacentMonths } = props;
