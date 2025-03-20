@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { forwardRef, useImperativeHandle, useState } from "react";
 import { cva } from "styled-system/css";
 
@@ -29,7 +29,7 @@ export const CopiedLinkToast = forwardRef<Ref>((_, ref) => {
 	);
 
 	return (
-		<AnimatePresence exitBeforeEnter>
+		<AnimatePresence mode="popLayout">
 			{open && (
 				<motion.div
 					variants={variants}

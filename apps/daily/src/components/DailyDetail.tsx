@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { format } from "date-fns";
-import { motion, useIsomorphicLayoutEffect } from "framer-motion";
+import { motion, useIsomorphicLayoutEffect } from "motion/react";
 import { useMDXComponent } from "next-contentlayer2/hooks";
 import Link from "next/link";
 import {
@@ -179,14 +179,11 @@ export default function DailyDetail({ daily }: Props) {
 										? {
 												scale: [0.8, 1.3, 1],
 												rotate: [0, 25, 0],
-												transition: {
-													duration: 0.5,
-													type: "spring",
-													stiffness: 400,
-													damping: 17,
-												},
+												transition: { easings: ["easeOut", "easeIn"] },
 											}
-										: {}
+										: {
+												scale: 1,
+											}
 								}
 							>
 								<Heart

@@ -1,4 +1,4 @@
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import type { GetStaticPaths, GetStaticProps } from "next";
 import { useRouter } from "next/router";
 
@@ -62,7 +62,7 @@ export default function MonthsNavPage() {
 
 function Likes({ likes, month }: { likes: Daily[]; month: Month }) {
 	return (
-		<AnimatePresence exitBeforeEnter>
+		<AnimatePresence mode="popLayout">
 			{likes.length ? (
 				<motion.section
 					initial={{ opacity: 0 }}

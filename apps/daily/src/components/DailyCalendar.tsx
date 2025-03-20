@@ -5,7 +5,7 @@ import {
 	motion,
 	useMotionValue,
 	useTransform,
-} from "framer-motion";
+} from "motion/react";
 import { useRouter } from "next/router";
 import {
 	type Dispatch,
