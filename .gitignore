@@ -37,3 +37,7 @@ yarn-error.log*
 .contentlayer
 
 .vercel
+
+## Panda
+styled-system
+styled-system-studio

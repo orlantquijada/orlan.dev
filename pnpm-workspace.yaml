@@ -1,6 +1,7 @@
 packages:
   - "apps/*"
   - "packages/*"
+  - "packages/ui/*"
 
 catalog:
   typescript: ^5.8.2
@@ -8,3 +9,6 @@ catalog:
   "@date-fns/tz": ^1.2.0
   motion: ^12.5.0
   "@biomejs/biome": ^1.9.4
+  "@pandacss/dev": ^0.53.2
+  "@tsconfig/strictest": ^2.0.5
+  "@pandacss/preset-panda": ^0.53.2
