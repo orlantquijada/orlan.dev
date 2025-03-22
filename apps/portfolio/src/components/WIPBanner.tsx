@@ -1,6 +1,8 @@
+import { Banner } from "components";
 import { AnimatePresence, type Variants, motion } from "motion/react";
 import { useState } from "react";
-import { Banner, type CSS } from "ui";
+import type { CSS } from "styled";
+import { css } from "styled/css";
 
 const variants: Variants = {
 	visible: {
@@ -14,7 +16,7 @@ const variants: Variants = {
 	},
 };
 
-export default function WIPBanner({ css }: { css?: CSS }) {
+export default function WIPBanner({ css: cssProp }: { css?: CSS }) {
 	const [open, setOpen] = useState(true);
 
 	return (
@@ -29,7 +31,7 @@ export default function WIPBanner({ css }: { css?: CSS }) {
 					animate="visible"
 					exit="hidden"
 				>
-					<Banner.Container css={css}>
+					<Banner.Container className={css(cssProp)}>
 						<Banner.Tag>In Progress</Banner.Tag>
 						<Banner.Title>
 							Hey There! This page is actively being iterated on.

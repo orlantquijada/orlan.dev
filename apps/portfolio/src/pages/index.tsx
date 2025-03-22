@@ -1,48 +1,66 @@
 import WIPBanner from "@components/WIPBanner";
+import { Box, Flex, type Text } from "components";
 import type { ComponentProps } from "react";
-import { Box, Flex, Text } from "ui";
+import { css, cx } from "styled/css";
+import { _flex, text } from "styled/recipes";
 
 export default function Home() {
 	return (
-		<Box
-			css={{
+		<div
+			className={css({
 				minHeight: "100vh",
-				pt: "$8",
-				"& > *": { px: "$4" },
-				"@tab": {
-					pt: "$16",
+				pt: "8",
+				"& > *": { px: "4" },
+				tab: {
+					pt: "16",
 				},
-			}}
+			})}
 		>
-			<Flex
-				direction="column"
-				as="header"
-				css={{ maxWidth: 780, "@tab": { mx: "auto" } }}
+			<div
+				className={cx(
+					_flex({ direction: "column" }),
+					css({
+						maxWidth: 780,
+						tab: { mx: "auto" },
+					}),
+				)}
 			>
-				<WIPBanner css={{ mb: "$6" }} />
+				<WIPBanner css={{ mb: "6" }} />
 				<HeaderText>
-					<Text css={{ display: "block", color: "$accent" }}>
+					<span
+						className={cx(text(), css({ display: "block", color: "accent" }))}
+					>
 						Orlan Quijada
-					</Text>
-					Full Stack <Text css={{ display: "block" }}>Developer &</Text>
+					</span>
+					Full Stack
+					<span className={cx(text(), css({ display: "block" }))}>
+						Developer &
+					</span>
 					Freelancer
 				</HeaderText>
-			</Flex>
-			<Box as="main"></Box>
-		</Box>
+			</div>
+			<Box></Box>
+		</div>
 	);
 }
 
 function HeaderText({ children }: ComponentProps<typeof Text>) {
 	return (
-		<Text
-			size={{ base: "5xl", tab: "7xl" }}
-			css={{
-				color: "olive.12",
-				fontFamily: "seri",
-			}}
+		<span
+			className={cx(
+				text({
+					size: {
+						base: "5xl",
+						tab: "7xl",
+					},
+				}),
+				css({
+					color: "olive.12",
+					fontFamily: "serif",
+				}),
+			)}
 		>
 			{children}
-		</Text>
+		</span>
 	);
 }
