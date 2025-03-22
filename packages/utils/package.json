@@ -1,0 +1,11 @@
+{
+  "name": "@repo/utils",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "devDependencies": {
+    "@tsconfig/strictest": "^2.0.5",
+    "typescript": "catalog:",
+    "motion": "catalog:"
+  }
+}

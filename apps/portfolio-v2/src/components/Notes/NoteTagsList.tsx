@@ -1,6 +1,12 @@
 import { ReactComponent as Close } from "@/icons/cross.svg";
 import { useStore } from "@nanostores/react";
-import { AnimatePresence, type Variants, motion } from "motion/react";
+import { transitions } from "@repo/utils";
+import {
+	AnimatePresence,
+	LayoutGroup,
+	MotionConfig,
+	motion,
+} from "motion/react";
 import { type ComponentProps, forwardRef, useEffect, useState } from "react";
 
 import { type TagGraphMap, getNeighborhoodsIntersection } from "@/lib/notes";
@@ -8,15 +14,6 @@ import { $selectedTags, addTag, clearTags, removeTag } from "@/stores/notes";
 import Chip from "../Chip/Chip";
 
 import styles from "./styles.module.css";
-
-const variants: Variants = {
-	fadeOut: {
-		opacity: 0,
-	},
-	slideIn: (custom) => ({
-		x: -4 * custom,
-	}),
-};
 
 type Props = {
 	tags: string[];
@@ -33,82 +30,80 @@ export default function NoteTagsList(props: Props) {
 	const initialOpacity = useTagsInitialOpacity();
 
 	return (
-		<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
-			<AnimatePresence mode="popLayout">
-				{isSelecting ? (
-					<Chip asChild>
-						<motion.button
-							initial={{ opacity: 0 }}
-							animate={{ opacity: 1 }}
-							onClick={() => clearTags()}
-						>
-							<Close className={styles.icon} />
-						</motion.button>
-					</Chip>
-				) : (
-					<Chip color="primary" asChild>
-						<motion.span variants={variants} exit="fadeOut">
-							all
-						</motion.span>
-					</Chip>
-				)}
+		<LayoutGroup>
+			<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
+				<MotionConfig transition={transitions.snappy}>
+					<AnimatePresence mode="popLayout">
+						{isSelecting ? (
+							<Chip asChild>
+								<motion.button
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									onClick={() => clearTags()}
+								>
+									<Close className={styles.icon} />
+								</motion.button>
+							</Chip>
+						) : (
+							<Chip color="primary" asChild>
+								<motion.span exit={{ opacity: 0 }}>all</motion.span>
+							</Chip>
+						)}
 
-				{_selectedTags.map((tag, index) =>
-					index === 0 ? (
-						<Tag
-							tag={tag}
-							variants={variants}
-							layoutId={tag}
-							key={tag}
-							style={{ zIndex: 5 - index }}
-						/>
-					) : (
-						<Tag
-							tag={tag}
-							custom={index}
-							layoutId={tag}
-							variants={variants}
-							animate="slideIn"
-							key={tag}
-							style={{
-								zIndex: 5 - index,
+						{_selectedTags.map((tag, index) =>
+							index === 0 ? (
+								<Tag
+									tag={tag}
+									layoutId={tag}
+									key={tag}
+									style={{ zIndex: 5 - index }}
+								/>
+							) : (
+								<Tag
+									tag={tag}
+									custom={index}
+									layoutId={tag}
+									key={tag}
+									style={{
+										zIndex: 5 - index,
 
-								paddingLeft: 36,
-								marginLeft: -32,
-								justifyContent: "flex-end",
-							}}
-						/>
-					),
-				)}
+										paddingLeft: 36,
+										marginLeft: -32,
+										justifyContent: "flex-end",
+									}}
+								/>
+							),
+						)}
 
-				{!isSelecting
-					? tags.map((tag) => (
-							<Tag
-								tag={tag}
-								initial={{ opacity: initialOpacity }}
-								animate={{ opacity: 1 }}
-								layoutId={tag}
-								key={tag}
-								variants={variants}
-								exit="fadeOut"
-							/>
-						))
-					: visibleTags.map((tag) => (
-							<Tag
-								tag={tag}
-								initial={{ opacity: initialOpacity }}
-								animate={{ opacity: 1 }}
-								variants={variants}
-								layoutId={tag}
-								key={tag}
-								exit="fadeOut"
-							/>
-						))}
-			</AnimatePresence>
-		</div>
+						{isSelecting
+							? visibleTags.map((tag) => (
+									<Tag
+										tag={tag}
+										initial={{ opacity: initialOpacity }}
+										animate={{ opacity: 1 }}
+										layoutId={tag}
+										key={tag}
+										exit={{ opacity: 0 }}
+									/>
+								))
+							: tags.map((tag) => (
+									<Tag
+										tag={tag}
+										initial={{ opacity: initialOpacity }}
+										animate={{ opacity: 1 }}
+										layoutId={tag}
+										key={tag}
+										exit={{ opacity: 0 }}
+									/>
+								))}
+					</AnimatePresence>
+				</MotionConfig>
+			</div>
+		</LayoutGroup>
 	);
 }
 
+// initial opacity = 1 on hard page load
 function useTagsInitialOpacity() {
 	const [initialOpacity, setInitialOpacity] = useState(1);
 
