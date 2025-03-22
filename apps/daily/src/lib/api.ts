@@ -1,6 +1,5 @@
+import { TZDate } from "@date-fns/tz";
 import { type Daily, allDailies } from "contentlayer/generated";
-import { parse } from "date-fns";
-import { formatInTimeZone } from "date-fns-tz";
 
 import { type Month, Months } from "./contentlayer";
 import { type FilterFalseProps, type KeysFlag, pickProps } from "./utils";
@@ -46,12 +45,7 @@ export function getDailies<
 export function getDailyToday(timezone = "Asia/Manila") {
 	// correctly display `Daily` today based on timezone if given
 	// ^ above is necessary bec `getServerSideProps` uses UTC by default
-	const format = "yyyy-MM-dd HH:mm:ss";
-	const today = parse(
-		formatInTimeZone(new Date(), timezone, format),
-		format,
-		new Date(),
-	);
+	const today = new TZDate(new Date(), timezone);
 
 	const dailyToday = getDailies({
 		filter: { month: Months[today.getMonth()], day: today.getDate() },

@@ -1,4 +1,5 @@
 import * as PopoverPrimitive from "@radix-ui/react-popover";
+import { transitions } from "@repo/utils";
 import { cva } from "cva";
 import {
 	AnimatePresence,
@@ -8,8 +9,6 @@ import {
 } from "motion/react";
 import { type RefObject, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
-
-import { transitions } from "@/utils/motion";
 
 import { buttonStyles } from "../Button";
 import { MenuPanel } from "./MenuPanel";

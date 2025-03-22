@@ -1,6 +1,7 @@
 import { useStore } from "@nanostores/react";
+import { transitions } from "@repo/utils";
 import { cx } from "cva";
-import { LayoutGroup } from "motion/react";
+import { LayoutGroup, MotionConfig } from "motion/react";
 import { twMerge } from "tailwind-merge";
 
 import type { NoteFrontmatter } from "@/lib/notes";
@@ -59,22 +60,24 @@ export default function NotesList(props: Props) {
 				]),
 			)}
 		>
-			<LayoutGroup>
-				{filtered.map((note) => (
-					<MotionNoteCard
-						{...note}
-						key={note.title}
-						isSelecting={isSelecting}
-					/>
-				))}
-				{rest.map((note) => (
-					<MotionNoteCard
-						{...note}
-						key={note.title}
-						isSelecting={isSelecting}
-					/>
-				))}
-			</LayoutGroup>
+			<MotionConfig transition={transitions.snappy}>
+				<LayoutGroup>
+					{filtered.map((note) => (
+						<MotionNoteCard
+							{...note}
+							key={note.title}
+							isSelecting={isSelecting}
+						/>
+					))}
+					{rest.map((note) => (
+						<MotionNoteCard
+							{...note}
+							key={note.title}
+							isSelecting={isSelecting}
+						/>
+					))}
+				</LayoutGroup>
+			</MotionConfig>
 		</div>
 	);
 }
