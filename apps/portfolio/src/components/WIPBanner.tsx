@@ -29,7 +29,7 @@ export default function WIPBanner({ css }: { css?: CSS }) {
 					animate="visible"
 					exit="hidden"
 				>
-					<Banner.Container as={motion.div} css={css}>
+					<Banner.Container css={css}>
 						<Banner.Tag>In Progress</Banner.Tag>
 						<Banner.Title>
 							Hey There! This page is actively being iterated on.
