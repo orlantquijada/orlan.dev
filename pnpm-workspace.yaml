@@ -7,3 +7,4 @@ catalog:
   date-fns: ^4.1.0
   "@date-fns/tz": ^1.2.0
   motion: ^12.5.0
+  "@biomejs/biome": ^1.9.4
