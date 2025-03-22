@@ -3,9 +3,8 @@ import type { CollectionEntry } from "astro:content";
 import { ViewTransitions } from "astro:transitions";
 import MetaData from "@/components/Notes/NoteDetailComponents/MetaData.astro";
 import { getViewTransitionName } from "@/lib/notes";
-import { DEFAULT_DATE_FORMAT } from "@/utils/constants";
+import { formatDate } from "@repo/utils";
 import { Icon } from "astro-icon/components";
-import { format } from "date-fns";
 import Layout from "./Layout.astro";
 
 type Props = CollectionEntry<"notes">["data"];
@@ -49,7 +48,7 @@ const data = Astro.props;
 
     <MetaData>
       <Icon name="clock" slot="icon" />
-      <span>{format(data.publishedAt, DEFAULT_DATE_FORMAT)}</span>
+      <span>{formatDate(data.publishedAt)}</span>
     </MetaData>
 
     {
@@ -57,11 +56,10 @@ const data = Astro.props;
         <MetaData>
           <Icon name="pencil" />
           <span>
-            {format(
+            {formatDate(
               Array.isArray(data.updatedAt)
                 ? data.updatedAt[data.updatedAt.length - 1]!
                 : data.updatedAt,
-              DEFAULT_DATE_FORMAT,
             )}
           </span>
         </MetaData>
