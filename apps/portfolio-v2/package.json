@@ -17,16 +17,16 @@
 		"@astrojs/react": "^4.2.1",
 		"@astrojs/tailwind": "^6.0.0",
 		"@astrojs/ts-plugin": "^1.10.4",
-		"@nanostores/react": "^0.7.1",
+		"@nanostores/react": "^0.8.4",
 		"@radix-ui/react-dialog": "^1.0.4",
 		"@radix-ui/react-popover": "^1.0.6",
 		"@radix-ui/react-slot": "^1.0.2",
 		"@radix-ui/react-toggle-group": "^1.0.4",
+		"@repo/utils": "workspace:*",
 		"astro": "^5.5.3",
 		"astro-icon": "~1.1.5",
 		"cva": "npm:class-variance-authority@^0.6.0",
-		"date-fns": "^2.30.0",
-		"motion": "^12.5.0",
+		"motion": "catalog:",
 		"nanostores": "^0.11.4",
 		"react": "^18.2.0",
 		"react-dom": "^18.1.0",
@@ -34,12 +34,12 @@
 		"tailwindcss": "^3.4.17"
 	},
 	"devDependencies": {
-		"@biomejs/biome": "^1.9.4",
+		"@biomejs/biome": "catalog:",
 		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.8",
 		"astro-compress": "2.0.15",
 		"svgo": "~2.8.0",
-		"typescript": "^5.8.2",
+		"typescript": "catalog:",
 		"vite-plugin-svgr": "^2.2.2"
 	}
 }
