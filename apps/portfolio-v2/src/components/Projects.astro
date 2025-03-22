@@ -6,13 +6,13 @@ import Video from "./Video.tsx";
 ---
 
 <section
-  class:list={['mt-8 flex w-full flex-col', 'h-[200vh]', 'md:h-[52rem]']}
+  class:list={["mt-8 flex w-full flex-col", "h-[200vh]", "md:h-[52rem]"]}
 >
   <h3
     class:list={[
-      'text-gray11 mb-6 text-sm',
-      'sticky top-24',
-      'md:relative md:top-[initial]',
+      "text-gray11 mb-6 text-sm",
+      "sticky top-24",
+      "md:relative md:top-[initial]",
     ]}
   >
     Projects
@@ -21,8 +21,8 @@ import Video from "./Video.tsx";
   <div class="relative h-full w-full">
     <div
       class:list={[
-        'sticky top-[8.75rem]',
-        'md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:w-full md:max-w-lg',
+        "sticky top-[8.75rem]",
+        "md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:w-full md:max-w-lg",
       ]}
       id="daily"
     >
@@ -41,8 +41,8 @@ import Video from "./Video.tsx";
 
     <div
       class:list={[
-        'sticky top-[8.75rem] mt-4 brightness-[.3]',
-        'md:absolute md:left-0 md:top-0 md:w-full md:max-w-xs md:brightness-100 md:hover:z-10',
+        "sticky top-[8.75rem] mt-4 brightness-[.3]",
+        "md:absolute md:left-0 md:top-0 md:w-full md:max-w-xs md:brightness-100 md:hover:z-10",
       ]}
       id="money"
     >
@@ -67,30 +67,26 @@ import Video from "./Video.tsx";
 </section>
 
 <script>
-  import { inView, animate, type AnimationOptions } from 'motion'
+  import { inView, animate, type AnimationOptions } from "motion";
 
   // tawilwind md breakpoint
-  if (!window.matchMedia('(min-width: 48rem)').matches) {
-    const transition: AnimationOptions = {
-      stiffness: 300,
-      damping: 30,
-      duration: 0.5,
-    }
-    const hide = { filter: 'brightness(0.3)' }
-    const show = { filter: 'brightness(1)' }
+  if (!window.matchMedia("(min-width: 48rem)").matches) {
+    const transition: AnimationOptions = {};
+    const hide = { filter: "brightness(0.3)" };
+    const show = { filter: "brightness(1)" };
 
     inView(
-      '#money',
+      "#money",
       (element) => {
-        animate(element, show, transition)
-        animate('#daily', hide, transition)
+        animate(element, show, transition);
+        animate("#daily", hide, transition);
 
         return () => {
-          animate(element, hide, transition)
-          animate('#daily', show, transition)
-        }
+          animate(element, hide, transition);
+          animate("#daily", show, transition);
+        };
       },
-      { amount: 'all', margin: '50%' },
-    )
+      { amount: "all", margin: "50%" },
+    );
   }
 </script>
