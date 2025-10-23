@@ -2,11 +2,11 @@ import { cva } from "cva";
 import { type ComponentProps, type ReactNode, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { ReactComponent as Check } from "@/icons/check.svg";
-import { ReactComponent as Copy } from "@/icons/copy-filled.svg";
-import { ReactComponent as GitHub } from "@/icons/github.svg";
-import { ReactComponent as Send } from "@/icons/send-filled.svg";
-import { ReactComponent as Twitter } from "@/icons/twitter.svg";
+import Check from "@/icons/check.svg?react";
+import Copy from "@/icons/copy-filled.svg?react";
+import GitHub from "@/icons/github.svg?react";
+import Send from "@/icons/send-filled.svg?react";
+import Twitter from "@/icons/twitter.svg?react";
 
 import { Button, buttonStyles } from "../Button";
 import * as Dialog from "../Dialog";

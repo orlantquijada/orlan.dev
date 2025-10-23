@@ -1,11 +1,11 @@
 import { cva } from "cva";
 import type { ReactNode } from "react";
 
-import { ReactComponent as ArrowRight } from "@/icons/arrow-right.svg";
-import { ReactComponent as ArrowTopRight } from "@/icons/arrow-top-right.svg";
-import { ReactComponent as GitHub } from "@/icons/github.svg";
-import { ReactComponent as Logo } from "@/icons/logo.svg";
-import { ReactComponent as Twitter } from "@/icons/twitter.svg";
+import ArrowRight from "@/icons/arrow-right.svg?react";
+import ArrowTopRight from "@/icons/arrow-top-right.svg?react";
+import GitHub from "@/icons/github.svg?react";
+import Logo from "@/icons/logo.svg?react";
+import Twitter from "@/icons/twitter.svg?react";
 
 import { isBrowser } from "@/lib/general";
 import { toggleTheme } from "@/lib/theme-toggle";
