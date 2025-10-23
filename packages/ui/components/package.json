@@ -13,11 +13,11 @@
     "@pandacss/dev": "catalog:",
     "@pandacss/preset-panda": "catalog:",
     "@tsconfig/strictest": "catalog:",
-    "@types/react": "^19.0.12",
+    "@types/react": "^19.2.2",
     "styled": "workspace:*",
     "typescript": "catalog:"
   },
   "dependencies": {
-    "react": "^19.0.0"
+    "react": "^19.2.0"
   }
 }
