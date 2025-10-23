@@ -1,5 +1,5 @@
-import { textRecipe } from "@/components/Text";
 import { defineConfig, defineGlobalStyles } from "@pandacss/dev";
+import { textRecipe } from "@/components/Text";
 
 const globalCss = defineGlobalStyles({
 	"*, *::before, *::after": {
@@ -80,7 +80,7 @@ export default defineConfig({
 
 			tokens: {
 				colors: {
-					olive: olive,
+					olive,
 				},
 
 				fonts: {
