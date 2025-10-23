@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import { useIsomorphicLayoutEffect } from "@/lib/general";
 import {
-	type ThemeKeys,
 	setTheme as _setTheme,
 	toggleTheme as _toggleTheme,
 	getTheme,
+	type ThemeKeys,
 } from "@/lib/theme-toggle";
 
 // NOTE: dead code

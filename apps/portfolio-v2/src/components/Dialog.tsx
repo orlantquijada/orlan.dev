@@ -5,31 +5,31 @@ import { twMerge } from "tailwind-merge";
 
 const contentStyles = cva(
 	[
-		"fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[calc(100vw-(24px*2))] max-w-[570px] max-h-[80vh] p-8",
-		"shadow-sm rounded-2xl border",
+		"fixed top-1/2 left-1/2 max-h-[80vh] w-[calc(100vw-(24px*2))] max-w-[570px] p-8",
+		"rounded-2xl border shadow-sm",
 		"z-50",
-		"data-[state=open]:motion-safe:animate-showContent data-[state=closed]:motion-safe:animate-hideContent",
+		"data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent",
 	],
 	{
 		variants: {
 			color: {
-				gray: "bg-gray1 border-gray7",
+				gray: "border-gray7 bg-gray1",
 			},
 			transluscent: {
 				true: "dark:bg-gray-a3 dark:backdrop-blur-md dark:backdrop-brightness-75",
-				false: "dark:bg-gray3 dark:border-gray6",
+				false: "dark:border-gray6 dark:bg-gray3",
 			},
 		},
 		defaultVariants: {
 			transluscent: false,
 			color: "gray",
 		},
-	},
+	}
 );
 
 const overlayStyles = cva([
 	"fixed inset-0 bg-overlay",
-	"data-[state=open]:motion-safe:animate-show data-[state=closed]:motion-safe:animate-hide",
+	"data-[state=closed]:motion-safe:animate-hide data-[state=open]:motion-safe:animate-show",
 	"z-40",
 ]);
 

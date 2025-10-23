@@ -2,12 +2,10 @@ import { useStore } from "@nanostores/react";
 import { transitions } from "@repo/utils";
 import { cx } from "cva";
 import { LayoutGroup, MotionConfig } from "motion/react";
+import type { CSSProperties } from "react";
 import { twMerge } from "tailwind-merge";
-
 import type { NoteFrontmatter } from "@/lib/notes";
 import { $selectedTags } from "@/stores/notes";
-
-import type { CSSProperties } from "react";
 import { MotionNoteCard } from "../NoteCard/NoteCard";
 import styles from "./styles.module.css";
 
@@ -39,14 +37,19 @@ export default function NotesList(props: Props) {
 
 	// fixed height is needed (relative height will cause for the container to assume 100% height for its height)
 	const smHeight = toRem(
-		Math.ceil(notes.length / 2) * (HEIGHT + CARD_MARGIN_BOTTOM),
+		Math.ceil(notes.length / 2) * (HEIGHT + CARD_MARGIN_BOTTOM)
 	);
 	const mdHeight = toRem(
-		Math.ceil(notes.length / 3) * (HEIGHT + CARD_MARGIN_BOTTOM),
+		Math.ceil(notes.length / 3) * (HEIGHT + CARD_MARGIN_BOTTOM)
 	);
 
 	return (
 		<div
+			className={twMerge(
+				cx(className, styles.notesList, [
+					"h-full sm:h-(--smHeight) md:h-(--mdHeight)",
+				])
+			)}
 			style={
 				{
 					"--smHeight": smHeight,
@@ -54,26 +57,21 @@ export default function NotesList(props: Props) {
 					"--mason-mb": toRem(CARD_MARGIN_BOTTOM),
 				} as CSSProperties
 			}
-			className={twMerge(
-				cx(className, styles.notesList, [
-					"h-full sm:h-(--smHeight) md:h-(--mdHeight)",
-				]),
-			)}
 		>
 			<MotionConfig transition={transitions.snappy}>
 				<LayoutGroup>
 					{filtered.map((note) => (
 						<MotionNoteCard
 							{...note}
-							key={note.title}
 							isSelecting={isSelecting}
+							key={note.title}
 						/>
 					))}
 					{rest.map((note) => (
 						<MotionNoteCard
 							{...note}
-							key={note.title}
 							isSelecting={isSelecting}
+							key={note.title}
 						/>
 					))}
 				</LayoutGroup>

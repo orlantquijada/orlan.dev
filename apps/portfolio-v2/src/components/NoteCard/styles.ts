@@ -2,14 +2,14 @@ import { cva } from "cva";
 import styles from "./styles.module.css";
 
 export const noteCardStyles = cva(
-	["transition-colors border rounded-lg", "p-4 flex flex-col", styles.noteCard],
+	["rounded-lg border transition-colors", "flex flex-col p-4", styles.noteCard],
 	{
 		variants: {
 			color: { gray: "border-gray3 bg-gray1 text-gray11" },
 			transluscent: {
-				true: "dark:border-gray-a3 dark:bg-gray-a3 dark:hover:bg-gray-a4 text-gray12 bg-[hsla(0,0%,99%,0.4)]",
+				true: "bg-[hsla(0,0%,99%,0.4)] text-gray12 dark:border-gray-a3 dark:bg-gray-a3 dark:hover:bg-gray-a4",
 				false:
-					"dark:border-gray3 dark:bg-gray3 dark:hover:bg-gray4 text-gray12",
+					"text-gray12 dark:border-gray3 dark:bg-gray3 dark:hover:bg-gray4",
 			},
 			stripes: {
 				true: styles.stripes,
@@ -20,5 +20,5 @@ export const noteCardStyles = cva(
 			transluscent: true,
 			stripes: false,
 		},
-	},
+	}
 );

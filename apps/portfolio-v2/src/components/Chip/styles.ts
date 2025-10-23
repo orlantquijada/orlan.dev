@@ -14,7 +14,7 @@ export const chipStyles = cva(
 					"h-6 min-w-10 px-2 text-xs md:h-7 md:min-w-12 md:px-3 md:text-sm",
 			},
 			color: {
-				gray: "border-gray6 bg-gray1 text-gray11 hover:border-gray7 hover:bg-gray3 focus-within:border-gray7 focus-within:bg-gray3",
+				gray: "border-gray6 bg-gray1 text-gray11 focus-within:border-gray7 focus-within:bg-gray3 hover:border-gray7 hover:bg-gray3",
 				primary: "border-gray12 bg-gray12 text-gray1 focus-visible:bg-gray-a11",
 			},
 			transluscent: {
@@ -31,14 +31,14 @@ export const chipStyles = cva(
 			{
 				color: "gray",
 				transluscent: true,
-				className: "dark:bg-gray-a3 dark:text-gray12 bg-[hsla(0,0%,99%,0.4)]",
+				className: "bg-[hsla(0,0%,99%,0.4)] dark:bg-gray-a3 dark:text-gray12",
 			},
 			{
 				color: "gray",
 				transluscent: false,
 				className:
-					"dark:bg-gray3 dark:focus-within:bg-gray4 dark:hover:bg-gray4",
+					"dark:bg-gray3 dark:hover:bg-gray4 dark:focus-within:bg-gray4",
 			},
 		],
-	},
+	}
 );

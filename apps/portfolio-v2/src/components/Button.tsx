@@ -1,17 +1,17 @@
-import { type VariantProps, cva } from "cva";
+import { cva, type VariantProps } from "cva";
 import type { ComponentProps } from "react";
 import { twMerge } from "tailwind-merge";
 import styles from "./Button.module.css";
 
 export const buttonStyles = cva(
 	[
-		"h-10 px-3 rounded-lg border border-gray7 dark:border-gray6 bg-gray1 ",
+		"h-10 rounded-lg border border-gray7 bg-gray1 px-3 dark:border-gray6",
 		styles.button,
 	],
 	{
 		variants: {
 			motionSafe: {
-				true: "motion-safe:transition-all hover:bg-gray3",
+				true: "hover:bg-gray3 motion-safe:transition-all",
 			},
 			translucent: {
 				true: [
@@ -37,7 +37,7 @@ export const buttonStyles = cva(
 			translucent: false,
 			motionSafe: true,
 		},
-	},
+	}
 );
 
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;
@@ -48,7 +48,7 @@ export function Button(props: ButtonProps) {
 	return (
 		<button
 			{..._props}
-			className={twMerge(buttonStyles({ className, translucent: translucent }))}
+			className={twMerge(buttonStyles({ className, translucent }))}
 		>
 			{children}
 		</button>

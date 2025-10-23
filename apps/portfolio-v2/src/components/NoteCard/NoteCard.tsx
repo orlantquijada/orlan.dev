@@ -2,7 +2,7 @@ import { motion } from "motion/react";
 import type { CSSProperties } from "react";
 import { twMerge } from "tailwind-merge";
 
-import { type NoteFrontmatter, getViewTransitionName } from "@/lib/notes";
+import { getViewTransitionName, type NoteFrontmatter } from "@/lib/notes";
 import { noteCardStyles } from "./styles";
 
 export type NoteCardProps = NoteFrontmatter & {
@@ -13,10 +13,10 @@ export default function NoteCard(props: NoteCardProps) {
 	const { title, description, href } = props;
 
 	return (
-		<a href={href} className={twMerge(noteCardStyles())}>
+		<a className={twMerge(noteCardStyles())} href={href}>
 			<h3 className="font-medium">{title}</h3>
 			{description ? (
-				<p className="text-sm text-gray10 dark:text-gray11">{description}</p>
+				<p className="text-gray10 text-sm dark:text-gray11">{description}</p>
 			) : null}
 		</a>
 	);
@@ -34,15 +34,15 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 
 	return (
 		<motion.a
-			layoutId={title}
-			animate={isSelecting ? { opacity: !selected ? 0.3 : 1 } : {}}
-			href={href}
+			animate={isSelecting ? { opacity: selected ? 1 : 0.3 } : {}}
 			className={twMerge(
 				noteCardStyles({
 					stripes: wip,
 					className: "will-change-[opacity,transform]",
-				}),
+				})
 			)}
+			href={href}
+			layoutId={title}
 		>
 			<h1
 				className="font-medium"
@@ -55,7 +55,7 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 				{title}
 			</h1>
 			{description ? (
-				<p className="text-sm text-gray10 dark:text-gray11">{description}</p>
+				<p className="text-gray10 text-sm dark:text-gray11">{description}</p>
 			) : null}
 		</motion.a>
 	);
