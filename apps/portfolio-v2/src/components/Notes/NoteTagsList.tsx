@@ -7,7 +7,7 @@ import {
 	MotionConfig,
 	motion,
 } from "motion/react";
-import { type ComponentProps, forwardRef, useEffect, useState } from "react";
+import { type ComponentProps, type Ref, useEffect, useState } from "react";
 
 import { type TagGraphMap, getNeighborhoodsIntersection } from "@/lib/notes";
 import { $selectedTags, addTag, clearTags, removeTag } from "@/stores/notes";
@@ -114,11 +114,12 @@ function useTagsInitialOpacity() {
 	return initialOpacity;
 }
 
-const Tag = forwardRef<
-	HTMLButtonElement,
-	{ tag: string } & ComponentProps<typeof motion.button>
->((props, ref) => {
-	const { tag, ...rest } = props;
+type TagProps = { tag: string; ref?: Ref<HTMLButtonElement> } & ComponentProps<
+	typeof motion.button
+>;
+
+const Tag = (props: TagProps) => {
+	const { tag, ref, ...rest } = props;
 	const _selectedTags = useStore($selectedTags);
 	const isSelected = _selectedTags.includes(tag);
 
@@ -149,4 +150,4 @@ const Tag = forwardRef<
 			</motion.button>
 		</Chip>
 	);
-});
+};

@@ -167,7 +167,7 @@ const contentStyles = cva(
 		variants: {
 			translucent: {
 				true: [
-					"dark:bg-grayA3",
+					"dark:bg-gray-a3",
 					// 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
 					"dark:backdrop-blur-md dark:backdrop-brightness-75",
 				],

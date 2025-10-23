@@ -7,18 +7,18 @@ export const chipStyles = cva(
 	{
 		variants: {
 			size: {
-				sm: "h-6 min-w-[2.5rem] px-2 text-xs",
-				md: "h-7 min-w-[3rem] px-3 text-sm",
+				sm: "h-6 min-w-10 px-2 text-xs",
+				md: "h-7 min-w-12 px-3 text-sm",
 				lg: "h-8 px-4",
 				responsive:
-					"h-6 min-w-[2.5rem] px-2 text-xs md:h-7 md:min-w-[3rem] md:px-3 md:text-sm",
+					"h-6 min-w-10 px-2 text-xs md:h-7 md:min-w-12 md:px-3 md:text-sm",
 			},
 			color: {
 				gray: "border-gray6 bg-gray1 text-gray11 hover:border-gray7 hover:bg-gray3 focus-within:border-gray7 focus-within:bg-gray3",
-				primary: "border-gray12 bg-gray12 text-gray1 focus-visible:bg-grayA11",
+				primary: "border-gray12 bg-gray12 text-gray1 focus-visible:bg-gray-a11",
 			},
 			transluscent: {
-				true: "dark:border-grayA4 dark:hover:border-grayA10 dark:focus-within:border-grayA10",
+				true: "dark:border-gray-a4 dark:hover:border-gray-a10 dark:focus-within:border-gray-a10",
 				false: "dark:border-gray3",
 			},
 		},
@@ -31,7 +31,7 @@ export const chipStyles = cva(
 			{
 				color: "gray",
 				transluscent: true,
-				className: "dark:bg-grayA3 dark:text-gray12 bg-[hsla(0,0%,99%,0.4)]",
+				className: "dark:bg-gray-a3 dark:text-gray12 bg-[hsla(0,0%,99%,0.4)]",
 			},
 			{
 				color: "gray",

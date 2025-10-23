@@ -93,7 +93,7 @@ function Social(props: ComponentProps<"a">) {
 	return (
 		<a
 			{...props}
-			className="flex items-center gap-1 rounded-full p-1 pr-2 outline-offset-2 transition-colors hover:bg-grayA3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
+			className="flex items-center gap-1 rounded-full p-1 pr-2 outline-offset-2 transition-colors hover:bg-gray-a3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
 			target="_blank"
 			rel="noopener noreferrer"
 		/>

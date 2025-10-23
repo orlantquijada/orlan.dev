@@ -16,7 +16,7 @@ const contentStyles = cva(
 				gray: "bg-gray1 border-gray7",
 			},
 			transluscent: {
-				true: "dark:bg-grayA3 dark:backdrop-blur-md dark:backdrop-brightness-75",
+				true: "dark:bg-gray-a3 dark:backdrop-blur-md dark:backdrop-brightness-75",
 				false: "dark:bg-gray3 dark:border-gray6",
 			},
 		},

@@ -56,7 +56,7 @@ export default function NotesList(props: Props) {
 			}
 			className={twMerge(
 				cx(className, styles.notesList, [
-					"h-full sm:h-[var(--smHeight)] md:h-[var(--mdHeight)]",
+					"h-full sm:h-(--smHeight) md:h-(--mdHeight)",
 				]),
 			)}
 		>

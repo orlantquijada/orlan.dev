@@ -1,6 +1,6 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
-import tailwind from "@astrojs/tailwind";
+import tailwindcss from "@tailwindcss/vite";
 import compress from "astro-compress";
 import icon from "astro-icon";
 import { defineConfig } from "astro/config";
@@ -8,7 +8,7 @@ import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [tailwind(), react(), mdx(), icon(), compress()],
+	integrations: [react(), mdx(), icon(), compress()],
 	scopedStyleStrategy: "where",
 	markdown: {
 		shikiConfig: {
@@ -16,7 +16,7 @@ export default defineConfig({
 		},
 	},
 	vite: {
-		plugins: [svgr()],
+		plugins: [svgr(), tailwindcss()],
 		ssr: {
 			noExternal: ["@radix-ui/*"],
 		},

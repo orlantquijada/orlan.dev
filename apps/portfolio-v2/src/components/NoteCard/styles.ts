@@ -7,7 +7,7 @@ export const noteCardStyles = cva(
 		variants: {
 			color: { gray: "border-gray3 bg-gray1 text-gray11" },
 			transluscent: {
-				true: "dark:border-grayA3 dark:bg-grayA3 dark:hover:bg-grayA4 text-gray12 bg-[hsla(0,0%,99%,0.4)]",
+				true: "dark:border-gray-a3 dark:bg-gray-a3 dark:hover:bg-gray-a4 text-gray12 bg-[hsla(0,0%,99%,0.4)]",
 				false:
 					"dark:border-gray3 dark:bg-gray3 dark:hover:bg-gray4 text-gray12",
 			},
