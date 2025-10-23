@@ -4,17 +4,17 @@ packages:
   - packages/ui/*
 
 catalog:
-  '@biomejs/biome': 2.2.6
-  '@date-fns/tz': ^1.2.0
-  '@pandacss/dev': ^0.53.2
-  '@pandacss/preset-panda': ^0.53.2
-  '@tsconfig/strictest': ^2.0.5
+  "@biomejs/biome": 2.2.6
+  "@date-fns/tz": ^1.2.0
+  "@pandacss/dev": ^0.53.2
+  "@pandacss/preset-panda": ^0.53.2
+  "@tsconfig/strictest": ^2.0.5
   date-fns: ^4.1.0
-  motion: ^12.5.0
-  typescript: ^5.8.2
+  motion: 12.5.0
+  typescript: 5.8.2
 
 onlyBuiltDependencies:
-  - '@biomejs/biome'
+  - "@biomejs/biome"
   - contentlayer2
   - esbuild
   - protobufjs

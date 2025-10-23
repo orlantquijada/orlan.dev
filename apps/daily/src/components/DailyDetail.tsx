@@ -1,8 +1,9 @@
 import { ArrowLeftIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import type { Daily } from "contentlayer/generated";
 import { format } from "date-fns";
 import { motion, useIsomorphicLayoutEffect } from "motion/react";
-import { useMDXComponent } from "next-contentlayer2/hooks";
 import Link from "next/link";
+import { useMDXComponent } from "next-contentlayer2/hooks";
 import {
 	type ComponentProps,
 	type PropsWithChildren,
@@ -10,7 +11,11 @@ import {
 	useRef,
 	useState,
 } from "react";
-
+import { css, cva, cx } from "styled-system/css";
+import { styled } from "styled-system/jsx";
+import { text } from "styled-system/recipes";
+import Heart from "@/components/HeartSvg";
+import Share from "@/components/ShareSvg";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useIsLiked } from "@/hooks/useIsLiked";
 import {
@@ -20,13 +25,6 @@ import {
 import { BASE_URL } from "@/lib/constants";
 import { type Month, Months } from "@/lib/contentlayer";
 import { like, removeLike } from "@/lib/like";
-import type { Daily } from "contentlayer/generated";
-import { css, cva, cx } from "styled-system/css";
-import { styled } from "styled-system/jsx";
-import { text } from "styled-system/recipes";
-
-import Heart from "@/components/HeartSvg";
-import Share from "@/components/ShareSvg";
 
 import { bodyComponents } from "./BodyMDXComponents";
 import { CopiedLinkToast } from "./CopiedLinkToast";
@@ -34,11 +32,12 @@ import { headerTitleComponents } from "./HeaderTitleMDXComponents";
 import LikeWrapper from "./LikeWrapper";
 import { Quote, quoteComponents } from "./QuoteMDXComponents";
 import { titleComponents } from "./TitleMDXComponents";
+
 // import InstallButton from './InstallButton'
 
-interface Props {
+type Props = {
 	daily: Daily;
-}
+};
 
 export default function DailyDetail({ daily }: Props) {
 	const Title = useMDXComponent(daily.title.code);
@@ -179,7 +178,7 @@ export default function DailyDetail({ daily }: Props) {
 										? {
 												scale: [0.8, 1.3, 1],
 												rotate: [0, 25, 0],
-												transition: { easings: ["easeOut", "easeIn"] },
+												transition: { ease: ["easeOut", "easeIn"] },
 											}
 										: {
 												scale: 1,

@@ -14,10 +14,18 @@
     "@pandacss/preset-panda": "catalog:",
     "@tsconfig/strictest": "catalog:",
     "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
     "styled": "workspace:*",
     "typescript": "catalog:"
   },
   "dependencies": {
-    "react": "^19.2.0"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "^19.2.2",
+      "@types/react-dom": "^19.2.2"
+    }
   }
 }
