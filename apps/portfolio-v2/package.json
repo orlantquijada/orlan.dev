@@ -24,6 +24,7 @@
 		"@radix-ui/react-toggle-group": "^1.0.4",
 		"@repo/utils": "workspace:*",
 		"astro": "^5.5.3",
+		"astro-compress": "^2.3.8",
 		"astro-icon": "~1.1.5",
 		"cva": "npm:class-variance-authority@^0.6.0",
 		"motion": "catalog:",
@@ -37,7 +38,6 @@
 		"@biomejs/biome": "catalog:",
 		"@types/react": "^18.0.25",
 		"@types/react-dom": "^18.0.8",
-		"astro-compress": "2.0.15",
 		"svgo": "~2.8.0",
 		"typescript": "catalog:",
 		"vite-plugin-svgr": "^2.2.2"
