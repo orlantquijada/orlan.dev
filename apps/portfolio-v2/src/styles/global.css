@@ -1,0 +1,237 @@
+@import "tailwindcss";
+@import "@radix-ui/colors/gray-dark-alpha.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+	/* gradient background values */
+	/* --accent-purple: hsla(256, 98%, 72%, 1);
+        --accent-red: hsla(354, 98%, 61%, 1);
+        --accent-green: hsla(133, 96%, 67%, 1);
+        --accent-yellow: hsla(38, 60%, 74%, 1);
+        --accent-blue: hsla(222, 67%, 73%, 1);
+        --accent-pink: hsla(343, 68%, 79%, 1); */
+
+	--lime: 75deg 99.8% 63.7%;
+	--pink: 343deg 68% 79%;
+	--violet: 256deg 99% 72%;
+	--blue: 222deg 67% 73%;
+
+	/* lime-a10 dark */
+	--accent: hsla(var(--lime) / 0.936);
+	--accent-pink: hsla(var(--pink) / 1);
+	--accent-violet: hsla(var(--violet) / 1);
+	--accent-blue: hsla(var(--blue) / 1);
+
+	--overlay: var(--gray-a9);
+
+	--selection-bg: var(--accent);
+	/* lime12 */
+	--selection-color: hsl(78, 70%, 11.5%);
+
+	/* radix colors */
+	--gray1: hsl(0, 0%, 99%);
+	--gray2: hsl(0, 0%, 97.3%);
+	--gray3: hsl(0, 0%, 95.1%);
+	--gray4: hsl(0, 0%, 93%);
+	--gray5: hsl(0, 0%, 90.9%);
+	--gray6: hsl(0, 0%, 88.7%);
+	--gray7: hsl(0, 0%, 85.8%);
+	--gray8: hsl(0, 0%, 78%);
+	--gray9: hsl(0, 0%, 56.1%);
+	--gray10: hsl(0, 0%, 52.3%);
+	--gray11: hsl(0, 0%, 43.5%);
+	--gray12: hsl(0, 0%, 9%);
+
+	--gray-a1: hsla(0, 0%, 0%, 0.012);
+	--gray-a2: hsla(0, 0%, 0%, 0.027);
+	--gray-a3: hsla(0, 0%, 0%, 0.047);
+	--gray-a4: hsla(0, 0%, 0%, 0.071);
+	--gray-a5: hsla(0, 0%, 0%, 0.09);
+	--gray-a6: hsla(0, 0%, 0%, 0.114);
+	--gray-a7: hsla(0, 0%, 0%, 0.141);
+	--gray-a8: hsla(0, 0%, 0%, 0.22);
+	--gray-a9: hsla(0, 0%, 0%, 0.439);
+	--gray-a10: hsla(0, 0%, 0%, 0.478);
+	--gray-a11: hsla(0, 0%, 0%, 0.565);
+	--gray-a12: hsla(0, 0%, 0%, 0.91);
+
+	--lime1: hsl(85, 50%, 98.7%);
+	--lime2: hsl(85, 66.7%, 96.5%);
+	--lime3: hsl(85, 76%, 92.3%);
+	--lime4: hsl(84, 75.3%, 87.5%);
+	--lime5: hsl(84, 71.5%, 81.9%);
+	--lime6: hsl(82, 65%, 74.6%);
+	--lime7: hsl(79, 53.2%, 61.8%);
+	--lime8: hsl(76, 61.7%, 45.1%);
+	--lime9: hsl(81, 67%, 50%);
+	--lime10: hsl(80, 68.3%, 46.9%);
+	--lime11: hsl(75, 80%, 26%);
+	--lime12: hsl(78, 70%, 11.5%);
+}
+
+.dark {
+	--accent: hsl(75, 85%, 60%);
+	--overlay: hsla(0, 0%, 0%, 0.7);
+
+	/* radix colors */
+	--gray1: hsl(0, 0%, 8.5%);
+	--gray2: hsl(0, 0%, 11%);
+	--gray3: hsl(0, 0%, 13.6%);
+	--gray4: hsl(0, 0%, 15.8%);
+	--gray5: hsl(0, 0%, 17.9%);
+	--gray6: hsl(0, 0%, 20.5%);
+	--gray7: hsl(0, 0%, 24.3%);
+	--gray8: hsl(0, 0%, 31.2%);
+	--gray9: hsl(0, 0%, 43.9%);
+	--gray10: hsl(0, 0%, 49.4%);
+	--gray11: hsl(0, 0%, 62.8%);
+	--gray12: hsl(0, 0%, 93%);
+
+	--gray-a1: hsla(0, 0%, 100%, 0);
+	--gray-a2: hsla(0, 0%, 100%, 0.026);
+	--gray-a3: hsla(0, 0%, 100%, 0.056);
+	--gray-a4: hsla(0, 0%, 100%, 0.077);
+	--gray-a5: hsla(0, 0%, 100%, 0.103);
+	--gray-a6: hsla(0, 0%, 100%, 0.129);
+	--gray-a7: hsla(0, 0%, 100%, 0.172);
+	--gray-a8: hsla(0, 0%, 100%, 0.249);
+	--gray-a9: hsla(0, 0%, 100%, 0.386);
+	--gray-a10: hsla(0, 0%, 100%, 0.446);
+	--gray-a11: hsla(0, 0%, 100%, 0.592);
+	--gray-a12: hsla(0, 0%, 100%, 0.923);
+
+	--lime1: hsl(75, 55%, 6%);
+	--lime2: hsl(74, 56.8%, 7.3%);
+	--lime3: hsl(78, 50.2%, 9.9%);
+	--lime4: hsl(79, 50.3%, 12.1%);
+	--lime5: hsl(79, 52.6%, 14.2%);
+	--lime6: hsl(78, 55.7%, 16.7%);
+	--lime7: hsl(77, 59.7%, 20.1%);
+	--lime8: hsl(75, 64.8%, 24.5%);
+	--lime9: hsl(81, 67%, 50%);
+	--lime10: hsl(75, 85%, 60%);
+	--lime11: hsl(81, 70%, 43.8%);
+	--lime12: hsl(84, 79%, 92.6%);
+
+	--sans: "Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+.dark {
+	color-scheme: dark;
+}
+
+@theme {
+	/* Font Families */
+	--font-family-sans: var(--sans);
+	--font-family-redaction: "Redaction", var(--font-family-sans);
+
+	/* Custom Colors */
+	--color-gray1: var(--gray1);
+	--color-gray2: var(--gray2);
+	--color-gray3: var(--gray3);
+	--color-gray4: var(--gray4);
+	--color-gray5: var(--gray5);
+	--color-gray6: var(--gray6);
+	--color-gray7: var(--gray7);
+	--color-gray8: var(--gray8);
+	--color-gray9: var(--gray9);
+	--color-gray10: var(--gray10);
+	--color-gray11: var(--gray11);
+	--color-gray12: var(--gray12);
+
+	--color-gray-a1: var(--gray-a1);
+	--color-gray-a2: var(--gray-a2);
+	--color-gray-a3: var(--gray-a3);
+	--color-gray-a4: var(--gray-a4);
+	--color-gray-a5: var(--gray-a5);
+	--color-gray-a6: var(--gray-a6);
+	--color-gray-a7: var(--gray-a7);
+	--color-gray-a8: var(--gray-a8);
+	--color-gray-a9: var(--gray-a9);
+	--color-gray-a10: var(--gray-a10);
+	--color-gray-a11: var(--gray-a11);
+	--color-gray-a12: var(--gray-a12);
+
+	--color-overlay: var(--overlay);
+	--color-accent: var(--accent);
+	--color-accent-blue: var(--accent-blue);
+	--color-accent-pink: var(--accent-pink);
+	--color-accent-violet: var(--accent-violet);
+	--color-selectionColor: var(--selection-color);
+
+	/* Animations */
+	--animate-show: show 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	--animate-hide: hide 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+	--animate-showContent: showContent 150ms cubic-bezier(0.16, 1, 0.3, 1)
+		forwards;
+	--animate-hideContent: hideContent 150ms cubic-bezier(0.16, 1, 0.3, 1)
+		forwards;
+
+	/* Box Shadows */
+
+	/* --shadow-surface-glass: inset 0.25px 1px 0 0 oklch(from theme(colors.rose.200) l c h / 3%), */
+	/*   0px 0.3px 0.3px rgba(3, 2, 2, 0.02), */
+	/*   0px 2.2px 2.5px -0.4px rgba(3, 2, 2, 0.02), */
+	/*   0px 4.3px 4.8px -0.8px rgba(3, 2, 2, 0.02), */
+	/*   0px 7.5px 8.4px -1.2px rgba(3, 2, 2, 0.02), */
+	/*   0px 12.8px 14.4px -1.7px rgba(3, 2, 2, 0.02), */
+	/*   0px 21px 23.6px -2.1px rgba(3, 2, 2, 0.02), */
+	/*   0px 33.2px 37.4px -2.5px rgba(3, 2, 2, 0.02); */
+	/**/
+	/* --shadow-surface-elevation-low: inset 0.25px 1px 1px 0 oklch(from theme(colors.rose.200) l c h / 1.5%), */
+	/*   0.3px 0.5px 0.7px rgba(3, 2, 2, 0.2), */
+	/*   0.4px 0.8px 1px -1.2px rgba(3, 2, 2, 0.2), */
+	/*   1px 2px 2.5px -2.5px rgba(3, 2, 2, 0.2); */
+	/**/
+	/* --shadow-surface-elevation-medium: inset 0.25px 1px 1px 0 oklch(from theme(colors.rose.200) l c h / 3%), */
+	/*   0.3px 0.5px 0.7px rgba(3, 2, 2, 0.1), */
+	/*   0.8px 1.6px 2px -0.8px rgba(3, 2, 2, 0.1), */
+	/*   2.1px 4.1px 5.2px -1.7px rgba(3, 2, 2, 0.1), */
+	/*   5px 10px 12.6px -2.5px rgba(3, 2, 2, 0.1); */
+}
+
+@keyframes show {
+	from {
+		opacity: 0;
+	}
+
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes hide {
+	from {
+		opacity: 1;
+	}
+
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes showContent {
+	from {
+		opacity: 0;
+		transform: translate(-50%, -45%) scale(0.96);
+	}
+
+	to {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+}
+
+@keyframes hideContent {
+	from {
+		opacity: 1;
+		transform: translate(-50%, -50%) scale(1);
+	}
+
+	to {
+		opacity: 0;
+		transform: translate(-50%, -45%) scale(0.96);
+	}
+}

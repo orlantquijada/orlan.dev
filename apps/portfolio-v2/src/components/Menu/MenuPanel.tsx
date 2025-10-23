@@ -62,7 +62,7 @@ function SendButton() {
 				type="button"
 				className={menuItemStyles({
 					className:
-						"-mx-8 border-t border-gray7 px-8 text-left transition-colors hover:bg-grayA3",
+						"-mx-8 border-t border-gray7 px-8 text-left transition-colors hover:bg-gray-a3",
 					intent: "sendBtn",
 				})}
 			>

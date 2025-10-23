@@ -1,6 +1,6 @@
 import { Slot } from "@radix-ui/react-slot";
 import type { VariantProps } from "cva";
-import { type ReactNode, forwardRef } from "react";
+import type { ReactNode, Ref } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { chipStyles } from "./styles";
@@ -11,9 +11,10 @@ type ChipProps = ChipVariantProps & {
 	children: ReactNode;
 	className?: string | undefined;
 	asChild?: boolean;
+	ref?: Ref<HTMLButtonElement>;
 };
 
-const Chip = forwardRef<HTMLElement, ChipProps>((props, ref) => {
+export default function Chip({ ref, ...props }: ChipProps) {
 	const {
 		color = "gray",
 		size = "responsive",
@@ -33,5 +34,4 @@ const Chip = forwardRef<HTMLElement, ChipProps>((props, ref) => {
 			{children}
 		</Comp>
 	);
-});
-export default Chip;
+}

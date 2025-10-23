@@ -13,19 +13,15 @@ const { title, className } = Astro.props;
 
 <BaseLayout title={title}>
   <slot name="head" slot="head" />
-  <Header class="layout-container" />
-  <main class:list={['layout-container py-24', className]}>
+  <Header class="mx-auto w-screen max-w-176 px-6" />
+  <main class:list={['mx-auto w-screen max-w-176 px-6 py-24', className]}>
     <div class="gradient"></div>
     <slot />
   </main>
-  <Footer class="layout-container" />
+  <Footer class="mx-auto w-screen max-w-176 px-6" />
 </BaseLayout>
 
 <style>
-  .layout-container {
-    @apply mx-auto w-screen max-w-[44rem] px-6;
-  }
-
   main {
     flex-grow: 1;
     width: 100%;

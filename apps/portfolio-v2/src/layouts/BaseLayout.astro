@@ -1,5 +1,5 @@
 ---
-import Colors from "@/components/Colors.astro";
+import "@/styles/global.css";
 import Fonts from "@/components/Fonts.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
 
@@ -24,7 +24,6 @@ const { title } = Astro.props;
   </head>
   <body>
     <slot />
-    <Colors />
     <style is:global>
       /* add global styles + reset */
       *,
@@ -57,6 +56,7 @@ const { title } = Astro.props;
         min-height: 100%;
         display: flex;
         flex-direction: column;
+        font-family: var(--sans);
       }
 
       a,
@@ -68,13 +68,13 @@ const { title } = Astro.props;
         width: 14px;
       }
       ::-webkit-scrollbar-thumb {
-        background-color: var(--grayA6);
+        background-color: var(--gray-a6);
         border-radius: 14px;
         background-clip: content-box;
         border: 4px solid transparent;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background-color: var(--grayA7);
+        background-color: var(--gray-a7);
       }
       ::-webkit-scrollbar-track {
         background: transparent;

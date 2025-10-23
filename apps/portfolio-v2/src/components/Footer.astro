@@ -50,15 +50,17 @@ const { class: className } = Astro.props;
   li {
     display: flex;
     align-items: center;
-
-    @apply text-sm md:text-base;
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
   }
+
   a {
     text-decoration: underline;
     text-decoration-color: var(--gray8);
     text-underline-offset: 4px;
     text-decoration-thickness: 1px;
   }
+
   a:hover {
     text-decoration-color: var(--gray10);
     text-decoration-style: wavy;

@@ -1,6 +1,5 @@
 import { type VariantProps, cva } from "cva";
 import type { ComponentProps } from "react";
-import { forwardRef } from "react";
 import { twMerge } from "tailwind-merge";
 import styles from "./Button.module.css";
 
@@ -16,7 +15,7 @@ export const buttonStyles = cva(
 			},
 			translucent: {
 				true: [
-					"dark:bg-grayA3",
+					"dark:bg-gray-a3",
 					// 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
 				],
 				false: ["dark:bg-gray3"],
@@ -26,7 +25,7 @@ export const buttonStyles = cva(
 			{
 				motionSafe: true,
 				translucent: true,
-				className: "hover:dark:bg-grayA4",
+				className: "hover:dark:bg-gray-a4",
 			},
 			{
 				motionSafe: true,
@@ -41,19 +40,17 @@ export const buttonStyles = cva(
 	},
 );
 
-export const Button = forwardRef<
-	HTMLButtonElement,
-	ComponentProps<"button"> & VariantProps<typeof buttonStyles>
->((props, ref) => {
+type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;
+
+export function Button(props: ButtonProps) {
 	const { className, children, translucent = null, ..._props } = props;
 
 	return (
 		<button
 			{..._props}
-			ref={ref}
 			className={twMerge(buttonStyles({ className, translucent: translucent }))}
 		>
 			{children}
 		</button>
 	);
-});
+}

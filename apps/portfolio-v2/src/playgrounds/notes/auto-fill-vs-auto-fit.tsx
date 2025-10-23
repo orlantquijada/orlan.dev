@@ -30,7 +30,7 @@ export default function Demo() {
 		<div className="flex flex-col">
 			<div
 				ref={ref}
-				className="relative flex max-w-full resize flex-col justify-between gap-4 overflow-auto rounded-xl border border-dashed border-grayA9 bg-grayA4 p-2"
+				className="relative flex max-w-full resize flex-col justify-between gap-4 overflow-auto rounded-xl border border-dashed border-gray-a9 bg-gray-a4 p-2"
 			>
 				<div
 					className="grid gap-2"
@@ -50,7 +50,7 @@ export default function Demo() {
 
 					<Button
 						translucent
-						className="grid aspect-square h-8 place-items-center p-0 text-grayA11"
+						className="grid aspect-square h-8 place-items-center p-0 text-gray-a11"
 						onClick={handleResetShowcase}
 					>
 						<Reset />
@@ -65,7 +65,7 @@ function Card() {
 	return (
 		<div className="flex h-48 flex-col rounded-lg bg-gray5 p-1">
 			<div className="h-4/5 w-full rounded-md bg-gray7" />
-			<p className="flex flex-grow items-center text-gray11">lorem ipsum</p>
+			<p className="flex grow items-center text-gray11">lorem ipsum</p>
 		</div>
 	);
 }
@@ -98,7 +98,7 @@ function ToggleButton({ children, ...props }: ComponentProps<"button">) {
 	return (
 		<button
 			{...props}
-			className="flex h-8 items-center rounded-md border border-transparent px-3 text-grayA11 first:rounded-l-md last:rounded-r-md data-[state=on]:border-grayA5 data-[state=on]:bg-grayA5 data-[state=on]:font-bold data-[state=on]:italic data-[state=on]:text-grayA12"
+			className="flex h-8 items-center rounded-md border border-transparent px-3 text-gray-a11 first:rounded-l-md last:rounded-r-md data-[state=on]:border-gray-a5 data-[state=on]:bg-gray-a5 data-[state=on]:font-bold data-[state=on]:italic data-[state=on]:text-gray-a12"
 		>
 			<code className="text-sm leading-none">{children}</code>
 		</button>

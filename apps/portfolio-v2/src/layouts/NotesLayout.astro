@@ -23,7 +23,7 @@ const data = Astro.props;
     </h1>
     {
       data.description ? (
-        <p class="text-grayA11 md:max-w-[80%]">{data.description}</p>
+      <p class="text-gray-a11 md:max-w-4/5">{data.description}</p>
       ) : null
     }
   </div>
@@ -76,7 +76,7 @@ const data = Astro.props;
     }
   </div>
 
-  <hr class="my-8 w-full border-t-2 border-t-grayA4" />
+  <hr class="my-8 w-full border-t-2 border-t-gray-a4" />
 
   <article>
     <slot />

@@ -55,7 +55,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 
 	return (
 		<section
-			className="relative mt-8 h-[var(--fullWidth)] w-full md:h-auto"
+			className="relative mt-8 h-(--fullWidth) w-full md:h-auto"
 			style={
 				{
 					// `--fullWidth` variable used for height
@@ -67,7 +67,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 			<div
 				className={cn(
 					"sticky top-[96px] -mx-6 flex flex-col items-start overflow-x-clip px-6",
-					"md:relative md:inset-[initial] md:h-[52rem] md:min-w-full md:overflow-visible",
+					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible",
 				)}
 			>
 				<h3 className="mb-6 text-sm text-gray11">Projects</h3>

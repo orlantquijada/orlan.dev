@@ -1,3 +1,5 @@
+@reference '../../styles/global.css'
+
 .noteCard {
 	outline: none;
 	position: relative;
@@ -13,12 +15,15 @@
 .noteCard:nth-child(1n):where(:focus-within, :hover) {
 	border-color: var(--accent);
 }
+
 .noteCard:nth-child(2n):where(:focus-within, :hover) {
 	border-color: var(--accent-violet);
 }
+
 .noteCard:nth-child(3n):where(:focus-within, :hover) {
 	border-color: var(--accent-pink);
 }
+
 .noteCard:nth-child(4n):where(:focus-within, :hover) {
 	border-color: var(--accent-blue);
 }
@@ -26,12 +31,15 @@
 .noteCard:nth-child(1n)::before {
 	--shadow-color: var(--lime);
 }
+
 .noteCard:nth-child(2n)::before {
 	--shadow-color: var(--violet);
 }
+
 .noteCard:nth-child(3n)::before {
 	--shadow-color: var(--pink);
 }
+
 .noteCard:nth-child(4n)::before {
 	--shadow-color: var(--blue);
 }
@@ -44,12 +52,13 @@
 		hsl(var(--shadow-color) / 0.25);
 	box-shadow: var(--shadow);
 }
+
 .noteCard:hover::before {
 	opacity: 100%;
 }
 
 .stripes {
-	--stripe-1: var(--grayA2);
+	--stripe-1: var(--gray-a2);
 	--stripe-2: transparent;
 
 	background-image: linear-gradient(
