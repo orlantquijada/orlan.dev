@@ -36,8 +36,8 @@ importers:
   .:
     devDependencies:
       turbo:
-        specifier: ^2.4.4
-        version: 2.4.4
+        specifier: ^2.5.8
+        version: 2.5.8
 
   apps/daily:
     dependencies:
@@ -138,7 +138,7 @@ importers:
     devDependencies:
       '@pandacss/dev':
         specifier: 'catalog:'
-        version: 0.53.2(typescript@5.8.2)
+        version: 0.53.2(jsdom@20.0.0)(typescript@5.8.2)
       '@pandacss/preset-panda':
         specifier: 'catalog:'
         version: 0.53.2
@@ -260,7 +260,7 @@ importers:
         version: 9.23.0
       '@pandacss/dev':
         specifier: 'catalog:'
-        version: 0.53.2(typescript@5.7.3)
+        version: 0.53.2(jsdom@20.0.0)(typescript@5.7.3)
       '@types/react':
         specifier: ^19.0.10
         version: 19.0.12
@@ -309,7 +309,7 @@ importers:
         version: 1.9.4
       '@pandacss/dev':
         specifier: 'catalog:'
-        version: 0.53.2(typescript@5.8.2)
+        version: 0.53.2(jsdom@20.0.0)(typescript@5.8.2)
       '@pandacss/preset-panda':
         specifier: 'catalog:'
         version: 0.53.2
@@ -333,7 +333,7 @@ importers:
         version: 1.9.4
       '@pandacss/dev':
         specifier: 'catalog:'
-        version: 0.53.2(typescript@5.8.2)
+        version: 0.53.2(jsdom@20.0.0)(typescript@5.8.2)
       '@pandacss/preset-panda':
         specifier: 'catalog:'
         version: 0.53.2
@@ -351,7 +351,7 @@ importers:
     devDependencies:
       '@pandacss/dev':
         specifier: 'catalog:'
-        version: 0.53.2(typescript@5.8.2)
+        version: 0.53.2(jsdom@20.0.0)(typescript@5.8.2)
       '@stitches/react':
         specifier: ^1.2.8
         version: 1.2.8(react@18.2.0)
@@ -6780,38 +6780,38 @@ packages:
   tunnel-agent@0.6.0:
     resolution: {integrity: sha512-McnNiV1l8RYeY8tBgEpuodCC1mLUdbSN+CYBL7kJsJNInOP8UjDDEwdk6Mw60vdLLrr5NHKZhMAOSrR2NZuQ+w==}
 
-  turbo-darwin-64@2.4.4:
-    resolution: {integrity: sha512-5kPvRkLAfmWI0MH96D+/THnDMGXlFNmjeqNRj5grLKiry+M9pKj3pRuScddAXPdlxjO5Ptz06UNaOQrrYGTx1g==}
+  turbo-darwin-64@2.5.8:
+    resolution: {integrity: sha512-Dh5bCACiHO8rUXZLpKw+m3FiHtAp2CkanSyJre+SInEvEr5kIxjGvCK/8MFX8SFRjQuhjtvpIvYYZJB4AGCxNQ==}
     cpu: [x64]
     os: [darwin]
 
-  turbo-darwin-arm64@2.4.4:
-    resolution: {integrity: sha512-/gtHPqbGQXDFhrmy+Q/MFW2HUTUlThJ97WLLSe4bxkDrKHecDYhAjbZ4rN3MM93RV9STQb3Tqy4pZBtsd4DfCw==}
+  turbo-darwin-arm64@2.5.8:
+    resolution: {integrity: sha512-f1H/tQC9px7+hmXn6Kx/w8Jd/FneIUnvLlcI/7RGHunxfOkKJKvsoiNzySkoHQ8uq1pJnhJ0xNGTlYM48ZaJOQ==}
     cpu: [arm64]
     os: [darwin]
 
-  turbo-linux-64@2.4.4:
-    resolution: {integrity: sha512-SR0gri4k0bda56hw5u9VgDXLKb1Q+jrw4lM7WAhnNdXvVoep4d6LmnzgMHQQR12Wxl3KyWPbkz9d1whL6NTm2Q==}
+  turbo-linux-64@2.5.8:
+    resolution: {integrity: sha512-hMyvc7w7yadBlZBGl/bnR6O+dJTx3XkTeyTTH4zEjERO6ChEs0SrN8jTFj1lueNXKIHh1SnALmy6VctKMGnWfw==}
     cpu: [x64]
     os: [linux]
 
-  turbo-linux-arm64@2.4.4:
-    resolution: {integrity: sha512-COXXwzRd3vslQIfJhXUklgEqlwq35uFUZ7hnN+AUyXx7hUOLIiD5NblL+ETrHnhY4TzWszrbwUMfe2BYWtaPQg==}
+  turbo-linux-arm64@2.5.8:
+    resolution: {integrity: sha512-LQELGa7bAqV2f+3rTMRPnj5G/OHAe2U+0N9BwsZvfMvHSUbsQ3bBMWdSQaYNicok7wOZcHjz2TkESn1hYK6xIQ==}
     cpu: [arm64]
     os: [linux]
 
-  turbo-windows-64@2.4.4:
-    resolution: {integrity: sha512-PV9rYNouGz4Ff3fd6sIfQy5L7HT9a4fcZoEv8PKRavU9O75G7PoDtm8scpHU10QnK0QQNLbE9qNxOAeRvF0fJg==}
+  turbo-windows-64@2.5.8:
+    resolution: {integrity: sha512-3YdcaW34TrN1AWwqgYL9gUqmZsMT4T7g8Y5Azz+uwwEJW+4sgcJkIi9pYFyU4ZBSjBvkfuPZkGgfStir5BBDJQ==}
     cpu: [x64]
     os: [win32]
 
-  turbo-windows-arm64@2.4.4:
-    resolution: {integrity: sha512-403sqp9t5sx6YGEC32IfZTVWkRAixOQomGYB8kEc6ZD+//LirSxzeCHCnM8EmSXw7l57U1G+Fb0kxgTcKPU/Lg==}
+  turbo-windows-arm64@2.5.8:
+    resolution: {integrity: sha512-eFC5XzLmgXJfnAK3UMTmVECCwuBcORrWdewoiXBnUm934DY6QN8YowC/srhNnROMpaKaqNeRpoB5FxCww3eteQ==}
     cpu: [arm64]
     os: [win32]
 
-  turbo@2.4.4:
-    resolution: {integrity: sha512-N9FDOVaY3yz0YCOhYIgOGYad7+m2ptvinXygw27WPLQvcZDl3+0Sa77KGVlLSiuPDChOUEnTKE9VJwLSi9BPGQ==}
+  turbo@2.5.8:
+    resolution: {integrity: sha512-5c9Fdsr9qfpT3hA0EyYSFRZj1dVVsb6KIWubA9JBYZ/9ZEAijgUEae0BBR/Xl/wekt4w65/lYLTFaP3JmwSO8w==}
     hasBin: true
 
   typanion@3.14.0:
@@ -9654,6 +9654,22 @@ snapshots:
       postcss-selector-parser: 6.1.2
       ts-pattern: 5.0.8
 
+  '@pandacss/dev@0.53.2(jsdom@20.0.0)(typescript@5.7.3)':
+    dependencies:
+      '@clack/prompts': 0.9.1
+      '@pandacss/config': 0.53.2
+      '@pandacss/logger': 0.53.2
+      '@pandacss/node': 0.53.2(jsdom@20.0.0)(typescript@5.7.3)
+      '@pandacss/postcss': 0.53.2(jsdom@20.0.0)(typescript@5.7.3)
+      '@pandacss/preset-panda': 0.53.2
+      '@pandacss/shared': 0.53.2
+      '@pandacss/token-dictionary': 0.53.2
+      '@pandacss/types': 0.53.2
+      cac: 6.7.14
+    transitivePeerDependencies:
+      - jsdom
+      - typescript
+
   '@pandacss/dev@0.53.2(jsdom@20.0.0)(typescript@5.8.2)':
     dependencies:
       '@clack/prompts': 0.9.1
@@ -9670,34 +9686,11 @@ snapshots:
       - jsdom
       - typescript
 
-  '@pandacss/dev@0.53.2(typescript@5.7.3)':
+  '@pandacss/extractor@0.53.2(jsdom@20.0.0)(typescript@5.7.3)':
     dependencies:
-      '@clack/prompts': 0.9.1
-      '@pandacss/config': 0.53.2
-      '@pandacss/logger': 0.53.2
-      '@pandacss/node': 0.53.2(typescript@5.7.3)
-      '@pandacss/postcss': 0.53.2(typescript@5.7.3)
-      '@pandacss/preset-panda': 0.53.2
       '@pandacss/shared': 0.53.2
-      '@pandacss/token-dictionary': 0.53.2
-      '@pandacss/types': 0.53.2
-      cac: 6.7.14
-    transitivePeerDependencies:
-      - jsdom
-      - typescript
-
-  '@pandacss/dev@0.53.2(typescript@5.8.2)':
-    dependencies:
-      '@clack/prompts': 0.9.1
-      '@pandacss/config': 0.53.2
-      '@pandacss/logger': 0.53.2
-      '@pandacss/node': 0.53.2(typescript@5.8.2)
-      '@pandacss/postcss': 0.53.2(typescript@5.8.2)
-      '@pandacss/preset-panda': 0.53.2
-      '@pandacss/shared': 0.53.2
-      '@pandacss/token-dictionary': 0.53.2
-      '@pandacss/types': 0.53.2
-      cac: 6.7.14
+      ts-evaluator: 1.2.0(jsdom@20.0.0)(typescript@5.7.3)
+      ts-morph: 24.0.0
     transitivePeerDependencies:
       - jsdom
       - typescript
@@ -9706,15 +9699,6 @@ snapshots:
     dependencies:
       '@pandacss/shared': 0.53.2
       ts-evaluator: 1.2.0(jsdom@20.0.0)(typescript@5.8.2)
-      ts-morph: 24.0.0
-    transitivePeerDependencies:
-      - jsdom
-      - typescript
-
-  '@pandacss/extractor@0.53.2(typescript@5.7.3)':
-    dependencies:
-      '@pandacss/shared': 0.53.2
-      ts-evaluator: 1.2.0(typescript@5.7.3)
       ts-morph: 24.0.0
     transitivePeerDependencies:
       - jsdom
@@ -9740,6 +9724,40 @@ snapshots:
     dependencies:
       '@pandacss/types': 0.53.2
       kleur: 4.1.5
+
+  '@pandacss/node@0.53.2(jsdom@20.0.0)(typescript@5.7.3)':
+    dependencies:
+      '@pandacss/config': 0.53.2
+      '@pandacss/core': 0.53.2
+      '@pandacss/generator': 0.53.2
+      '@pandacss/logger': 0.53.2
+      '@pandacss/parser': 0.53.2(jsdom@20.0.0)(typescript@5.7.3)
+      '@pandacss/reporter': 0.53.2
+      '@pandacss/shared': 0.53.2
+      '@pandacss/token-dictionary': 0.53.2
+      '@pandacss/types': 0.53.2
+      browserslist: 4.23.3
+      chokidar: 4.0.3
+      fs-extra: 11.2.0
+      glob-parent: 6.0.2
+      is-glob: 4.0.3
+      lodash.merge: 4.6.2
+      look-it-up: 2.1.0
+      outdent: 0.8.0
+      package-manager-detector: 0.1.0
+      perfect-debounce: 1.0.0
+      picomatch: 4.0.2
+      pkg-types: 1.0.3
+      pluralize: 8.0.0
+      postcss: 8.4.49
+      prettier: 3.2.5
+      tinyglobby: 0.2.12
+      ts-morph: 24.0.0
+      ts-pattern: 5.0.8
+      tsconfck: 3.0.2(typescript@5.7.3)
+    transitivePeerDependencies:
+      - jsdom
+      - typescript
 
   '@pandacss/node@0.53.2(jsdom@20.0.0)(typescript@5.8.2)':
     dependencies:
@@ -9775,70 +9793,18 @@ snapshots:
       - jsdom
       - typescript
 
-  '@pandacss/node@0.53.2(typescript@5.7.3)':
+  '@pandacss/parser@0.53.2(jsdom@20.0.0)(typescript@5.7.3)':
     dependencies:
       '@pandacss/config': 0.53.2
       '@pandacss/core': 0.53.2
-      '@pandacss/generator': 0.53.2
+      '@pandacss/extractor': 0.53.2(jsdom@20.0.0)(typescript@5.7.3)
       '@pandacss/logger': 0.53.2
-      '@pandacss/parser': 0.53.2(typescript@5.7.3)
-      '@pandacss/reporter': 0.53.2
       '@pandacss/shared': 0.53.2
-      '@pandacss/token-dictionary': 0.53.2
       '@pandacss/types': 0.53.2
-      browserslist: 4.23.3
-      chokidar: 4.0.3
-      fs-extra: 11.2.0
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      lodash.merge: 4.6.2
-      look-it-up: 2.1.0
-      outdent: 0.8.0
-      package-manager-detector: 0.1.0
-      perfect-debounce: 1.0.0
-      picomatch: 4.0.2
-      pkg-types: 1.0.3
-      pluralize: 8.0.0
-      postcss: 8.4.49
-      prettier: 3.2.5
-      tinyglobby: 0.2.12
+      '@vue/compiler-sfc': 3.4.19
+      magic-string: 0.30.17
       ts-morph: 24.0.0
       ts-pattern: 5.0.8
-      tsconfck: 3.0.2(typescript@5.7.3)
-    transitivePeerDependencies:
-      - jsdom
-      - typescript
-
-  '@pandacss/node@0.53.2(typescript@5.8.2)':
-    dependencies:
-      '@pandacss/config': 0.53.2
-      '@pandacss/core': 0.53.2
-      '@pandacss/generator': 0.53.2
-      '@pandacss/logger': 0.53.2
-      '@pandacss/parser': 0.53.2(typescript@5.8.2)
-      '@pandacss/reporter': 0.53.2
-      '@pandacss/shared': 0.53.2
-      '@pandacss/token-dictionary': 0.53.2
-      '@pandacss/types': 0.53.2
-      browserslist: 4.23.3
-      chokidar: 4.0.3
-      fs-extra: 11.2.0
-      glob-parent: 6.0.2
-      is-glob: 4.0.3
-      lodash.merge: 4.6.2
-      look-it-up: 2.1.0
-      outdent: 0.8.0
-      package-manager-detector: 0.1.0
-      perfect-debounce: 1.0.0
-      picomatch: 4.0.2
-      pkg-types: 1.0.3
-      pluralize: 8.0.0
-      postcss: 8.4.49
-      prettier: 3.2.5
-      tinyglobby: 0.2.12
-      ts-morph: 24.0.0
-      ts-pattern: 5.0.8
-      tsconfck: 3.0.2(typescript@5.8.2)
     transitivePeerDependencies:
       - jsdom
       - typescript
@@ -9859,34 +9825,10 @@ snapshots:
       - jsdom
       - typescript
 
-  '@pandacss/parser@0.53.2(typescript@5.7.3)':
+  '@pandacss/postcss@0.53.2(jsdom@20.0.0)(typescript@5.7.3)':
     dependencies:
-      '@pandacss/config': 0.53.2
-      '@pandacss/core': 0.53.2
-      '@pandacss/extractor': 0.53.2(typescript@5.7.3)
-      '@pandacss/logger': 0.53.2
-      '@pandacss/shared': 0.53.2
-      '@pandacss/types': 0.53.2
-      '@vue/compiler-sfc': 3.4.19
-      magic-string: 0.30.17
-      ts-morph: 24.0.0
-      ts-pattern: 5.0.8
-    transitivePeerDependencies:
-      - jsdom
-      - typescript
-
-  '@pandacss/parser@0.53.2(typescript@5.8.2)':
-    dependencies:
-      '@pandacss/config': 0.53.2
-      '@pandacss/core': 0.53.2
-      '@pandacss/extractor': 0.53.2(jsdom@20.0.0)(typescript@5.8.2)
-      '@pandacss/logger': 0.53.2
-      '@pandacss/shared': 0.53.2
-      '@pandacss/types': 0.53.2
-      '@vue/compiler-sfc': 3.4.19
-      magic-string: 0.30.17
-      ts-morph: 24.0.0
-      ts-pattern: 5.0.8
+      '@pandacss/node': 0.53.2(jsdom@20.0.0)(typescript@5.7.3)
+      postcss: 8.4.49
     transitivePeerDependencies:
       - jsdom
       - typescript
@@ -9894,22 +9836,6 @@ snapshots:
   '@pandacss/postcss@0.53.2(jsdom@20.0.0)(typescript@5.8.2)':
     dependencies:
       '@pandacss/node': 0.53.2(jsdom@20.0.0)(typescript@5.8.2)
-      postcss: 8.4.49
-    transitivePeerDependencies:
-      - jsdom
-      - typescript
-
-  '@pandacss/postcss@0.53.2(typescript@5.7.3)':
-    dependencies:
-      '@pandacss/node': 0.53.2(typescript@5.7.3)
-      postcss: 8.4.49
-    transitivePeerDependencies:
-      - jsdom
-      - typescript
-
-  '@pandacss/postcss@0.53.2(typescript@5.8.2)':
-    dependencies:
-      '@pandacss/node': 0.53.2(typescript@5.8.2)
       postcss: 8.4.49
     transitivePeerDependencies:
       - jsdom
@@ -15461,6 +15387,15 @@ snapshots:
     dependencies:
       typescript: 5.7.3
 
+  ts-evaluator@1.2.0(jsdom@20.0.0)(typescript@5.7.3):
+    dependencies:
+      ansi-colors: 4.1.3
+      crosspath: 2.0.0
+      object-path: 0.11.8
+      typescript: 5.7.3
+    optionalDependencies:
+      jsdom: 20.0.0
+
   ts-evaluator@1.2.0(jsdom@20.0.0)(typescript@5.8.2):
     dependencies:
       ansi-colors: 4.1.3
@@ -15469,13 +15404,6 @@ snapshots:
       typescript: 5.8.2
     optionalDependencies:
       jsdom: 20.0.0
-
-  ts-evaluator@1.2.0(typescript@5.7.3):
-    dependencies:
-      ansi-colors: 4.1.3
-      crosspath: 2.0.0
-      object-path: 0.11.8
-      typescript: 5.7.3
 
   ts-interface-checker@0.1.13: {}
 
@@ -15510,32 +15438,32 @@ snapshots:
     dependencies:
       safe-buffer: 5.2.1
 
-  turbo-darwin-64@2.4.4:
+  turbo-darwin-64@2.5.8:
     optional: true
 
-  turbo-darwin-arm64@2.4.4:
+  turbo-darwin-arm64@2.5.8:
     optional: true
 
-  turbo-linux-64@2.4.4:
+  turbo-linux-64@2.5.8:
     optional: true
 
-  turbo-linux-arm64@2.4.4:
+  turbo-linux-arm64@2.5.8:
     optional: true
 
-  turbo-windows-64@2.4.4:
+  turbo-windows-64@2.5.8:
     optional: true
 
-  turbo-windows-arm64@2.4.4:
+  turbo-windows-arm64@2.5.8:
     optional: true
 
-  turbo@2.4.4:
+  turbo@2.5.8:
     optionalDependencies:
-      turbo-darwin-64: 2.4.4
-      turbo-darwin-arm64: 2.4.4
-      turbo-linux-64: 2.4.4
-      turbo-linux-arm64: 2.4.4
-      turbo-windows-64: 2.4.4
-      turbo-windows-arm64: 2.4.4
+      turbo-darwin-64: 2.5.8
+      turbo-darwin-arm64: 2.5.8
+      turbo-linux-64: 2.5.8
+      turbo-linux-arm64: 2.5.8
+      turbo-windows-64: 2.5.8
+      turbo-windows-arm64: 2.5.8
 
   typanion@3.14.0: {}
 
