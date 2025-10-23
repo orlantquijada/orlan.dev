@@ -8,7 +8,7 @@ import {
 
 import { Button } from "@/components/Button";
 
-import { ReactComponent as Reset } from "@/icons/reset.svg";
+import Reset from "@/icons/reset.svg?react";
 
 type Auto = "fit" | "fill";
 

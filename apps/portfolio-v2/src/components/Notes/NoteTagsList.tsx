@@ -1,4 +1,4 @@
-import { ReactComponent as Close } from "@/icons/cross.svg";
+import Close from "@/icons/cross.svg?react";
 import { useStore } from "@nanostores/react";
 import { transitions } from "@repo/utils";
 import {
