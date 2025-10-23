@@ -1,7 +1,7 @@
 import * as ToggleGroup from "@radix-ui/react-toggle-group";
 import {
-	type CSSProperties,
 	type ComponentProps,
+	type CSSProperties,
 	useRef,
 	useState,
 } from "react";
@@ -29,8 +29,8 @@ export default function Demo() {
 	return (
 		<div className="flex flex-col">
 			<div
+				className="relative flex max-w-full resize flex-col justify-between gap-4 overflow-auto rounded-xl border border-gray-a9 border-dashed bg-gray-a4 p-2"
 				ref={ref}
-				className="relative flex max-w-full resize flex-col justify-between gap-4 overflow-auto rounded-xl border border-dashed border-gray-a9 bg-gray-a4 p-2"
 			>
 				<div
 					className="grid gap-2"
@@ -46,12 +46,12 @@ export default function Demo() {
 				</div>
 
 				<div className="flex justify-end gap-4">
-					<AutoFitFillToggle onChangeAuto={handleChangeAuto} auto={auto} />
+					<AutoFitFillToggle auto={auto} onChangeAuto={handleChangeAuto} />
 
 					<Button
-						translucent
 						className="grid aspect-square h-8 place-items-center p-0 text-gray-a11"
 						onClick={handleResetShowcase}
+						translucent
 					>
 						<Reset />
 					</Button>
@@ -79,15 +79,15 @@ function AutoFitFillToggle({
 }) {
 	return (
 		<ToggleGroup.Root
+			className="flex w-fit overflow-hidden rounded-md"
+			onValueChange={onChangeAuto}
 			type="single"
 			value={auto}
-			onValueChange={onChangeAuto}
-			className="flex w-fit overflow-hidden rounded-md"
 		>
-			<ToggleGroup.Item value="fill" asChild>
+			<ToggleGroup.Item asChild value="fill">
 				<ToggleButton>auto-fill</ToggleButton>
 			</ToggleGroup.Item>
-			<ToggleGroup.Item value="fit" asChild>
+			<ToggleGroup.Item asChild value="fit">
 				<ToggleButton>auto-fit</ToggleButton>
 			</ToggleGroup.Item>
 		</ToggleGroup.Root>
@@ -98,7 +98,7 @@ function ToggleButton({ children, ...props }: ComponentProps<"button">) {
 	return (
 		<button
 			{...props}
-			className="flex h-8 items-center rounded-md border border-transparent px-3 text-gray-a11 first:rounded-l-md last:rounded-r-md data-[state=on]:border-gray-a5 data-[state=on]:bg-gray-a5 data-[state=on]:font-bold data-[state=on]:italic data-[state=on]:text-gray-a12"
+			className="flex h-8 items-center rounded-md border border-transparent px-3 text-gray-a11 first:rounded-l-md last:rounded-r-md data-[state=on]:border-gray-a5 data-[state=on]:bg-gray-a5 data-[state=on]:font-bold data-[state=on]:text-gray-a12 data-[state=on]:italic"
 		>
 			<code className="text-sm leading-none">{children}</code>
 		</button>

@@ -1,4 +1,3 @@
-import { cn } from "@/lib/general";
 import type { HTMLAttributes } from "astro/types";
 import {
 	type ElementRef,
@@ -7,6 +6,7 @@ import {
 	useRef,
 	useState,
 } from "react";
+import { cn } from "@/lib/general";
 import { browserIconButtonStyles } from "./BrowserIconButton/styles";
 
 type Props = {
@@ -37,29 +37,28 @@ export default function Video({
 	return (
 		<div className={cn("relative", className)}>
 			<video
-				ref={videoRef}
 				autoPlay
-				playsInline
-				muted
-				loop
-				preload="auto"
 				controls={false}
+				loop
+				muted
 				onPause={() => {
 					setState("paused");
 				}}
 				onPlay={() => {
 					setState("playing");
 				}}
+				playsInline
+				preload="auto"
+				ref={videoRef}
 			>
 				<source src={src} type={type} />
 			</video>
 
 			<button
-				type="button"
 				className={cn(
 					browserIconButtonStyles(),
-					"absolute bottom-4 right-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100",
-					state === "paused" && "translate-y-0 opacity-100",
+					"absolute right-4 bottom-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100",
+					state === "paused" && "translate-y-0 opacity-100"
 				)}
 				onClick={() => {
 					if (!videoRef.current) return;
@@ -72,11 +71,12 @@ export default function Video({
 						setState("paused");
 					}
 				}}
+				type="button"
 			>
 				<span
 					className={cn(
 						"absolute opacity-0",
-						state === "paused" && "opacity-100",
+						state === "paused" && "opacity-100"
 					)}
 				>
 					{playingIcon}
@@ -84,7 +84,7 @@ export default function Video({
 				<span
 					className={cn(
 						"absolute opacity-0",
-						state === "playing" && "opacity-100",
+						state === "playing" && "opacity-100"
 					)}
 				>
 					{pausedIcon}

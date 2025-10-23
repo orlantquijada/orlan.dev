@@ -4,8 +4,8 @@ import { cva } from "cva";
 import {
 	AnimatePresence,
 	MotionConfig,
-	type Variants,
 	motion,
+	type Variants,
 } from "motion/react";
 import { type RefObject, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -42,24 +42,24 @@ export function Menu() {
 
 	return (
 		<MotionConfig transition={transitions.punchy}>
-			<PopoverPrimitive.Root open={open} onOpenChange={setOpen}>
+			<PopoverPrimitive.Root onOpenChange={setOpen} open={open}>
 				<div className="relative ml-auto flex">
 					<PopoverPrimitive.Trigger asChild>
 						<motion.button
-							variants={buttonVariants}
-							initial="closed"
 							animate={open ? "open" : "closed"}
+							className={twMerge(
+								buttonStyles({
+									className: "z-10 flex items-center gap-3",
+									motionSafe: false,
+								})
+							)}
+							initial="closed"
 							style={{
 								border: "none",
 								background: "none",
 								boxShadow: "none",
 							}}
-							className={twMerge(
-								buttonStyles({
-									className: "z-10 flex items-center gap-3",
-									motionSafe: false,
-								}),
-							)}
+							variants={buttonVariants}
 						>
 							<MenuIcon />
 							{open ? "Close" : "Menu"}
@@ -67,14 +67,14 @@ export function Menu() {
 					</PopoverPrimitive.Trigger>
 					<PopoverPrimitive.Anchor asChild>
 						<div
-							ref={containerRef as RefObject<HTMLDivElement>}
-							id="portal-container"
 							className={twMerge(
 								buttonStyles({
 									className: "absolute inset-0",
 									translucent: true,
-								}),
+								})
 							)}
+							id="portal-container"
+							ref={containerRef as RefObject<HTMLDivElement>}
 						/>
 					</PopoverPrimitive.Anchor>
 				</div>
@@ -83,20 +83,20 @@ export function Menu() {
 					{open && (
 						<PopoverPrimitive.Portal
 							container={containerRef.current}
-							key="portal"
 							forceMount
+							key="portal"
 						>
 							<PopoverPrimitive.Content
 								align="end"
 								// 40 = button height
-								sideOffset={-40}
 								asChild
+								sideOffset={-40}
 							>
 								<motion.div
-									variants={panelVariants}
-									initial="closed"
 									animate="open"
+									className={twMerge(contentStyles({ translucent: true }))}
 									exit="closed"
+									initial="closed"
 									style={{
 										transformOrigin:
 											"var(--radix-popover-content-transform-origin)",
@@ -105,7 +105,7 @@ export function Menu() {
 										type: "tween",
 										duration: 0.2,
 									}}
-									className={twMerge(contentStyles({ translucent: true }))}
+									variants={panelVariants}
 								>
 									<MenuPanel />
 								</motion.div>
@@ -134,23 +134,24 @@ function getLineMotionProps(direction: -1 | 1) {
 }
 
 function MenuIcon() {
-	const [topLineMotionProps, bottomLineMotionProps] = useMemo(() => {
-		return [getLineMotionProps(1), getLineMotionProps(-1)];
-	}, []);
+	const [topLineMotionProps, bottomLineMotionProps] = useMemo(
+		() => [getLineMotionProps(1), getLineMotionProps(-1)],
+		[]
+	);
 
 	return (
-		<svg viewBox="0 0 24 24" className="h-[1em] w-[1em] stroke-gray10">
+		<svg className="h-[1em] w-[1em] stroke-gray10" viewBox="0 0 24 24">
 			<title>Menu Icon</title>
 			<motion.path
 				d="M1 8H23"
-				strokeWidth="2"
 				strokeLinecap="round"
+				strokeWidth="2"
 				{...topLineMotionProps}
 			/>
 			<motion.path
 				d="M1 16H23"
-				strokeWidth="2"
 				strokeLinecap="round"
+				strokeWidth="2"
 				{...bottomLineMotionProps}
 			/>
 		</svg>
@@ -159,8 +160,8 @@ function MenuIcon() {
 
 const contentStyles = cva(
 	[
-		"max-h-[80vh] p-8 pb-0 overflow-hidden",
-		"bg-gray1 border border-gray7 dark:border-gray6 shadow-sm rounded-lg",
+		"max-h-[80vh] overflow-hidden p-8 pb-0",
+		"rounded-lg border border-gray7 bg-gray1 shadow-sm dark:border-gray6",
 		styles.menuContent,
 	],
 	{
@@ -177,5 +178,5 @@ const contentStyles = cva(
 		defaultVariants: {
 			translucent: false,
 		},
-	},
+	}
 );

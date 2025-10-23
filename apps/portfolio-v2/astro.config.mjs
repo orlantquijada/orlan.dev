@@ -1,9 +1,9 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
+import { defineConfig } from "astro/config";
 import compress from "astro-compress";
 import icon from "astro-icon";
-import { defineConfig } from "astro/config";
 import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config

@@ -41,7 +41,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 			setWidth(
 				window.innerWidth > breakpoint
 					? containerSize
-					: window.innerWidth - 24 * 2,
+					: window.innerWidth - 24 * 2
 			);
 			setIsOnMobileWidth(window.innerWidth < breakpoint);
 		}
@@ -56,21 +56,21 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 	return (
 		<section
 			className="relative mt-8 h-(--fullWidth) w-full md:h-auto"
+			ref={scrollableRef}
 			style={
 				{
 					// `--fullWidth` variable used for height
 					"--fullWidth": `${fullWidth + width * 1.5}px`,
 				} as CSSProperties
 			}
-			ref={scrollableRef}
 		>
 			<div
 				className={cn(
-					"sticky top-[96px] -mx-6 flex flex-col items-start overflow-x-clip px-6",
-					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible",
+					"-mx-6 sticky top-[96px] flex flex-col items-start overflow-x-clip px-6",
+					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible"
 				)}
 			>
-				<h3 className="mb-6 text-sm text-gray11">Projects</h3>
+				<h3 className="mb-6 text-gray11 text-sm">Projects</h3>
 
 				<motion.div
 					className={cn("flex will-change-transform", "md:h-full md:w-full")}

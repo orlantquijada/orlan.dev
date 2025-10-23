@@ -14,8 +14,8 @@ export const disableTransitionOnThemeChange = (callback: () => void) => {
             -o-transition: none !important;
             -ms-transition: none !important;
             transition: none !important;
-          }`,
-		),
+          }`
+		)
 	);
 	document.head.appendChild(css);
 
@@ -27,11 +27,8 @@ export const disableTransitionOnThemeChange = (callback: () => void) => {
 	}, 1);
 };
 
-export const getDefaultTheme = () => {
-	return window.matchMedia("(prefers-color-scheme: dark)").matches
-		? "dark"
-		: "light";
-};
+export const getDefaultTheme = () =>
+	window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
 
 export const getTheme = () => {
 	const theme = localStorage.getItem(storageKey);

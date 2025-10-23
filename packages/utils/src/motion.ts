@@ -1,6 +1,6 @@
 import type { Transition } from "motion";
 
-export const transitions: Record<string, Transition> = {
+export const transitions = {
 	bounce: {
 		type: "spring",
 		stiffness: 260,
@@ -18,4 +18,4 @@ export const transitions: Record<string, Transition> = {
 	},
 	tactile: { type: "spring", duration: 0.4, bounce: 0.1 },
 	punchy: { type: "spring", duration: 0.3, bounce: 0.1 },
-};
+} as const satisfies Record<string, Transition>;

@@ -4,7 +4,7 @@ packages:
   - packages/ui/*
 
 catalog:
-  '@biomejs/biome': ^1.9.4
+  '@biomejs/biome': 2.2.6
   '@date-fns/tz': ^1.2.0
   '@pandacss/dev': ^0.53.2
   '@pandacss/preset-panda': ^0.53.2

@@ -1,4 +1,3 @@
-import Close from "@/icons/cross.svg?react";
 import { useStore } from "@nanostores/react";
 import { transitions } from "@repo/utils";
 import {
@@ -8,8 +7,9 @@ import {
 	motion,
 } from "motion/react";
 import { type ComponentProps, type Ref, useEffect, useState } from "react";
+import Close from "@/icons/cross.svg?react";
 
-import { type TagGraphMap, getNeighborhoodsIntersection } from "@/lib/notes";
+import { getNeighborhoodsIntersection, type TagGraphMap } from "@/lib/notes";
 import { $selectedTags, addTag, clearTags, removeTag } from "@/stores/notes";
 import Chip from "../Chip/Chip";
 
@@ -37,15 +37,15 @@ export default function NoteTagsList(props: Props) {
 						{isSelecting ? (
 							<Chip asChild>
 								<motion.button
-									initial={{ opacity: 0 }}
 									animate={{ opacity: 1 }}
+									initial={{ opacity: 0 }}
 									onClick={() => clearTags()}
 								>
 									<Close className={styles.icon} />
 								</motion.button>
 							</Chip>
 						) : (
-							<Chip color="primary" asChild>
+							<Chip asChild color="primary">
 								<motion.span exit={{ opacity: 0 }}>all</motion.span>
 							</Chip>
 						)}
@@ -53,17 +53,16 @@ export default function NoteTagsList(props: Props) {
 						{_selectedTags.map((tag, index) =>
 							index === 0 ? (
 								<Tag
-									tag={tag}
-									layoutId={tag}
 									key={tag}
+									layoutId={tag}
 									style={{ zIndex: 5 - index }}
+									tag={tag}
 								/>
 							) : (
 								<Tag
-									tag={tag}
 									custom={index}
-									layoutId={tag}
 									key={tag}
+									layoutId={tag}
 									style={{
 										zIndex: 5 - index,
 
@@ -71,29 +70,30 @@ export default function NoteTagsList(props: Props) {
 										marginLeft: -32,
 										justifyContent: "flex-end",
 									}}
+									tag={tag}
 								/>
-							),
+							)
 						)}
 
 						{isSelecting
 							? visibleTags.map((tag) => (
 									<Tag
-										tag={tag}
-										initial={{ opacity: initialOpacity }}
 										animate={{ opacity: 1 }}
-										layoutId={tag}
-										key={tag}
 										exit={{ opacity: 0 }}
+										initial={{ opacity: initialOpacity }}
+										key={tag}
+										layoutId={tag}
+										tag={tag}
 									/>
 								))
 							: tags.map((tag) => (
 									<Tag
-										tag={tag}
-										initial={{ opacity: initialOpacity }}
 										animate={{ opacity: 1 }}
-										layoutId={tag}
-										key={tag}
 										exit={{ opacity: 0 }}
+										initial={{ opacity: initialOpacity }}
+										key={tag}
+										layoutId={tag}
+										tag={tag}
 									/>
 								))}
 					</AnimatePresence>
@@ -125,25 +125,25 @@ const Tag = (props: TagProps) => {
 
 	return (
 		<Chip
-			key={tag}
-			color={isSelected || tag === "all" ? "primary" : "gray"}
-			className="will-change-[opacity,transform]"
 			asChild
+			className="will-change-[opacity,transform]"
+			color={isSelected || tag === "all" ? "primary" : "gray"}
+			key={tag}
 		>
 			<motion.button
 				{...rest}
 				className={_selectedTags.length > 1 ? styles.chip : ""}
 				data-selected={isSelected}
+				onClick={() => {
+					if (isSelected) removeTag(tag);
+					else addTag(tag);
+				}}
+				ref={ref}
 				style={{
 					// fix to distorition on animation (border-radius distorts if size animates)
 					// solution is to set style inline
 					borderRadius: 999,
 					...rest.style,
-				}}
-				ref={ref}
-				onClick={() => {
-					if (isSelected) removeTag(tag);
-					else addTag(tag);
 				}}
 			>
 				<motion.span layout>{tag}</motion.span>

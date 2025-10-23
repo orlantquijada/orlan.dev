@@ -7,12 +7,10 @@ import Copy from "@/icons/copy-filled.svg?react";
 import GitHub from "@/icons/github.svg?react";
 import Send from "@/icons/send-filled.svg?react";
 import Twitter from "@/icons/twitter.svg?react";
-
+import { EMAIL } from "@/utils/constants";
 import { Button, buttonStyles } from "../Button";
 import * as Dialog from "../Dialog";
 import ContactDetail from "./ContactDetail";
-
-import { EMAIL } from "@/utils/constants";
 import styles from "./ContactDialog.module.css";
 
 export default function ContactDialog({ children }: { children: ReactNode }) {
@@ -30,23 +28,23 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
 	return (
 		<Dialog.Root trigger={children}>
 			<div className="flex flex-col gap-6 md:gap-8">
-				<Dialog.Title className="text-xl font-medium md:text-2xl">
+				<Dialog.Title className="font-medium text-xl md:text-2xl">
 					Contact
 				</Dialog.Title>
 
 				<div className="flex flex-col gap-8 text-sm md:text-base">
-					<ContactDetail title="Email" description={EMAIL}>
+					<ContactDetail description={EMAIL} title="Email">
 						<div className="flex gap-2">
 							<a
-								href={`mailto:${EMAIL}`}
 								className={twMerge(
 									buttonStyles({
 										className: "flex items-center gap-2 active:scale-95",
 										translucent: true,
-									}),
+									})
 								)}
-								target="_blank"
+								href={`mailto:${EMAIL}`}
 								rel="noopener noreferrer"
+								target="_blank"
 							>
 								<Send className={iconStyles()} />
 								Compose
@@ -56,10 +54,10 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
 								onClick={copyEmail}
 								translucent
 							>
-								{!copied ? (
-									<Copy className={iconStyles()} />
-								) : (
+								{copied ? (
 									<Check className={iconStyles()} />
+								) : (
+									<Copy className={iconStyles()} />
 								)}
 								Copy
 							</Button>
@@ -69,8 +67,8 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
 					<div className="h-auto w-full border border-gray6" />
 
 					<ContactDetail
-						title="Stay in touch"
 						description="I'm more active on twitter"
+						title="Stay in touch"
 					>
 						<div className="flex gap-4">
 							<Social href="https://github.com/orlantquijada">
@@ -93,9 +91,9 @@ function Social(props: ComponentProps<"a">) {
 	return (
 		<a
 			{...props}
-			className="flex items-center gap-1 rounded-full p-1 pr-2 outline-offset-2 transition-colors hover:bg-gray-a3 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gray7"
-			target="_blank"
+			className="flex items-center gap-1 rounded-full p-1 pr-2 outline-offset-2 transition-colors hover:bg-gray-a3 focus-visible:outline-gray7"
 			rel="noopener noreferrer"
+			target="_blank"
 		/>
 	);
 }

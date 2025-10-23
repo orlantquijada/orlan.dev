@@ -1,20 +1,21 @@
 {
-	"extends": "astro/tsconfigs/strictest",
-	"compilerOptions": {
-		"plugins": [
-			{
-				"name": "@astrojs/ts-plugin"
-			}
-		],
-		"target": "ES2021",
-		"baseUrl": ".",
-		"paths": {
-			"@/*": ["src/*"]
-		},
-		"jsx": "react-jsx",
-		"jsxImportSource": "react",
-		"incremental": true
-	},
-	"include": [".astro/types.d.ts", "**/*"],
-	"exclude": ["dist"]
+  "extends": "astro/tsconfigs/strictest",
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "@astrojs/ts-plugin"
+      }
+    ],
+    "target": "ES2021",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "incremental": true,
+    "strictNullChecks": true
+  },
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"]
 }

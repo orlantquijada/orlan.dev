@@ -23,26 +23,26 @@ export function MenuPanel() {
 				<h4 className="mb-3 text-gray10 dark:text-gray11">Connect</h4>
 				<div className="flex flex-col">
 					<ConnectLink
+						href="https://twitter.com/orlantquijada"
 						Icon={<Twitter className="h-5 w-5" />}
 						label="Twitter"
-						href="https://twitter.com/orlantquijada"
 					/>
 					<ConnectLink
+						href="https://github.com/orlantquijada"
 						Icon={<GitHub className="h-5 w-5" />}
 						label="GitHub"
-						href="https://github.com/orlantquijada"
 					/>
 				</div>
 			</div>
 
 			<button
-				type="button"
 				className={menuItemStyles({
 					className: "text-left text-sm transition-all hover:translate-x-1",
 				})}
 				onClick={() => {
 					if (isBrowser) toggleTheme();
 				}}
+				type="button"
 			>
 				<div className="flex justify-center">
 					<Logo className="h-4 w-4" />
@@ -59,12 +59,12 @@ function SendButton() {
 	return (
 		<ContactDialog>
 			<button
-				type="button"
 				className={menuItemStyles({
 					className:
-						"-mx-8 border-t border-gray7 px-8 text-left transition-colors hover:bg-gray-a3",
+						"-mx-8 border-gray7 border-t px-8 text-left transition-colors hover:bg-gray-a3",
 					intent: "sendBtn",
 				})}
+				type="button"
 			>
 				<span className={bulletStyles({ className: "bg-accent" })} />
 				Send me a message
@@ -94,7 +94,7 @@ function ConnectLink(props: { href: string; label: string; Icon: ReactNode }) {
 	const { href, label, Icon } = props;
 
 	return (
-		<a href={href} target="_blank" rel="noopener noreferrer">
+		<a href={href} rel="noopener noreferrer" target="_blank">
 			<MenuItem Icon={<ArrowTopRight className={`${styles.icon} h-4 w-4`} />}>
 				{Icon}
 				{label}
@@ -119,7 +119,7 @@ function Nav() {
 			<ul className="flex flex-col">
 				{links.map((link) => (
 					<li key={link.label}>
-						<a href={link.href} className="font-medium">
+						<a className="font-medium" href={link.href}>
 							<MenuItem
 								Icon={
 									<ArrowRight
@@ -150,6 +150,6 @@ const menuItemStyles = cva(
 		defaultVariants: {
 			intent: "default",
 		},
-	},
+	}
 );
-const bulletStyles = cva(["w-2 h-2 rounded-full justify-self-center"]);
+const bulletStyles = cva(["h-2 w-2 justify-self-center rounded-full"]);
