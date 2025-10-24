@@ -1,5 +1,6 @@
+"use strict";
 module.exports = {
   plugins: {
-    '@pandacss/dev/postcss': {},
+    "@pandacss/dev/postcss": {},
   },
-}
+};

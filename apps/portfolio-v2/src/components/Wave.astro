@@ -1,34 +1,12 @@
 ---
-export interface Props {
-	title: string;
-}
+	export interface Props {
+		title: string;
+	}
 
-const { title } = Astro.props;
-const characters = title.split("");
+	const { title } = Astro.props;
+	const characters = title.split("");
 ---
-
 {
   characters.map((character, index) => (
-    <span aria-hidden data-wave style={{ '--character': index }}>
-      {character === ' ' ? <>&nbsp;</> : character}
-    </span>
-  ))
-}
-
-<style>
-  [data-wave] {
-    display: inline-block;
-    animation: 0.8s ease-in-out calc(var(--character) * -0.1s) infinite
-      alternate both wave;
-    will-change: transform;
-  }
-
-  @keyframes wave {
-    from {
-      transform: translateY(-3%);
-    }
-    to {
-      transform: translateY(3%);
-    }
-  }
-</style>
+    <span aria-hidden data-wave style={{ '--character': index }}
+>{character === ' ' ? <>&nbsp;</> : character}

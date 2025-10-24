@@ -1,17 +1,16 @@
 ---
-import { Icon } from "astro-icon/components";
-import BrowserIconButton from "./BrowserIconButton/BrowserIconButton.astro";
+	import { Icon } from "astro-icon/components";
+	import BrowserIconButton from "./BrowserIconButton/BrowserIconButton.astro";
 
-type Props = {
-	title: string;
-	className?: string;
-	href?: string;
-	aspect: "phone" | "desktop";
-};
+	type Props = {
+		title: string;
+		className?: string;
+		href?: string;
+		aspect: "phone" | "desktop";
+	};
 
-const props = Astro.props;
+	const props = Astro.props;
 ---
-
 <div
   class:list={[
     "group relative w-full overflow-hidden rounded-lg border border-gray5 shadow-[0px_3px_10px_rgba(0,0,0,0.15)] shadow-black/15 transition-transform hover:-translate-y-1",
@@ -52,11 +51,11 @@ const props = Astro.props;
 </div>
 
 <style>
-  .titlebar {
-    background-image: url(/traffic-lights.svg), url(/globe.svg);
-    background-position:
-      8px center,
-      right 8px center;
-    background-repeat: no-repeat, no-repeat;
-  }
+	.titlebar {
+		background-image: url(/traffic-lights.svg), url(/globe.svg);
+		background-position:
+			8px center,
+			right 8px center;
+		background-repeat: no-repeat, no-repeat;
+	}
 </style>

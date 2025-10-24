@@ -48,7 +48,7 @@ export function Button(props: ButtonProps) {
 	return (
 		<button
 			{..._props}
-			className={twMerge(buttonStyles({ className, translucent }))}
+			class={twMerge(buttonStyles({ className, translucent }))}
 		>
 			{children}
 		</button>

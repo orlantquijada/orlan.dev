@@ -1,29 +1,29 @@
 ---
-export type Props = {
-	className?: string;
-};
+	export type Props = {
+		className?: string;
+	};
 
-const { className } = Astro.props;
+	const { className } = Astro.props;
 ---
-
 <button
-  class:list={[
+	class:list={[
     'h-10 rounded-lg border border-gray7 bg-gray1 px-3 transition-colors hover:border-gray8 dark:border-gray6 dark:bg-gray-a3',
     className,
   ]}
-  ><slot />
+>
+	<slot/>
 </button>
 
 <style>
-  button {
-    --shadow-color: 0 0 0;
-  }
-  html.dark button {
-    --shadow-color: 255 255 255;
-  }
+	button {
+		--shadow-color: 0 0 0;
+	}
+	html.dark button {
+		--shadow-color: 255 255 255;
+	}
 
-  button {
-    box-shadow: 0 3px 2px -2px rgba(var(--shadow-color) / 0.1);
-    -webkit-tap-highlight-color: transparent;
-  }
+	button {
+		box-shadow: 0 3px 2px -2px rgba(var(--shadow-color) / 0.1);
+		-webkit-tap-highlight-color: transparent;
+	}
 </style>

@@ -1,65 +1,65 @@
 ---
-import SayHi from "./Contact/SayHi";
-import Projects from "./Projects.astro";
+	import SayHi from "./Contact/SayHi";
+	import Projects from "./Projects.astro";
 ---
-
 <div class="flex flex-col items-start gap-12">
-  <h2
-    class="font-family-redaction sticky top-10 flex h-10 items-center text-base italic"
-  >
-    Orlan Quijada
-  </h2>
-  <p class="tracking-normal">
-    A <span class="font-family-redaction text-base italic">product-focused</span>
-     Fullstsack Engineer based in the Philippines. Currently the Lead Software
-    Engineer at <a
-      class="link"
-      href="https://play.google.com/store/apps/details?id=com.felicityincorporated.felicity&pcampaignid=web_share"
-      target="_blank">Felicity</a
-    >.
-  </p>
-  <!-- <p class="text-base"> -->
-  <!--   You can learn more about me by reading -->
-  <!--   <a href="/#" class="link">my blog</a>, perusing my personal wiki of <a -->
-  <!--     href="/notes" -->
-  <!--     class="link">public notes</a -->
-  <!--   > and <a href="/#" class="link">bookmarks</a>. -->
-  <!-- </p> -->
-  <p class="text-base">
-    You can learn more about me by perusing my personal wiki of <a
-      href="/notes"
-      class="link">public notes</a
-    >.
-  </p>
+	<h2
+		class="font-family-redaction sticky top-10 flex h-10 items-center text-base italic"
+	>
+		Orlan Quijada
+	</h2>
+	<p class="tracking-normal">
+		A
+		<span class="font-family-redaction text-base italic">product-focused</span>
+		Fullstsack Engineer based in the Philippines. Currently the Lead Software
+		Engineer at
+		<a
+			class="link"
+			href="https://play.google.com/store/apps/details?id=com.felicityincorporated.felicity&pcampaignid=web_share"
+			target="_blank"
+			>Felicity</a
+		>.
+	</p>
+	<!-- <p class="text-base"> -->
+	<!--   You can learn more about me by reading -->
+	<!--   <a href="/#" class="link">my blog</a>, perusing my personal wiki of <a -->
+	<!--     href="/notes" -->
+	<!--     class="link">public notes</a -->
+	<!--   > and <a href="/#" class="link">bookmarks</a>. -->
+	<!-- </p> -->
+	<p class="text-base">
+		You can learn more about me by perusing my personal wiki of
+		<a href="/notes" class="link">public notes</a>.
+	</p>
 
-  <SayHi client:load />
+	<SayHi client:load/>
 
-  <Projects />
+	<Projects/>
 </div>
 
 <style>
-  button,
-  a,
-  u {
-    text-underline-offset: 4px;
-    padding: 0 4px;
-    margin: 0 -3px;
-    border-radius: 4px;
-  }
+	button,
+	a,
+	u {
+		text-underline-offset: 4px;
+		padding: 0 4px;
+		margin: 0 -3px;
+		border-radius: 4px;
+	}
 
-  .link {
-    display: inline-block;
-    text-decoration: underline;
-    text-decoration-color: var(--gray9);
-    text-decoration-thickness: 1px;
-  }
+	.link {
+		display: inline-block;
+		text-decoration: underline;
+		text-decoration-color: var(--gray9);
+		text-decoration-thickness: 1px;
+	}
 
-  .link:hover,
-  .link:focus-within {
-    color: var(--selection-color);
-    background-color: var(--accent);
-    text-decoration-line: underline;
-    text-decoration-style: wavy;
-    outline: none;
-  }
+	.link:hover,
+	.link:focus-within {
+		color: var(--selection-color);
+		background-color: var(--accent);
+		text-decoration-line: underline;
+		text-decoration-style: wavy;
+		outline: none;
+	}
 </style>

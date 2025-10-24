@@ -28,7 +28,7 @@ export default function Chip({ ref, ...props }: ChipProps) {
 
 	return (
 		<Comp
-			className={twMerge(chipStyles({ color, size, transluscent, className }))}
+			class={twMerge(chipStyles({ color, size, transluscent, className }))}
 			ref={ref}
 		>
 			{children}

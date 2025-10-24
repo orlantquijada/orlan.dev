@@ -1,20 +1,19 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import { ViewTransitions } from "astro:transitions";
-import MetaData from "@/components/Notes/NoteDetailComponents/MetaData.astro";
-import { getViewTransitionName } from "@/lib/notes";
-import { formatDate } from "@repo/utils";
-import { Icon } from "astro-icon/components";
-import Layout from "./Layout.astro";
+	import type { CollectionEntry } from "astro:content";
+	import { ViewTransitions } from "astro:transitions";
+	import { formatDate } from "@repo/utils";
+	import { Icon } from "astro-icon/components";
+	import MetaData from "@/components/Notes/NoteDetailComponents/MetaData.astro";
+	import { getViewTransitionName } from "@/lib/notes";
+	import Layout from "./Layout.astro";
 
-type Props = CollectionEntry<"notes">["data"];
+	type Props = CollectionEntry<"notes">["data"];
 
-const data = Astro.props;
+	const data = Astro.props;
 ---
-
 <Layout title={data.title}>
-  <ViewTransitions slot="head" />
-  <div class="grid place-items-start gap-2">
+	<ViewTransitions slot="head"/>
+	<div class="grid place-items-start gap-2">
     <h1
       class="text-balance text-3xl font-medium"
       style={`view-transition-name:${getViewTransitionName(data.title)}`}
@@ -28,7 +27,7 @@ const data = Astro.props;
     }
   </div>
 
-  <div class="flex gap-6">
+	<div class="flex gap-6">
     <MetaData>
       <Icon name="tag" slot="icon" />
 
@@ -76,35 +75,35 @@ const data = Astro.props;
     }
   </div>
 
-  <hr class="my-8 w-full border-t-2 border-t-gray-a4" />
+	<hr class="my-8 w-full border-t-2 border-t-gray-a4">
 
-  <article>
-    <slot />
-  </article>
+	<article>
+		<slot/>
+	</article>
 </Layout>
 
 <style lang="css">
-  [data-icon] {
-    width: 1rem;
-    height: 1rem;
-  }
+	[data-icon] {
+		width: 1rem;
+		height: 1rem;
+	}
 
-  [data-icon='wrench'] {
-    width: 15px;
-    height: 15px;
-  }
+	[data-icon="wrench"] {
+		width: 15px;
+		height: 15px;
+	}
 
-  .tag {
-    display: grid;
-    grid-template-columns: 1fr auto;
-  }
+	.tag {
+		display: grid;
+		grid-template-columns: 1fr auto;
+	}
 
-  .tag:not(:last-of-type)::after {
-    content: '·';
-    margin-inline: 0.25rem;
-  }
+	.tag:not(:last-of-type)::after {
+		content: "·";
+		margin-inline: 0.25rem;
+	}
 
-  :global(article > :where(:not(:last-child))) {
-    margin-bottom: 1rem;
-  }
+	:global(article > :where(:not(:last-child))) {
+		margin-bottom: 1rem;
+	}
 </style>

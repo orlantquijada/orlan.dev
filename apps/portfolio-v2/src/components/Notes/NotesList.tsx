@@ -45,7 +45,7 @@ export default function NotesList(props: Props) {
 
 	return (
 		<div
-			className={twMerge(
+			class={twMerge(
 				cx(className, styles.notesList, [
 					"h-full sm:h-(--smHeight) md:h-(--mdHeight)",
 				])

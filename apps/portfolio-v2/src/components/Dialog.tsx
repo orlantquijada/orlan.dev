@@ -45,9 +45,9 @@ export function Root(props: Props) {
 		<DialogPrimitive.Root>
 			<DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
 			<DialogPrimitive.Portal>
-				<DialogPrimitive.Overlay className={overlayStyles()} />
+				<DialogPrimitive.Overlay class={overlayStyles()} />
 				<DialogPrimitive.Content
-					className={twMerge(contentStyles({ transluscent: true }))}
+					class={twMerge(contentStyles({ transluscent: true }))}
 				>
 					{children}
 				</DialogPrimitive.Content>

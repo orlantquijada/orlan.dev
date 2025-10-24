@@ -1,84 +1,83 @@
 ---
-import "@/styles/global.css";
-import Fonts from "@/components/Fonts.astro";
-import ThemeToggle from "@/components/ThemeToggle.astro";
+	import "@/styles/global.css";
+	import Fonts from "@/components/Fonts.astro";
+	import ThemeToggle from "@/components/ThemeToggle.astro";
 
-export interface Props {
-	title: string;
-}
+	export interface Props {
+		title: string;
+	}
 
-const { title } = Astro.props;
+	const { title } = Astro.props;
 ---
-
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
-    <slot name="head" />
-    <Fonts />
-    <ThemeToggle />
-  </head>
-  <body>
-    <slot />
-    <style is:global>
-      /* add global styles + reset */
-      *,
-      *::after,
-      *::before {
-        box-sizing: border-box;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
-      * {
-        min-width: 0;
-      }
-      ::selection {
-        /* background-color: var(--violetA5);
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width">
+		<link rel="icon" href="/favicon.svg">
+		<meta name="generator" content={Astro.generator}>
+		<title>{title}</title>
+		<slot name="head"/>
+		<Fonts/>
+		<ThemeToggle/>
+	</head>
+	<body>
+		<slot/>
+		<style is:global>
+			/* add global styles + reset */
+			*,
+			*::after,
+			*::before {
+				box-sizing: border-box;
+				-webkit-font-smoothing: antialiased;
+				-moz-osx-font-smoothing: grayscale;
+			}
+			* {
+				min-width: 0;
+			}
+			::selection {
+				/* background-color: var(--violetA5);
         color: var(--violet12); */
 
-        background-color: var(--selection-bg);
-        color: var(--selection-color);
-      }
-      html {
-        display: grid;
-        min-height: 100vh;
-        min-height: 100dvh;
-      }
+				background-color: var(--selection-bg);
+				color: var(--selection-color);
+			}
+			html {
+				display: grid;
+				min-height: 100vh;
+				min-height: 100dvh;
+			}
 
-      body {
-        background-color: var(--gray1);
-        color: var(--gray12);
+			body {
+				background-color: var(--gray1);
+				color: var(--gray12);
 
-        min-height: 100%;
-        display: flex;
-        flex-direction: column;
-        font-family: var(--sans);
-      }
+				min-height: 100%;
+				display: flex;
+				flex-direction: column;
+				font-family: var(--sans);
+			}
 
-      a,
-      button {
-        -webkit-tap-highlight-color: transparent;
-      }
+			a,
+			button {
+				-webkit-tap-highlight-color: transparent;
+			}
 
-      ::-webkit-scrollbar {
-        width: 14px;
-      }
-      ::-webkit-scrollbar-thumb {
-        background-color: var(--gray-a6);
-        border-radius: 14px;
-        background-clip: content-box;
-        border: 4px solid transparent;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background-color: var(--gray-a7);
-      }
-      ::-webkit-scrollbar-track {
-        background: transparent;
-      }
-    </style>
-  </body>
+			::-webkit-scrollbar {
+				width: 14px;
+			}
+			::-webkit-scrollbar-thumb {
+				background-color: var(--gray-a6);
+				border-radius: 14px;
+				background-clip: content-box;
+				border: 4px solid transparent;
+			}
+			::-webkit-scrollbar-thumb:hover {
+				background-color: var(--gray-a7);
+			}
+			::-webkit-scrollbar-track {
+				background: transparent;
+			}
+		</style>
+	</body>
 </html>

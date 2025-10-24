@@ -5,7 +5,7 @@ type Props = {
 export default function MenuIcon({ open }: Props) {
 	return (
 		<svg
-			className={`h-[1em] w-[1em] stroke-gray10 ${open ? "translate-y-1" : ""}`}
+			class={`h-[1em] w-[1em] stroke-gray10 ${open ? "translate-y-1" : ""}`}
 			viewBox="0 0 24 24"
 		>
 			<title>Menu Icon</title>

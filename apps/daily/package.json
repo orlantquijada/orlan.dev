@@ -7,6 +7,7 @@
     "build": "contentlayer2 build && next build",
     "start": "next start",
     "lint": "next lint",
+    "format": "biome check --write",
     "test": "vitest",
     "check": "biome check --fix src/",
     "prepare": "panda codegen"
@@ -34,6 +35,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "jsdom": "^20.0.0",
     "typescript": "catalog:",
+    "ultracite": "catalog:",
     "vite": "^5.0.10",
     "vitest": "^1.0.4"
   },

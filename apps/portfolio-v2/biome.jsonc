@@ -31,5 +31,5 @@
       "cssModules": true
     }
   },
-  "extends": ["ultracite"]
+  "extends": ["ultracite/core", "ultracite/react", "ultracite/astro"]
 }

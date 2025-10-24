@@ -1,28 +1,27 @@
 ---
-import { getCollection } from "astro:content";
-import { ViewTransitions } from "astro:transitions";
-import NotesWrapper from "@/components/Notes/NotesWrapper";
-import Layout from "@/layouts/Layout.astro";
-import { buildTagGraph } from "@/lib/notes";
+	import { getCollection } from "astro:content";
+	import { ViewTransitions } from "astro:transitions";
+	import NotesWrapper from "@/components/Notes/NotesWrapper";
+	import Layout from "@/layouts/Layout.astro";
+	import { buildTagGraph } from "@/lib/notes";
 
-const notesData = await getCollection("notes");
+	const notesData = await getCollection("notes");
 
-const filteredNotes = notesData.filter(({ data: { draft } }) => !draft);
-const notes = filteredNotes.map((note) => ({
-	...note.data,
-	href: `/notes/${note.id}`,
-}));
-const tagsPerNote = filteredNotes.map((note) => [...new Set(note.data.tags)]);
+	const filteredNotes = notesData.filter(({ data: { draft } }) => !draft);
+	const notes = filteredNotes.map((note) => ({
+		...note.data,
+		href: `/notes/${note.id}`,
+	}));
+	const tagsPerNote = filteredNotes.map((note) => [...new Set(note.data.tags)]);
 
-const tags = [...new Set(tagsPerNote.flat())];
-const tagsGraph = buildTagGraph(...tagsPerNote);
+	const tags = [...new Set(tagsPerNote.flat())];
+	const tagsGraph = buildTagGraph(...tagsPerNote);
 ---
-
 <Layout title="🌱 Notes — Orlan Quijada">
-  <ViewTransitions slot="head" />
-  <h1 class="text-3xl font-medium">Notes</h1>
-  <p class="mt-2 max-w-md text-xl">
-    A personal wiki of notes, code snippets, and more stuff on the internet.
-  </p>
-  <NotesWrapper tags={tags} tagsGraph={tagsGraph} notes={notes} client:load />
+	<ViewTransitions slot="head"/>
+	<h1 class="text-3xl font-medium">Notes</h1>
+	<p class="mt-2 max-w-md text-xl">
+		A personal wiki of notes, code snippets, and more stuff on the internet.
+	</p>
+	<NotesWrapper tags={tags} tagsGraph={tagsGraph} notes={notes} client:load/>
 </Layout>

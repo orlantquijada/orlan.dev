@@ -31,7 +31,7 @@ export default function NoteTagsList(props: Props) {
 
 	return (
 		<LayoutGroup>
-			<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
+			<div class="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
 				<MotionConfig transition={transitions.snappy}>
 					<AnimatePresence mode="popLayout">
 						{isSelecting ? (
@@ -41,7 +41,7 @@ export default function NoteTagsList(props: Props) {
 									initial={{ opacity: 0 }}
 									onClick={() => clearTags()}
 								>
-									<Close className={styles.icon} />
+									<Close class={styles.icon} />
 								</motion.button>
 							</Chip>
 						) : (
@@ -126,13 +126,13 @@ const Tag = (props: TagProps) => {
 	return (
 		<Chip
 			asChild
-			className="will-change-[opacity,transform]"
+			class="will-change-[opacity,transform]"
 			color={isSelected || tag === "all" ? "primary" : "gray"}
 			key={tag}
 		>
 			<motion.button
 				{...rest}
-				className={_selectedTags.length > 1 ? styles.chip : ""}
+				class={_selectedTags.length > 1 ? styles.chip : ""}
 				data-selected={isSelected}
 				onClick={() => {
 					if (isSelected) removeTag(tag);

@@ -1,9 +1,9 @@
 ---
-import type { HTMLAttributes } from "astro/types";
+	import type { HTMLAttributes } from "astro/types";
 
-type Props = HTMLAttributes<"code">;
-const { class: className, ...props } = Astro.props;
+	type Props = HTMLAttributes<"code">;
+	const props = Astro.props;
 ---
-
-<code class:list={['rounded-md bg-gray7 p-1 text-xs',className]} {...props}><slot /></code>
-
+<code {...props} class:list={['rounded-md bg-gray7 p-1 text-xs',props.class]}>
+	<slot/>
+</code>

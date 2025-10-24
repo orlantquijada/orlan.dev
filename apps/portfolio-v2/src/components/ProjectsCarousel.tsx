@@ -55,7 +55,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 
 	return (
 		<section
-			className="relative mt-8 h-(--fullWidth) w-full md:h-auto"
+			class="relative mt-8 h-(--fullWidth) w-full md:h-auto"
 			ref={scrollableRef}
 			style={
 				{
@@ -65,15 +65,15 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 			}
 		>
 			<div
-				className={cn(
+				class={cn(
 					"-mx-6 sticky top-[96px] flex flex-col items-start overflow-x-clip px-6",
 					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible"
 				)}
 			>
-				<h3 className="mb-6 text-gray11 text-sm">Projects</h3>
+				<h3 class="mb-6 text-gray11 text-sm">Projects</h3>
 
 				<motion.div
-					className={cn("flex will-change-transform", "md:h-full md:w-full")}
+					class={cn("flex will-change-transform", "md:h-full md:w-full")}
 					style={
 						{
 							"--itemWidth": `${width}px`,

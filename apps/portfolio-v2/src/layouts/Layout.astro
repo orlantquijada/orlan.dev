@@ -1,70 +1,69 @@
 ---
-import Footer from "@/components/Footer.astro";
-import Header from "@/components/Header.astro";
-import BaseLayout from "./BaseLayout.astro";
+	import Footer from "@/components/Footer.astro";
+	import Header from "@/components/Header.astro";
+	import BaseLayout from "./BaseLayout.astro";
 
-export interface Props {
-	title: string;
-	className?: string;
-}
+	export interface Props {
+		title: string;
+		className?: string;
+	}
 
-const { title, className } = Astro.props;
+	const { title, className } = Astro.props;
 ---
-
 <BaseLayout title={title}>
-  <slot name="head" slot="head" />
-  <Header class="mx-auto w-screen max-w-176 px-6" />
-  <main class:list={['mx-auto w-screen max-w-176 px-6 py-24', className]}>
-    <div class="gradient"></div>
-    <slot />
-  </main>
-  <Footer class="mx-auto w-screen max-w-176 px-6" />
+	<slot name="head" slot="head"/>
+	<header class="mx-auto w-screen max-w-176 px-6"/>
+	<main class:list={['mx-auto w-screen max-w-176 px-6 py-24', className]}>
+		<div class="gradient"></div>
+		<slot/>
+	</main>
+	<footer class="mx-auto w-screen max-w-176 px-6"/>
 </BaseLayout>
 
 <style>
-  main {
-    flex-grow: 1;
-    width: 100%;
-    align-content: flex-start;
-  }
-  main::before,
-  main::after,
-  .gradient {
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    inset: 0;
-  }
-  main::before {
-    background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, var(--gray1) 100%);
-    content: '';
-    z-index: -1;
-  }
-  main::after {
-    z-index: -2;
-    /* background-image: url('/grid.svg'); */
-    background-image: url('/grid2.svg');
-    /* background-image: url('/waves.svg'); */
-    opacity: 0.2;
-    content: '';
-    filter: invert(0.8);
-    /* alternative */
-    /* filter: invert(1); */
-  }
-  html.dark main::after {
-    filter: unset;
-  }
+	main {
+		flex-grow: 1;
+		width: 100%;
+		align-content: flex-start;
+	}
+	main::before,
+	main::after,
+	.gradient {
+		width: 100vw;
+		height: 100vh;
+		position: fixed;
+		inset: 0;
+	}
+	main::before {
+		background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, var(--gray1) 100%);
+		content: "";
+		z-index: -1;
+	}
+	main::after {
+		z-index: -2;
+		/* background-image: url('/grid.svg'); */
+		background-image: url("/grid2.svg");
+		/* background-image: url('/waves.svg'); */
+		opacity: 0.2;
+		content: "";
+		filter: invert(0.8);
+		/* alternative */
+		/* filter: invert(1); */
+	}
+	html.dark main::after {
+		filter: unset;
+	}
 
-  .gradient {
-    /* might be good to tweek */
-    /* mix-blend-mode: difference; */
-    /* mix-blend-mode: hard-light; */
+	.gradient {
+		/* might be good to tweek */
+		/* mix-blend-mode: difference; */
+		/* mix-blend-mode: hard-light; */
 
-    content: '';
-    z-index: -3;
-    width: 100%;
-    filter: saturate(150%);
-    /*
+		content: "";
+		z-index: -3;
+		width: 100%;
+		filter: saturate(150%);
+		/*
     background-image: radial-gradient(
         at 27% 37%,
         var(--arc-palette-background) 0px,
@@ -102,17 +101,17 @@ const { title, className } = Astro.props;
       );
     */
 
-    opacity: 0.2;
-    background-image:
-      radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 50%),
-      radial-gradient(at 97% 21%, hsla(256, 98%, 72%, 1) 0px, transparent 50%),
-      radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
-      radial-gradient(at 10% 29%, hsla(133, 96%, 67%, 1) 0px, transparent 50%),
-      radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
-      radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
-      radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
-  }
-  html.dark .gradient {
-    opacity: 0.1;
-  }
+		opacity: 0.2;
+		background-image:
+			radial-gradient(at 27% 37%, hsla(215, 98%, 61%, 1) 0px, transparent 50%),
+			radial-gradient(at 97% 21%, hsla(256, 98%, 72%, 1) 0px, transparent 50%),
+			radial-gradient(at 52% 99%, hsla(354, 98%, 61%, 1) 0px, transparent 50%),
+			radial-gradient(at 10% 29%, hsla(133, 96%, 67%, 1) 0px, transparent 50%),
+			radial-gradient(at 97% 96%, hsla(38, 60%, 74%, 1) 0px, transparent 50%),
+			radial-gradient(at 33% 50%, hsla(222, 67%, 73%, 1) 0px, transparent 50%),
+			radial-gradient(at 79% 53%, hsla(343, 68%, 79%, 1) 0px, transparent 50%);
+	}
+	html.dark .gradient {
+		opacity: 0.1;
+	}
 </style>

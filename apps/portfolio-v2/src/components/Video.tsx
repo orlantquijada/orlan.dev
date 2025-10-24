@@ -35,7 +35,7 @@ export default function Video({
 	}, []);
 
 	return (
-		<div className={cn("relative", className)}>
+		<div class={cn("relative", className)}>
 			<video
 				autoPlay
 				controls={false}
@@ -55,7 +55,7 @@ export default function Video({
 			</video>
 
 			<button
-				className={cn(
+				class={cn(
 					browserIconButtonStyles(),
 					"absolute right-4 bottom-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100",
 					state === "paused" && "translate-y-0 opacity-100"
@@ -74,18 +74,12 @@ export default function Video({
 				type="button"
 			>
 				<span
-					className={cn(
-						"absolute opacity-0",
-						state === "paused" && "opacity-100"
-					)}
+					class={cn("absolute opacity-0", state === "paused" && "opacity-100")}
 				>
 					{playingIcon}
 				</span>
 				<span
-					className={cn(
-						"absolute opacity-0",
-						state === "playing" && "opacity-100"
-					)}
+					class={cn("absolute opacity-0", state === "playing" && "opacity-100")}
 				>
 					{pausedIcon}
 				</span>

@@ -1,11 +1,10 @@
 ---
-import Showcase from "@/components/Showcase.astro";
+	import Showcase from "@/components/Showcase.astro";
 
-const tabs = ["Home", "Company", "About", "Careers"];
-// const tabs = ['Home', 'Company']
-// const tabs = ['Home', 'Company', 'About']
+	const tabs = ["Home", "Company", "About", "Careers"];
+	// const tabs = ['Home', 'Company']
+	// const tabs = ['Home', 'Company', 'About']
 ---
-
 <Showcase
   className="overflow-clip overflow-x-auto flex justify-center items-center"
 >
@@ -24,73 +23,73 @@ const tabs = ["Home", "Company", "About", "Careers"];
 </Showcase>
 
 <style>
-  input {
-    display: none;
-  }
-  li {
-    background-color: var(--gray4);
-    position: relative;
-    border: 1px solid var(--gray6);
-  }
-  li:first-child {
-    border-top-left-radius: 0.75rem;
-    border-bottom-left-radius: 0.75rem;
-  }
-  li:last-child {
-    border-top-right-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
-  }
-  .label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-inline: 1.5rem;
-    min-height: 3rem;
-    cursor: pointer;
-  }
-  li:where(:hover) {
-    background-color: var(--gray5);
-  }
-  li:has(input:checked) {
-    background-color: transparent;
-    border-color: transparent;
-  }
-  li:has(input:checked) label {
-    color: var(--accent-violet);
-    text-decoration: underline;
-    text-underline-offset: 4px;
-    text-decoration-style: wavy;
-  }
+	input {
+		display: none;
+	}
+	li {
+		background-color: var(--gray4);
+		position: relative;
+		border: 1px solid var(--gray6);
+	}
+	li:first-child {
+		border-top-left-radius: 0.75rem;
+		border-bottom-left-radius: 0.75rem;
+	}
+	li:last-child {
+		border-top-right-radius: 0.75rem;
+		border-bottom-right-radius: 0.75rem;
+	}
+	.label {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-inline: 1.5rem;
+		min-height: 3rem;
+		cursor: pointer;
+	}
+	li:where(:hover) {
+		background-color: var(--gray5);
+	}
+	li:has(input:checked) {
+		background-color: transparent;
+		border-color: transparent;
+	}
+	li:has(input:checked) label {
+		color: var(--accent-violet);
+		text-decoration: underline;
+		text-underline-offset: 4px;
+		text-decoration-style: wavy;
+	}
 
-  /* TODO: breaks on mobile */
+	/* TODO: breaks on mobile */
 
-  li:has(input:checked) + li::before,
-  li:has(+ li input:checked)::before {
-    font-size: 1rem;
-    color: var(--accent-violet);
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, calc(100% * var(--direction, 1)));
-  }
+	li:has(input:checked) + li::before,
+	li:has(+ li input:checked)::before {
+		font-size: 1rem;
+		color: var(--accent-violet);
+		position: absolute;
+		left: 50%;
+		transform: translate(-50%, calc(100% * var(--direction, 1)));
+	}
 
-  /* immediate before selector */
-  li:has(+ li input:checked) {
-    border-top-right-radius: 0.75rem;
-    border-bottom-right-radius: 0.75rem;
-  }
+	/* immediate before selector */
+	li:has(+ li input:checked) {
+		border-top-right-radius: 0.75rem;
+		border-bottom-right-radius: 0.75rem;
+	}
 
-  /* immediate after selector */
-  li:has(input:checked) + li {
-    border-top-left-radius: 0.75rem;
-    border-bottom-left-radius: 0.75rem;
-  }
-  li:has(+ li input:checked)::before {
-    content: '↓';
-    top: 0;
-    --direction: -1;
-  }
-  li:has(input:checked) + li::before {
-    content: '↑';
-    bottom: 0;
-  }
+	/* immediate after selector */
+	li:has(input:checked) + li {
+		border-top-left-radius: 0.75rem;
+		border-bottom-left-radius: 0.75rem;
+	}
+	li:has(+ li input:checked)::before {
+		content: "↓";
+		top: 0;
+		--direction: -1;
+	}
+	li:has(input:checked) + li::before {
+		content: "↑";
+		bottom: 0;
+	}
 </style>

@@ -27,6 +27,6 @@
     "components": "workspace:*",
     "styled": "workspace:*",
     "typescript": "catalog:",
-    "ultracite": "5.6.4"
+    "ultracite": "catalog:"
   }
 }

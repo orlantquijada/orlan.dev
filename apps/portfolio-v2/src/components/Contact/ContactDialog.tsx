@@ -27,16 +27,16 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
 
 	return (
 		<Dialog.Root trigger={children}>
-			<div className="flex flex-col gap-6 md:gap-8">
-				<Dialog.Title className="font-medium text-xl md:text-2xl">
+			<div class="flex flex-col gap-6 md:gap-8">
+				<Dialog.Title class="font-medium text-xl md:text-2xl">
 					Contact
 				</Dialog.Title>
 
-				<div className="flex flex-col gap-8 text-sm md:text-base">
+				<div class="flex flex-col gap-8 text-sm md:text-base">
 					<ContactDetail description={EMAIL} title="Email">
-						<div className="flex gap-2">
+						<div class="flex gap-2">
 							<a
-								className={twMerge(
+								class={twMerge(
 									buttonStyles({
 										className: "flex items-center gap-2 active:scale-95",
 										translucent: true,
@@ -46,37 +46,37 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
 								rel="noopener noreferrer"
 								target="_blank"
 							>
-								<Send className={iconStyles()} />
+								<Send class={iconStyles()} />
 								Compose
 							</a>
 							<Button
-								className="flex items-center gap-2 active:scale-95"
+								class="flex items-center gap-2 active:scale-95"
 								onClick={copyEmail}
 								translucent
 							>
 								{copied ? (
-									<Check className={iconStyles()} />
+									<Check class={iconStyles()} />
 								) : (
-									<Copy className={iconStyles()} />
+									<Copy class={iconStyles()} />
 								)}
 								Copy
 							</Button>
 						</div>
 					</ContactDetail>
 
-					<div className="h-auto w-full border border-gray6" />
+					<div class="h-auto w-full border border-gray6" />
 
 					<ContactDetail
 						description="I'm more active on twitter"
 						title="Stay in touch"
 					>
-						<div className="flex gap-4">
+						<div class="flex gap-4">
 							<Social href="https://github.com/orlantquijada">
-								<GitHub className={iconStyles({ size: "md" })} />
+								<GitHub class={iconStyles({ size: "md" })} />
 								GitHub
 							</Social>
 							<Social href="https://twitter.com/orlantquijada">
-								<Twitter className={iconStyles({ size: "md" })} />
+								<Twitter class={iconStyles({ size: "md" })} />
 								Twitter
 							</Social>
 						</div>
@@ -91,7 +91,7 @@ function Social(props: ComponentProps<"a">) {
 	return (
 		<a
 			{...props}
-			className="flex items-center gap-1 rounded-full p-1 pr-2 outline-offset-2 transition-colors hover:bg-gray-a3 focus-visible:outline-gray7"
+			class="flex items-center gap-1 rounded-full p-1 pr-2 outline-offset-2 transition-colors hover:bg-gray-a3 focus-visible:outline-gray7"
 			rel="noopener noreferrer"
 			target="_blank"
 		/>

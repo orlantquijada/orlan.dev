@@ -1,20 +1,19 @@
 ---
-import { Menu } from "./Menu/Menu";
+	import { Menu } from "./Menu/Menu";
 
-type Props = {
-	class?: string;
-};
+	type Props = {
+		class?: string;
+	};
 
-const { class: className } = Astro.props;
+	const { class: className } = Astro.props;
 ---
-
 <header
-  class:list={[
+	class:list={[
     'sticky left-0 right-0 top-10 z-10 mt-10 flex items-center justify-between px-6',
     className,
   ]}
 >
-  {
+	{
     Astro.url.pathname !== '/' ? (
       <a href="/">
         <h1 class="font-family-redaction font-medium hover:font-semibold hover:italic md:text-base md:leading-none">
@@ -23,5 +22,5 @@ const { class: className } = Astro.props;
       </a>
     ) : null
   }
-  <Menu client:load />
+	<menu client:load/>
 </header>

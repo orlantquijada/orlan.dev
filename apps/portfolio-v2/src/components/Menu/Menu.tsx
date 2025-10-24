@@ -43,11 +43,11 @@ export function Menu() {
 	return (
 		<MotionConfig transition={transitions.punchy}>
 			<PopoverPrimitive.Root onOpenChange={setOpen} open={open}>
-				<div className="relative ml-auto flex">
+				<div class="relative ml-auto flex">
 					<PopoverPrimitive.Trigger asChild>
 						<motion.button
 							animate={open ? "open" : "closed"}
-							className={twMerge(
+							class={twMerge(
 								buttonStyles({
 									className: "z-10 flex items-center gap-3",
 									motionSafe: false,
@@ -67,7 +67,7 @@ export function Menu() {
 					</PopoverPrimitive.Trigger>
 					<PopoverPrimitive.Anchor asChild>
 						<div
-							className={twMerge(
+							class={twMerge(
 								buttonStyles({
 									className: "absolute inset-0",
 									translucent: true,
@@ -94,7 +94,7 @@ export function Menu() {
 							>
 								<motion.div
 									animate="open"
-									className={twMerge(contentStyles({ translucent: true }))}
+									class={twMerge(contentStyles({ translucent: true }))}
 									exit="closed"
 									initial="closed"
 									style={{
@@ -140,7 +140,7 @@ function MenuIcon() {
 	);
 
 	return (
-		<svg className="h-[1em] w-[1em] stroke-gray10" viewBox="0 0 24 24">
+		<svg class="h-[1em] w-[1em] stroke-gray10" viewBox="0 0 24 24">
 			<title>Menu Icon</title>
 			<motion.path
 				d="M1 8H23"

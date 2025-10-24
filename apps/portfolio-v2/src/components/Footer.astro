@@ -1,76 +1,77 @@
 ---
-import LogoIcon from "./LogoIcon.astro";
+	import LogoIcon from "./LogoIcon.astro";
 
-type Props = {
-	class?: string;
-};
+	type Props = {
+		class?: string;
+	};
 
-const { class: className } = Astro.props;
+	const { class: className } = Astro.props;
 ---
-
 <footer
-  class:list={['flex flex-col justify-center gap-4 px-6 pb-24', className]}
+	class:list={['flex flex-col justify-center gap-4 px-6 pb-24', className]}
 >
-  <div class="divider mb-6 h-4 w-full overflow-clip"></div>
+	<div class="divider mb-6 h-4 w-full overflow-clip"></div>
 
-  <ul class="flex gap-3">
-    <li>
-      <button class="theme-toggle">
-        <LogoIcon />
-      </button>
-    </li>
+	<ul class="flex gap-3">
+		<li>
+			<button class="theme-toggle">
+				<LogoIcon/>
+			</button>
+		</li>
 
-    <li class="pointer-events-none select-none text-sm">•</li>
-    <li>
-      <a href="/notes">Notes</a>
-    </li>
-    <li>
-      <a href="https://daily.orlan.dev" target="_blank">Daily</a>
-    </li>
+		<li class="pointer-events-none select-none text-sm">•</li>
+		<li>
+			<a href="/notes">Notes</a>
+		</li>
+		<li>
+			<a href="https://daily.orlan.dev" target="_blank">Daily</a>
+		</li>
 
-    <li class="ml-auto">
-      <a href="https://twitter.com/orlantquijada" target="_blank">Twitter</a>
-    </li>
-    <li>
-      <a href="https://github.com/orlantquijada" target="_blank">GitHub</a>
-    </li>
-  </ul>
+		<li class="ml-auto">
+			<a href="https://twitter.com/orlantquijada" target="_blank">Twitter</a>
+		</li>
+		<li>
+			<a href="https://github.com/orlantquijada" target="_blank">GitHub</a>
+		</li>
+	</ul>
 
-  <p class="text-sm text-gray11">
-    This portfolio is Open Sourced! View it in <a
-      href="https://www.figma.com/file/9DD7B7AKV2SN3sqo6cLWRB/Portfolio?node-id=610%3A3865"
-      target="_blank">Figma</a
-    > or <a href="https://github.com/orlantquijada/orlan.dev" target="_blank"
-      >Github</a
-    >.
-  </p>
+	<p class="text-sm text-gray11">
+		This portfolio is Open Sourced! View it in
+		<a
+			href="https://www.figma.com/file/9DD7B7AKV2SN3sqo6cLWRB/Portfolio?node-id=610%3A3865"
+			target="_blank"
+			>Figma</a
+		>or <a href="https://github.com/orlantquijada/orlan.dev" target="_blank"
+			>Github</a
+		>.
+	</p>
 </footer>
 
 <style>
-  li {
-    display: flex;
-    align-items: center;
-    font-size: var(--text-sm);
-    line-height: var(--tw-leading, var(--text-sm--line-height));
-  }
+	li {
+		display: flex;
+		align-items: center;
+		font-size: var(--text-sm);
+		line-height: var(--tw-leading, var(--text-sm--line-height));
+	}
 
-  a {
-    text-decoration: underline;
-    text-decoration-color: var(--gray8);
-    text-underline-offset: 4px;
-    text-decoration-thickness: 1px;
-  }
+	a {
+		text-decoration: underline;
+		text-decoration-color: var(--gray8);
+		text-underline-offset: 4px;
+		text-decoration-thickness: 1px;
+	}
 
-  a:hover {
-    text-decoration-color: var(--gray10);
-    text-decoration-style: wavy;
-  }
+	a:hover {
+		text-decoration-color: var(--gray10);
+		text-decoration-style: wavy;
+	}
 
-  .divider {
-    background: url('/waves2.svg');
-  }
+	.divider {
+		background: url("/waves2.svg");
+	}
 
-  html.dark .divider {
-    filter: unset;
-  }
+	html.dark .divider {
+		filter: unset;
+	}
 </style>
