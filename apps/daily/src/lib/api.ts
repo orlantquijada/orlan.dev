@@ -33,11 +33,19 @@ export function getDailies<
   if (filter) {
     const { author, day, month } = filter;
 
-    if (month) dailies = filterByKey(dailies, "month", month as Month);
-    if (day) dailies = filterByKey(dailies, "day", day);
-    if (author) dailies = filterByKey(dailies, "author", author);
+    if (month) {
+      dailies = filterByKey(dailies, "month", month as Month);
+    }
+    if (day) {
+      dailies = filterByKey(dailies, "day", day);
+    }
+    if (author) {
+      dailies = filterByKey(dailies, "author", author);
+    }
   }
-  if (select) dailies = dailies.map((daily) => pickProps(daily, select));
+  if (select) {
+    dailies = dailies.map((daily) => pickProps(daily, select));
+  }
 
   return dailies as unknown as Result[];
 }
@@ -51,7 +59,9 @@ export function getDailyToday(timezone = "Asia/Manila") {
     filter: { month: Months[today.getMonth()], day: today.getDate() },
   });
 
-  if (dailyToday.length) return dailyToday[0];
+  if (dailyToday.length) {
+    return dailyToday[0];
+  }
 }
 
 export function getPreviousMonth(month: Month) {

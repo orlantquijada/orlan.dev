@@ -131,11 +131,15 @@ export const getStaticProps: GetStaticProps<
   Record<string, never>,
   { month: Lowercase<Month> }
 > = async ({ params }) => {
-  if (!params) return { notFound: true };
+  if (!params) {
+    return { notFound: true };
+  }
 
   const month = capitalize(params.month);
 
-  if (!Months.includes(month)) return { notFound: true };
+  if (!Months.includes(month)) {
+    return { notFound: true };
+  }
 
   return {
     props: {},

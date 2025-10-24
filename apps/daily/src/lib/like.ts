@@ -42,7 +42,9 @@ export const getAllLiked = () => {
     for (const month of Months) {
       if (key.startsWith(`${DAILY_KEY}${month}`)) {
         const { success, data } = parseKey(key);
-        if (success) likes.push(data);
+        if (success) {
+          likes.push(data);
+        }
       }
     }
   });

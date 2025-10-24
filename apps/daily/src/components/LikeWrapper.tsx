@@ -30,7 +30,7 @@ export default function LikeWrapper({ children, month, day, onLike }: Props) {
         x: e.pageX,
         y: e.pageY,
         rotate: 0,
-        key: new Date().getTime(),
+        key: Date.now(),
       });
       like({ month, day });
       onLike?.();

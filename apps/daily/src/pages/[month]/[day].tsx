@@ -43,14 +43,18 @@ export const getStaticProps: GetStaticProps<
   { daily: Daily },
   { month: Lowercase<Month>; day: string }
 > = async ({ params }) => {
-  if (!params) return { notFound: true };
+  if (!params) {
+    return { notFound: true };
+  }
 
   const { day, month } = params;
   const daily = getDailies({
     filter: { day: Number.parseInt(day, 10), month: capitalize(month) },
   });
 
-  if (!daily.length) return { notFound: true };
+  if (!daily.length) {
+    return { notFound: true };
+  }
 
   return {
     props: {

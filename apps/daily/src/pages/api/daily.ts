@@ -26,9 +26,11 @@ export default function handler(
 ) {
   const dailyToday = getDailyToday(timezone as string);
 
-  if (dailyToday) res.status(200).json(transformData(dailyToday));
-  else
+  if (dailyToday) {
+    res.status(200).json(transformData(dailyToday));
+  } else {
     res.status(404).json({
       message: "No entry found for today.",
     });
+  }
 }

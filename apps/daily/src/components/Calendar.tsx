@@ -26,8 +26,9 @@ const CalendarContext = createContext<
 function useCalendar() {
   const context = useContext(CalendarContext);
 
-  if (context === undefined)
+  if (context === undefined) {
     throw new Error("Must be used within a CalendarProvider");
+  }
 
   return context;
 }
@@ -56,8 +57,9 @@ export function Root({
   );
 
   useEffect(() => {
-    if (onChangeCurrentMonthDate)
+    if (onChangeCurrentMonthDate) {
       onChangeCurrentMonthDate(currentMonthStartDate);
+    }
   }, [currentMonthStartDate, onChangeCurrentMonthDate]);
 
   return (
@@ -80,7 +82,9 @@ export function PreviousMonthButton(props: ComponentProps<"button">) {
       onClick={(e) => {
         handleClick();
 
-        if (props.onClick) props.onClick(e);
+        if (props.onClick) {
+          props.onClick(e);
+        }
       }}
     />
   );
@@ -100,7 +104,9 @@ export function NextMonthButton(props: ComponentProps<"button">) {
       onClick={(e) => {
         handleClick();
 
-        if (props.onClick) props.onClick(e);
+        if (props.onClick) {
+          props.onClick(e);
+        }
       }}
     />
   );
@@ -120,7 +126,9 @@ export function ResetToTodayButton(props: ComponentProps<"button">) {
       onClick={(e) => {
         handleClick();
 
-        if (props.onClick) props.onClick(e);
+        if (props.onClick) {
+          props.onClick(e);
+        }
       }}
     />
   );
@@ -146,13 +154,14 @@ export function Days<TIncludeAdjacent extends boolean>(props: {
     end: includeAdjacentMonths ? endOfWeek(endOfMonthDate) : endOfMonthDate,
   });
 
-  if (includeAdjacentMonths)
+  if (includeAdjacentMonths) {
     return children(
       days.map((day) => ({
         value: day,
         isInCurrentMonth: isSameMonth(day, currentMonthStartDate),
       })) as DaysResult<true>[]
     );
+  }
 
   return children(
     days.map((day) => ({ value: day })) as DaysResult<TIncludeAdjacent>[]

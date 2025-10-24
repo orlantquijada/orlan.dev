@@ -9,7 +9,9 @@ export function useShowActions() {
   const [loading, isTabDimensions] = useIsMinWidthTabDimensions();
 
   // always show on desktop
-  if (!(loading || isTabDimensions)) return [ref, true] as const;
+  if (!(loading || isTabDimensions)) {
+    return [ref, true] as const;
+  }
 
   const showActions = isContentScrollable ? show : true;
   return [ref, showActions] as const;
@@ -39,8 +41,9 @@ function useIsContentScrollable() {
     const htmlElement = document.querySelector("html");
     const contentClientHeight = contentRef.current?.clientHeight;
 
-    if (htmlElement && contentClientHeight)
+    if (htmlElement && contentClientHeight) {
       setIsContentScrollable(contentClientHeight > htmlElement.clientHeight);
+    }
   }, []);
 
   return [contentRef, Boolean(isContentScrollable)] as const;
@@ -53,7 +56,9 @@ export function useIsMinWidthTabDimensions() {
 
   useIsomorphicLayoutEffect(() => {
     const htmlElement = document.querySelector("html");
-    if (htmlElement) setIsTabDimensions(htmlElement.clientWidth < TAB_WIDTH);
+    if (htmlElement) {
+      setIsTabDimensions(htmlElement.clientWidth < TAB_WIDTH);
+    }
   }, []);
 
   const loading = isTabDimensions === undefined;

@@ -237,14 +237,20 @@ function Actions({
   const ref = useRef<HTMLDivElement>(null);
 
   useClickOutside(ref, () => {
-    if (isOnTabDimensions) setOpen(false);
+    if (isOnTabDimensions) {
+      setOpen(false);
+    }
   });
 
   useIsomorphicLayoutEffect(() => {
-    if (!loading) setOpen(!isOnTabDimensions);
+    if (!loading) {
+      setOpen(!isOnTabDimensions);
+    }
   }, [loading]);
 
-  if (loading) return null;
+  if (loading) {
+    return null;
+  }
 
   return (
     <StyledActions
@@ -257,8 +263,11 @@ function Actions({
       <FooterButton
         css={{ mb: "0.25rem", mt: ".5rem" }}
         onClick={() => {
-          if (open) setOpen(false);
-          else setOpen(true);
+          if (open) {
+            setOpen(false);
+          } else {
+            setOpen(true);
+          }
         }}
         size="small"
       >

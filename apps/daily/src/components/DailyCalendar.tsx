@@ -55,9 +55,13 @@ export default function DailyCalendar({ month }: { month: Month }) {
 
   const handleRoute = (direction: "next" | "prev" | "reset") => {
     let toMonth = "";
-    if (direction === "reset") toMonth = getMonthToday();
-    else if (direction === "next") toMonth = getNextMonth(month);
-    else if (direction === "prev") toMonth = getPreviousMonth(month);
+    if (direction === "reset") {
+      toMonth = getMonthToday();
+    } else if (direction === "next") {
+      toMonth = getNextMonth(month);
+    } else if (direction === "prev") {
+      toMonth = getPreviousMonth(month);
+    }
 
     // shallow is required bec data fetching will be handled client-side but
     // calendar month state will be handled with the URL
@@ -178,8 +182,11 @@ function Days({
           onDragEnd={(_, info) => {
             const offset = info.offset.x;
 
-            if (offset > 0 && offset > NAVIGATION_OFFSET) prev();
-            else if (offset < 0 && offset < -NAVIGATION_OFFSET) next();
+            if (offset > 0 && offset > NAVIGATION_OFFSET) {
+              prev();
+            } else if (offset < 0 && offset < -NAVIGATION_OFFSET) {
+              next();
+            }
           }}
           style={{ x, opacity, paddingBlockEnd: "5rem" }}
         >

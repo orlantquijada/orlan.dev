@@ -6,7 +6,9 @@ export function useLikes() {
   const [likes, setLikes] = useState<Daily[]>([]);
 
   useEffect(() => {
-    if (typeof localStorage === "object") setLikes(getAllLiked());
+    if (typeof localStorage === "object") {
+      setLikes(getAllLiked());
+    }
   }, []);
 
   return likes;

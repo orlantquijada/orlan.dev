@@ -40,7 +40,9 @@ export default function PreviewToast({
 
   useEffect(() => {
     function hideOnEsc(event: KeyboardEvent) {
-      if (event.code === "Escape") setSelectedDate(undefined);
+      if (event.code === "Escape") {
+        setSelectedDate(undefined);
+      }
     }
 
     window.addEventListener("keydown", hideOnEsc);

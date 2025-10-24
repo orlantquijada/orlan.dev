@@ -8,7 +8,9 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse) {
 
   const select: Record<string, boolean> = {};
   if (fields && typeof fields === "string") {
-    for (const key of fields.split(",")) select[key] = true;
+    for (const key of fields.split(",")) {
+      select[key] = true;
+    }
   }
 
   const dailies = getDailies({

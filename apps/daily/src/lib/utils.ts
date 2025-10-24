@@ -26,7 +26,9 @@ export function pickProps<
     .map(([key]) => key) as Array<keyof Obj>;
 
   const propsObj: { [Key in keyof Obj]?: Obj[Key] } = {};
-  for (const key of keysList) propsObj[key] = obj[key];
+  for (const key of keysList) {
+    propsObj[key] = obj[key];
+  }
 
   return propsObj as any;
 }

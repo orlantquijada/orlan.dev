@@ -8,7 +8,9 @@ export function useIsLiked(daily: Pick<Daily, "day" | "month">) {
   const [isLiked, setIsLiked] = useState<boolean>();
 
   useIsomorphicLayoutEffect(() => {
-    if (typeof localStorage !== "undefined") setIsLiked(getIsLiked(daily));
+    if (typeof localStorage !== "undefined") {
+      setIsLiked(getIsLiked(daily));
+    }
   }, []);
 
   return [Boolean(isLiked), setIsLiked] as const;

@@ -7,19 +7,24 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse) {
   const { month, day, fields } = _req.query;
 
   const parsedDay = Number.parseInt(day as string, 10);
-  if (Number.isNaN(parsedDay)) res.status(400).json("Invalid day value");
+  if (Number.isNaN(parsedDay)) {
+    res.status(400).json("Invalid day value");
+  }
 
   const capitalizedMonth = month
     ? capitalize(month as Lowercase<Month>)
     : undefined;
 
-  if (capitalizedMonth && Months.indexOf(capitalizedMonth) === -1)
+  if (capitalizedMonth && Months.indexOf(capitalizedMonth) === -1) {
     res.status(400).json("Invalid month value");
+  }
 
   let select: Record<string, boolean> | undefined;
   if (fields && typeof fields === "string") {
     select = {};
-    for (const key of fields.split(",")) select[key] = true;
+    for (const key of fields.split(",")) {
+      select[key] = true;
+    }
   }
 
   const daily = getDailies({
@@ -35,8 +40,9 @@ export default function handler(_req: NextApiRequest, res: NextApiResponse) {
       "public, s-maxage=604800, stale-while-revalidate=86400"
     );
     res.status(200).json(daily[0]);
-  } else
+  } else {
     res
       .status(404)
       .json(`No entry found for ${capitalizedMonth}, ${parsedDay}.`);
+  }
 }
