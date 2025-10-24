@@ -2,16 +2,8 @@
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"code">;
-const props = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<code {...props}><slot /></code>
+<code class:list={['rounded-md bg-gray7 p-1 text-xs',className]} {...props}><slot /></code>
 
-<style>
-  @reference '../../../styles/global.css'
-
-  /* TODO: background color, color, font-family */
-  code {
-    @apply rounded-md bg-gray7 p-1 text-xs;
-  }
-</style>

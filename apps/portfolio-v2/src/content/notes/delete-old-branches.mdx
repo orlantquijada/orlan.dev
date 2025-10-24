@@ -1,0 +1,11 @@
+---
+title: Delete Local Old Branches
+tags: ['git', 'snippets']
+publishedAt: 2025-10-24
+---
+
+```sh
+git branch --merged | grep -v '^*\|main\|master\|develop' | xargs -r git branch -d
+```
+
+*This may not work on other merging strategies squash/rebase.*

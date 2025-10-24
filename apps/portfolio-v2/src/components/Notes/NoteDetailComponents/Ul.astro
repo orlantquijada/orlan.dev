@@ -11,14 +11,16 @@ const props = Astro.props;
 </ul>
 
 <style>
-  @reference '../../../styles/global.css'
-
   :global(.ul li) {
-    @apply relative pl-8;
+    position: relative;
+    padding-inline-start: 2rem;
   }
 
   :global(.ul li::before) {
     content: '— ';
-    @apply absolute left-0 top-0 text-gray11;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-gray11, var(--gray11));
   }
 </style>

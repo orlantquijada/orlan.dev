@@ -1,5 +1,3 @@
-@reference '../../styles/global.css'
-
 .icon {
 	width: 0.75rem;
 	width: 0.75rem;
@@ -10,11 +8,24 @@
 }
 
 .notesList {
-	@apply flex flex-col flex-wrap content-between;
+	display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;
+	align-content: space-between;
 }
 
 .notesList > * {
-	@apply order-1 mb-(--mason-mb) w-full sm:w-[49%] md:w-[32%];
+	order: 1;
+	margin-block-end: var(--mason-mb);
+	width: 100%;
+
+	@media (width >= 40rem) {
+		width: 49%;
+	}
+
+	@media (width >= 48rem) {
+		width: 32%;
+	}
 }
 
 @media (min-width: 640px) {

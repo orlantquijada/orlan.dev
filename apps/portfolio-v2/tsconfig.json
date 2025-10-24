@@ -14,7 +14,8 @@
     "jsx": "react-jsx",
     "jsxImportSource": "react",
     "incremental": true,
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "allowJs": true
   },
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"]

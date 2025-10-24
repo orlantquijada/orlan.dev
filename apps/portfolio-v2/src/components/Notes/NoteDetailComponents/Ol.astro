@@ -11,23 +11,25 @@ const props = Astro.props;
 </ol>
 
 <style>
-  @reference '../../../styles/global.css'
-
   :global(.ol) {
     list-style: none;
     counter-reset: counts;
-
-    @apply flex flex-col gap-2;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   :global(.ol > li) {
-    @apply relative pl-8;
+    position: relative;
+    padding-inline-start: 2rem;
   }
 
   :global(.ol li::before) {
     content: counter(counts) '. ';
     counter-increment: counts;
-
-    @apply absolute left-0 top-0 text-gray11;
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--color-gray11, var(--gray11));
   }
 </style>
