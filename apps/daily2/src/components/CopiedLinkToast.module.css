@@ -1,0 +1,5 @@
+.container {
+  --viewport-padding: calc(var(--content-px) * 2);
+  width: calc(100% - var(--viewport-padding));
+  max-width: calc(var(--content-max-width) - var(--viewport-padding));
+}
