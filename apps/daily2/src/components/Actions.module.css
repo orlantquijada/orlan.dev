@@ -1,0 +1,33 @@
+.footerButton {
+  transition:
+    background-color 150ms ease,
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.actionsContainer {
+  transition:
+    background-color 150ms ease,
+    opacity 150ms ease,
+    box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:focus-within {
+    --ring-offset: 2px;
+    box-shadow:
+      0 0 0 var(--ring-offset) var(--color-background),
+      0 0 0 calc(var(--ring-offset) + 2px) var(--olive-7);
+  }
+}
+
+.footer {
+  --padding-x: 1rem;
+  padding-inline: var(--padding-x);
+  max-width: calc(
+    var(--icon-button-size) *
+    2 +
+    var(--padding-x) *
+    4 +
+    var(--content-max-width)
+  );
+}

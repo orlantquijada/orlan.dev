@@ -1,0 +1,47 @@
+.container {
+  --content-max-width: 650px;
+  --content-px: 1rem;
+  --header-height: min(15vw, 7rem);
+  --icon-button-size: 4rem;
+
+  @media (width >= 48rem) {
+    --icon-button-size: 5rem;
+  }
+}
+
+.quote {
+  align-self: stretch;
+
+  &::before {
+    content: "";
+  }
+
+  &::after {
+    content: "";
+  }
+
+  & > :first-child::before {
+    content: open-quote;
+  }
+
+  & > :last-child:not(ol)::after {
+    content: close-quote;
+  }
+
+  & > :last-child:where(ol) {
+    & li:last-of-type::after {
+      content: close-quote;
+    }
+  }
+}
+
+.body {
+  & > p:first-child:first-letter {
+    float: left;
+    line-height: 85%;
+    width: 0.7em;
+    font-size: 325%;
+    font-style: initial;
+    padding-inline-end: 1rem;
+  }
+}

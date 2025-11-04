@@ -1,0 +1,29 @@
+.loadingTitleSkeleton {
+  --skeleton-color: var(--color-olive-5);
+  --shine-color: var(--color-olive-2);
+
+  background-size: 400% 100%;
+  width: 15rem;
+  height: 1.5rem;
+  border-radius: 0.5rem;
+
+  background-image: linear-gradient(
+    270deg,
+    var(--skeleton-color),
+    var(--shine-color),
+    var(--skeleton-color)
+  );
+
+  & {
+    animation: shimmer 8s ease-in-out infinite;
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}

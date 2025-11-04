@@ -1,0 +1,19 @@
+.main {
+  --content-max-width: 650px;
+  --content-padding-x: 1rem;
+  --content-padding-y: 2rem;
+  --toast-height: 4rem;
+  --viewport-padding: calc(var(--content-padding-x) * 2);
+
+  padding-block-end: calc(
+    var(--content-padding-y) +
+    var(--toast-height) +
+    1rem
+  );
+
+  overflow-x: hidden;
+
+  @media (width >= 48rem) {
+    overflow-x: initial;
+  }
+}

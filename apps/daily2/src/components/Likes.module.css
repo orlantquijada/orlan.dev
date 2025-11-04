@@ -1,0 +1,8 @@
+.likeContainer {
+  grid-template-areas: "title title" "author date";
+
+  @media (width >= 48rem) {
+    grid-template-areas: "date title author";
+    grid-template-columns: 5rem auto auto;
+  }
+}
