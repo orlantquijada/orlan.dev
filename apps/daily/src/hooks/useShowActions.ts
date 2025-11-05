@@ -1,26 +1,25 @@
-import { useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "./useIsomorphicLayoutEffect";
+"use client";
+import { useEffect, useLayoutEffect, useState } from "react";
 
 const PAGE_OFFSET = 65;
 
 export function useShowActions() {
   const show = useShowOnScroll(PAGE_OFFSET);
-  const [ref, isContentScrollable] = useIsContentScrollable();
-  const [loading, isTabDimensions] = useIsMinWidthTabDimensions();
+  const isContentScrollable = useIsContentScrollable();
+  const [loading, isMinTabDimes] = useIsMinWidthTabDimensions();
 
   // always show on desktop
-  if (!(loading || isTabDimensions)) {
-    return [ref, true] as const;
+  if (!loading && isMinTabDimes) {
+    return true;
   }
 
-  const showActions = isContentScrollable ? show : true;
-  return [ref, showActions] as const;
+  return isContentScrollable ? show : true;
 }
 
 function useShowOnScroll(pageOffset = 0) {
   const [show, setShow] = useState(false);
 
-  useIsomorphicLayoutEffect(() => {
+  useEffect(() => {
     const handleOnScroll = () => {
       setShow(window.scrollY > pageOffset);
     };
@@ -32,36 +31,38 @@ function useShowOnScroll(pageOffset = 0) {
   return show;
 }
 
+export const CONTENT_ID = "content";
+
 // if the content overflows the viewport height
 function useIsContentScrollable() {
   const [isContentScrollable, setIsContentScrollable] = useState<boolean>();
-  const contentRef = useRef<HTMLElement>(null);
 
-  useIsomorphicLayoutEffect(() => {
+  useLayoutEffect(() => {
     const htmlElement = document.querySelector("html");
-    const contentClientHeight = contentRef.current?.clientHeight;
+    const content = document.getElementById(CONTENT_ID);
+    const contentClientHeight = content?.clientHeight;
 
     if (htmlElement && contentClientHeight) {
       setIsContentScrollable(contentClientHeight > htmlElement.clientHeight);
     }
   }, []);
 
-  return [contentRef, Boolean(isContentScrollable)] as const;
+  return Boolean(isContentScrollable);
 }
 
 const TAB_WIDTH = 768;
 
 export function useIsMinWidthTabDimensions() {
-  const [isTabDimensions, setIsTabDimensions] = useState<boolean>();
+  const [isMinTabDimes, setIsMinTabDimes] = useState<boolean>();
 
-  useIsomorphicLayoutEffect(() => {
+  useLayoutEffect(() => {
     const htmlElement = document.querySelector("html");
     if (htmlElement) {
-      setIsTabDimensions(htmlElement.clientWidth < TAB_WIDTH);
+      setIsMinTabDimes(htmlElement.clientWidth >= TAB_WIDTH);
     }
   }, []);
 
-  const loading = isTabDimensions === undefined;
+  const loading = isMinTabDimes === undefined;
 
-  return [isTabDimensions, loading] as const;
+  return [isMinTabDimes, loading] as const;
 }

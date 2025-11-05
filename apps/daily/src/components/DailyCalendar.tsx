@@ -1,3 +1,5 @@
+"use client";
+
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { format, isSameDay, isThisMonth } from "date-fns";
 import {
@@ -6,43 +8,70 @@ import {
   useMotionValue,
   useTransform,
 } from "motion/react";
-import { useRouter } from "next/router";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   type Dispatch,
   type SetStateAction,
   useCallback,
   useEffect,
-  useRef,
   useState,
 } from "react";
-import { css, cva, cx } from "styled-system/css";
-import { styled } from "styled-system/jsx";
-import { text } from "styled-system/recipes";
 import * as Calendar from "@/components/Calendar";
-import { getMonthToday, getNextMonth, getPreviousMonth } from "@/lib/api";
-import { type Month, MonthSubjectsMap } from "@/lib/contentlayer";
-
+import UTurnLeftIcon from "@/icons/UTurnLeftIcon";
+import { type Month, monthSchema, monthSubjectsMap } from "@/lib/like";
+import { cn } from "@/lib/utils";
+import styles from "./DailyCalendar.module.css";
 import PreviewToast from "./PreviewToast";
-import UTurnLeftIcon from "./UTurnLeftIcon";
 
+const Months = monthSchema.options;
 const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-const NAVIGATION_OFFSET = 100;
 
-export default function DailyCalendar({ month }: { month: Month }) {
-  const router = useRouter();
-  const [currentMonthDate, setCurrentMonthDate] = useState(() => {
-    const today = new Date();
-    return new Date(`${month} 1, ${today.getFullYear()}`);
-  });
-  const onChangeCurrentMonthDate = useCallback(
-    (date: Date) => setCurrentMonthDate(date),
-    []
+export function getPreviousMonth(month: Month) {
+  const indexOfPrevMonth = Months.indexOf(month) - 1;
+  return Months[
+    indexOfPrevMonth < Months.indexOf("january")
+      ? Months.indexOf("december")
+      : indexOfPrevMonth
+  ];
+}
+
+export function getNextMonth(month: Month) {
+  const indexOfNextMonth = Months.indexOf(month) + 1;
+  return Months[
+    indexOfNextMonth > Months.indexOf("december")
+      ? Months.indexOf("january")
+      : indexOfNextMonth
+  ];
+}
+
+export function getMonthToday() {
+  const today = new Date();
+  return Months[today.getMonth()];
+}
+
+export default function DailyCalendar() {
+  const pathname = usePathname();
+  const month = pathname.slice(1) as Month;
+
+  const monthToDate = useCallback((_month: Month) => {
+    const year = new Date().getFullYear();
+    // Convert month name to month index
+    const monthIndex = new Date(`${_month} 1, ${year}`).getMonth();
+    return new Date(year, monthIndex, 1);
+  }, []);
+
+  const [currentMonthDate, setCurrentMonthDate] = useState(() =>
+    monthToDate(month)
   );
+  const [selectedDate, setSelectedDate] = useState<Date>();
 
-  // TODO: refactor impl
-  // currently drag next and prev actions are hacks by imperatively clicking these buttons
-  const prevBtn = useRef<HTMLButtonElement>(null);
-  const nextBtn = useRef<HTMLButtonElement>(null);
+  const previousMonth = getPreviousMonth(month);
+  const nextMonth = getNextMonth(month);
+
+  useEffect(() => {
+    setCurrentMonthDate(monthToDate(month));
+  }, [month, monthToDate]);
 
   const x = useMotionValue(0);
   const opacity = useTransform(
@@ -51,95 +80,75 @@ export default function DailyCalendar({ month }: { month: Month }) {
     [0.1, 1, 0.1]
   );
 
-  const [selectedDate, setSelectedDate] = useState<Date>();
-
-  const handleRoute = (direction: "next" | "prev" | "reset") => {
-    let toMonth = "";
-    if (direction === "reset") {
-      toMonth = getMonthToday();
-    } else if (direction === "next") {
-      toMonth = getNextMonth(month);
-    } else if (direction === "prev") {
-      toMonth = getPreviousMonth(month);
-    }
-
-    // shallow is required bec data fetching will be handled client-side but
-    // calendar month state will be handled with the URL
-    router.push(`/${toMonth.toLowerCase()}`, undefined, { shallow: true });
-  };
-
   return (
     <>
-      <Calendar.Root
-        defaultCurrentMonth={currentMonthDate}
-        onChangeCurrentMonthDate={onChangeCurrentMonthDate}
-      >
-        <Header>
-          <h1
-            className={cx(
-              text({ size: { base: "base", md: "xl" } }),
-              css({ fontWeight: "regular" })
-            )}
-          >
+      <Calendar.Root defaultDate={currentMonthDate} value={currentMonthDate}>
+        <header className="flex w-full items-center md:justify-between">
+          <h1 className="text-base md:text-xl">
             {format(currentMonthDate, "MMM y")}
           </h1>
 
-          <SubjectTitle
-            className={text({ size: { base: "base", md: "xl" } })}
+          <motion.h2
+            className="ml-2.5 text-base text-olive-11 italic md:ml-[initial] md:text-xl"
             style={{ opacity }}
           >
-            {MonthSubjectsMap[month]}
-          </SubjectTitle>
+            {monthSubjectsMap[month]}
+          </motion.h2>
 
-          <CalendarButtonsContainer>
-            {isThisMonth(currentMonthDate) ? null : (
-              <Calendar.ResetToTodayButton
-                className={calendarButtonStyle}
-                onClick={() => handleRoute("reset")}
+          <div className="ml-auto flex md:ml-[initial]">
+            {!isThisMonth(currentMonthDate) && (
+              <Link
+                className={calendarButtonClassName}
+                href={`/${getMonthToday()}`}
               >
                 <span>
                   <UTurnLeftIcon />
                 </span>
-              </Calendar.ResetToTodayButton>
+              </Link>
             )}
-            <Calendar.PreviousMonthButton
-              className={calendarButtonStyle}
-              onClick={() => handleRoute("prev")}
-              ref={prevBtn}
+
+            <Link
+              className={calendarButtonClassName}
+              href={`/${previousMonth}`}
             >
               <span>
                 <ChevronLeftIcon />
               </span>
-            </Calendar.PreviousMonthButton>
-            <Calendar.NextMonthButton
-              className={calendarButtonStyle}
-              onClick={() => handleRoute("next")}
-              ref={nextBtn}
-            >
+            </Link>
+
+            <Link className={calendarButtonClassName} href={`/${nextMonth}`}>
               <span>
                 <ChevronRightIcon />
               </span>
-            </Calendar.NextMonthButton>
-          </CalendarButtonsContainer>
-        </Header>
+            </Link>
+          </div>
+        </header>
 
-        <CalendarBody>
-          <CalendarRow>
+        <div className="flex w-full flex-col gap-4">
+          <div className="grid grid-cols-7">
             {weekdays.map((weekday) => (
-              <Weekday className={text({ size: "base" })} key={weekday}>
+              <span
+                className="text-center text-base text-olive-11 md:text-left"
+                key={weekday}
+              >
                 {weekday}
-              </Weekday>
+              </span>
             ))}
-          </CalendarRow>
+          </div>
+
           <Days
-            next={() => nextBtn.current?.click()}
+            next={() => {
+              window.history.pushState(null, "", `/${nextMonth}`);
+            }}
             opacity={opacity}
-            prev={() => prevBtn.current?.click()}
+            prev={() => {
+              window.history.pushState(null, "", `/${previousMonth}`);
+            }}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             x={x}
           />
-        </CalendarBody>
+        </div>
       </Calendar.Root>
       <PreviewToast
         selectedDate={selectedDate}
@@ -149,230 +158,69 @@ export default function DailyCalendar({ month }: { month: Month }) {
   );
 }
 
+const NAVIGATION_OFFSET = 100;
+
 function Days({
-  next,
-  prev,
-  x,
-  opacity,
   selectedDate,
   setSelectedDate,
+  next,
+  prev,
+  opacity,
+  x,
 }: {
   next: () => void;
   prev: () => void;
-  x: MotionValue<number>;
-  opacity: MotionValue<number>;
   selectedDate: Date | undefined;
   setSelectedDate: Dispatch<SetStateAction<Date | undefined>>;
+  x: MotionValue<number>;
+  opacity: MotionValue<number>;
 }) {
-  const today = new Date();
+  const { days } = Calendar.useCalendarContext();
 
-  const [jsLoaded, setJsLoaded] = useState(false);
-  useEffect(() => {
-    setJsLoaded(true);
-  }, []);
+  const selected = (date: Date) =>
+    selectedDate && isSameDay(date, selectedDate);
 
   return (
-    <Calendar.Days includeAdjacentMonths>
-      {(days) => (
-        <motion.div
-          drag="x"
-          dragConstraints={{ left: 0, right: 0 }}
-          dragElastic={0.3}
-          dragSnapToOrigin
-          onDragEnd={(_, info) => {
-            const offset = info.offset.x;
+    <motion.div
+      className="pb-20"
+      drag="x"
+      dragConstraints={{ left: 0, right: 0 }}
+      dragElastic={0.3}
+      dragMomentum={false}
+      onDragEnd={(_, info) => {
+        const offset = info.offset.x;
 
-            if (offset > 0 && offset > NAVIGATION_OFFSET) {
-              prev();
-            } else if (offset < 0 && offset < -NAVIGATION_OFFSET) {
-              next();
-            }
-          }}
-          style={{ x, opacity, paddingBlockEnd: "5rem" }}
-        >
-          <DaysContainer>
-            {days.map(({ value: day, isInCurrentMonth }) => (
-              <StyledDay
-                inCurrentMonth={isInCurrentMonth}
-                key={day.toString()}
-                onClick={() => setSelectedDate(day)}
-                onDragStart={(e) => e.preventDefault()}
-                selected={selectedDate && isSameDay(day, selectedDate)}
-                today={jsLoaded && isSameDay(day, today)}
-              >
-                <span style={{ zIndex: 1 }}>{format(day, "d")}</span>
-              </StyledDay>
-            ))}
-          </DaysContainer>
-        </motion.div>
-      )}
-    </Calendar.Days>
+        if (offset > 0 && offset > NAVIGATION_OFFSET) {
+          prev();
+        } else if (offset < 0 && offset < -NAVIGATION_OFFSET) {
+          next();
+        }
+      }}
+      style={{ x, opacity }}
+    >
+      <div className="grid grid-cols-7 md:border md:border-olive-3">
+        {days.map(({ date, isInCurrentMonth, isToday }) => (
+          <button
+            className={cn(
+              styles.day,
+              "grid h-16 cursor-pointer place-items-center border-t border-t-olive-3 bg-background p-4 text-base text-foreground leading-none transition-colors duration-75 hover:bg-olive-2 focus:outline-olive-7 md:h-25 md:place-items-start md:border md:border-olive-3",
+              isToday &&
+                "relative text-olive-10 before:absolute before:size-[2em] before:rounded-full before:bg-olive-3 md:before:top-[0.5em] md:before:left-[0.5em]",
+              selected(date) && "underline",
+              !isInCurrentMonth && "text-olive-8"
+            )}
+            key={date.toString()}
+            onClick={() => setSelectedDate(date)}
+            onDragStart={(e) => e.preventDefault()}
+            type="button"
+          >
+            <span className="z-10">{format(date, "d")}</span>
+          </button>
+        ))}
+      </div>
+    </motion.div>
   );
 }
 
-//////////////////////////////////////////////////////////////////
-
-const SubjectTitle = styled(motion.h2, {
-  base: {
-    fontStyle: "italic",
-    color: "olive.11",
-    fontWeight: "regular",
-
-    ml: "0.625rem",
-
-    md: { ml: "initial" },
-  },
-});
-const CalendarButtonsContainer = styled("div", {
-  base: {
-    display: "flex",
-    ml: "auto",
-
-    md: { ml: "initial" },
-  },
-});
-const Header = styled("header", {
-  base: {
-    display: "flex",
-    alignItems: "center",
-    width: "full",
-
-    md: {
-      justifyContent: "space-between",
-    },
-  },
-});
-
-const CalendarBody = styled("div", {
-  base: {
-    display: "flex",
-    flexDirection: "column",
-
-    gap: "1rem",
-
-    width: "full",
-  },
-});
-
-const calendarButtonStyle = css({
-  w: "2rem",
-  h: "2rem",
-  color: "olive.11",
-  border: "none",
-  background: "none",
-  cursor: "pointer",
-
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  transition: "box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1)",
-  borderRadius: "0.25rem",
-
-  "& span": {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  _hover: {
-    color: "olive.12",
-  },
-  "&:focus-within, &:active": {
-    outline: "none",
-    "--ring-width": "2px",
-    "--ring-offset": "2px",
-    "--ring-color": "colors.olive.7",
-    boxShadow:
-      "0 0 0 var(--ring-width) var(--colors-bg), 0 0 0 calc(var(--ring-width) + var(--ring-offset)) var(--ring-color)",
-  },
-});
-
-const calendarGrid = cva({
-  base: {
-    display: "grid",
-    gridTemplateColumns: "repeat(7, 1fr)",
-  },
-});
-const CalendarRow = styled("div", calendarGrid);
-const DaysContainer = styled("div", {
-  base: {
-    ...calendarGrid.raw(),
-
-    md: {
-      border: "1px solid",
-      borderColor: "olive.3",
-    },
-  },
-});
-
-const StyledDay = styled("button", {
-  base: {
-    p: "1rem",
-    // px: '1rem',
-    height: "4rem",
-
-    border: "none",
-    borderTop: "1px solid",
-    borderTopColor: "olive.3",
-    background: "bg",
-    fontSize: "base",
-    color: "textColor",
-    display: "grid",
-    placeItems: "center",
-    cursor: "pointer",
-    lineHeight: 1,
-    WebkitTapHighlightColor: "transparent",
-
-    _focus: {
-      outlineColor: "olive.7",
-    },
-
-    md: {
-      height: "6.25rem",
-      placeItems: "flex-start",
-      border: "1px solid",
-      borderColor: "olive.3",
-    },
-  },
-  variants: {
-    today: {
-      true: {
-        position: "relative",
-        color: "olive.10",
-
-        _before: {
-          content: "''",
-          backgroundColor: "olive.3",
-          borderRadius: "999px",
-          position: "absolute",
-          w: "2em",
-          h: "2em",
-
-          md: {
-            top: "0.5em",
-            left: "0.5em",
-          },
-        },
-      },
-    },
-    selected: {
-      true: {
-        textDecoration: "underline",
-      },
-    },
-    inCurrentMonth: {
-      false: {
-        color: "olive.8",
-      },
-    },
-  },
-});
-
-const Weekday = styled("span", {
-  base: {
-    textAlign: "center",
-    color: "olive.11",
-
-    md: { textAlign: "left" },
-  },
-});
+const calendarButtonClassName =
+  "flex size-8 cursor-pointer items-center justify-center rounded-sm border-none bg-none text-olive-11 transition-shadow focus-within:outline-none focus-within:ring-2 focus-within:ring-olive-7 hover:text-olive-12 active:outline-none active:ring-2 active:ring-olive-7 [&_span]:flex [&_span]:items-center [&_span]:justify-center";

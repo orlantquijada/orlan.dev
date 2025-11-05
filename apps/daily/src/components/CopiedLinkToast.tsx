@@ -1,6 +1,8 @@
+"use client";
+
 import { AnimatePresence, motion } from "motion/react";
 import { type Ref, useImperativeHandle, useState } from "react";
-import { cva } from "styled-system/css";
+import styles from "./CopiedLinkToast.module.css";
 
 type CopiedLinkToastActions = {
   open: () => void;
@@ -35,7 +37,7 @@ export function CopiedLinkToast({ ref }: CopiedLinkToastProps) {
       {open && (
         <motion.div
           animate="show"
-          className={container()}
+          className={`${styles.container} fixed inset-x-0 top-(--header-height) z-999 mx-auto flex items-center justify-center rounded-lg border border-olive-6 bg-olive-4 p-3 text-olive-11`}
           exit="hide"
           initial="hide"
           transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
@@ -53,28 +55,3 @@ const variants = {
   hide: { y: "-30%", opacity: 0 },
   show: { y: 0, opacity: 1 },
 };
-
-const container = cva({
-  base: {
-    backgroundColor: "olive.4",
-    color: "olive.11",
-    borderRadius: "0.5rem",
-    border: "1px solid",
-    borderColor: "olive.6",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    p: "0.75rem",
-    zIndex: 999,
-
-    "--viewportPadding": "calc(var(--contentPX) * 2)",
-    height: "var(--toastHeight)",
-    position: "fixed",
-    top: "var(--headerHeight)",
-    left: 0,
-    right: 0,
-    mx: "auto",
-    width: "calc(100% - var(--viewportPadding))",
-    maxWidth: "calc(var(--contentMaxWidth) - var(--viewportPadding))",
-  },
-});
