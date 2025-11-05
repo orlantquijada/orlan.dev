@@ -1,56 +1,78 @@
-import { allDailies, type Daily } from "contentlayer/generated";
-import { type Month, Months } from "./contentlayer";
+import { z } from "zod/mini";
 
-///////////////////////// util /////////////////////////
+export type Daily = {
+  title: string;
+  author: string;
+  book: string;
+  section: string;
+  quote: string;
+};
 
-type BetterTypedDaily = Daily & { month: Month };
+export type DailyDate = {
+  month: string;
+  day: string;
+};
+
 const DAILY_KEY = "__daily_/";
-const getKey = ({ day, month }: Pick<Daily, "month" | "day">) =>
-  `${DAILY_KEY}${month}/${day}`;
-const parseKey = <T extends string = `${typeof DAILY_KEY}${Month}/${string}`>(
-  key: T
-) => {
-  const [, month, _day] = key.split("/");
+export function toKey({ day, month }: DailyDate) {
+  return `${DAILY_KEY}${month}/${day}`;
+}
 
-  const day = Number.parseInt(_day, 10);
-  if (Months.includes(month as Month) && !Number.isNaN(day)) {
-    return {
-      success: true,
-      data: { month: month as Month, day },
-    } as const;
-  }
+export const monthSubjectsMap: Record<Month, string> = {
+  january: "Clarity",
+  febuary: "Passions and Emotion",
+  march: "Awareness",
+  april: "Unbiased Thought",
+  may: "Right Action",
+  june: "Problem Solving",
+  july: "Duty",
+  august: "Pragmatism",
+  september: "Fortitude and Resilience",
+  october: "Virtue and Kindness",
+  november: "Acceptance",
+  december: "Meditation On Mortality",
+} as const;
+
+export const monthSchema = z.enum([
+  "january",
+  "febuary",
+  "march",
+  "april",
+  "may",
+  "june",
+  "july",
+  "august",
+  "september",
+  "october",
+  "november",
+  "december",
+]);
+
+export type Month = z.infer<typeof monthSchema>;
+
+export function parseKey(key: string) {
+  const [, month, day] = key.split("/");
 
   return {
-    success: false,
-  } as const;
-};
+    month,
+    day,
+  };
+}
 
-///////////////////////// api /////////////////////////
-
-export const like = (daily: Pick<Daily, "month" | "day">) => {
-  localStorage.setItem(getKey(daily), JSON.stringify(true));
-};
-export const removeLike = (daily: Pick<Daily, "month" | "day">) =>
-  localStorage.removeItem(getKey(daily));
-export const getIsLiked = (daily: Pick<Daily, "month" | "day">) =>
-  Boolean(localStorage.getItem(getKey(daily)));
-export const getAllLiked = () => {
-  type Like = Pick<BetterTypedDaily, "month" | "day">;
-  const likes: Like[] = [];
-
-  Object.keys(localStorage).forEach((key) => {
-    for (const month of Months) {
-      if (key.startsWith(`${DAILY_KEY}${month}`)) {
-        const { success, data } = parseKey(key);
-        if (success) {
-          likes.push(data);
-        }
-      }
-    }
-  });
-  return likes.map((like) =>
-    allDailies.find(
-      ({ month, day }) => month === like.month && day === like.day
+export function like(daily: DailyDate) {
+  return localStorage.setItem(toKey(daily), JSON.stringify(true));
+}
+export function removeLike(daily: DailyDate) {
+  return localStorage.removeItem(toKey(daily));
+}
+export function getIsLiked(daily: DailyDate) {
+  return Boolean(localStorage.getItem(toKey(daily)));
+}
+export function getAllLikedDates(month?: Month): DailyDate[] {
+  const monthsToCheck = month ? [month] : monthSchema.options;
+  return Object.keys(localStorage)
+    .filter((key) =>
+      monthsToCheck.some((_month) => key.startsWith(`${DAILY_KEY}${_month}`))
     )
-  ) as Daily[];
-};
+    .map(parseKey);
+}

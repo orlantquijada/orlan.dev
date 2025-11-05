@@ -1,50 +1,37 @@
-import { BASE_URL } from "./constants";
+import clsx, { type ClassValue } from "clsx";
+import { remark } from "remark";
+import strip from "strip-markdown";
+import { twMerge } from "tailwind-merge";
 
-export type FilterFalseProps<K extends Record<string, boolean | undefined>> =
-  NonNullable<
-    {
-      [Key in keyof K]: K[Key] extends true ? Key : never;
-    }[keyof K]
-  >;
+export function cn(...args: ClassValue[]) {
+  return twMerge(clsx(args));
+}
 
-export type KeysFlag<T extends Record<string, unknown>> = Partial<
-  Record<keyof T, boolean>
->;
+// Types for the result object with discriminated union
+type Success<T> = {
+  data: T;
+  error: null;
+};
 
-export function pickProps<
-  Obj extends Record<string, unknown>,
-  Flags extends KeysFlag<Obj>,
-  PickedProps = FilterFalseProps<Flags> extends keyof Obj
-    ? Pick<Obj, FilterFalseProps<Flags>>
-    : never,
->(
-  obj: Obj,
-  keysFlag: Flags
-): Flags extends Record<string, never | false> ? Obj : PickedProps {
-  const keysList = Object.entries(keysFlag)
-    .filter(([, value]) => value)
-    .map(([key]) => key) as Array<keyof Obj>;
+type Failure<E> = {
+  data: null;
+  error: E;
+};
 
-  const propsObj: { [Key in keyof Obj]?: Obj[Key] } = {};
-  for (const key of keysList) {
-    propsObj[key] = obj[key];
+type Result<T, E = Error> = Success<T> | Failure<E>;
+
+// Main wrapper function
+export async function tryCatch<T, E = Error>(
+  promise: Promise<T>
+): Promise<Result<T, E>> {
+  try {
+    const data = await promise;
+    return { data, error: null };
+  } catch (error) {
+    return { data: null, error: error as E };
   }
-
-  return propsObj as any;
 }
 
-export function capitalize<T extends string>(str: T) {
-  return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>;
+export function stripMarkdown(markdown: string) {
+  return remark().use(strip).process(markdown);
 }
-
-export function getDetailSocialMediaImage(params: {
-  title: string;
-  subtitle: string;
-  author: string;
-}) {
-  const URLParams = new URLSearchParams(params);
-
-  return `${BASE_URL}/api/og?${URLParams}`;
-}
-
-export type NonEmptyArray<T> = [T, ...T[]];

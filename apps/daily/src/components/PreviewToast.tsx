@@ -1,23 +1,18 @@
-import type { Daily } from "contentlayer/generated";
+"use client";
+
 import { AnimatePresence, motion, type Variants } from "motion/react";
 import Link from "next/link";
-import { useMDXComponent } from "next-contentlayer2/hooks";
 import {
   type ComponentProps,
   type Dispatch,
   type SetStateAction,
   useEffect,
 } from "react";
-import { cva } from "styled-system/css";
-import { styled } from "styled-system/jsx";
-import { text } from "styled-system/recipes";
-import useSWR from "swr";
-import { type MDXComponents, Months } from "@/lib/contentlayer";
+import useSWR, { type Fetcher } from "swr";
+import { type Daily, type DailyDate, monthSchema } from "@/lib/like";
+import { stripMarkdown } from "@/lib/utils";
+import styles from "./PreviewToast.module.css";
 
-// const variants: Variants = {
-//   hide: { y: 'calc(100% + var(--contentPaddingY))', x: '50%' },
-//   show: { y: 0, x: '50%' },
-// }
 const variants: Variants = {
   hide: { y: "30%", opacity: 0 },
   show: { y: 0, opacity: 1 },
@@ -30,11 +25,13 @@ export default function PreviewToast({
   selectedDate: Date | undefined;
   setSelectedDate: Dispatch<SetStateAction<Date | undefined>>;
 }) {
-  const { data: daily, error } = useSWR<Daily>(
-    () =>
-      selectedDate
-        ? `api/${Months[selectedDate.getMonth()]}/${selectedDate.getDate()}`
-        : null,
+  const month = selectedDate
+    ? monthSchema.options[selectedDate.getMonth()]
+    : undefined;
+  const day = selectedDate ? selectedDate.getDate() : undefined;
+
+  const { data: daily, error } = useSWR(
+    selectedDate ? { month, day } : null,
     fetcher
   );
 
@@ -57,8 +54,7 @@ export default function PreviewToast({
       {selectedDate && (
         <motion.div
           animate="show"
-          // react magic: unmount component on `selectedDate` change
-          className={container()}
+          className="fixed inset-x-0 bottom-(--content-padding-y) z-10 mx-auto flex h-(--toast-height) w-[calc(100%-var(--viewport-padding))] max-w-[calc(var(--content-max-width)-var(--viewport-padding))] items-center justify-between gap-4 rounded-lg border border-olive-6 bg-olive-1 p-3"
           exit="hide"
           initial="hide"
           key={selectedDate.toString()}
@@ -66,18 +62,20 @@ export default function PreviewToast({
           variants={variants}
         >
           {loading ? (
-            <LoadingTitleSkeleton />
+            <div className={styles.loadingTitleSkeleton} />
           ) : daily ? (
-            <ToastTitle title={daily.title} />
+            <Title>{daily.title}</Title>
           ) : (
-            <Title className={text({ size: { base: "base", md: "lg" } })}>
-              No content yet!
-            </Title>
+            <Title>No content yet!</Title>
           )}
 
           {daily ? (
-            <Link href={daily ? daily.url : "/"} legacyBehavior passHref>
-              <Action>View</Action>
+            <Link
+              className="grid h-full place-items-center rounded-sm bg-transparent px-2 text-base text-olive-11 transition-[box-shadow,background-color] hover:bg-olive-3 focus:bg-olive-3 focus:outline-none focus:ring-2 focus:ring-olive-7 focus:ring-offset-2 md:px-3 md:text-lg"
+              href={`/${month}/${day}`}
+              style={{ WebkitTapHighlightColor: "transparent" }}
+            >
+              View
             </Link>
           ) : null}
         </motion.div>
@@ -86,107 +84,19 @@ export default function PreviewToast({
   );
 }
 
-const LoadingTitleSkeleton = styled("div", {
-  base: {
-    "--skeletonColor": "colors.olive.5",
-    "--shineColor": "colors.olive.2",
-
-    backgroundImage:
-      "linear-gradient(270deg, var(--skeletonColor), var(--shineColor), var(--skeletonColor))",
-    backgroundSize: "400% 100%",
-    width: "15rem",
-    height: "1.5rem",
-    borderRadius: "0.5rem",
-    animation: "shimmer 8s ease-in-out infinite",
-  },
-});
-
-const toastTitleComponents = {
-  p: (props: ComponentProps<typeof Title>) => (
-    <Title {...props} className={text({ size: { base: "base", md: "lg" } })} />
-  ),
-} as MDXComponents;
-
-function ToastTitle({ title }: Pick<Daily, "title">) {
-  const TitleMDX = useMDXComponent(title.code);
-
-  return <TitleMDX components={toastTitleComponents} />;
+function Title(props: ComponentProps<"span">) {
+  return (
+    <span
+      {...props}
+      className="block truncate font-bold text-base text-olive-11 md:text-lg"
+    />
+  );
 }
 
 //////////////////////////////////////////////////////////////////
 
-const container = cva({
-  base: {
-    backgroundColor: "olive.1",
-    borderRadius: "0.5rem",
-    border: "1px solid",
-    borderColor: "olive.6",
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "1rem",
-    p: "0.75rem",
-    zIndex: 1,
-
-    height: "var(--toastHeight)",
-    position: "fixed",
-    bottom: "var(--contentPaddingY)",
-    left: 0,
-    right: 0,
-    mx: "auto",
-    "--viewportPadding": "calc(var(--contentPaddingX) * 2)",
-    width: "calc(100% - var(--viewportPadding))",
-    maxWidth: "calc(var(--contentMaxWidth) - var(--viewportPadding))",
-  },
-});
-
-const Title = styled("span", {
-  base: {
-    color: "olive.11",
-    fontWeight: "bold",
-    display: "block",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-});
-
-const Action = styled("a", {
-  base: {
-    backgroundColor: "transparent",
-    color: "olive.11",
-    borderRadius: "4px",
-    height: "full",
-    px: "0.5rem",
-    display: "grid",
-    placeItems: "center",
-    transition:
-      "box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1), background-color 150ms cubic-bezier(0.4, 0, 0.2, 1)",
-    fontSize: "base",
-    WebkitTapHighlightColor: "transparent",
-
-    _hover: { backgroundColor: "olive.3" },
-    _focus: {
-      backgroundColor: "olive.3",
-      outline: "none",
-      "--ring-width": "2px",
-      "--ring-offset": "2px",
-      "--ring-color": "colors.olive.7",
-      boxShadow:
-        "0 0 0 var(--ring-width) var(--colors-bg), 0 0 0 calc(var(--ring-width) + var(--ring-offset)) var(--ring-color)",
-    },
-
-    md: {
-      fontSize: "lg",
-      px: "0.75rem",
-    },
-  },
-});
-
-//////////////////////////////////////////////////////////////////
-
-async function fetcher(url: string) {
-  const res = await fetch(url);
+const fetcher: Fetcher<Daily, DailyDate> = async ({ day, month }) => {
+  const res = await fetch(`api/${month}/${day}`);
 
   if (!res.ok) {
     const error: Error & { info: unknown; status: number } = {
@@ -197,5 +107,9 @@ async function fetcher(url: string) {
     throw error;
   }
 
-  return res.json();
-}
+  const { title, ...props } = (await res.json()) as Daily;
+
+  const strippedTitle = await stripMarkdown(title);
+
+  return { ...props, title: strippedTitle.toString() };
+};

@@ -1,135 +1,72 @@
-import type { Daily } from "contentlayer/generated";
+"use client";
+
+import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
-import { useMDXComponent } from "next-contentlayer2/hooks";
-import type { ComponentProps } from "react";
-import { cva, cx } from "styled-system/css";
-import { styled } from "styled-system/jsx";
-import { text } from "styled-system/recipes";
+import { usePathname } from "next/navigation";
+import { type Like, useLikes } from "@/hooks/useLikes";
+import type { Month } from "@/lib/like";
+import styles from "./Likes.module.css";
 
-export function LikesList({ likes }: { likes: Daily[] }) {
-  return (
-    <StyledLikesList>
-      {likes.map((like) => (
-        <LikedCard daily={like} key={`${like.month}-${like.day}`} />
-      ))}
-    </StyledLikesList>
+export function Likes() {
+  const pathname = usePathname();
+  const month = pathname.slice(1) as Month;
+  const likes = useLikes(month);
+
+  if (!likes.length) {
+    return null;
+  }
+
+  const sortedLikes = likes.sort(
+    (current, next) => Number(current.day) - Number(next.day)
   );
-}
-
-function LikedCard({ daily }: { daily: Daily }) {
-  const Title = useMDXComponent(daily.title.code);
 
   return (
-    <StyledLi>
-      <Link
-        href={{
-          pathname: "/[month]/[day]",
-          query: {
-            month: daily.month,
-            day: daily.day,
-          },
-        }}
-        legacyBehavior
-        passHref
+    <AnimatePresence mode="popLayout">
+      <motion.section
+        animate={{ opacity: 1 }}
+        className="w-full"
+        exit={{ opacity: 0 }}
+        initial={{ opacity: 0 }}
+        key={month}
       >
-        <StyledA>
-          <StyledDate>
-            {daily.month.slice(0, 3)} {daily.day}
-          </StyledDate>
-          <Title components={likedTitleComponents} />
-          <StyledAuthor>{daily.author}</StyledAuthor>
-        </StyledA>
-      </Link>
-    </StyledLi>
+        <h2 className="font-bold text-olive-11 text-xl md:text-2xl">Liked</h2>
+
+        <ol className="list-none p-0">
+          {sortedLikes.map((like) => (
+            <Card key={`${like.month}/${like.day}`} like={like} />
+          ))}
+        </ol>
+      </motion.section>
+    </AnimatePresence>
   );
 }
 
-const StyledDate = styled("span", {
-  base: {
-    gridArea: "date",
-    display: "flex",
-    justifyContent: "flex-end",
-    alignItems: "flex-end",
-
-    color: "olive.9",
-
-    md: {
-      justifyContent: "flex-start",
-    },
-  },
-});
-const StyledAuthor = styled("span", {
-  base: {
-    gridArea: "author",
-    color: "olive.11",
-    flexShrink: 0,
-    md: {
-      ml: "auto",
-    },
-  },
-});
-const StyledLikesList = styled("ol", {
-  base: {
-    listStyle: "none",
-    padding: 0,
-  },
-});
-const StyledLi = styled("li", {
-  base: {
-    "&:not(:first-of-type)": {
-      borderTop: "1px solid",
-      borderTopColor: "olive.3",
-    },
-  },
-});
-const StyledA = styled("a", {
-  base: {
-    display: "grid",
-    gridTemplateAreas: `
-"title title"
-"author date"
-`,
-
-    py: "1rem",
-    px: "0.5rem",
-    mx: "-0.5rem",
-    transition: "all 150ms ease",
-
-    md: {
-      gridTemplateAreas: `
-"date title author"
-`,
-      gridTemplateColumns: "5rem auto auto",
-    },
-
-    _hover: {
-      backgroundColor: "olive.2",
-    },
-  },
-});
-const title = cva({
-  base: {
-    gridArea: "title",
-
-    color: "olive.11",
-    fontWeight: "bold",
-
-    display: "block",
-    whiteSpace: "nowrap",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-
-    md: {
-      marginTop: 0,
-    },
-  },
-});
-
-const likedTitleComponents = {
-  p: (props: ComponentProps<"p">) => (
-    <p
-      {...props}
-      className={cx(text({ size: { base: "base", md: "lg" } }), title())}
-    />
-  ),
-};
+function Card({ like }: { like: Like }) {
+  return (
+    <li className="not-first-of-type:border-t not-first-of-type:border-t-olive-3">
+      <Link
+        className={`${styles.likeContainer} -mx-2 grid px-2 py-4 transition-all hover:bg-olive-2`}
+        href={`/${like.month}/${like.day}`}
+      >
+        <span
+          className="flex items-end justify-end text-olive-9 capitalize md:justify-start"
+          style={{ gridArea: "date" }}
+        >
+          {like.month.slice(0, 3)} {like.day}
+        </span>
+        <p
+          className="block truncate font-bold text-base text-olive-11 md:mt-0 md:text-lg"
+          style={{ gridArea: "title" }}
+        >
+          {like.title}
+        </p>
+        <span
+          className="shrink-0 text-olive-11 md:ml-auto"
+          style={{ gridArea: "author" }}
+        >
+          {like.author}
+        </span>
+      </Link>
+    </li>
+  );
+}

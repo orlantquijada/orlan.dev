@@ -1,142 +1,81 @@
-// import Image from 'next/image'
+"use client";
 
-import type { Daily } from "contentlayer/generated";
 import { motion } from "motion/react";
-import Head from "next/head";
-import { type PropsWithChildren, useState } from "react";
-import { css } from "styled-system/css";
-import { styled } from "styled-system/jsx";
-import { useDoubleClick } from "@/hooks/useDoubleClick";
-import { like } from "@/lib/like";
-
-// import Heart from '../../public/heart.webp'
+import Image from "next/image";
+import { type ReactNode, useState } from "react";
+import { useLikedContext } from "@/hooks/useLikedContext";
 
 const HEART_SIZE = 130;
 const SKEW_DEG = 30;
 
-type Props = PropsWithChildren<{
-  onLike?: () => void;
-}> &
-  Pick<Daily, "month" | "day">;
+type Props = {
+  children: ReactNode;
+};
 
-export default function LikeWrapper({ children, month, day, onLike }: Props) {
+export default function LikeWrapper({ children }: Props) {
   const [open, setOpen] = useState<
     false | { y: number; x: number; rotate: number; key: number }
   >(false);
-
-  const handler = useDoubleClick(
-    (e) => {
-      setOpen({
-        x: e.pageX,
-        y: e.pageY,
-        rotate: 0,
-        key: Date.now(),
-      });
-      like({ month, day });
-      onLike?.();
-    },
-    { delay: 300 }
-  );
+  const [, setIsLiked] = useLikedContext();
 
   return (
-    <>
-      <Head>
-        <link as="image" href="/heart.webp" rel="preload" />
-      </Head>
-      <Container
-        onClick={handler}
-        /* onClick={(e) => { */
-        /*   if (timer.current) { */
-        /*     clearTimeout(timer.current) */
-        /*     timer.current = null */
-        /**/
-        /*     // do something */
-        /*     setOpen({ */
-        /*       x: e.pageX, */
-        /*       y: e.pageY, */
-        /*       rotate: 0, */
-        /*       key: new Date().getTime(), */
-        /*     }) */
-        /*     like({ month, day }) */
-        /*     onLike?.() */
-        /*   } else { */
-        /*     timer.current = setTimeout(() => { */
-        /*       timer.current = null */
-        /*     }, DELAY) */
-        /*   } */
-        /* }} */
-      >
-        {children}
+    //  biome-ignore lint/a11y/noStaticElementInteractions: intentional
+    <div
+      className="relative max-w-screen overflow-clip"
+      onDoubleClick={(e) => {
+        setOpen({
+          x: e.pageX,
+          y: e.pageY,
+          rotate: 0,
+          key: Date.now(),
+        });
 
-        {/* TODO: preload heart png */}
-        {open ? (
-          <motion.div
-            animate={{
-              scale: [1, 0.85, 1, 1, 1.3],
-              y: -120,
-              opacity: 0,
-            }}
-            className={css({
-              width: HEART_SIZE,
-              height: HEART_SIZE,
-              userSelect: "none",
-            })}
-            initial={{
-              y: "-50%",
-              x: "-50%",
-              top: open.y,
-              left: open.x,
-              position: "absolute",
-              rotate: `${getRandomInt(-SKEW_DEG, SKEW_DEG)}deg`,
-            }}
-            key={open.key}
-            onAnimationComplete={() => setOpen(false)}
-            transition={{
-              scale: { delay: 0, times: [0, 0.15, 0.3, 0.5, 1] },
-              delay: 0.5,
-            }}
-          >
-            <HeartImage />
-          </motion.div>
-        ) : null}
-      </Container>
-    </>
+        setIsLiked(true);
+      }}
+    >
+      {children}
+
+      {open ? (
+        <motion.div
+          animate={{
+            scale: [1, 0.85, 1, 1, 1.3],
+            y: -120,
+            opacity: 0,
+          }}
+          className="absolute aspect-square select-none"
+          initial={{
+            y: "-50%",
+            x: "-50%",
+            top: open.y,
+            left: open.x,
+            rotate: `${getRandomInt(-SKEW_DEG, SKEW_DEG)}deg`,
+          }}
+          key={open.key}
+          onAnimationComplete={() => setOpen(false)}
+          style={{ width: HEART_SIZE }}
+          transition={{
+            scale: { delay: 0, times: [0, 0.15, 0.3, 0.5, 1] },
+            delay: 0.5,
+          }}
+        >
+          <HeartImage />
+        </motion.div>
+      ) : null}
+    </div>
   );
 }
 
 function HeartImage() {
-  // return (
-  //   <Image
-  //     // src="/heart.png"
-  //     src={Heart}
-  //     alt="Heart"
-  //     objectFit="fill"
-  //     width={HEART_SIZE}
-  //     height={HEART_SIZE}
-  //     priority
-  //   />
-  // )
   return (
-    <picture>
-      <img
-        alt="Heart"
-        // src="heart.svg"
-        height={HEART_SIZE}
-        src="/heart.webp"
-        style={{ objectFit: "fill" }}
-        width={HEART_SIZE}
-      />
-    </picture>
+    <Image
+      alt="Heart"
+      height={HEART_SIZE}
+      preload
+      src="/heart.webp"
+      width={HEART_SIZE}
+    />
   );
 }
-
-const Container = styled("div", {
-  base: {
-    position: "relative",
-    overflow: "clip",
-    maxWidth: "100vw",
-  },
-});
 
 function getRandomInt(min: number, max: number) {
   const _min = Math.ceil(min);
