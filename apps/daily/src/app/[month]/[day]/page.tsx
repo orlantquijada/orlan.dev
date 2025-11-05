@@ -31,12 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: cleanTitle,
-    metadataBase: new URL("https://clean-pugs-feel.loca.lt"),
     description: cleanQuote,
     openGraph: {
       title: cleanTitle,
       description: cleanQuote,
-      url: `https://clean-pugs-feel.loca.lt/${month}/${day}`,
       type: "article",
     },
     twitter: {

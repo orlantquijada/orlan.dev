@@ -23,11 +23,9 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: cleanTitle,
     description: cleanQuote,
-    metadataBase: new URL("https://clean-pugs-feel.loca.lt"),
     openGraph: {
       title: cleanTitle,
       description: cleanQuote,
-      url: `https://clean-pugs-feel.loca.lt/${month}/${day}`,
       type: "article",
     },
     twitter: {
