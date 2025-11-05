@@ -6,8 +6,6 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 
-  allowedDevOrigins: ["clean-pugs-feel.loca.lt"],
-
   // cacheComponents: true,
 };
 
