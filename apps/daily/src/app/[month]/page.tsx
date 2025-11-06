@@ -1,7 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import DailyCalendar from "@/components/DailyCalendar";
 import { Likes } from "@/components/Likes";
 import { type Month, monthSchema, monthSubjectsMap } from "@/lib/like";
+import { capitalize } from "@/lib/utils";
 import styles from "./page.module.css";
 
 type Props = {
@@ -12,9 +13,9 @@ export async function generateStaticParams() {
   return monthSchema.options.map((month) => ({ month }));
 }
 
-function capitalize<T extends string>(str: T) {
-  return `${str[0].toUpperCase()}${str.slice(1)}` as Capitalize<T>;
-}
+export const viewport: Viewport = {
+  themeColor: "#fcfdfc",
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { month } = await params;

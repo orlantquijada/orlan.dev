@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import DailyDetail from "@/components/DailyDetail";
 import { getDaily, getFiles } from "@/lib/content";
 import { stripMarkdown } from "@/lib/utils";
@@ -22,6 +22,10 @@ export async function generateStaticParams() {
     };
   });
 }
+
+export const viewport: Viewport = {
+  themeColor: "#fcfdfc",
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { day, month } = await params;
