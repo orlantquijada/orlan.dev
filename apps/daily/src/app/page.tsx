@@ -1,17 +1,7 @@
-import { TZDate } from "@date-fns/tz";
 import type { Metadata } from "next";
 import DailyDetail from "@/components/DailyDetail";
 import { getDaily } from "@/lib/content";
-import type { DailyDate } from "@/lib/like";
-import { stripMarkdown } from "@/lib/utils";
-
-function getDailyDateToday(): DailyDate {
-  const today = new TZDate(new Date(), "Asia/Manila");
-  const month = today.toLocaleString("en-US", { month: "long" }).toLowerCase();
-  const day = today.getDate().toString();
-
-  return { day, month };
-}
+import { getDailyDateToday, stripMarkdown } from "@/lib/utils";
 
 export async function generateMetadata(): Promise<Metadata> {
   const { day, month } = getDailyDateToday();

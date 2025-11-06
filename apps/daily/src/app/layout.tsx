@@ -23,5 +23,3 @@ export default function RootLayout({
     </html>
   );
 }
-
-//143.44.165.221

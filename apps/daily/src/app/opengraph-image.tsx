@@ -1,7 +1,8 @@
 import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
-import { type Month, monthSubjectsMap } from "@/lib/like";
+import { getDaily } from "@/lib/content";
+import { getDailyDateToday, stripMarkdown } from "@/lib/utils";
 
 export const size = {
   width: 1200,
@@ -17,13 +18,15 @@ const ibm = "IBM Plex Mono";
 // to be used for styles
 const ibmFontFamily = `"${ibm}"`;
 
-export default async function Image({
-  params,
-}: {
-  params: Promise<{ month: Month }>;
-}) {
-  const { month } = await params;
-  const subject = monthSubjectsMap[month];
+export default async function Image() {
+  const { day, month } = getDailyDateToday();
+  const { frontmatter } = await getDaily({ day, month });
+
+  const cleanTitle = (await stripMarkdown(frontmatter.title)).toString();
+
+  const subtitle = `${month} ${day}`;
+  const title = cleanTitle || "Daily Philosophy Quotes";
+  const author = frontmatter.author;
 
   const interFontData = await loadFont("InterDisplay-ExtraBold.ttf");
   const ibmFontData = await loadFont("IBMPlexMono-Regular.ttf");
@@ -52,7 +55,7 @@ export default async function Image({
           textTransform: "capitalize",
         }}
       >
-        {month}
+        {subtitle}
       </div>
       <div
         style={{
@@ -60,11 +63,24 @@ export default async function Image({
           fontSize: 88,
           marginTop: 12,
           marginBottom: 6,
+
           // olive 12
           color: "#141e12",
+          fontWeight: 700,
         }}
       >
-        {subject}
+        {title}
+      </div>
+      <div
+        style={{
+          fontFamily: ibmFontFamily,
+          fontSize: 52,
+          marginTop: "auto",
+          // olive 11
+          color: "#6b716a",
+        }}
+      >
+        {author}
       </div>
     </div>,
     {
