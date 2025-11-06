@@ -1,3 +1,5 @@
+import { readFile } from "node:fs/promises";
+import { join } from "node:path";
 import { ImageResponse } from "next/og";
 import { getDaily } from "@/lib/content";
 import { stripMarkdown } from "@/lib/utils";
@@ -7,35 +9,31 @@ export const size = {
   height: 630,
 };
 
-async function loadGoogleFont(font: string) {
-  const url = `https://fonts.googleapis.com/css2?family=${font}`;
-  const css = await (await fetch(url)).text();
-  const resource = css.match(
-    /src: url\((.+)\) format\('(opentype|truetype)'\)/
-  );
-
-  if (resource) {
-    const response = await fetch(resource[1]);
-    if (response.status === 200) {
-      return await response.arrayBuffer();
-    }
-  }
-
-  throw new Error("failed to load font data");
+async function loadFont(font: string) {
+  return readFile(join(process.cwd(), `public/fonts/${font}`));
 }
+
+const ibm = "IBM Plex Mono";
+
+// to be used for styles
+const ibmFontFamily = `"${ibm}"`;
 
 export default async function Image({
   params,
 }: {
-  params: { day: string; month: string };
+  params: Promise<{ day: string; month: string }>;
 }) {
-  const { frontmatter } = await getDaily(params);
+  const { day, month } = await params;
+  const { frontmatter } = await getDaily({ day, month });
 
   const cleanTitle = (await stripMarkdown(frontmatter.title)).toString();
 
-  const subtitle = `${params.month} ${params.day}`;
+  const subtitle = `${month} ${day}`;
   const title = cleanTitle || "Daily Philosophy Quotes";
   const author = frontmatter.author;
+
+  const interFontData = await loadFont("InterDisplay-ExtraBold.ttf");
+  const ibmFontData = await loadFont("IBMPlexMono-Regular.ttf");
 
   return new ImageResponse(
     <div
@@ -53,11 +51,12 @@ export default async function Image({
     >
       <div
         style={{
-          fontFamily: '"EB Garamond"',
+          fontFamily: ibmFontFamily,
           fontSize: 44,
           alignSelf: "flex-start",
           // olive 11
           color: "#6b716a",
+          textTransform: "capitalize",
         }}
       >
         {subtitle}
@@ -68,6 +67,7 @@ export default async function Image({
           fontSize: 88,
           marginTop: 12,
           marginBottom: 6,
+
           // olive 12
           color: "#141e12",
         }}
@@ -76,7 +76,7 @@ export default async function Image({
       </div>
       <div
         style={{
-          fontFamily: '"EB Garamond"',
+          fontFamily: ibmFontFamily,
           fontSize: 52,
           marginTop: "auto",
           // olive 11
@@ -91,13 +91,15 @@ export default async function Image({
       fonts: [
         {
           name: "Inter",
-          data: await loadGoogleFont("Inter"),
+          data: interFontData,
           style: "normal",
+          weight: 700,
         },
         {
-          name: "EB Garamond",
-          data: await loadGoogleFont("EB Garamond"),
+          name: ibm,
+          data: ibmFontData,
           style: "normal",
+          weight: 400,
         },
       ],
     }

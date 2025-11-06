@@ -1,7 +1,9 @@
+import { TZDate } from "@date-fns/tz";
 import clsx, { type ClassValue } from "clsx";
 import { remark } from "remark";
 import strip from "strip-markdown";
 import { twMerge } from "tailwind-merge";
+import type { DailyDate } from "./like";
 
 export function cn(...args: ClassValue[]) {
   return twMerge(clsx(args));
@@ -34,4 +36,12 @@ export async function tryCatch<T, E = Error>(
 
 export function stripMarkdown(markdown: string) {
   return remark().use(strip).process(markdown);
+}
+
+export function getDailyDateToday(): DailyDate {
+  const today = new TZDate(new Date(), "Asia/Manila");
+  const month = today.toLocaleString("en-US", { month: "long" }).toLowerCase();
+  const day = today.getDate().toString();
+
+  return { day, month };
 }
