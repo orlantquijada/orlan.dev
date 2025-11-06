@@ -1,7 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import DailyDetail from "@/components/DailyDetail";
 import { getDaily } from "@/lib/content";
 import { getDailyDateToday, stripMarkdown } from "@/lib/utils";
+
+export const viewport: Viewport = {
+  themeColor: "#fcfdfc",
+};
 
 export async function generateMetadata(): Promise<Metadata> {
   const { day, month } = getDailyDateToday();
