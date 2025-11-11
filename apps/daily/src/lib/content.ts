@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { cacheLife } from "next/cache";
 import type { Daily, DailyDate } from "./like";
 
 async function getAllCalendarFiles(dir: string) {
@@ -25,6 +26,32 @@ async function getAllCalendarFiles(dir: string) {
 
 export function getFiles() {
   return getAllCalendarFiles(path.join(process.cwd(), "src", "content"));
+}
+
+export async function getValidDates(): Promise<DailyDate[]> {
+  "use cache";
+  cacheLife("max");
+  const files = await getFiles();
+
+  return files.map((fileName) => {
+    const [month, day] = fileName.split("/").slice(-2);
+
+    // removes file extension
+    const _day = day.split(".")[0];
+
+    return {
+      month,
+      day: _day,
+    };
+  });
+}
+
+export async function isValidDate(date: DailyDate) {
+  return Boolean(
+    (await getValidDates()).find(
+      ({ day, month }) => day === date.day && month === date.month
+    )
+  );
 }
 
 export async function getDaily({ day, month }: DailyDate) {

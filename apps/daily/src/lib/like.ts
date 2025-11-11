@@ -48,6 +48,10 @@ export const monthSchema = z.enum([
   "december",
 ]);
 
+export function isValidMonth(month: string) {
+  return monthSchema.options.includes(month as Month);
+}
+
 export type Month = z.infer<typeof monthSchema>;
 
 export function parseKey(key: string) {

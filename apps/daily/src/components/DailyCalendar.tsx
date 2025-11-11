@@ -10,13 +10,7 @@ import {
 } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  type Dispatch,
-  type SetStateAction,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
 import * as Calendar from "@/components/Calendar";
 import UTurnLeftIcon from "@/icons/UTurnLeftIcon";
 import { type Month, monthSchema, monthSubjectsMap } from "@/lib/like";
@@ -50,16 +44,16 @@ export function getMonthToday() {
   return Months[today.getMonth()];
 }
 
+function monthToDate(month: Month) {
+  const year = new Date().getFullYear();
+  // Convert month name to month index
+  const monthIndex = new Date(`${month} 1, ${year}`).getMonth();
+  return new Date(year, monthIndex, 1);
+}
+
 export default function DailyCalendar() {
   const pathname = usePathname();
   const month = pathname.slice(1) as Month;
-
-  const monthToDate = useCallback((_month: Month) => {
-    const year = new Date().getFullYear();
-    // Convert month name to month index
-    const monthIndex = new Date(`${_month} 1, ${year}`).getMonth();
-    return new Date(year, monthIndex, 1);
-  }, []);
 
   const [currentMonthDate, setCurrentMonthDate] = useState(() =>
     monthToDate(month)
@@ -71,7 +65,7 @@ export default function DailyCalendar() {
 
   useEffect(() => {
     setCurrentMonthDate(monthToDate(month));
-  }, [month, monthToDate]);
+  }, [month]);
 
   const x = useMotionValue(0);
   const opacity = useTransform(
