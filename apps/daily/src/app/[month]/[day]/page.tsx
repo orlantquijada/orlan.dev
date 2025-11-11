@@ -1,6 +1,10 @@
+"use cache";
 import type { Metadata, Viewport } from "next";
+import { cacheLife } from "next/cache";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import DailyDetail from "@/components/DailyDetail";
-import { getDaily, getFiles } from "@/lib/content";
+import { getDaily, getValidDates, isValidDate } from "@/lib/content";
 import { stripMarkdown } from "@/lib/utils";
 
 type Props = {
@@ -8,19 +12,7 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const files = await getFiles();
-
-  return files.map((fileName) => {
-    const [month, day] = fileName.split("/").slice(-2);
-
-    // removes file extension
-    const _day = day.split(".")[0];
-
-    return {
-      month,
-      day: _day,
-    };
-  });
+  return await getValidDates();
 }
 
 export const viewport: Viewport = {
@@ -28,7 +20,15 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  "use cache";
+  cacheLife("max");
+
   const { day, month } = await params;
+
+  if (!(await isValidDate({ day, month }))) {
+    notFound();
+  }
+
   const { frontmatter } = await getDaily({ day, month });
   const cleanTitle = (await stripMarkdown(frontmatter.title)).toString();
   const cleanQuote = (await stripMarkdown(frontmatter.quote)).toString();
@@ -50,12 +50,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function EntryDetailPage({ params }: Props) {
+  "use cache";
+  cacheLife("max");
+
   const { day, month } = await params;
+
+  if (!(await isValidDate({ day, month }))) {
+    notFound();
+  }
+
   const { Body, frontmatter } = await getDaily({ day, month });
 
   return (
-    <DailyDetail Body={Body} date={{ day, month }} frontmatter={frontmatter} />
+    <Suspense>
+      <DailyDetail
+        Body={Body}
+        date={{ day, month }}
+        frontmatter={frontmatter}
+      />
+    </Suspense>
   );
 }
-
-export const dynamicParams = false;

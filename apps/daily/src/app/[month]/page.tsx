@@ -1,7 +1,15 @@
 import type { Metadata, Viewport } from "next";
+import { cacheLife } from "next/cache";
+import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import DailyCalendar from "@/components/DailyCalendar";
 import { Likes } from "@/components/Likes";
-import { type Month, monthSchema, monthSubjectsMap } from "@/lib/like";
+import {
+  isValidMonth,
+  type Month,
+  monthSchema,
+  monthSubjectsMap,
+} from "@/lib/like";
 import { capitalize } from "@/lib/utils";
 import styles from "./page.module.css";
 
@@ -18,7 +26,14 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  "use cache";
+  cacheLife("max");
+
   const { month } = await params;
+
+  if (!isValidMonth(month)) {
+    notFound();
+  }
 
   const capitalizedMonth = capitalize(month);
   const subject = monthSubjectsMap[month];
@@ -41,15 +56,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function MonthPage({ params: _ }: Props) {
+export default async function MonthPage({ params }: Props) {
+  "use cache";
+  cacheLife("weeks");
+
+  const { month } = await params;
+
+  if (!isValidMonth(month)) {
+    notFound();
+  }
+
   return (
     <main
       className={`${styles.main} mx-auto flex min-h-screen max-w-(--content-max-width) flex-col items-center gap-6 px-(--content-padding-x) pt-(--content-padding-y)`}
     >
-      <DailyCalendar />
+      <Suspense>
+        <DailyCalendar />
+      </Suspense>
       <Likes />
     </main>
   );
 }
-
-export const dynamicParams = false;
