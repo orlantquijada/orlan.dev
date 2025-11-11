@@ -41,7 +41,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 			setWidth(
 				window.innerWidth > breakpoint
 					? containerSize
-					: window.innerWidth - 24 * 2
+					: window.innerWidth - 24 * 2,
 			);
 			setIsOnMobileWidth(window.innerWidth < breakpoint);
 		}
@@ -67,7 +67,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 			<div
 				class={cn(
 					"-mx-6 sticky top-[96px] flex flex-col items-start overflow-x-clip px-6",
-					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible"
+					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible",
 				)}
 			>
 				<h3 class="mb-6 text-gray11 text-sm">Projects</h3>

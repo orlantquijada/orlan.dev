@@ -62,7 +62,7 @@ export default function Actions({
       <footer
         className={cn(
           styles.footer,
-          "fixed inset-x-0 bottom-4 mx-auto flex flex-col md:bottom-10"
+          "fixed inset-x-0 bottom-4 mx-auto flex flex-col md:bottom-10",
         )}
       >
         <motion.div
@@ -70,7 +70,7 @@ export default function Actions({
           className={cn(
             styles.actionsContainer,
             "flex w-(--icon-button-size) flex-col-reverse items-center justify-start overflow-hidden rounded-lg bg-olive-4 opacity-100 focus-within:bg-olive-4 focus-within:opacity-100 focus-within:ring-2 focus-within:ring-background hover:bg-olive-4 hover:opacity-100 md:bg-transparent md:opacity-75",
-            shouldShow ? "opacity-100 md:opacity-75" : "opacity-0"
+            shouldShow ? "opacity-100 md:opacity-75" : "opacity-0",
           )}
           initial={open ? "visible" : "hidden"}
           ref={ref}
@@ -136,7 +136,7 @@ export default function Actions({
             >
               <HeartSvg
                 className={footerBtnIconStyles(
-                  isLiked ? { className: "text-liked" } : {}
+                  isLiked ? { className: "text-liked" } : {},
                 )}
               />
             </IconMotionWrapper>
@@ -160,7 +160,7 @@ function footerButtonStyles({
     styles.footerButton,
     "flex aspect-square w-(--icon-button-size) shrink-0 cursor-pointer items-center justify-center rounded-sm border-none bg-transparent p-0 focus-within:bg-olive-2 focus-within:outline-none hover:bg-olive-2 hover:outline-none",
     size === "small" && "w-[calc(var(--icon-button-size)-0.5rem)]",
-    className
+    className,
   );
 }
 
@@ -195,7 +195,7 @@ function IconMotionWrapper(props: ComponentProps<typeof motion.div>) {
       {...props}
       className={cn(
         "grid h-full w-full scale-100 place-items-center",
-        props.className
+        props.className,
       )}
     />
   );

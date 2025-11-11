@@ -76,7 +76,7 @@ export function getAllLikedDates(month?: Month): DailyDate[] {
   const monthsToCheck = month ? [month] : monthSchema.options;
   return Object.keys(localStorage)
     .filter((key) =>
-      monthsToCheck.some((_month) => key.startsWith(`${DAILY_KEY}${_month}`))
+      monthsToCheck.some((_month) => key.startsWith(`${DAILY_KEY}${_month}`)),
     )
     .map(parseKey);
 }

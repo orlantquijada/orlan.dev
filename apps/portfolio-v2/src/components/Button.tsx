@@ -37,7 +37,7 @@ export const buttonStyles = cva(
 			translucent: false,
 			motionSafe: true,
 		},
-	}
+	},
 );
 
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;

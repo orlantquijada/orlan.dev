@@ -72,7 +72,7 @@ export default function NoteTagsList(props: Props) {
 									}}
 									tag={tag}
 								/>
-							)
+							),
 						)}
 
 						{isSelecting

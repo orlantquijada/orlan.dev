@@ -19,7 +19,8 @@
     ],
     "module": "ESNext",
     "target": "ES2018",
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*",

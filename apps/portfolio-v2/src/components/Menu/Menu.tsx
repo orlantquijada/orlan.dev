@@ -51,7 +51,7 @@ export function Menu() {
 								buttonStyles({
 									className: "z-10 flex items-center gap-3",
 									motionSafe: false,
-								})
+								}),
 							)}
 							initial="closed"
 							style={{
@@ -71,7 +71,7 @@ export function Menu() {
 								buttonStyles({
 									className: "absolute inset-0",
 									translucent: true,
-								})
+								}),
 							)}
 							id="portal-container"
 							ref={containerRef as RefObject<HTMLDivElement>}
@@ -136,7 +136,7 @@ function getLineMotionProps(direction: -1 | 1) {
 function MenuIcon() {
 	const [topLineMotionProps, bottomLineMotionProps] = useMemo(
 		() => [getLineMotionProps(1), getLineMotionProps(-1)],
-		[]
+		[],
 	);
 
 	return (
@@ -178,5 +178,5 @@ const contentStyles = cva(
 		defaultVariants: {
 			translucent: false,
 		},
-	}
+	},
 );

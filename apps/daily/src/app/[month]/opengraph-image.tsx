@@ -83,6 +83,6 @@ export default async function Image({
           weight: 400,
         },
       ],
-    }
+    },
   );
 }

@@ -58,7 +58,7 @@ export default function Video({
 				class={cn(
 					browserIconButtonStyles(),
 					"absolute right-4 bottom-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100",
-					state === "paused" && "translate-y-0 opacity-100"
+					state === "paused" && "translate-y-0 opacity-100",
 				)}
 				onClick={() => {
 					if (!videoRef.current) return;

@@ -49,8 +49,8 @@ export async function getValidDates(): Promise<DailyDate[]> {
 export async function isValidDate(date: DailyDate) {
   return Boolean(
     (await getValidDates()).find(
-      ({ day, month }) => day === date.day && month === date.month
-    )
+      ({ day, month }) => day === date.day && month === date.month,
+    ),
   );
 }
 

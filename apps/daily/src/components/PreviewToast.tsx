@@ -32,7 +32,7 @@ export default function PreviewToast({
 
   const { data: daily, error } = useSWR(
     selectedDate ? { month, day } : null,
-    fetcher
+    fetcher,
   );
 
   useEffect(() => {

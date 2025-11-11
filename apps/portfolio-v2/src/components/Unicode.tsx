@@ -25,7 +25,7 @@ export default function Unicode({ char }: Props) {
 			<span
 				class={cn(
 					"font-bold text-6xl text-gray11 opacity-50",
-					copied && "text-gray12 opacity-100"
+					copied && "text-gray12 opacity-100",
 				)}
 			>
 				{copied ? "✓" : char}

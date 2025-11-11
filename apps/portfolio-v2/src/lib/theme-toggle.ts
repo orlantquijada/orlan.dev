@@ -14,8 +14,8 @@ export const disableTransitionOnThemeChange = (callback: () => void) => {
             -o-transition: none !important;
             -ms-transition: none !important;
             transition: none !important;
-          }`
-		)
+          }`,
+		),
 	);
 	document.head.appendChild(css);
 

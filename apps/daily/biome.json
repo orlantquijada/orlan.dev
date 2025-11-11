@@ -7,13 +7,13 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": [
-      "**",
-      "!node_modules",
-      "!.next",
-      "!dist",
-      "!build"
-    ]
+    "includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+  },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true,
+      "cssModules": true
+    }
   },
   "formatter": {
     "enabled": true,
@@ -40,9 +40,5 @@
       }
     }
   },
-  "extends": [
-    "ultracite/core",
-    "ultracite/react",
-    "ultracite/next"
-  ]
+  "extends": ["../../biome.json", "ultracite/react", "ultracite/next"]
 }

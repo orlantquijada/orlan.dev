@@ -20,5 +20,5 @@ export const noteCardStyles = cva(
 			transluscent: true,
 			stripes: false,
 		},
-	}
+	},
 );

@@ -39,7 +39,7 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 				noteCardStyles({
 					stripes: wip,
 					className: "will-change-[opacity,transform]",
-				})
+				}),
 			)}
 			href={href}
 			layoutId={title}
