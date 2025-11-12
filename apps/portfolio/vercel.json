@@ -1,59 +1,59 @@
 {
-	"regions": ["hkg1"],
-	"headers": [
-		{
-			"source": "/fonts/Inter-Thin.woff2",
-			"headers": [
-				{
-					"key": "Cache-Control",
-					"value": "public, no-transform, immutable, max-age=31536000"
-				}
-			]
-		},
-		{
-			"source": "/fonts/Inter-Regular.woff2",
-			"headers": [
-				{
-					"key": "Cache-Control",
-					"value": "public, no-transform, immutable, max-age=31536000"
-				}
-			]
-		},
-		{
-			"source": "/fonts/Inter-Medium.woff2",
-			"headers": [
-				{
-					"key": "Cache-Control",
-					"value": "public, no-transform, immutable, max-age=31536000"
-				}
-			]
-		},
-		{
-			"source": "/fonts/Inter-SemiBold.woff2",
-			"headers": [
-				{
-					"key": "Cache-Control",
-					"value": "public, no-transform, immutable, max-age=31536000"
-				}
-			]
-		},
-		{
-			"source": "/fonts/Inter-Bold.woff2",
-			"headers": [
-				{
-					"key": "Cache-Control",
-					"value": "public, no-transform, immutable, max-age=31536000"
-				}
-			]
-		},
-		{
-			"source": "/fonts/SerifBold.woff2",
-			"headers": [
-				{
-					"key": "Cache-Control",
-					"value": "public, no-transform, immutable, max-age=31536000"
-				}
-			]
-		}
-	]
+  "regions": ["hkg1"],
+  "headers": [
+    {
+      "source": "/fonts/Inter-Thin.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, no-transform, immutable, max-age=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/Inter-Regular.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, no-transform, immutable, max-age=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/Inter-Medium.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, no-transform, immutable, max-age=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/Inter-SemiBold.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, no-transform, immutable, max-age=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/Inter-Bold.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, no-transform, immutable, max-age=31536000"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/SerifBold.woff2",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, no-transform, immutable, max-age=31536000"
+        }
+      ]
+    }
+  ]
 }

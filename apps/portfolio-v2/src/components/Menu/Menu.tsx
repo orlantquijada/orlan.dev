@@ -43,15 +43,15 @@ export function Menu() {
 	return (
 		<MotionConfig transition={transitions.punchy}>
 			<PopoverPrimitive.Root onOpenChange={setOpen} open={open}>
-				<div class="relative ml-auto flex">
+				<div className="relative ml-auto flex">
 					<PopoverPrimitive.Trigger asChild>
 						<motion.button
 							animate={open ? "open" : "closed"}
-							class={twMerge(
+							className={twMerge(
 								buttonStyles({
 									className: "z-10 flex items-center gap-3",
 									motionSafe: false,
-								}),
+								})
 							)}
 							initial="closed"
 							style={{
@@ -67,11 +67,11 @@ export function Menu() {
 					</PopoverPrimitive.Trigger>
 					<PopoverPrimitive.Anchor asChild>
 						<div
-							class={twMerge(
+							className={twMerge(
 								buttonStyles({
 									className: "absolute inset-0",
 									translucent: true,
-								}),
+								})
 							)}
 							id="portal-container"
 							ref={containerRef as RefObject<HTMLDivElement>}
@@ -94,7 +94,7 @@ export function Menu() {
 							>
 								<motion.div
 									animate="open"
-									class={twMerge(contentStyles({ translucent: true }))}
+									className={twMerge(contentStyles({ translucent: true }))}
 									exit="closed"
 									initial="closed"
 									style={{
@@ -136,11 +136,11 @@ function getLineMotionProps(direction: -1 | 1) {
 function MenuIcon() {
 	const [topLineMotionProps, bottomLineMotionProps] = useMemo(
 		() => [getLineMotionProps(1), getLineMotionProps(-1)],
-		[],
+		[]
 	);
 
 	return (
-		<svg class="h-[1em] w-[1em] stroke-gray10" viewBox="0 0 24 24">
+		<svg className="h-[1em] w-[1em] stroke-gray10" viewBox="0 0 24 24">
 			<title>Menu Icon</title>
 			<motion.path
 				d="M1 8H23"
@@ -178,5 +178,5 @@ const contentStyles = cva(
 		defaultVariants: {
 			translucent: false,
 		},
-	},
+	}
 );

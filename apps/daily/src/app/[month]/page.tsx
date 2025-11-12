@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import DailyCalendar from "@/components/DailyCalendar";
@@ -26,9 +25,6 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  "use cache";
-  cacheLife("max");
-
   const { month } = await params;
 
   if (!isValidMonth(month)) {
@@ -57,9 +53,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function MonthPage({ params }: Props) {
-  "use cache";
-  cacheLife("weeks");
-
   const { month } = await params;
 
   if (!isValidMonth(month)) {
@@ -77,3 +70,5 @@ export default async function MonthPage({ params }: Props) {
     </main>
   );
 }
+
+export const dynamicParams = false;

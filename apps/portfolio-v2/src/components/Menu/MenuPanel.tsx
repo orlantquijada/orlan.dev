@@ -16,36 +16,38 @@ import styles from "./styles.module.css";
 
 export function MenuPanel() {
 	return (
-		<div class="mt-10 flex flex-col gap-8">
+		<div className="mt-10 flex flex-col gap-8">
 			<Nav />
 
 			<div>
-				<h4 class="mb-3 text-gray10 dark:text-gray11">Connect</h4>
-				<div class="flex flex-col">
+				<h4 className="mb-3 text-gray10 dark:text-gray11">Connect</h4>
+				<div className="flex flex-col">
 					<ConnectLink
 						href="https://twitter.com/orlantquijada"
-						Icon={<Twitter class="h-5 w-5" />}
+						Icon={<Twitter className="h-5 w-5" />}
 						label="Twitter"
 					/>
 					<ConnectLink
 						href="https://github.com/orlantquijada"
-						Icon={<GitHub class="h-5 w-5" />}
+						Icon={<GitHub className="h-5 w-5" />}
 						label="GitHub"
 					/>
 				</div>
 			</div>
 
 			<button
-				class={menuItemStyles({
+				className={menuItemStyles({
 					className: "text-left text-sm transition-all hover:translate-x-1",
 				})}
 				onClick={() => {
-					if (isBrowser) toggleTheme();
+					if (isBrowser) {
+						toggleTheme();
+					}
 				}}
 				type="button"
 			>
-				<div class="flex justify-center">
-					<Logo class="h-4 w-4" />
+				<div className="flex justify-center">
+					<Logo className="h-4 w-4" />
 				</div>
 				Toggle Theme
 			</button>
@@ -59,14 +61,14 @@ function SendButton() {
 	return (
 		<ContactDialog>
 			<button
-				class={menuItemStyles({
+				className={menuItemStyles({
 					className:
 						"-mx-8 border-gray7 border-t px-8 text-left transition-colors hover:bg-gray-a3",
 					intent: "sendBtn",
 				})}
 				type="button"
 			>
-				<span class={bulletStyles({ className: "bg-accent" })} />
+				<span className={bulletStyles({ className: "bg-accent" })} />
 				Send me a message
 			</button>
 		</ContactDialog>
@@ -78,12 +80,12 @@ function MenuItem(props: { Icon: ReactNode; children: ReactNode }) {
 
 	return (
 		<div
-			class={menuItemStyles({
+			className={menuItemStyles({
 				className: "group transition-transform hover:translate-x-1",
 			})}
 		>
 			{children}
-			<div class="-mx-2 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
+			<div className="-mx-2 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
 				{Icon}
 			</div>
 		</div>
@@ -95,7 +97,7 @@ function ConnectLink(props: { href: string; label: string; Icon: ReactNode }) {
 
 	return (
 		<a href={href} rel="noopener noreferrer" target="_blank">
-			<MenuItem Icon={<ArrowTopRight class={`${styles.icon} h-4 w-4`} />}>
+			<MenuItem Icon={<ArrowTopRight className={`${styles.icon} h-4 w-4`} />}>
 				{Icon}
 				{label}
 			</MenuItem>
@@ -116,16 +118,18 @@ const links: Array<{
 function Nav() {
 	return (
 		<nav>
-			<ul class="flex flex-col">
+			<ul className="flex flex-col">
 				{links.map((link) => (
 					<li key={link.label}>
-						<a class="font-medium" href={link.href}>
+						<a className="font-medium" href={link.href}>
 							<MenuItem
 								Icon={
-									<ArrowRight class={`h-4 w-4 text-gray10 ${styles.icon}`} />
+									<ArrowRight
+										className={`h-4 w-4 text-gray10 ${styles.icon}`}
+									/>
 								}
 							>
-								<span class={bulletStyles({ className: link.color })} />
+								<span className={bulletStyles({ className: link.color })} />
 								{link.label}
 							</MenuItem>
 						</a>
@@ -148,6 +152,6 @@ const menuItemStyles = cva(
 		defaultVariants: {
 			intent: "default",
 		},
-	},
+	}
 );
 const bulletStyles = cva(["h-2 w-2 justify-self-center rounded-full"]);

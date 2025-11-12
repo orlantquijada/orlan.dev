@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import { cacheLife } from "next/cache";
 import DailyDetail from "@/components/DailyDetail";
 import { getDaily } from "@/lib/content";
 import { getDailyDateToday, stripMarkdown } from "@/lib/utils";
@@ -9,8 +8,6 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  "use cache";
-  cacheLife("days");
   const { day, month } = getDailyDateToday();
   const { frontmatter } = await getDaily({ day, month });
 
@@ -34,9 +31,6 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function Home() {
-  "use cache";
-  cacheLife("days");
-
   const { day, month } = getDailyDateToday();
   const { Body, frontmatter } = await getDaily({ day, month });
 
@@ -44,3 +38,5 @@ export default async function Home() {
     <DailyDetail Body={Body} date={{ day, month }} frontmatter={frontmatter} />
   );
 }
+
+export const dynamic = "force-dynamic";

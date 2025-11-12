@@ -1,10 +1,10 @@
 ---
-	import { query, storageKey } from "@/lib/theme-toggle";
+import { query, storageKey } from "@/lib/theme-toggle";
 ---
+
 <!-- inline is necessary to avoid FOUC 
      flash happens on dark mode default -->
 <script is:inline define:vars={{ query, storageKey }}>
-	"use strict";
 	////////////////////////////// Util fns //////////////////////////////
 
 	const disableTransitionOnThemeChange = (callback) => {
@@ -38,7 +38,9 @@
 
 	const getTheme = () => {
 		const theme = localStorage.getItem(storageKey);
-		if (theme) return theme;
+		if (theme) {
+			return theme;
+		}
 		return getDefaultTheme();
 	};
 
@@ -85,7 +87,9 @@
 
 	// sync across tabs
 	window.addEventListener("storage", (e) => {
-		if (e.key !== storageKey) return;
+		if (e.key !== storageKey) {
+			return;
+		}
 
 		setTheme(e.newValue);
 	});

@@ -37,7 +37,7 @@ export const buttonStyles = cva(
 			translucent: false,
 			motionSafe: true,
 		},
-	},
+	}
 );
 
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;
@@ -48,7 +48,7 @@ export function Button(props: ButtonProps) {
 	return (
 		<button
 			{..._props}
-			class={twMerge(buttonStyles({ className, translucent }))}
+			className={twMerge(buttonStyles({ className, translucent }))}
 		>
 			{children}
 		</button>

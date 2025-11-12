@@ -16,7 +16,7 @@ export default function NotesWrapper({ notes, tags, tagsGraph }: Props) {
 	return (
 		<LayoutGroup>
 			<NoteTagsList tags={tags} tagsGraph={tagsGraph} />
-			<NotesList class="mt-14" notes={notes} />
+			<NotesList className="mt-14" notes={notes} />
 		</LayoutGroup>
 	);
 }

@@ -30,25 +30,27 @@ export default function NotesList(props: Props) {
 		if (
 			isSelecting &&
 			_selectedTags.every((selectedTag) => note.tags.includes(selectedTag))
-		)
+		) {
 			filtered.push({ ...note, selected: true });
-		else rest.push({ ...note, selected: false });
+		} else {
+			rest.push({ ...note, selected: false });
+		}
 	}
 
 	// fixed height is needed (relative height will cause for the container to assume 100% height for its height)
 	const smHeight = toRem(
-		Math.ceil(notes.length / 2) * (HEIGHT + CARD_MARGIN_BOTTOM),
+		Math.ceil(notes.length / 2) * (HEIGHT + CARD_MARGIN_BOTTOM)
 	);
 	const mdHeight = toRem(
-		Math.ceil(notes.length / 3) * (HEIGHT + CARD_MARGIN_BOTTOM),
+		Math.ceil(notes.length / 3) * (HEIGHT + CARD_MARGIN_BOTTOM)
 	);
 
 	return (
 		<div
-			class={twMerge(
+			className={twMerge(
 				cx(className, styles.notesList, [
 					"h-full sm:h-(--smHeight) md:h-(--mdHeight)",
-				]),
+				])
 			)}
 			style={
 				{

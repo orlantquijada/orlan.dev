@@ -5,8 +5,8 @@ import {
 	useTransform,
 } from "motion/react";
 import {
+	type ComponentRef,
 	type CSSProperties,
-	type ElementRef,
 	type ReactNode,
 	useEffect,
 	useRef,
@@ -26,7 +26,7 @@ const breakpoint = 768;
 const containerSize = 704 - 24 * 2;
 
 export default function ProjectsCarousel({ children, numOfItems }: Props) {
-	const scrollableRef = useRef<ElementRef<"div">>(null);
+	const scrollableRef = useRef<ComponentRef<"div">>(null);
 	const { scrollYProgress } = useScroll({
 		target: scrollableRef,
 	});
@@ -41,7 +41,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 			setWidth(
 				window.innerWidth > breakpoint
 					? containerSize
-					: window.innerWidth - 24 * 2,
+					: window.innerWidth - 24 * 2
 			);
 			setIsOnMobileWidth(window.innerWidth < breakpoint);
 		}
@@ -55,7 +55,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 
 	return (
 		<section
-			class="relative mt-8 h-(--fullWidth) w-full md:h-auto"
+			className="relative mt-8 h-(--fullWidth) w-full md:h-auto"
 			ref={scrollableRef}
 			style={
 				{
@@ -65,15 +65,15 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 			}
 		>
 			<div
-				class={cn(
-					"-mx-6 sticky top-[96px] flex flex-col items-start overflow-x-clip px-6",
-					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible",
+				className={cn(
+					"-mx-6 sticky top-24 flex flex-col items-start overflow-x-clip px-6",
+					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible"
 				)}
 			>
-				<h3 class="mb-6 text-gray11 text-sm">Projects</h3>
+				<h3 className="mb-6 text-gray11 text-sm">Projects</h3>
 
 				<motion.div
-					class={cn("flex will-change-transform", "md:h-full md:w-full")}
+					className={cn("flex will-change-transform", "md:h-full md:w-full")}
 					style={
 						{
 							"--itemWidth": `${width}px`,

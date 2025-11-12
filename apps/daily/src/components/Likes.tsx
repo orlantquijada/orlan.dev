@@ -17,7 +17,7 @@ export function Likes() {
   }
 
   const sortedLikes = likes.sort(
-    (current, next) => Number(current.day) - Number(next.day),
+    (current, next) => Number(current.day) - Number(next.day)
   );
 
   return (

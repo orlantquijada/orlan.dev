@@ -8,7 +8,14 @@ import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config
 export default defineConfig({
-	integrations: [react(), mdx(), icon(), compress()],
+	integrations: [
+		react(),
+		mdx(),
+		icon(),
+		compress({
+			HTML: false,
+		}),
+	],
 	scopedStyleStrategy: "where",
 	markdown: {
 		shikiConfig: {

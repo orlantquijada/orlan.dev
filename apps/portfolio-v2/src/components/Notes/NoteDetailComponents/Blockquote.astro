@@ -6,21 +6,21 @@ const props = Astro.props;
 ---
 
 <blockquote
-  {...props}
-  class="relative text-gray11 *:after:absolute *:after:ml-0.5 *:after:content-[close-quote]"
+	{...props}
+	class="relative text-gray11 *:after:absolute *:after:ml-0.5 *:after:content-[close-quote]"
 >
-  <slot />
+	<slot/>
 </blockquote>
 
 <style>
-  blockquote {
-    quotes: '“' '”' '‘' '’';
-  }
+	blockquote {
+		quotes: "“" "”" "‘" "’";
+	}
 
-  blockquote::before {
-    content: open-quote;
-    position: absolute;
-    left: -2px;
-    transform: translateX(-100%);
-  }
+	blockquote::before {
+		content: open-quote;
+		position: absolute;
+		left: -2px;
+		transform: translateX(-100%);
+	}
 </style>

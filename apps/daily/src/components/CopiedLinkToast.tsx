@@ -29,7 +29,7 @@ export function CopiedLinkToast({ ref }: CopiedLinkToastProps) {
         }, TOAST_DURATION);
       },
     }),
-    [],
+    []
   );
 
   return (

@@ -40,5 +40,5 @@ export const chipStyles = cva(
 					"dark:bg-gray3 dark:hover:bg-gray4 dark:focus-within:bg-gray4",
 			},
 		],
-	},
+	}
 );

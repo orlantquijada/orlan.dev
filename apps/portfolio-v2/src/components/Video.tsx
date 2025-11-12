@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from "astro/types";
 import {
-	type ElementRef,
+	type ComponentRef,
 	type ReactNode,
 	useEffect,
 	useRef,
@@ -25,7 +25,7 @@ export default function Video({
 	playingIcon,
 	className,
 }: Props) {
-	const videoRef = useRef<ElementRef<"video">>(null);
+	const videoRef = useRef<ComponentRef<"video">>(null);
 	const [state, setState] = useState<"playing" | "paused">();
 
 	useEffect(() => {
@@ -35,7 +35,7 @@ export default function Video({
 	}, []);
 
 	return (
-		<div class={cn("relative", className)}>
+		<div className={cn("relative", className)}>
 			<video
 				autoPlay
 				controls={false}
@@ -55,13 +55,15 @@ export default function Video({
 			</video>
 
 			<button
-				class={cn(
+				className={cn(
 					browserIconButtonStyles(),
 					"absolute right-4 bottom-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100",
-					state === "paused" && "translate-y-0 opacity-100",
+					state === "paused" && "translate-y-0 opacity-100"
 				)}
 				onClick={() => {
-					if (!videoRef.current) return;
+					if (!videoRef.current) {
+						return;
+					}
 
 					if (videoRef.current.paused) {
 						videoRef.current.play();
@@ -74,12 +76,18 @@ export default function Video({
 				type="button"
 			>
 				<span
-					class={cn("absolute opacity-0", state === "paused" && "opacity-100")}
+					className={cn(
+						"absolute opacity-0",
+						state === "paused" && "opacity-100"
+					)}
 				>
 					{playingIcon}
 				</span>
 				<span
-					class={cn("absolute opacity-0", state === "playing" && "opacity-100")}
+					className={cn(
+						"absolute opacity-0",
+						state === "playing" && "opacity-100"
+					)}
 				>
 					{pausedIcon}
 				</span>

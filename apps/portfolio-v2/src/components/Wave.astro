@@ -1,12 +1,14 @@
 ---
-	export interface Props {
-		title: string;
-	}
+export type Props = {
+	title: string;
+};
 
-	const { title } = Astro.props;
-	const characters = title.split("");
+const { title } = Astro.props;
+const characters = title.split("");
 ---
+
 {
   characters.map((character, index) => (
     <span aria-hidden data-wave style={{ '--character': index }}
 >{character === ' ' ? <>&nbsp;</> : character}
+}
