@@ -3,11 +3,11 @@ import type { HTMLTag, Polymorphic } from "astro/types";
 
 import { browserIconButtonStyles } from "./styles.ts";
 
-type Props<Tag extends HTMLTag> = Polymorphic<{ as: Tag }>;
+type Props<T extends HTMLTag> = Polymorphic<{ as: T }>;
 
 const { as: Tag, ...props } = Astro.props;
 ---
 
 <Tag {...props} class={browserIconButtonStyles({ class: props.class })}>
-  <slot />
+	<slot/>
 </Tag>

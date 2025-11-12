@@ -5,8 +5,6 @@ const nextConfig: NextConfig = {
   /* config options here */
   reactCompiler: true,
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
-
-  cacheComponents: true,
 };
 
 const withMDX = createMDX({

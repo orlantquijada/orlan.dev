@@ -1,6 +1,4 @@
-"use cache";
 import type { Metadata, Viewport } from "next";
-import { cacheLife } from "next/cache";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import DailyDetail from "@/components/DailyDetail";
@@ -20,9 +18,6 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  "use cache";
-  cacheLife("max");
-
   const { day, month } = await params;
 
   if (!(await isValidDate({ day, month }))) {
@@ -50,9 +45,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function EntryDetailPage({ params }: Props) {
-  "use cache";
-  cacheLife("max");
-
   const { day, month } = await params;
 
   if (!(await isValidDate({ day, month }))) {
@@ -71,3 +63,5 @@ export default async function EntryDetailPage({ params }: Props) {
     </Suspense>
   );
 }
+
+export const dynamicParams = false;

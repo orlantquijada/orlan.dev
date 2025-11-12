@@ -13,10 +13,10 @@ export default function NoteCard(props: NoteCardProps) {
 	const { title, description, href } = props;
 
 	return (
-		<a class={twMerge(noteCardStyles())} href={href}>
-			<h3 class="font-medium">{title}</h3>
+		<a className={twMerge(noteCardStyles())} href={href}>
+			<h3 className="font-medium">{title}</h3>
 			{description ? (
-				<p class="text-gray10 text-sm dark:text-gray11">{description}</p>
+				<p className="text-gray10 text-sm dark:text-gray11">{description}</p>
 			) : null}
 		</a>
 	);
@@ -35,17 +35,17 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 	return (
 		<motion.a
 			animate={isSelecting ? { opacity: selected ? 1 : 0.3 } : {}}
-			class={twMerge(
+			className={twMerge(
 				noteCardStyles({
 					stripes: wip,
 					className: "will-change-[opacity,transform]",
-				}),
+				})
 			)}
 			href={href}
 			layoutId={title}
 		>
 			<h1
-				class="font-medium"
+				className="font-medium"
 				style={
 					{
 						viewTransitionName: getViewTransitionName(title),
@@ -55,7 +55,7 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 				{title}
 			</h1>
 			{description ? (
-				<p class="text-gray10 text-sm dark:text-gray11">{description}</p>
+				<p className="text-gray10 text-sm dark:text-gray11">{description}</p>
 			) : null}
 		</motion.a>
 	);

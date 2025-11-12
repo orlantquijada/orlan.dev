@@ -8,14 +8,17 @@ export function buildTagGraph(...noteTags: string[][]): TagGraphMap {
 
 	for (const tags of noteTags) {
 		for (const tag of tags) {
-			const node = tagGraph.get(tag);
+			if (!tagGraph.has(tag)) {
+				tagGraph.set(tag, new Set());
+			}
 
-			if (node) {
-				for (const _tag of tags) {
-					if (_tag !== tag) node.add(_tag);
+			const relatedTags = tagGraph.get(tag);
+
+			for (const relatedTag of tags) {
+				if (relatedTag !== tag) {
+					relatedTags?.add(relatedTag);
 				}
-			} else
-				tagGraph.set(tag, new Set([...tags].filter((_tag) => _tag !== tag)));
+			}
 		}
 	}
 
@@ -30,15 +33,17 @@ export function intersectionSet<T>(s1: Set<T>, s2: Set<T>): Set<T> {
 // http://olizardo.bol.ucla.edu/classes/soc-111/lessons-winter-2022/2-lesson-graph-theory.html#node-neighborhood-intersection
 export function getNeighborhoodsIntersection(
 	graph: TagGraphMap,
-	nodes: string[],
+	nodes: string[]
 ) {
-	if (nodes.length === 0) return [];
+	if (nodes.length === 0) {
+		return [];
+	}
 
 	let intersection = graph.get(nodes[0] as string) as Set<string>;
 	for (const node of nodes) {
 		intersection = intersectionSet(
 			intersection,
-			graph.get(node) as Set<string>,
+			graph.get(node) as Set<string>
 		);
 	}
 

@@ -1,12 +1,13 @@
 ---
-	import LogoIcon from "./LogoIcon.astro";
+import LogoIcon from "./LogoIcon.astro";
 
-	type Props = {
-		class?: string;
-	};
+type Props = {
+	class?: string;
+};
 
-	const { class: className } = Astro.props;
+const { class: className } = Astro.props;
 ---
+
 <footer
 	class:list={['flex flex-col justify-center gap-4 px-6 pb-24', className]}
 >

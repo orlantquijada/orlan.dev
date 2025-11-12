@@ -1,12 +1,13 @@
 ---
-	import { cn } from "@/lib/general";
+import { cn } from "@/lib/general";
 
-	const { className } = Astro.props;
+const { className } = Astro.props;
 
-	type Props = {
-		className?: string;
-	};
+type Props = {
+	className?: string;
+};
 ---
+
 <div
 	class={cn(
     'rounded-xl border border-dashed border-gray-a9 bg-gray-a4 p-[10%] isolate',

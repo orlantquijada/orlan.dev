@@ -1,8 +1,9 @@
 ---
-	import UnicodeReact from "./Unicode";
+import UnicodeReact from "./Unicode";
 
-	type Props = { char: string };
+type Props = { char: string };
 
-	const { char } = Astro.props;
+const { char } = Astro.props;
 ---
+
 <UnicodeReact char={char} client:load/>

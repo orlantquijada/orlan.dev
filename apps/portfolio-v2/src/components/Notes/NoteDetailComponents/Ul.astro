@@ -7,20 +7,20 @@ const props = Astro.props;
 ---
 
 <ul {...props} class:list={['ul', props.class]}>
-  <slot />
+	<slot/>
 </ul>
 
 <style>
-  :global(.ul li) {
-    position: relative;
-    padding-inline-start: 2rem;
-  }
+	:global(.ul li) {
+		position: relative;
+		padding-inline-start: 2rem;
+	}
 
-  :global(.ul li::before) {
-    content: '— ';
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--color-gray11, var(--gray11));
-  }
+	:global(.ul li::before) {
+		content: "— ";
+		position: absolute;
+		left: 0;
+		top: 0;
+		color: var(--color-gray11, var(--gray11));
+	}
 </style>

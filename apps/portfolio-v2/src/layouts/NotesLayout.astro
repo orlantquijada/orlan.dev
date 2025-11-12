@@ -1,39 +1,40 @@
 ---
-	import type { CollectionEntry } from "astro:content";
-	import { ViewTransitions } from "astro:transitions";
-	import { formatDate } from "@repo/utils";
-	import { Icon } from "astro-icon/components";
-	import MetaData from "@/components/Notes/NoteDetailComponents/MetaData.astro";
-	import { getViewTransitionName } from "@/lib/notes";
-	import Layout from "./Layout.astro";
+import type { CollectionEntry } from "astro:content";
+import { ViewTransitions } from "astro:transitions";
+import { formatDate } from "@repo/utils";
+import { Icon } from "astro-icon/components";
+import MetaData from "@/components/Notes/NoteDetailComponents/MetaData.astro";
+import { getViewTransitionName } from "@/lib/notes";
+import Layout from "./Layout.astro";
 
-	type Props = CollectionEntry<"notes">["data"];
+type Props = CollectionEntry<"notes">["data"];
 
-	const data = Astro.props;
+const data = Astro.props;
 ---
+
 <Layout title={data.title}>
 	<ViewTransitions slot="head"/>
 	<div class="grid place-items-start gap-2">
-    <h1
-      class="text-balance text-3xl font-medium"
-      style={`view-transition-name:${getViewTransitionName(data.title)}`}
-    >
-      {data.title}
-    </h1>
-    {
+		<h1
+			class="text-balance text-3xl font-medium"
+			style={`view-transition-name:${getViewTransitionName(data.title)}`}
+		>
+			{data.title}
+		</h1>
+		{
       data.description ? (
       <p class="text-gray-a11 md:max-w-4/5">{data.description}</p>
       ) : null
     }
-  </div>
+	</div>
 
 	<div class="flex gap-6">
-    <MetaData>
-      <Icon name="tag" slot="icon" />
+		<MetaData>
+			<Icon name="tag" slot="icon"/>
 
-      <ul class="flex items-center">
-        <!-- TODO: filter notes by tag link -->
-        {
+			<ul class="flex items-center">
+				<!-- TODO: filter notes by tag link -->
+				{
           [...data.tags].map((tag) => (
             <li class="tag">
               <a href="/notes" class="hover:underline">
@@ -42,15 +43,15 @@
             </li>
           ))
         }
-      </ul>
-    </MetaData>
+			</ul>
+		</MetaData>
 
-    <MetaData>
-      <Icon name="clock" slot="icon" />
-      <span>{formatDate(data.publishedAt)}</span>
-    </MetaData>
+		<MetaData>
+			<Icon name="clock" slot="icon"/>
+			<span>{formatDate(data.publishedAt)}</span>
+		</MetaData>
 
-    {
+		{
       data.updatedAt ? (
         <MetaData>
           <Icon name="pencil" />
@@ -65,7 +66,7 @@
       ) : null
     }
 
-    {
+		{
       data.wip ? (
         <MetaData>
           <Icon name="wrench" slot="icon" />
@@ -73,7 +74,7 @@
         </MetaData>
       ) : null
     }
-  </div>
+	</div>
 
 	<hr class="my-8 w-full border-t-2 border-t-gray-a4">
 

@@ -24,7 +24,7 @@ const contentStyles = cva(
 			transluscent: false,
 			color: "gray",
 		},
-	},
+	}
 );
 
 const overlayStyles = cva([
@@ -45,9 +45,9 @@ export function Root(props: Props) {
 		<DialogPrimitive.Root>
 			<DialogPrimitive.Trigger asChild>{trigger}</DialogPrimitive.Trigger>
 			<DialogPrimitive.Portal>
-				<DialogPrimitive.Overlay class={overlayStyles()} />
+				<DialogPrimitive.Overlay className={overlayStyles()} />
 				<DialogPrimitive.Content
-					class={twMerge(contentStyles({ transluscent: true }))}
+					className={twMerge(contentStyles({ transluscent: true }))}
 				>
 					{children}
 				</DialogPrimitive.Content>

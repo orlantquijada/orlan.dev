@@ -1,12 +1,13 @@
 ---
-	import { Menu } from "./Menu/Menu";
+import { Menu } from "./Menu/Menu";
 
-	type Props = {
-		class?: string;
-	};
+type Props = {
+	class?: string;
+};
 
-	const { class: className } = Astro.props;
+const { class: className } = Astro.props;
 ---
+
 <header
 	class:list={[
     'sticky left-0 right-0 top-10 z-10 mt-10 flex items-center justify-between px-6',
@@ -22,5 +23,5 @@
       </a>
     ) : null
   }
-	<menu client:load/>
+	<Menu client:load/>
 </header>

@@ -13,7 +13,7 @@ export async function getLikes(dates: DailyDate[]) {
       ).toString();
 
       return { ...daily.frontmatter, title: strippedTitle, ...date };
-    }),
+    })
   );
 
   return likes;

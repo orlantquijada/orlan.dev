@@ -56,7 +56,7 @@ export default function DailyCalendar() {
   const month = pathname.slice(1) as Month;
 
   const [currentMonthDate, setCurrentMonthDate] = useState(() =>
-    monthToDate(month),
+    monthToDate(month)
   );
   const [selectedDate, setSelectedDate] = useState<Date>();
 
@@ -71,7 +71,7 @@ export default function DailyCalendar() {
   const opacity = useTransform(
     x,
     [-NAVIGATION_OFFSET, 0, NAVIGATION_OFFSET],
-    [0.1, 1, 0.1],
+    [0.1, 1, 0.1]
   );
 
   return (
@@ -201,7 +201,7 @@ function Days({
               isToday &&
                 "relative text-olive-10 before:absolute before:size-[2em] before:rounded-full before:bg-olive-3 md:before:top-[0.5em] md:before:left-[0.5em]",
               selected(date) && "underline",
-              !isInCurrentMonth && "text-olive-8",
+              !isInCurrentMonth && "text-olive-8"
             )}
             key={date.toString()}
             onClick={() => setSelectedDate(date)}
