@@ -1,0 +1,59 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+type Props = HTMLAttributes<"pre">;
+const props = Astro.props;
+---
+
+<div class="root">
+	<pre {...props}><slot/></pre>
+	<div class="shine"/>
+</div>
+
+<style>
+	.root {
+		position: relative;
+	}
+
+	pre {
+		border-radius: 12px;
+		padding: 16px;
+		backdrop-filter: blur(10px);
+		border: 1px solid var(--color-gray6);
+		position: relative;
+		line-height: 1.5;
+		font-size: 13px;
+		box-shadow: rgb(0 0 0 / 10%) 0px 5px 30px -5px;
+		background: hsla(0, 0%, 99%, 0.4) !important;
+
+		html.dark & {
+			background: var(--color-gray-a2) !important;
+		}
+	}
+
+	html.dark .shine {
+		background: linear-gradient(
+			90deg,
+			rgba(56, 189, 248, 0),
+			var(--color-gray5) 10%,
+			var(--color-gray9) 50%,
+			rgba(236, 72, 153, 0)
+		);
+		height: 1px;
+		position: absolute;
+		top: -1px;
+		width: 100%;
+		z-index: -1;
+	}
+
+	:global(html.dark) {
+		.astro-code,
+		.astro-code span {
+			color: var(--shiki-dark) !important;
+			/* Optional, if you also want font styles */
+			font-style: var(--shiki-dark-font-style) !important;
+			font-weight: var(--shiki-dark-font-weight) !important;
+			text-decoration: var(--shiki-dark-text-decoration) !important;
+		}
+	}
+</style>

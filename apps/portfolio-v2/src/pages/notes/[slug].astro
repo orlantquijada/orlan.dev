@@ -1,14 +1,13 @@
 ---
-import { type CollectionEntry, getCollection } from "astro:content";
-import { render } from "astro:content";
-import { components } from "@/components/Notes/NoteDetailComponents/components.astro";
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import { components } from "@/components/Notes/NoteDetailComponents/components";
 import NotesLayout from "@/layouts/NotesLayout.astro";
 
 export async function getStaticPaths() {
 	const notes = await getCollection("notes");
-	return notes.map((note) => ({
-		params: { slug: note.id },
-		props: note,
+	return notes.map((_note) => ({
+		params: { slug: _note.id },
+		props: _note,
 	}));
 }
 
