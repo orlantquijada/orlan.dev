@@ -193,6 +193,19 @@
 	/*   5px 10px 12.6px -2.5px rgba(3, 2, 2, 0.1); */
 }
 
+[data-animate] {
+	--stagger: 0;
+	--delay: 120ms;
+	--start: 0ms;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	[data-animate] {
+		animation: enter 0.6s both;
+		animation-delay: calc(var(--stagger) * var(--delay) + var(--start));
+	}
+}
+
 @keyframes show {
 	from {
 		opacity: 0;
@@ -234,5 +247,16 @@
 	to {
 		opacity: 0;
 		transform: translate(-50%, -45%) scale(0.96);
+	}
+}
+
+@keyframes enter {
+	0% {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
 	}
 }

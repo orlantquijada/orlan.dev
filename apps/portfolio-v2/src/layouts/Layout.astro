@@ -42,9 +42,7 @@ const { title, className } = Astro.props;
 	}
 	main::after {
 		z-index: -2;
-		/* background-image: url('/grid.svg'); */
-		background-image: url("/grid2.svg");
-		/* background-image: url('/waves.svg'); */
+		background-image: url("/grid.svg");
 		opacity: 0.2;
 		content: "";
 		filter: invert(0.8);
@@ -63,44 +61,8 @@ const { title, className } = Astro.props;
 		content: "";
 		z-index: -3;
 		width: 100%;
-		filter: saturate(150%);
-		/*
-    background-image: radial-gradient(
-        at 27% 37%,
-        var(--arc-palette-background) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 97% 21%,
-        var(--arc-palette-minContrastColor) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 52% 99%,
-        var(--arc-palette-foregroundSecondary) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 10% 29%,
-        var(--arc-palette-foregroundTertiary) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 97% 96%,
-        var(--arc-palette-maxContrastColor) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 33% 50%,
-        var(--arc-palette-foregroundPrimary) 0px,
-        transparent 50%
-      ),
-      radial-gradient(
-        at 79% 53%,
-        var(--arc-palette-backgroundExtra) 0px,
-        transparent 50%
-      );
-    */
+		height: 100%;
+		filter: blur(100px) saturate(150%);
 
 		opacity: 0.2;
 		background-image:

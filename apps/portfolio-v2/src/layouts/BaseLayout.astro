@@ -3,9 +3,9 @@ import "@/styles/global.css";
 import Fonts from "@/components/Fonts.astro";
 import ThemeToggle from "@/components/ThemeToggle.astro";
 
-export interface Props {
+export type Props = {
 	title: string;
-}
+};
 
 const { title } = Astro.props;
 ---
