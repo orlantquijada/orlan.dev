@@ -1,13 +1,24 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
-import { defineConfig } from "astro/config";
+import { defineConfig, fontProviders } from "astro/config";
 import compress from "astro-compress";
 import icon from "astro-icon";
 import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config
 export default defineConfig({
+	experimental: {
+		fonts: [
+			{
+				provider: fontProviders.google(),
+				name: "JetBrains Mono",
+				cssVariable: "--font-jetbrains-mono",
+				fallbacks: ["monospace"],
+				subsets: ["latin"],
+			},
+		],
+	},
 	integrations: [
 		react(),
 		mdx(),
@@ -19,7 +30,10 @@ export default defineConfig({
 	scopedStyleStrategy: "where",
 	markdown: {
 		shikiConfig: {
-			theme: "min-dark",
+			themes: {
+				dark: "material-theme-ocean",
+				light: "min-light",
+			},
 		},
 	},
 	vite: {

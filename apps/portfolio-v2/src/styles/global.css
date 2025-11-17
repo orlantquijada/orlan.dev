@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "@radix-ui/colors/gray-dark-alpha.css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -121,6 +120,10 @@
 
 .dark {
 	color-scheme: dark;
+}
+
+@theme inline {
+	--font-mono: var(--font-jetbrains-mono);
 }
 
 @theme {
