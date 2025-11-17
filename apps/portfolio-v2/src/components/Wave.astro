@@ -7,8 +7,4 @@ const { title } = Astro.props;
 const characters = title.split("");
 ---
 
-{
-  characters.map((character, index) => (
-    <span aria-hidden data-wave style={{ '--character': index }}
->{character === ' ' ? <>&nbsp;</> : character}
-}
+{characters.map((character, index) => <span aria-hidden data-wave style={{ '--character': index }}>{character === ' ' ? <>&nbsp;</> : character}</span>)}

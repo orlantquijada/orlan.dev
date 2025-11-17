@@ -6,19 +6,17 @@ import Projects from "./Projects.astro";
 <div class="flex flex-col items-start gap-12">
 	<h2
 		class="font-family-redaction sticky top-10 flex h-10 items-center text-base italic"
+		data-animate
 	>
 		Orlan Quijada
 	</h2>
-	<p class="tracking-normal">
-		A<span class="font-family-redaction text-base italic">product-focused</span>
-		Fullstsack Engineer based in the Philippines. Currently the Lead Software
-		Engineer at
-		<a
-			class="link"
-			href="https://play.google.com/store/apps/details?id=com.felicityincorporated.felicity&pcampaignid=web_share"
-			target="_blank"
-			>Felicity</a
-		>.
+	<p style="--stagger:1" data-animate class="tracking-normal leading-loose">
+		A{' '}
+		<span class="font-family-redaction text-base italic">product-focused</span>
+		Senior Engineer obsessed with building polished software. Currently shipping
+		at
+		<a class="link" href="https://spaceduck.com" target="_blank">Spaceduck</a>.
+		Previously led engineering at Felicity.
 	</p>
 	<!-- <p class="text-base"> -->
 	<!--   You can learn more about me by reading -->
@@ -27,7 +25,7 @@ import Projects from "./Projects.astro";
 	<!--     class="link">public notes</a -->
 	<!--   > and <a href="/#" class="link">bookmarks</a>. -->
 	<!-- </p> -->
-	<p class="text-base">
+	<p class="text-base leading-loose" style="--stagger:2" data-animate>
 		You can learn more about me by perusing my personal wiki of
 		<a href="/notes" class="link">public notes</a>.
 	</p>
