@@ -67,6 +67,10 @@
 	--lime10: hsl(80, 68.3%, 46.9%);
 	--lime11: hsl(75, 80%, 26%);
 	--lime12: hsl(78, 70%, 11.5%);
+
+	--sans:
+		"Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
+		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .dark {
@@ -112,10 +116,6 @@
 	--lime10: hsl(75, 85%, 60%);
 	--lime11: hsl(81, 70%, 43.8%);
 	--lime12: hsl(84, 79%, 92.6%);
-
-	--sans:
-		"Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
-		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
 .dark {
