@@ -1,36 +1,37 @@
 ---
-import SayHi from "./Contact/SayHi";
 import Projects from "./Projects.astro";
+import Socials from "./Socials.astro";
 ---
 
-<div class="flex flex-col items-start gap-12">
-	<h2
-		class="font-family-redaction sticky top-10 flex h-10 items-center text-base italic"
+<div class="flex flex-col gap-16 items-start">
+	<h1
+		class="italic font-family-redaction text-4xl max-w-xs leading-snug"
 		data-animate
 	>
-		Orlan Quijada
-	</h2>
-	<p style="--stagger:1" data-animate class="tracking-normal leading-loose">
-		A{' '}
-		<span class="font-family-redaction text-base italic">product-focused</span>
-		Senior Engineer obsessed with building polished software. Currently shipping
-		at
-		<a class="link" href="https://spaceduck.com" target="_blank">Spaceduck</a>.
-		Previously led engineering at Felicity.
-	</p>
-	<!-- <p class="text-base"> -->
-	<!--   You can learn more about me by reading -->
-	<!--   <a href="/#" class="link">my blog</a>, perusing my personal wiki of <a -->
-	<!--     href="/notes" -->
-	<!--     class="link">public notes</a -->
-	<!--   > and <a href="/#" class="link">bookmarks</a>. -->
-	<!-- </p> -->
-	<p class="text-base leading-loose" style="--stagger:2" data-animate>
-		You can learn more about me by perusing my personal wiki of
-		<a href="/notes" class="link">public notes</a>.
-	</p>
+		Senior Engineer building mobile and web software.
+	</h1>
 
-	<SayHi client:load/>
+	<section class="flex flex-col gap-6 max-w-md">
+		<p data-animate style="--stagger: 1">
+			I currently lead mobile development at
+			<a class="link" href="https://spaceduck.com" target="_blank">Spaceduck</a>
+			{' '}— building the company’s flagship iOS and Android app. I’ve delivered
+			major features end‑to‑end, including an AI assistant and a Notion‑style
+			rich‑text editor.
+		</p>
+
+		<p data-animate style="--stagger: 2">
+			Previously, I was Lead Software Engineer at Felicity, working across
+			mobile, web, and backend systems.
+		</p>
+
+		<p data-animate style="--stagger: 3">
+			Most of my career has been spent in early‑stage startups, taking full
+			ownership of product engineering.
+		</p>
+	</section>
+
+	<Socials/>
 
 	<Projects/>
 </div>

@@ -32,7 +32,7 @@ export default defineConfig({
 		shikiConfig: {
 			themes: {
 				dark: "material-theme-ocean",
-				light: "min-light",
+				light: "solarized-light",
 			},
 		},
 	},

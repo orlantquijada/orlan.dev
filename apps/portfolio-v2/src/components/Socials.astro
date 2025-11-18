@@ -1,0 +1,45 @@
+---
+import { Icon } from "astro-icon/components";
+import { EMAIL } from "@/utils/constants";
+
+type SocialID = "github" | "linked-in" | "email";
+type Social = {
+	id: SocialID;
+	url: string;
+	iconName: string;
+	title: string;
+};
+
+const socials: Social[] = [
+	{
+		id: "github",
+		iconName: "github2",
+		title: "Github",
+		url: "https://github.com/orlantquijada",
+	},
+	{
+		id: "linked-in",
+		iconName: "linked-in",
+		title: "LinkedIn",
+		url: "https://www.linkedin.com/in/orlan-quijada-b55868198/",
+	},
+	{
+		id: "email",
+		iconName: "email",
+		title: "Email",
+		url: `mailto:${EMAIL}`,
+	},
+];
+---
+
+<div data-animate style="--stagger: 4" class="flex gap-x-5">
+	{socials.map((social) => (
+    <a href={social.url} title={social.title} class="px-2 -mx-2 text-gray9 transition-colors hover:text-gray12">
+      <Icon
+        name={social.iconName}
+        size={24}
+        slot="icon"
+      />
+    </a>
+  ))}
+</div>
