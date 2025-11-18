@@ -2,12 +2,12 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
-import compress from "astro-compress";
 import icon from "astro-icon";
 import svgr from "vite-plugin-svgr";
+import compress from "astro-compress";
 
 // https://astro.build/config
-export default defineConfig({
+const config = defineConfig({
 	experimental: {
 		fonts: [
 			{
@@ -29,12 +29,12 @@ export default defineConfig({
 	],
 	scopedStyleStrategy: "where",
 	markdown: {
-		shikiConfig: {
-			themes: {
-				dark: "material-theme-ocean",
-				light: "solarized-light",
-			},
+	shikiConfig: {
+		themes: {
+			dark: "material-theme-ocean",
+			light: "solarized-light",
 		},
+	},
 	},
 	vite: {
 		plugins: [svgr(), tailwindcss()],
@@ -43,3 +43,5 @@ export default defineConfig({
 		},
 	},
 });
+
+export default config;
