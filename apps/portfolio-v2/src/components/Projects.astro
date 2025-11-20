@@ -23,9 +23,9 @@ import Video from "./Video.tsx";
 	<div class="relative h-full w-full">
 		<div
 			class:list={[
-        "sticky top-35",
-        "md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:w-full md:max-w-lg",
-      ]}
+	       "sticky top-35",
+	       "md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:w-full md:max-w-lg",
+	     ]}
 			id="daily"
 		>
 			<BrowserBox
@@ -34,7 +34,12 @@ import Video from "./Video.tsx";
 				href="https://daily.orlan.dev"
 				className="md:min-w-lg"
 			>
-				<Video src="/stoic-demo.mp4" className="aspect-93/80" client:load>
+				<Video
+					src="/stoic-demo2.mp4"
+					type="video/mp4"
+					className="aspect-93/80"
+					client:load
+				>
 					<Icon name="pause" slot="pausedIcon"/>
 					<Icon name="play" slot="playingIcon"/>
 				</Video>
@@ -43,9 +48,9 @@ import Video from "./Video.tsx";
 
 		<div
 			class:list={[
-        "sticky top-35 mt-4 brightness-[.3]",
-        "md:absolute md:left-0 md:top-0 md:w-full md:max-w-xs md:brightness-100 md:hover:z-10",
-      ]}
+	       "sticky top-35 mt-4 brightness-[.3]",
+	       "md:absolute md:left-0 md:top-0 md:w-full md:max-w-xs md:brightness-100 md:hover:z-10",
+	     ]}
 			id="money"
 		>
 			<BrowserBox
@@ -55,7 +60,7 @@ import Video from "./Video.tsx";
 				className="md:min-w-[20rem]"
 			>
 				<Video
-					src="/jamm-add-txn.mp4"
+					src="/jamm-add-fund2.mp4"
 					className="aspect-6/13"
 					type="video/mp4"
 					client:load

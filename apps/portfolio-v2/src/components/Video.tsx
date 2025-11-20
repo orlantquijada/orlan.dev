@@ -48,7 +48,7 @@ export default function Video({
 					setState("playing");
 				}}
 				playsInline
-				preload="auto"
+				preload="none"
 				ref={videoRef}
 			>
 				<source src={src} type={type} />
