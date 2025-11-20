@@ -1,6 +1,7 @@
 ---
 import Projects from "./Projects.astro";
 import Socials from "./Socials.astro";
+import { DuckSprite } from "./Sprite.tsx";
 ---
 
 <div class="flex flex-col gap-16 items-start">
@@ -14,7 +15,16 @@ import Socials from "./Socials.astro";
 	<section class="flex flex-col gap-6 max-w-md">
 		<p data-animate style="--stagger: 1">
 			I currently lead mobile development at
-			<a class="link" href="https://spaceduck.com" target="_blank">Spaceduck</a>
+			<span
+				class="inline-flex relative items-center justify-center group isolate"
+			>
+				<a class="link" href="https://spaceduck.com" target="_blank"
+					>Spaceduck</a
+				><span
+					class="pointer-events-none select-none size-10 absolute transition-all duration-350 opacity-0 rotate-45 group-hover:opacity-100 group-hover:-translate-y-8 group-hover:-rotate-30"
+					><DuckSprite client:only/></span
+				>
+			</span>
 			{' '}— building the company’s flagship iOS and Android app. I’ve delivered
 			major features end‑to‑end, including an AI assistant and a Notion‑style
 			rich‑text editor.
