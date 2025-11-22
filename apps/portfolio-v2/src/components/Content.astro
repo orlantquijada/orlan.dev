@@ -1,7 +1,9 @@
 ---
+import { Icon } from "astro-icon/components";
 import Projects from "./Projects.astro";
 import Socials from "./Socials.astro";
 import { DuckSprite } from "./Sprite.tsx";
+import VideoPreviewDialog from "./VideoPreviewDialog.tsx";
 ---
 
 <div class="flex flex-col gap-16 items-start">
@@ -13,7 +15,7 @@ import { DuckSprite } from "./Sprite.tsx";
 	</h1>
 
 	<section class="flex flex-col gap-6 max-w-md">
-		<p data-animate style="--stagger: 1">
+		<p data-animate style="--stagger: 1" class="">
 			I currently lead mobile development at
 			<span
 				class="inline-flex relative items-center justify-center group isolate"
@@ -26,8 +28,16 @@ import { DuckSprite } from "./Sprite.tsx";
 				>
 			</span>
 			{' '}— building the company’s flagship iOS and Android app. I’ve delivered
-			major features end‑to‑end, including an AI assistant and a Notion‑style
-			rich‑text editor.
+			major features end‑to‑end, including an
+			<VideoPreviewDialog client:load src="/ai-assistant2.mp4" type="video/mp4">
+				AI assistant
+				<Icon name="play" width={10} height={12} slot="icon"/>
+			</VideoPreviewDialog>
+			{' '}and a
+			<VideoPreviewDialog client:load src="/collab-notes3.mp4" type="video/mp4">
+				Notion‑style rich‑text editor
+				<Icon name="play" width={10} height={12} slot="icon"/>
+			</VideoPreviewDialog>
 		</p>
 
 		<p data-animate style="--stagger: 2">
@@ -47,7 +57,6 @@ import { DuckSprite } from "./Sprite.tsx";
 </div>
 
 <style>
-	button,
 	a,
 	u {
 		text-underline-offset: 4px;

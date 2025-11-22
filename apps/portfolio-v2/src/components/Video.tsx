@@ -1,11 +1,6 @@
 import type { HTMLAttributes } from "astro/types";
-import {
-	type ComponentRef,
-	type ReactNode,
-	useEffect,
-	useRef,
-	useState,
-} from "react";
+import type { ReactNode } from "react";
+import { useVideoControls } from "@/hooks/useVideoControls";
 import { cn } from "@/lib/general";
 import { browserIconButtonStyles } from "./BrowserIconButton/styles";
 
@@ -25,14 +20,7 @@ export default function Video({
 	playingIcon,
 	className,
 }: Props) {
-	const videoRef = useRef<ComponentRef<"video">>(null);
-	const [state, setState] = useState<"playing" | "paused">();
-
-	useEffect(() => {
-		if (videoRef.current) {
-			setState(videoRef.current.paused ? "paused" : "playing");
-		}
-	}, []);
+	const [videoRef, { pause, play, state }] = useVideoControls();
 
 	return (
 		<div className={cn("relative", className)}>
@@ -41,12 +29,8 @@ export default function Video({
 				controls={false}
 				loop
 				muted
-				onPause={() => {
-					setState("paused");
-				}}
-				onPlay={() => {
-					setState("playing");
-				}}
+				onPause={pause}
+				onPlay={play}
 				playsInline
 				preload="none"
 				ref={videoRef}
@@ -67,10 +51,10 @@ export default function Video({
 
 					if (videoRef.current.paused) {
 						videoRef.current.play();
-						setState("playing");
+						play();
 					} else {
 						videoRef.current.pause();
-						setState("paused");
+						pause();
 					}
 				}}
 				type="button"
