@@ -68,6 +68,8 @@
 	--lime11: hsl(75, 80%, 26%);
 	--lime12: hsl(78, 70%, 11.5%);
 
+	--chip-bg: hsla(0, 0%, 99%, 0.4);
+
 	--sans:
 		"Inter", ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji",
 		"Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -165,13 +167,13 @@
 	--color-accent-violet: var(--accent-violet);
 	--color-selectionColor: var(--selection-color);
 
+	--color-chip-bg: var(--chip-bg);
+
 	/* Animations */
-	--animate-show: show 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-	--animate-hide: hide 150ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-	--animate-showContent: showContent 150ms cubic-bezier(0.16, 1, 0.3, 1)
-		forwards;
-	--animate-hideContent: hideContent 150ms cubic-bezier(0.16, 1, 0.3, 1)
-		forwards;
+	--animate-show: show 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+	--animate-hide: hide 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+	--animate-showContent: showContent 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+	--animate-hideContent: hideContent 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
 
 	/* Box Shadows */
 
@@ -212,44 +214,52 @@
 @keyframes show {
 	from {
 		opacity: 0;
+		-webkit-backdrop-filter: blur(0);
+		backdrop-filter: blur(0);
 	}
 
 	to {
 		opacity: 1;
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
 	}
 }
 
 @keyframes hide {
 	from {
 		opacity: 1;
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
 	}
 
 	to {
 		opacity: 0;
+		-webkit-backdrop-filter: blur(0);
+		backdrop-filter: blur(0);
 	}
 }
 
 @keyframes showContent {
 	from {
 		opacity: 0;
-		transform: translate(-50%, -45%) scale(0.96);
+		transform: scale(0.96);
 	}
 
 	to {
 		opacity: 1;
-		transform: translate(-50%, -50%) scale(1);
+		transform: scale(1);
 	}
 }
 
 @keyframes hideContent {
 	from {
 		opacity: 1;
-		transform: translate(-50%, -50%) scale(1);
+		transform: scale(1);
 	}
 
 	to {
 		opacity: 0;
-		transform: translate(-50%, -45%) scale(0.96);
+		transform: scale(0.96);
 	}
 }
 

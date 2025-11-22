@@ -7,7 +7,7 @@ const props = Astro.props;
 
 <div class="root">
 	<pre {...props}><slot/></pre>
-  <div class="shine"/>
+	<div class="shine"/>
 </div>
 
 <style>
@@ -24,7 +24,7 @@ const props = Astro.props;
 		line-height: 1.5;
 		font-size: 13px;
 		box-shadow: rgb(0 0 0 / 10%) 0px 5px 30px -5px;
-		background: hsla(0, 0%, 99%, 0.4) !important;
+		background: var(--color-chip-bg) !important;
 
 		html.dark & {
 			background: var(--color-gray-a2) !important;

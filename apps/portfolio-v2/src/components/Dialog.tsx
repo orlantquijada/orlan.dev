@@ -5,7 +5,7 @@ import { twMerge } from "tailwind-merge";
 
 const contentStyles = cva(
 	[
-		"fixed top-1/2 left-1/2 max-h-[80vh] w-[calc(100vw-(24px*2))] max-w-[570px] p-8",
+		"-translate-1/2 fixed top-1/2 left-1/2 max-h-[80vh] w-[calc(100vw-(24px*2))] max-w-[570px] p-8",
 		"rounded-2xl border shadow-sm",
 		"z-50",
 		"data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent",
