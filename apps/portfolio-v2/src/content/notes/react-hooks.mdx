@@ -1,7 +1,7 @@
 ---
 title: React Hooks
 description: Mini react hooks that can be copy-pasted.
-tags: ['react', 'js', 'typescript']
+tags: ["react", "js", "typescript"]
 publishedAt: 2022-11-21
 wip: true
 ---
@@ -9,7 +9,7 @@ wip: true
 ## `useClickOutside`
 
 ```tsx
-import { RefObject, useCallback, useEffect } from 'react'
+import { RefObject, useCallback, useEffect } from "react";
 
 export function useClickOutside(
   elementRef: RefObject<HTMLElement>,
@@ -21,23 +21,36 @@ export function useClickOutside(
         elementRef.current &&
         !elementRef.current.contains(event.target as Node)
       )
-        callback(event)
+        callback(event);
     },
     [callback, elementRef],
-  )
+  );
 
   useEffect(() => {
-    addEventListener('click', handleClick)
-    return () => removeEventListener('click', handleClick)
-  }, [handleClick])
+    addEventListener("click", handleClick);
+    return () => removeEventListener("click", handleClick);
+  }, [handleClick]);
 }
 ```
 
 ## `useIsomorphicLayoutEffect`
 
 ```tsx
-import { useEffect, useLayoutEffect } from 'react'
+import { useEffect, useLayoutEffect } from "react";
 
 export const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+```
+
+## `usePrevious`
+
+```tsx
+export function usePrevious<T>(value: T) {
+  const prevRef = useRef<T>(undefined);
+  useEffect(() => {
+    prevRef.current = value;
+  }, [value]);
+
+  return prevRef.current;
+}
 ```

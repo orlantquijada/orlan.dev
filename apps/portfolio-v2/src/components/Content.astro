@@ -1,42 +1,62 @@
 ---
-import SayHi from "./Contact/SayHi";
+import { Icon } from "astro-icon/components";
 import Projects from "./Projects.astro";
+import Socials from "./Socials.astro";
+import { DuckSprite } from "./Sprite.tsx";
+import VideoPreviewDialog from "./VideoPreviewDialog.tsx";
 ---
 
-<div class="flex flex-col items-start gap-12">
-	<h2
-		class="font-family-redaction sticky top-10 flex h-10 items-center text-base italic"
+<div class="flex flex-col gap-16 items-start">
+	<h1
+		class="italic font-family-redaction text-4xl max-w-xs leading-snug"
 		data-animate
 	>
-		Orlan Quijada
-	</h2>
-	<p style="--stagger:1" data-animate class="tracking-normal leading-loose">
-		A{' '}
-		<span class="font-family-redaction text-base italic">product-focused</span>
-		Senior Engineer obsessed with building polished software. Currently shipping
-		at
-		<a class="link" href="https://spaceduck.com" target="_blank">Spaceduck</a>.
-		Previously led engineering at Felicity.
-	</p>
-	<!-- <p class="text-base"> -->
-	<!--   You can learn more about me by reading -->
-	<!--   <a href="/#" class="link">my blog</a>, perusing my personal wiki of <a -->
-	<!--     href="/notes" -->
-	<!--     class="link">public notes</a -->
-	<!--   > and <a href="/#" class="link">bookmarks</a>. -->
-	<!-- </p> -->
-	<p class="text-base leading-loose" style="--stagger:2" data-animate>
-		You can learn more about me by perusing my personal wiki of
-		<a href="/notes" class="link">public notes</a>.
-	</p>
+		Senior Engineer building mobile and web software.
+	</h1>
 
-	<SayHi client:load/>
+	<section class="flex flex-col gap-6 max-w-md">
+		<p data-animate style="--stagger: 1" class="">
+			I currently lead mobile development at
+			<span
+				class="inline-flex relative items-center justify-center group isolate"
+			>
+				<a class="link" href="https://spaceduck.com" target="_blank"
+					>Spaceduck</a
+				><span
+					class="pointer-events-none select-none size-10 absolute transition-all duration-350 opacity-0 rotate-45 group-hover:opacity-100 group-hover:-translate-y-8 group-hover:-rotate-30"
+					><DuckSprite client:only/></span
+				>
+			</span>
+			{' '}— building the company’s flagship iOS and Android app. I’ve delivered
+			major features end‑to‑end, including an
+			<VideoPreviewDialog client:load src="/ai-assistant2.mp4" type="video/mp4">
+				AI assistant
+				<Icon name="play" width={10} height={12} slot="icon"/>
+			</VideoPreviewDialog>
+			{' '}and a
+			<VideoPreviewDialog client:load src="/collab-notes3.mp4" type="video/mp4">
+				Notion‑style rich‑text editor
+				<Icon name="play" width={10} height={12} slot="icon"/>
+			</VideoPreviewDialog>
+		</p>
+
+		<p data-animate style="--stagger: 2">
+			Previously, I was Lead Software Engineer at Felicity, working across
+			mobile, web, and backend systems.
+		</p>
+
+		<p data-animate style="--stagger: 3">
+			Most of my career has been spent in early‑stage startups, taking full
+			ownership of product engineering.
+		</p>
+	</section>
+
+	<Socials/>
 
 	<Projects/>
 </div>
 
 <style>
-	button,
 	a,
 	u {
 		text-underline-offset: 4px;
@@ -59,5 +79,16 @@ import Projects from "./Projects.astro";
 		text-decoration-line: underline;
 		text-decoration-style: wavy;
 		outline: none;
+	}
+
+	h1 {
+		--text-gradient: linear-gradient(
+			333deg,
+			var(--color-gray-a11),
+			var(--color-gray-a12)
+		);
+		background: var(--text-gradient);
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
 	}
 </style>
