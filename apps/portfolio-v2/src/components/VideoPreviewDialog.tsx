@@ -1,4 +1,5 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
+import * as HoverCard from "@radix-ui/react-hover-card";
 import { transitions } from "@repo/utils";
 import { AnimatePresence, motion } from "motion/react";
 import type { ComponentProps, ReactNode } from "react";
@@ -22,26 +23,49 @@ export default function VideoPreviewDialog({
 }: Props) {
 	return (
 		<DialogPrimitive.Root>
-			<DialogPrimitive.Trigger className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full border border-gray-a6 bg-gray-a3 px-2 align-middle text-gray12 transition-all hover:border-gray-a7 hover:bg-gray-a4">
-				{icon}
-				<span>{children}</span>
-			</DialogPrimitive.Trigger>
-			<DialogPrimitive.Portal>
-				<DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-overlay data-[state=closed]:motion-safe:animate-hide data-[state=open]:motion-safe:animate-show" />
-				<DialogPrimitive.Content className="-translate-1/2 fixed top-1/2 left-1/2 isolate z-50 grid w-fit place-items-center overflow-hidden rounded-xl shadow-sm data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent md:w-fit">
-					<Video src={src} type={type} />
+			<HoverCard.Root closeDelay={0} openDelay={0}>
+				<HoverCard.Trigger asChild>
+					<DialogPrimitive.Trigger className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full border border-gray-a6 bg-gray-a3 px-2 align-middle text-gray12 transition-all hover:border-gray-a7 hover:bg-gray-a4">
+						{icon}
+						<span>{children}</span>
+					</DialogPrimitive.Trigger>
+				</HoverCard.Trigger>
 
-					<div
-						className={`${styles.gradientBg} fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4 md:hidden`}
+				<HoverCard.Portal>
+					<HoverCard.Content
+						align="center"
+						className={`${styles.hoverContent} overflow-clip rounded-xl`}
+						side="top"
+						sideOffset={8}
 					>
-						<DialogPrimitive.Close
-							className={`${styles.close} grid size-16 cursor-pointer place-items-center rounded-xl transition-all active:scale-90 active:opacity-75`}
+						<Video
+							autoPlay
+							height={435}
+							loop
+							src={src}
+							type={type}
+							width={200}
+						/>
+					</HoverCard.Content>
+				</HoverCard.Portal>
+
+				<DialogPrimitive.Portal>
+					<DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-overlay data-[state=closed]:motion-safe:animate-hide data-[state=open]:motion-safe:animate-show" />
+					<DialogPrimitive.Content className="-translate-1/2 fixed top-1/2 left-1/2 isolate z-50 grid w-fit place-items-center overflow-hidden rounded-xl shadow-sm data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent md:w-fit">
+						<DialogVideo src={src} type={type} />
+
+						<div
+							className={`${styles.gradientBg} fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4 md:hidden`}
 						>
-							<Close />
-						</DialogPrimitive.Close>
-					</div>
-				</DialogPrimitive.Content>
-			</DialogPrimitive.Portal>
+							<DialogPrimitive.Close
+								className={`${styles.close} grid size-16 cursor-pointer place-items-center rounded-xl transition-all active:scale-90 active:opacity-75`}
+							>
+								<Close />
+							</DialogPrimitive.Close>
+						</div>
+					</DialogPrimitive.Content>
+				</DialogPrimitive.Portal>
+			</HoverCard.Root>
 		</DialogPrimitive.Root>
 	);
 }
@@ -49,16 +73,22 @@ export default function VideoPreviewDialog({
 type VideoProps = {
 	src: string;
 	type?: Exclude<ComponentProps<"source">["type"], null>;
-};
+} & ComponentProps<"video">;
 
-function Video({ src, type }: VideoProps) {
+function Video({ src, type, ...props }: VideoProps) {
+	return (
+		<video muted {...props}>
+			<source src={src} type={type} />
+		</video>
+	);
+}
+
+function DialogVideo({ src, type }: VideoProps) {
 	const [videoRef, { state, toggle }] = useVideoControls();
 
 	return (
 		<div className="group relative grid w-[calc(75vw)] max-w-100 place-items-center">
-			<video muted onClick={toggle} playsInline ref={videoRef}>
-				<source src={src} type={type} />
-			</video>
+			<Video onClick={toggle} ref={videoRef} src={src} type={type} />
 
 			<div
 				className={cn(
