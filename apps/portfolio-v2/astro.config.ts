@@ -29,12 +29,12 @@ const config = defineConfig({
 	],
 	scopedStyleStrategy: "where",
 	markdown: {
-	shikiConfig: {
-		themes: {
-			dark: "material-theme-ocean",
-			light: "solarized-light",
+		shikiConfig: {
+			themes: {
+				dark: "material-theme-ocean",
+				light: "solarized-light",
+			},
 		},
-	},
 	},
 	vite: {
 		plugins: [svgr(), tailwindcss()],
