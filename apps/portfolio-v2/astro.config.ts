@@ -1,5 +1,6 @@
 import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
+import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
 import compress from "astro-compress";
@@ -43,8 +44,9 @@ const config = defineConfig({
 		},
 	},
 
+	adapter: vercel(),
 	redirects: {
-		"/resume": "/01Quijada.pdf",
+		"/resume": { destination: "/01Quijada.pdf", status: 301 },
 	},
 });
 
