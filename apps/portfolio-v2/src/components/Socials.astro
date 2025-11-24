@@ -1,6 +1,8 @@
 ---
 import { Icon } from "astro-icon/components";
+import { twMerge } from "tailwind-merge";
 import { EMAIL } from "@/utils/constants";
+import { buttonStyles } from "./Button";
 
 type SocialID = "github" | "linked-in" | "email";
 type Social = {
@@ -30,11 +32,30 @@ const socials: Social[] = [
 		url: `mailto:${EMAIL}`,
 	},
 ];
+
+const btnClass = twMerge(
+	buttonStyles({
+		className: "flex items-center gap-2",
+		translucent: true,
+	})
+);
 ---
 
-<div data-animate style="--stagger: 4" class="flex gap-x-5">
+<div data-animate style="--stagger: 4">
+	<a class={btnClass} href="/resume" target="_blank" rel="noopener noreferrer">
+		<Icon
+			name="file-download"
+			slot="icon"
+			size={16}
+			class="text-gray10 group-hover:text-gray1 transition-all"
+		/>
+		<span>View Resume</span>
+	</a>
+</div>
+
+<div data-animate style="--stagger: 5" class="flex gap-x-5">
 	{socials.map((social) => (
-    <a href={social.url} title={social.title} class="px-2 -mx-2 text-gray9 transition-colors hover:text-gray12">
+    <a href={social.url} title={social.title} class="aspect-square px-2 -mx-2 text-gray9 transition-all ease-out hover:text-gray12 hover:scale-110">
       <Icon
         class='size-6'
         name={social.iconName}

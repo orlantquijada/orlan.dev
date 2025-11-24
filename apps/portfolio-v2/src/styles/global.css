@@ -264,7 +264,7 @@
 }
 
 @keyframes enter {
-	0% {
+	from {
 		filter: blur(5px);
 		opacity: 0;
 		transform: translateY(10px);

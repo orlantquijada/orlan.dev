@@ -38,7 +38,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
 							<a
 								className={twMerge(
 									buttonStyles({
-										className: "flex items-center gap-2 active:scale-95",
+										className: "flex items-center gap-2",
 										translucent: true,
 									})
 								)}
@@ -50,7 +50,7 @@ export default function ContactDialog({ children }: { children: ReactNode }) {
 								Compose
 							</a>
 							<Button
-								className="flex items-center gap-2 active:scale-95"
+								className="flex items-center gap-2"
 								onClick={copyEmail}
 								translucent
 							>

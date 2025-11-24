@@ -51,6 +51,7 @@ export function Menu() {
 								buttonStyles({
 									className: "z-10 flex items-center gap-3",
 									motionSafe: false,
+									withAnimations: false,
 								})
 							)}
 							initial="closed"
@@ -71,6 +72,8 @@ export function Menu() {
 								buttonStyles({
 									className: "absolute inset-0",
 									translucent: true,
+									withAnimations: false,
+									motionSafe: false,
 								})
 							)}
 							id="portal-container"

@@ -2,9 +2,9 @@ import mdx from "@astrojs/mdx";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
+import compress from "astro-compress";
 import icon from "astro-icon";
 import svgr from "vite-plugin-svgr";
-import compress from "astro-compress";
 
 // https://astro.build/config
 const config = defineConfig({
@@ -41,6 +41,10 @@ const config = defineConfig({
 		ssr: {
 			noExternal: ["@radix-ui/*"],
 		},
+	},
+
+	redirects: {
+		"/resume": "/01Quijada.pdf",
 	},
 });
 
