@@ -1,7 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 import { twMerge } from "tailwind-merge";
-import { EMAIL } from "@/utils/constants";
+import { EMAIL, GITHUB, LINKED_IN } from "@/utils/constants";
 import { buttonStyles } from "./Button";
 
 type SocialID = "github" | "linked-in" | "email";
@@ -17,13 +17,13 @@ const socials: Social[] = [
 		id: "github",
 		iconName: "github2",
 		title: "Github",
-		url: "https://github.com/orlantquijada",
+		url: GITHUB,
 	},
 	{
 		id: "linked-in",
 		iconName: "linked-in",
 		title: "LinkedIn",
-		url: "https://www.linkedin.com/in/orlan-quijada-b55868198/",
+		url: LINKED_IN,
 	},
 	{
 		id: "email",

@@ -1,4 +1,5 @@
 ---
+import { GITHUB } from "@/utils/constants";
 import LogoIcon from "./LogoIcon.astro";
 
 type Props = {
@@ -42,12 +43,7 @@ const { class: className } = Astro.props;
 			>
 		</li>
 		<li>
-			<a
-				href="https://github.com/orlantquijada"
-				target="_blank"
-				rel="noopener noreferrer"
-				>GitHub</a
-			>
+			<a href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
 		</li>
 	</ul>
 

@@ -5,10 +5,12 @@ import ArrowRight from "@/icons/arrow-right.svg?react";
 import ArrowTopRight from "@/icons/arrow-top-right.svg?react";
 import FileDownload from "@/icons/file-download.svg?react";
 import GitHub from "@/icons/github.svg?react";
+import LinkedIn from "@/icons/linked-in.svg?react";
 import Logo from "@/icons/logo.svg?react";
 import Twitter from "@/icons/twitter.svg?react";
 import { isBrowser } from "@/lib/general";
 import { toggleTheme } from "@/lib/theme-toggle";
+import { GITHUB, LINKED_IN } from "@/utils/constants";
 import ContactDialog from "../Contact/ContactDialog";
 import styles from "./styles.module.css";
 
@@ -26,9 +28,14 @@ export function MenuPanel() {
 						label="Twitter"
 					/>
 					<ConnectLink
-						href="https://github.com/orlantquijada"
+						href={GITHUB}
 						Icon={<GitHub className="h-5 w-5" />}
 						label="GitHub"
+					/>
+					<ConnectLink
+						href={LINKED_IN}
+						Icon={<LinkedIn className="h-5 w-5 text-[#858585]" />}
+						label="Linked In"
 					/>
 					<ConnectLink
 						href="/resume"
