@@ -5,35 +5,31 @@ import styles from "./Button.module.css";
 
 export const buttonStyles = cva(
 	[
-		"h-10 rounded-lg border border-gray7 bg-gray1 px-3 dark:border-gray6",
+		"h-10 cursor-pointer rounded-lg border border-gray7 bg-gray1 px-3 dark:border-gray6",
 		styles.button,
 	],
 	{
 		variants: {
+			withAnimations: {
+				true: "hover:bg-gray1 active:scale-97 active:opacity-75 hover:dark:bg-gray5",
+			},
 			motionSafe: {
-				true: "hover:bg-gray3 motion-safe:transition-all",
+				true: "transition-all ease-out",
 			},
 			translucent: {
-				true: [
-					"dark:bg-gray-a3",
-					// 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
-				],
-				false: ["dark:bg-gray3"],
+				true: "bg-chip-bg dark:bg-gray-a3",
+				false: "dark:bg-gray3",
 			},
 		},
 		compoundVariants: [
 			{
-				motionSafe: true,
+				withAnimations: true,
 				translucent: true,
-				className: "hover:dark:bg-gray-a4",
-			},
-			{
-				motionSafe: true,
-				translucent: false,
-				className: "hover:dark:bg-gray4",
+				className: "hover:dark:bg-gray-a5",
 			},
 		],
 		defaultVariants: {
+			withAnimations: true,
 			translucent: false,
 			motionSafe: true,
 		},
@@ -43,12 +39,21 @@ export const buttonStyles = cva(
 type ButtonProps = ComponentProps<"button"> & VariantProps<typeof buttonStyles>;
 
 export function Button(props: ButtonProps) {
-	const { className, children, translucent = null, ..._props } = props;
+	const {
+		className,
+		children,
+		withAnimations,
+		motionSafe,
+		translucent = null,
+		..._props
+	} = props;
 
 	return (
 		<button
 			{..._props}
-			className={twMerge(buttonStyles({ className, translucent }))}
+			className={twMerge(
+				buttonStyles({ className, translucent, withAnimations, motionSafe })
+			)}
 		>
 			{children}
 		</button>

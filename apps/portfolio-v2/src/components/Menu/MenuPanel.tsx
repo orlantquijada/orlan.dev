@@ -1,17 +1,15 @@
 import { cva } from "cva";
 import type { ReactNode } from "react";
-
+import { twMerge } from "tailwind-merge";
 import ArrowRight from "@/icons/arrow-right.svg?react";
 import ArrowTopRight from "@/icons/arrow-top-right.svg?react";
+import FileDownload from "@/icons/file-download.svg?react";
 import GitHub from "@/icons/github.svg?react";
 import Logo from "@/icons/logo.svg?react";
 import Twitter from "@/icons/twitter.svg?react";
-
 import { isBrowser } from "@/lib/general";
 import { toggleTheme } from "@/lib/theme-toggle";
-
 import ContactDialog from "../Contact/ContactDialog";
-
 import styles from "./styles.module.css";
 
 export function MenuPanel() {
@@ -21,7 +19,7 @@ export function MenuPanel() {
 
 			<div>
 				<h4 className="mb-3 text-gray10 dark:text-gray11">Connect</h4>
-				<div className="flex flex-col">
+				<div className="group/item flex flex-col">
 					<ConnectLink
 						href="https://twitter.com/orlantquijada"
 						Icon={<Twitter className="h-5 w-5" />}
@@ -32,12 +30,18 @@ export function MenuPanel() {
 						Icon={<GitHub className="h-5 w-5" />}
 						label="GitHub"
 					/>
+					<ConnectLink
+						href="/resume"
+						Icon={<FileDownload className="h-5 w-5 text-[#858585]" />}
+						label="Download Resume"
+					/>
 				</div>
 			</div>
 
 			<button
 				className={menuItemStyles({
-					className: "text-left text-sm transition-all hover:translate-x-1",
+					className:
+						"cursor-pointer text-left text-sm transition-all hover:translate-x-1",
 				})}
 				onClick={() => {
 					if (isBrowser) {
@@ -61,11 +65,13 @@ function SendButton() {
 	return (
 		<ContactDialog>
 			<button
-				className={menuItemStyles({
-					className:
-						"-mx-8 border-gray7 border-t px-8 text-left transition-colors hover:bg-gray-a3",
-					intent: "sendBtn",
-				})}
+				className={twMerge(
+					menuItemStyles({
+						className:
+							"-mx-8 cursor-pointer border-gray7 border-t px-8 text-left transition-colors hover:bg-gray-a3",
+						intent: "sendBtn",
+					})
+				)}
 				type="button"
 			>
 				<span className={bulletStyles({ className: "bg-accent" })} />
@@ -81,22 +87,32 @@ function MenuItem(props: { Icon: ReactNode; children: ReactNode }) {
 	return (
 		<div
 			className={menuItemStyles({
-				className: "group transition-transform hover:translate-x-1",
+				className: "group/menu transition-transform hover:translate-x-1",
 			})}
 		>
 			{children}
-			<div className="-mx-2 opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100">
+			<div className="-mx-2 opacity-0 transition-all group-hover/menu:translate-x-1 group-hover/menu:opacity-100">
 				{Icon}
 			</div>
 		</div>
 	);
 }
 
-function ConnectLink(props: { href: string; label: string; Icon: ReactNode }) {
+function ConnectLink(props: {
+	href: string;
+	label: string;
+	Icon: ReactNode;
+	className?: string;
+}) {
 	const { href, label, Icon } = props;
 
 	return (
-		<a href={href} rel="noopener noreferrer" target="_blank">
+		<a
+			className="group/item opacity-100 transition-all duration-250 ease-out hover:opacity-100 group-hover/item:opacity-50"
+			href={href}
+			rel="noopener noreferrer"
+			target="_blank"
+		>
 			<MenuItem Icon={<ArrowTopRight className={`${styles.icon} h-4 w-4`} />}>
 				{Icon}
 				{label}

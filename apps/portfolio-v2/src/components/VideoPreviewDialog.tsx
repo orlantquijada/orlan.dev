@@ -3,17 +3,27 @@ import * as HoverCard from "@radix-ui/react-hover-card";
 import { transitions } from "@repo/utils";
 import { AnimatePresence, motion } from "motion/react";
 import type { ComponentProps, ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 import { useVideoControls } from "@/hooks/useVideoControls";
 import Close from "@/icons/cross.svg?react";
 import Pause from "@/icons/pause-big.svg?react";
 import Play from "@/icons/play-big.svg?react";
 import { cn } from "@/lib/general";
+import { buttonStyles } from "./Button";
 import styles from "./VideoPreviewDialog.module.css";
 
 type Props = {
 	children: ReactNode;
 	icon?: ReactNode;
 } & VideoProps;
+
+const btnClassName = twMerge(
+	buttonStyles({
+		className:
+			"inline-flex h-auto cursor-pointer items-center justify-center gap-1.5 px-2 align-middle",
+		translucent: true,
+	})
+);
 
 export default function VideoPreviewDialog({
 	children,
@@ -25,7 +35,7 @@ export default function VideoPreviewDialog({
 		<DialogPrimitive.Root>
 			<HoverCard.Root closeDelay={0} openDelay={0}>
 				<HoverCard.Trigger asChild>
-					<DialogPrimitive.Trigger className="inline-flex cursor-pointer items-center justify-center gap-1.5 rounded-full border border-gray-a6 bg-gray-a3 px-2 align-middle text-gray12 transition-all hover:border-gray-a7 hover:bg-gray-a4">
+					<DialogPrimitive.Trigger className={btnClassName}>
 						{icon}
 						<span>{children}</span>
 					</DialogPrimitive.Trigger>
@@ -34,9 +44,8 @@ export default function VideoPreviewDialog({
 				<HoverCard.Portal>
 					<HoverCard.Content
 						align="center"
-						className={`${styles.hoverContent} overflow-clip rounded-xl`}
+						className={`${styles.hoverContent} z-10 overflow-clip rounded-xl`}
 						side="top"
-						sideOffset={8}
 					>
 						<Video
 							autoPlay
@@ -88,7 +97,13 @@ function DialogVideo({ src, type }: VideoProps) {
 
 	return (
 		<div className="group relative grid w-[calc(75vw)] max-w-100 place-items-center">
-			<Video onClick={toggle} ref={videoRef} src={src} type={type} />
+			<Video
+				className="cursor-pointer"
+				onClick={toggle}
+				ref={videoRef}
+				src={src}
+				type={type}
+			/>
 
 			<div
 				className={cn(
