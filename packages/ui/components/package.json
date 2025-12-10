@@ -1,25 +1,25 @@
 {
-	"name": "components",
-	"version": "0.0.0",
-	"license": "MIT",
-	"main": "./src/index.ts",
-	"types": "./src/index.ts",
-	"scripts": {
-		"build": "tsc --noEmit",
-		"prepare": "panda codegen"
-	},
-	"devDependencies": {
-		"@biomejs/biome": "catalog:",
-		"@pandacss/dev": "catalog:",
-		"@pandacss/preset-panda": "catalog:",
-		"@tsconfig/strictest": "catalog:",
-		"@types/react": "^19.2.2",
-		"@types/react-dom": "^19.2.2",
-		"styled": "workspace:*",
-		"typescript": "catalog:"
-	},
-	"dependencies": {
-		"react": "^19.2.0",
-		"react-dom": "^19.2.0"
-	}
+  "name": "components",
+  "version": "0.0.0",
+  "license": "MIT",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc --noEmit",
+    "prepare": "panda codegen"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "catalog:",
+    "@pandacss/dev": "catalog:",
+    "@pandacss/preset-panda": "catalog:",
+    "@tsconfig/strictest": "catalog:",
+    "@types/react": "catalog:react19",
+    "@types/react-dom": "catalog:react19",
+    "styled": "workspace:*",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "react": "catalog:react19",
+    "react-dom": "catalog:react19"
+  }
 }

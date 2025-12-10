@@ -13,6 +13,7 @@
     "dev:p": "turbo run dev --filter=portfolio",
     "dev:p2": "turbo run dev --filter=portfolio-2.0",
     "lint": "turbo run lint",
+    "lint:ws": "pnpm dlx sherif@latest",
     "format": "turbo run format"
   },
   "devDependencies": {
