@@ -14,6 +14,13 @@ catalog:
   typescript: 5.9.3
   ultracite: 6.3.6
 
+catalogs:
+  react19:
+    "@types/react": ^19.2.7
+    "@types/react-dom": ^19.2.3
+    react: ^19.2.1
+    react-dom: ^19.2.1
+
 onlyBuiltDependencies:
   - "@biomejs/biome"
   - contentlayer2

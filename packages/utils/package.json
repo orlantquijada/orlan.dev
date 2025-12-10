@@ -5,7 +5,7 @@
   "types": "./src/index.ts",
   "devDependencies": {
     "@tsconfig/strictest": "catalog:",
-    "typescript": "catalog:",
-    "motion": "catalog:"
+    "motion": "catalog:",
+    "typescript": "catalog:"
   }
 }

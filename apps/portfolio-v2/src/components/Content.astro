@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import { SPACEDUCK_LINK } from "@/utils/constants";
 import Projects from "./Projects.astro";
 import Socials from "./Socials.astro";
 import { DuckSprite } from "./Sprite.tsx";
@@ -22,7 +23,7 @@ import VideoPreviewDialog from "./VideoPreviewDialog.tsx";
 			>
 				<a
 					class="link"
-					href="https://spaceduck.com"
+					href={SPACEDUCK_LINK}
 					target="_blank"
 					rel="noopener noreferrer"
 					>Spaceduck</a
