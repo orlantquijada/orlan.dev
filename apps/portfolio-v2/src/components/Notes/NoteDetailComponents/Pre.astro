@@ -1,12 +1,17 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import CopyButton from "./CopyButton";
 
 type Props = HTMLAttributes<"pre">;
 const props = Astro.props;
+
+const html = await Astro.slots.render("default");
+const code = html.replace(/<[^>]*>/g, "");
 ---
 
 <div class="root">
-	<pre {...props}><slot/></pre>
+	<pre {...props}><Fragment set:html={html} /></pre>
+	<CopyButton client:idle code={code} />
 	<div class="shine"/>
 </div>
 
