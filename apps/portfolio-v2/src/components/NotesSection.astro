@@ -1,0 +1,77 @@
+---
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
+import NoteCard from "./NoteCard/NoteCard";
+import styles from "./Notes/styles.module.css";
+
+const notesData = await getCollection("notes");
+const recentNotes = notesData
+  .filter(({ data }) => !data.draft)
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 5)
+  .map((note) => ({
+    ...note.data,
+    href: `/notes/${note.id}`,
+  }));
+
+// Masonry height calculation (same as NotesList.tsx)
+const HEIGHT = 100; // estimated height per card
+const CARD_MARGIN_BOTTOM = 12;
+const totalItems = recentNotes.length + 1; // +1 for "view all" card
+const toRem = (num: number) => `${num / 16}rem`;
+const smHeight = toRem(Math.ceil(totalItems / 2) * (HEIGHT + CARD_MARGIN_BOTTOM));
+const mdHeight = toRem(Math.ceil(totalItems / 3) * (HEIGHT + CARD_MARGIN_BOTTOM));
+---
+
+<section data-animate style="--stagger: 8">
+  <h3 class="text-gray11 mb-6 text-sm">Notes</h3>
+  <div
+    class:list={[styles.notesList, "notes-masonry"]}
+    style={`--mason-mb: 0.75rem; --smHeight: ${smHeight}; --mdHeight: ${mdHeight};`}
+  >
+    {recentNotes.map((note) => (
+      <NoteCard {...note} />
+    ))}
+    <a href="/notes" class="view-all-card">
+      <span>View all notes</span>
+      <Icon name="arrow-right" class="size-4" />
+    </a>
+  </div>
+</section>
+
+<style>
+  .notes-masonry {
+    height: auto;
+  }
+
+  @media (min-width: 640px) {
+    .notes-masonry {
+      height: var(--smHeight);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .notes-masonry {
+      height: var(--mdHeight);
+    }
+  }
+
+  .view-all-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    border: 1px dashed var(--gray6);
+    border-radius: 0.5rem;
+    color: var(--gray11);
+    font-size: 0.875rem;
+    transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+  }
+
+  .view-all-card:hover {
+    border-color: var(--gray8);
+    color: var(--gray12);
+    background-color: var(--gray-a2);
+  }
+</style>
