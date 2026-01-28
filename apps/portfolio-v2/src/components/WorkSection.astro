@@ -1,11 +1,17 @@
 ---
+import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 
+import spaceduck1 from "../../public/projects/spaceduck/1.png";
+import spaceduck2 from "../../public/projects/spaceduck/2.png";
+import spaceduck3 from "../../public/projects/spaceduck/3.png";
+import spaceduck4 from "../../public/projects/spaceduck/4.png";
+
 const previewImages = [
-	{ src: "/projects/spaceduck/1.webp", alt: "Spaceduck app screenshot 1" },
-	{ src: "/projects/spaceduck/2.webp", alt: "Spaceduck app screenshot 2" },
-	{ src: "/projects/spaceduck/3.webp", alt: "Spaceduck app screenshot 3" },
-	{ src: "/projects/spaceduck/4.webp", alt: "Spaceduck app screenshot 4" },
+	{ src: spaceduck1, alt: "Spaceduck app screenshot 1" },
+	{ src: spaceduck2, alt: "Spaceduck app screenshot 2" },
+	{ src: spaceduck3, alt: "Spaceduck app screenshot 3" },
+	{ src: spaceduck4, alt: "Spaceduck app screenshot 4" },
 ];
 ---
 
@@ -23,8 +29,8 @@ const previewImages = [
 						Spaceduck
 					</h4>
 					<p class="text-sm text-gray11 mt-1 max-w-xs">
-						AI-powered workspace for reading, writing, and research. Built the iOS
-						app from scratch.
+						AI-powered workspace for reading, writing, and research. Built the
+						iOS app from scratch.
 					</p>
 				</div>
 
@@ -44,11 +50,12 @@ const previewImages = [
 			<div class="preview-gallery">
 				{previewImages.map((image, index) => (
 					<div class="preview-card" style={`--card-index: ${index}`}>
-						<img
+						<Image
+							height={221}
+							width={111}
 							src={image.src}
 							alt={image.alt}
 							class="h-full w-full object-cover"
-							loading="lazy"
 						/>
 					</div>
 				))}
@@ -63,8 +70,8 @@ const previewImages = [
 		flex-direction: column;
 		gap: 3rem;
 		padding: 1.5rem;
-		backdrop-filter: blur(10px);
-		background: var(--color-chip-bg);
+		/* !important needed to override Tailwind utility specificity */
+		background: var(--color-chip-bg) !important;
 		border: 1px solid var(--gray6);
 		border-radius: 16px;
 		text-decoration: none;
@@ -73,7 +80,7 @@ const previewImages = [
 		position: relative;
 
 		html.dark & {
-			background: var(--color-gray-a2);
+			background: var(--color-gray-a2) !important;
 		}
 	}
 
