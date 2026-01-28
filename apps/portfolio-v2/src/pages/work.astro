@@ -1,14 +1,38 @@
 ---
 import ImageLightbox from "@/components/ImageLightbox";
 import Layout from "@/layouts/Layout.astro";
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 
-const spaceduckImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
-	src: `/projects/spaceduck/${num}.webp`,
-	alt: `Spaceduck app screenshot ${num}`,
+// Hero gallery images
+import img1 from "../../public/projects/spaceduck/1.webp";
+import img2 from "../../public/projects/spaceduck/2.webp";
+import img3 from "../../public/projects/spaceduck/3.webp";
+import img4 from "../../public/projects/spaceduck/4.webp";
+import img5 from "../../public/projects/spaceduck/5.webp";
+import img6 from "../../public/projects/spaceduck/6.webp";
+import img7 from "../../public/projects/spaceduck/7.webp";
+import img8 from "../../public/projects/spaceduck/8.webp";
+import img9 from "../../public/projects/spaceduck/9.webp";
+import img10 from "../../public/projects/spaceduck/10.webp";
+
+// Showcase images
+import desktop from "../../public/projects/spaceduck/showcase/desktop.webp";
+import home1 from "../../public/projects/spaceduck/showcase/home-1.webp";
+import home2 from "../../public/projects/spaceduck/showcase/home-2.webp";
+import typography from "../../public/projects/spaceduck/showcase/typography.webp";
+import icons from "../../public/projects/spaceduck/showcase/icons.webp";
+import journal from "../../public/projects/spaceduck/showcase/journal.webp";
+
+const heroImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
+
+const spaceduckImages = heroImages.map((img, i) => ({
+	src: img.src,
+	alt: `Spaceduck app screenshot ${i + 1}`,
 }));
 
 type ShowcaseItem = {
-	src: string;
+	src: ImageMetadata | string;
 	alt: string;
 	colSpan?: 1 | 2 | 3;
 	rowSpan?: 1 | 2 | 3;
@@ -26,24 +50,24 @@ const swatchColors = [
 
 const showcaseItems: ShowcaseItem[] = [
 	{
-		src: "/projects/spaceduck/showcase/desktop.webp",
+		src: desktop,
 		alt: "Spaceduck desktop dashboard",
 		colSpan: 3,
 		rowSpan: 2,
 	},
 	{
-		src: "/projects/spaceduck/showcase/home-1.webp",
+		src: home1,
 		alt: "Spaceduck app home screen",
 		rowSpan: 2,
 	},
 	{
-		src: "/projects/spaceduck/showcase/typography.webp",
+		src: typography,
 		alt: "Typography specimen",
 		colSpan: 2,
 		background: "surface",
 	},
 	{
-		src: "/projects/spaceduck/showcase/icons.webp",
+		src: icons,
 		alt: "Spaceduck icon set",
 		colSpan: 2,
 		background: "surface",
@@ -61,12 +85,12 @@ const showcaseItems: ShowcaseItem[] = [
 		background: "surface",
 	},
 	{
-		src: "/projects/spaceduck/showcase/home-2.webp",
+		src: home2,
 		alt: "Spaceduck app drafts view",
 		rowSpan: 2,
 	},
 	{
-		src: "/projects/spaceduck/showcase/journal.webp",
+		src: journal,
 		alt: "Spaceduck journal feature",
 		rowSpan: 2,
 	},
@@ -76,6 +100,12 @@ const showcaseItems: ShowcaseItem[] = [
 		background: "surface",
 	},
 ];
+
+// For lightbox, we need string URLs
+const showcaseItemsForLightbox = showcaseItems.map((item) => ({
+	src: typeof item.src === "string" ? item.src : item.src.src,
+	alt: item.alt,
+}));
 ---
 
 <Layout title="Work — Orlan Quijada">
@@ -96,24 +126,27 @@ const showcaseItems: ShowcaseItem[] = [
 		<div class="relative">
 			<div class="project-workspace">
 				<div class="shine"></div>
-				<ImageLightbox images={spaceduckImages} client:load>
+				<ImageLightbox images={spaceduckImages} client:visible>
 					<div class="hero-gallery">
 						{[0, 1, 2, 3, 4].map((index) => (
 						<button
 							data-lightbox-index={index}
 							class="hero-card"
 						>
-							<img
-								src={spaceduckImages[index].src}
+							<Image
+								src={heroImages[index]}
 								alt={spaceduckImages[index].alt}
 								class="h-full w-full object-cover"
+								width={180}
+								loading="lazy"
+								decoding="async"
 							/>
 						</button>
 					))}
 					</div>
 				</ImageLightbox>
 
-				<ImageLightbox images={showcaseItems} client:load>
+				<ImageLightbox images={showcaseItemsForLightbox} client:visible>
 					<div class="showcase-grid">
 						{showcaseItems.map((item, index) => (
 						<button
@@ -142,11 +175,21 @@ const showcaseItems: ShowcaseItem[] = [
 										</div>
 									))}
 								</div>
-							) : (
+							) : typeof item.src === "string" ? (
 								<img
 									src={item.src}
 									alt={item.alt}
 									class="h-full w-full object-contain"
+									loading="lazy"
+									decoding="async"
+								/>
+							) : (
+								<Image
+									src={item.src}
+									alt={item.alt}
+									class="h-full w-full object-contain"
+									loading="lazy"
+									decoding="async"
 								/>
 							)}
 						</button>
@@ -161,7 +204,6 @@ const showcaseItems: ShowcaseItem[] = [
 <style>
 	/* Project Workspace Container */
 	.project-workspace {
-		backdrop-filter: blur(10px);
 		background: var(--color-chip-bg);
 		border: 1px solid var(--gray6);
 		border-radius: 16px;
