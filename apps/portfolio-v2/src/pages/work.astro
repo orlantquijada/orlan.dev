@@ -97,8 +97,8 @@ const showcaseItems: ShowcaseItem[] = [
 			<div class="project-workspace">
 				<div class="shine"></div>
 				<ImageLightbox images={spaceduckImages} client:load>
-				<div class="hero-gallery">
-					{[0, 1, 2, 3, 4].map((index) => (
+					<div class="hero-gallery">
+						{[0, 1, 2, 3, 4].map((index) => (
 						<button
 							data-lightbox-index={index}
 							class="hero-card"
@@ -110,12 +110,12 @@ const showcaseItems: ShowcaseItem[] = [
 							/>
 						</button>
 					))}
-				</div>
-			</ImageLightbox>
+					</div>
+				</ImageLightbox>
 
-			<ImageLightbox images={showcaseItems} client:load>
-				<div class="showcase-grid">
-					{showcaseItems.map((item, index) => (
+				<ImageLightbox images={showcaseItems} client:load>
+					<div class="showcase-grid">
+						{showcaseItems.map((item, index) => (
 						<button
 							data-lightbox-index={index}
 							class:list={[
@@ -151,8 +151,8 @@ const showcaseItems: ShowcaseItem[] = [
 							)}
 						</button>
 					))}
-				</div>
-			</ImageLightbox>
+					</div>
+				</ImageLightbox>
 			</div>
 		</div>
 	</section>
