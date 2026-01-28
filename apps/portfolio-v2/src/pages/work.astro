@@ -93,8 +93,10 @@ const showcaseItems: ShowcaseItem[] = [
 			collaborate.
 		</p>
 
-		<div class="project-workspace">
-			<ImageLightbox images={spaceduckImages} client:load>
+		<div class="relative">
+			<div class="project-workspace">
+				<div class="shine"></div>
+				<ImageLightbox images={spaceduckImages} client:load>
 				<div class="hero-gallery">
 					{[0, 1, 2, 3, 4].map((index) => (
 						<button
@@ -151,6 +153,7 @@ const showcaseItems: ShowcaseItem[] = [
 					))}
 				</div>
 			</ImageLightbox>
+			</div>
 		</div>
 	</section>
 </Layout>
@@ -158,11 +161,18 @@ const showcaseItems: ShowcaseItem[] = [
 <style>
 	/* Project Workspace Container */
 	.project-workspace {
-		background: rgba(13, 14, 20, 0.03);
-		border: 1px solid var(--gray4);
+		backdrop-filter: blur(10px);
+		background: var(--color-chip-bg);
+		border: 1px solid var(--gray6);
 		border-radius: 16px;
 		padding: 2rem;
 		margin-top: 2rem;
+		box-shadow: rgb(0 0 0 / 10%) 0px 5px 30px -5px;
+		position: relative;
+
+		html.dark & {
+			background: var(--color-gray-a2);
+		}
 	}
 
 	.showcase-grid {

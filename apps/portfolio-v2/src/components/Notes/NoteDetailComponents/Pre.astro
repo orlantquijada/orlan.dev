@@ -12,7 +12,7 @@ const code = html.replace(/<[^>]*>/g, "");
 <div class="root">
 	<pre {...props}><Fragment set:html={html} /></pre>
 	<CopyButton client:idle code={code} />
-	<div class="shine"/>
+	<div class="shine" style="top: -1px; z-index: -1;" />
 </div>
 
 <style>
@@ -34,21 +34,6 @@ const code = html.replace(/<[^>]*>/g, "");
 		html.dark & {
 			background: var(--color-gray-a2) !important;
 		}
-	}
-
-	html.dark .shine {
-		background: linear-gradient(
-			90deg,
-			rgba(56, 189, 248, 0),
-			var(--color-gray5) 10%,
-			var(--color-gray9) 50%,
-			rgba(236, 72, 153, 0)
-		);
-		height: 1px;
-		position: absolute;
-		top: -1px;
-		width: 100%;
-		z-index: -1;
 	}
 
 	:global(html.dark) {
