@@ -29,7 +29,6 @@
     "@repo/utils": "workspace:*",
     "@tailwindcss/vite": "^4.1.16",
     "astro": "^5.15.0",
-    "astro-compress": "^2.3.8",
     "astro-icon": "~1.1.5",
     "cva": "npm:class-variance-authority@^0.7.1",
     "motion": "catalog:",

@@ -3,7 +3,7 @@ import react from "@astrojs/react";
 import vercel from "@astrojs/vercel";
 import tailwindcss from "@tailwindcss/vite";
 import { defineConfig, fontProviders } from "astro/config";
-import compress from "astro-compress";
+
 import icon from "astro-icon";
 import svgr from "vite-plugin-svgr";
 
@@ -20,14 +20,7 @@ const config = defineConfig({
 			},
 		],
 	},
-	integrations: [
-		react(),
-		mdx(),
-		icon(),
-		compress({
-			HTML: false,
-		}),
-	],
+	integrations: [react(), mdx(), icon()],
 	scopedStyleStrategy: "where",
 	markdown: {
 		shikiConfig: {

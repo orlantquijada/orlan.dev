@@ -1,8 +1,8 @@
 ---
+import { getImage, Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import ImageLightbox from "@/components/ImageLightbox";
 import Layout from "@/layouts/Layout.astro";
-import { Image } from "astro:assets";
-import type { ImageMetadata } from "astro";
 
 // Hero gallery images
 import img1 from "../../public/projects/spaceduck/1.webp";
@@ -20,16 +20,33 @@ import img10 from "../../public/projects/spaceduck/10.webp";
 import desktop from "../../public/projects/spaceduck/showcase/desktop.webp";
 import home1 from "../../public/projects/spaceduck/showcase/home-1.webp";
 import home2 from "../../public/projects/spaceduck/showcase/home-2.webp";
-import typography from "../../public/projects/spaceduck/showcase/typography.webp";
 import icons from "../../public/projects/spaceduck/showcase/icons.webp";
 import journal from "../../public/projects/spaceduck/showcase/journal.webp";
+import typography from "../../public/projects/spaceduck/showcase/typography.webp";
 
-const heroImages = [img1, img2, img3, img4, img5, img6, img7, img8, img9, img10];
+const heroImages = [
+	img1,
+	img2,
+	img3,
+	img4,
+	img5,
+	img6,
+	img7,
+	img8,
+	img9,
+	img10,
+];
 
-const spaceduckImages = heroImages.map((img, i) => ({
-	src: img.src,
-	alt: `Spaceduck app screenshot ${i + 1}`,
-}));
+// Generate optimized lightbox images (larger for full-screen viewing)
+const spaceduckImages = await Promise.all(
+	heroImages.map(async (img, i) => {
+		const optimized = await getImage({ src: img, width: 1200, format: "webp" });
+		return {
+			src: optimized.src,
+			alt: `Spaceduck app screenshot ${i + 1}`,
+		};
+	})
+);
 
 type ShowcaseItem = {
 	src: ImageMetadata | string;
@@ -109,6 +126,11 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 ---
 
 <Layout title="Work — Orlan Quijada">
+	<Fragment slot="head">
+		{spaceduckImages.map(img => (
+			<link rel="preload" as="image" href={img.src} type="image/webp" />
+		))}
+	</Fragment>
 	<a href="/" class="text-sm text-gray11 hover:text-gray12 transition-colors"
 		>← Back</a
 	>
