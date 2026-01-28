@@ -1,0 +1,221 @@
+---
+import { Icon } from "astro-icon/components";
+
+const previewImages = [
+	{ src: "/projects/spaceduck/1.webp", alt: "Spaceduck app screenshot 1" },
+	{ src: "/projects/spaceduck/2.webp", alt: "Spaceduck app screenshot 2" },
+	{ src: "/projects/spaceduck/3.webp", alt: "Spaceduck app screenshot 3" },
+	{ src: "/projects/spaceduck/4.webp", alt: "Spaceduck app screenshot 4" },
+];
+---
+
+<section data-animate style="--stagger: 6" class="flex flex-col w-full">
+	<h3 class="text-gray11 mb-6 text-sm">Work</h3>
+
+	<a href="/work" class="work-card group">
+		<div class="work-card-content">
+			<div class="work-info">
+				<h4
+					class="text-lg font-medium group-hover:text-gray12 transition-colors"
+				>
+					Spaceduck
+				</h4>
+				<p class="text-sm text-gray11 mt-1 max-w-xs">
+					AI-powered workspace for reading, writing, and research. Built the iOS
+					app from scratch.
+				</p>
+			</div>
+
+			<div class="view-link">
+				<span
+					class="text-sm text-gray11 group-hover:text-gray12 transition-colors"
+				>
+					View project
+				</span>
+				<Icon
+					name="arrow-right"
+					class="size-4 text-gray11 group-hover:text-gray12 group-hover:translate-x-1 transition-all"
+				/>
+			</div>
+		</div>
+
+		<div class="preview-gallery">
+			{previewImages.map((image, index) => (
+				<div class="preview-card" style={`--card-index: ${index}`}>
+					<img
+						src={image.src}
+						alt={image.alt}
+						class="h-full w-full object-cover"
+						loading="lazy"
+					/>
+				</div>
+			))}
+		</div>
+	</a>
+</section>
+
+<style>
+	.work-card {
+		display: flex;
+		flex-direction: column;
+		gap: 3rem;
+		padding: 1.5rem;
+		background: rgba(13, 14, 20, 0.03);
+		border: 1px solid var(--gray4);
+		border-radius: 16px;
+		text-decoration: none;
+		transition: border-color 150ms ease;
+	}
+
+	.work-card:hover {
+		border-color: var(--gray6);
+	}
+
+	.work-card-content {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+
+	.work-info {
+		flex: 1;
+	}
+
+	.view-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-shrink: 0;
+	}
+
+	.preview-gallery {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 200px;
+		position: relative;
+		perspective: 800px;
+	}
+
+	.preview-card {
+		--card-index: 0;
+		position: absolute;
+		width: 100px;
+		border-radius: 8px;
+		overflow: hidden;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+		transition:
+			transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
+			box-shadow 200ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.preview-card:nth-child(1) {
+		transform: translateX(-110px) rotate(-8deg);
+		z-index: 1;
+	}
+
+	.preview-card:nth-child(2) {
+		transform: translateX(-38px) rotate(-3deg);
+		z-index: 2;
+	}
+
+	.preview-card:nth-child(3) {
+		transform: translateX(38px) rotate(3deg);
+		z-index: 2;
+	}
+
+	.preview-card:nth-child(4) {
+		transform: translateX(110px) rotate(8deg);
+		z-index: 1;
+	}
+
+	.work-card:hover .preview-card:nth-child(1) {
+		transform: translateX(-120px) rotate(-10deg) translateY(-4px);
+	}
+
+	.work-card:hover .preview-card:nth-child(2) {
+		transform: translateX(-42px) rotate(-4deg) translateY(-4px);
+	}
+
+	.work-card:hover .preview-card:nth-child(3) {
+		transform: translateX(42px) rotate(4deg) translateY(-4px);
+	}
+
+	.work-card:hover .preview-card:nth-child(4) {
+		transform: translateX(120px) rotate(10deg) translateY(-4px);
+	}
+
+	.work-card:hover .preview-card {
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+	}
+
+	/* Desktop: side-by-side layout */
+	@media (min-width: 768px) {
+		.work-card {
+			flex-direction: row;
+			align-items: center;
+		}
+
+		.work-card-content {
+			flex: 1;
+			flex-direction: column;
+			align-items: flex-start;
+		}
+
+		.preview-gallery {
+			flex: 1;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.work-card {
+			padding: 1rem;
+		}
+
+		.work-card-content {
+			flex-direction: column;
+			gap: 0.75rem;
+		}
+
+		.preview-gallery {
+			height: 160px;
+		}
+
+		.preview-card {
+			width: 80px;
+		}
+
+		.preview-card:nth-child(1) {
+			transform: translateX(-70px) rotate(-8deg);
+		}
+
+		.preview-card:nth-child(2) {
+			transform: translateX(-24px) rotate(-3deg);
+		}
+
+		.preview-card:nth-child(3) {
+			transform: translateX(24px) rotate(3deg);
+		}
+
+		.preview-card:nth-child(4) {
+			transform: translateX(70px) rotate(8deg);
+		}
+
+		.work-card:hover .preview-card:nth-child(1) {
+			transform: translateX(-76px) rotate(-10deg) translateY(-4px);
+		}
+
+		.work-card:hover .preview-card:nth-child(2) {
+			transform: translateX(-28px) rotate(-4deg) translateY(-4px);
+		}
+
+		.work-card:hover .preview-card:nth-child(3) {
+			transform: translateX(28px) rotate(4deg) translateY(-4px);
+		}
+
+		.work-card:hover .preview-card:nth-child(4) {
+			transform: translateX(76px) rotate(10deg) translateY(-4px);
+		}
+	}
+</style>
