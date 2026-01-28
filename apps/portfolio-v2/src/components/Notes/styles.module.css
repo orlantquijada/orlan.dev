@@ -18,12 +18,16 @@
 	order: 1;
 	margin-block-end: var(--mason-mb);
 	width: 100%;
+}
 
-	@media (width >= 40rem) {
+@media (min-width: 640px) {
+	.notesList > * {
 		width: 49%;
 	}
+}
 
-	@media (width >= 48rem) {
+@media (min-width: 768px) {
+	.notesList > * {
 		width: 32%;
 	}
 }
