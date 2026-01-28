@@ -4,6 +4,7 @@ import { Icon } from "astro-icon/components";
 import { SPACEDUCK_LINK } from "@/utils/constants";
 
 import { DuckSprite } from "./Sprite.tsx";
+import NotesSection from "./NotesSection.astro";
 import Projects from "./Projects.astro";
 import Socials from "./Socials.astro";
 import VideoPreviewDialog from "./VideoPreviewDialog.tsx";
@@ -64,6 +65,9 @@ import WorkSection from "./WorkSection.astro";
 	<WorkSection/>
 
 	<Projects/>
+
+	<!-- TODO: fix masonry layout -->
+	<!-- <NotesSection/> -->
 </div>
 
 <style>
