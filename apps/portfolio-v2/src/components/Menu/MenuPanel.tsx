@@ -136,6 +136,7 @@ const links: Array<{
 	// { href: '/writing', label: 'Writing', color: 'bg-accent-pink' },
 	// { href: '/bookmarks', label: 'Bookmarks', color: 'bg-accent-violet' },
 	{ href: "/notes", label: "Notes", color: "bg-accent-blue" },
+	{ href: "/work", label: "Work", color: "bg-accent-violet" },
 ];
 
 function Nav() {

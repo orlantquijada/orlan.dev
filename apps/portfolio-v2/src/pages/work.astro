@@ -1,0 +1,390 @@
+---
+import ImageLightbox from "@/components/ImageLightbox";
+import Layout from "@/layouts/Layout.astro";
+
+const spaceduckImages = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => ({
+	src: `/projects/spaceduck/${num}.webp`,
+	alt: `Spaceduck app screenshot ${num}`,
+}));
+
+type ShowcaseItem = {
+	src: string;
+	alt: string;
+	colSpan?: 1 | 2 | 3;
+	rowSpan?: 1 | 2 | 3;
+	background?: "surface" | "none";
+	component?: "swatch";
+};
+
+const swatchColors = [
+	{ name: "Surface One", neutral: "Neutral 0", hex: "#0d0e14" },
+	{ name: "Surface Two", neutral: "Neutral 20", hex: "#1a1b26" },
+	{ name: "Surface Three", neutral: "Neutral 30", hex: "#2a2c3d" },
+	{ name: "Surface Four", neutral: "Neutral 40", hex: "#3d4055" },
+	{ name: "Surface Five", neutral: "Neutral 99", hex: "#f5f5f7" },
+];
+
+const showcaseItems: ShowcaseItem[] = [
+	{
+		src: "/projects/spaceduck/showcase/desktop.webp",
+		alt: "Spaceduck desktop dashboard",
+		colSpan: 3,
+		rowSpan: 2,
+	},
+	{
+		src: "/projects/spaceduck/showcase/home-1.webp",
+		alt: "Spaceduck app home screen",
+		rowSpan: 2,
+	},
+	{
+		src: "/projects/spaceduck/showcase/typography.webp",
+		alt: "Typography specimen",
+		colSpan: 2,
+		background: "surface",
+	},
+	{
+		src: "/projects/spaceduck/showcase/icons.webp",
+		alt: "Spaceduck icon set",
+		colSpan: 2,
+		background: "surface",
+	},
+	{
+		src: "/projects/spaceduck/showcase/swatch.webp",
+		alt: "Spaceduck color palette",
+		colSpan: 2,
+		component: "swatch",
+	},
+	{
+		src: "/projects/spaceduck/showcase/wordmark.svg",
+		alt: "Spaceduck wordmark",
+		colSpan: 2,
+		background: "surface",
+	},
+	{
+		src: "/projects/spaceduck/showcase/home-2.webp",
+		alt: "Spaceduck app drafts view",
+		rowSpan: 2,
+	},
+	{
+		src: "/projects/spaceduck/showcase/journal.webp",
+		alt: "Spaceduck journal feature",
+		rowSpan: 2,
+	},
+	{
+		src: "/projects/spaceduck/showcase/logo.svg",
+		alt: "Spaceduck logo",
+		background: "surface",
+	},
+];
+---
+
+<Layout title="Work — Orlan Quijada">
+	<a href="/" class="text-sm text-gray11 hover:text-gray12 transition-colors"
+		>← Back</a
+	>
+
+	<h1 class="mt-8 text-3xl font-medium">Work</h1>
+
+	<section class="mt-12">
+		<h2 class="text-2xl font-medium">Spaceduck</h2>
+		<p class="mt-2 max-w-lg text-gray11">
+			As the sole mobile engineer, I built the Spaceduck mobile app from the
+			ground up—an AI-powered workspace to help you read, write, research, and
+			collaborate.
+		</p>
+
+		<div class="project-workspace">
+			<ImageLightbox images={spaceduckImages} client:load>
+				<div class="hero-gallery">
+					{[0, 1, 2, 3, 4].map((index) => (
+						<button
+							data-lightbox-index={index}
+							class="hero-card"
+						>
+							<img
+								src={spaceduckImages[index].src}
+								alt={spaceduckImages[index].alt}
+								class="h-full w-full object-cover"
+							/>
+						</button>
+					))}
+				</div>
+			</ImageLightbox>
+
+			<ImageLightbox images={showcaseItems} client:load>
+				<div class="showcase-grid">
+					{showcaseItems.map((item, index) => (
+						<button
+							data-lightbox-index={index}
+							class:list={[
+								"showcase-item",
+								item.colSpan === 2 && "col-span-2",
+								item.colSpan === 3 && "col-span-3",
+								item.rowSpan === 2 && "row-span-2",
+								item.rowSpan === 3 && "row-span-3",
+								item.background === "surface" && "has-surface-bg",
+							]}
+						>
+							{item.component === "swatch" ? (
+								<div class="swatch-grid">
+									{swatchColors.map((color) => (
+										<div
+											class:list={[
+												"swatch-item",
+												color.hex === "#f5f5f7" && "swatch-item-light",
+											]}
+											style={`background: ${color.hex}`}
+										>
+											<span class="swatch-name">{color.name}</span>
+											<span class="swatch-neutral">{color.neutral}</span>
+										</div>
+									))}
+								</div>
+							) : (
+								<img
+									src={item.src}
+									alt={item.alt}
+									class="h-full w-full object-contain"
+								/>
+							)}
+						</button>
+					))}
+				</div>
+			</ImageLightbox>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	/* Project Workspace Container */
+	.project-workspace {
+		background: rgba(13, 14, 20, 0.03);
+		border: 1px solid var(--gray4);
+		border-radius: 16px;
+		padding: 2rem;
+		margin-top: 2rem;
+	}
+
+	.showcase-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		grid-auto-rows: 150px;
+		grid-auto-flow: dense;
+		gap: 16px;
+		margin-top: 2rem;
+	}
+
+	.showcase-item {
+		border-radius: 12px;
+		overflow: hidden;
+		cursor: pointer;
+		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+		transition:
+			transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
+			box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1),
+			filter 150ms cubic-bezier(0.4, 0, 0.2, 1),
+			opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+	}
+
+	.showcase-item:hover {
+		transform: scale(1.06);
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+	}
+
+	/* Sibling desaturation for showcase */
+	.showcase-grid:has(.showcase-item:hover) .showcase-item:not(:hover) {
+		filter: saturate(0);
+		opacity: 0.7;
+	}
+
+	.showcase-item.has-surface-bg {
+		background: #0d0e14;
+		padding: 1.5rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.showcase-item.has-surface-bg img {
+		object-fit: contain;
+		max-width: 80%;
+		max-height: 80%;
+	}
+
+	.swatch-grid {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		border-radius: 8px;
+		overflow: hidden;
+	}
+
+	.swatch-item {
+		flex: 1;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
+		padding: 0.75rem;
+		color: #f5f5f7;
+	}
+
+	.swatch-item-light {
+		color: #0d0e14;
+	}
+
+	.swatch-name {
+		font-size: 0.75rem;
+		font-weight: 500;
+	}
+
+	.swatch-neutral {
+		font-size: 0.625rem;
+		opacity: 0.7;
+	}
+
+	.span-col-2 {
+		grid-column: span 2;
+	}
+	.span-row-2 {
+		grid-row: span 2;
+	}
+	.span-row-3 {
+		grid-row: span 3;
+	}
+
+	.hero-gallery {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 400px;
+		perspective: 1000px;
+	}
+
+	.hero-card {
+		--card-index: 0;
+		--card-y: 0px;
+		--unit-x: 160px;
+		--unit-rotate: 6deg;
+		position: absolute;
+		width: 180px;
+		border-radius: 12px;
+		overflow: hidden;
+		background: white;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+		cursor: pointer;
+		transition-duration: 150ms;
+		transition-property: transform, box-shadow, filter, opacity;
+		transition-timing-function: cubic-bezier(0.4, 0.2, 1);
+		transform: translateX(calc(var(--card-index) * var(--unit-x)))
+			rotate(calc(var(--card-index) * var(--unit-rotate)))
+			translateY(var(--card-y));
+	}
+
+	.hero-card:nth-child(1) {
+		--card-index: -2;
+		--card-y: 48px;
+		z-index: 1;
+	}
+	.hero-card:nth-child(2) {
+		--card-index: -1;
+		--card-y: 16px;
+		z-index: 2;
+	}
+	.hero-card:nth-child(3) {
+		z-index: 5;
+	}
+	.hero-card:nth-child(4) {
+		--card-index: 1;
+		--card-y: 16px;
+		z-index: 2;
+	}
+	.hero-card:nth-child(5) {
+		--card-index: 2;
+		--card-y: 48px;
+		z-index: 1;
+	}
+
+	.hero-card:hover {
+		z-index: 10;
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+		transform: translateX(calc(var(--card-index) * var(--unit-x)))
+			rotate(calc(var(--card-index) * var(--unit-rotate)))
+			translateY(calc(var(--card-y) - 8px)) scale(1.06);
+	}
+
+	.hero-gallery:has(.hero-card:hover) .hero-card:not(:hover) {
+		filter: saturate(0);
+		opacity: 0.7;
+	}
+
+	@media (max-width: 768px) {
+		.project-workspace {
+			padding: 1.5rem;
+		}
+
+		.showcase-grid {
+			grid-template-columns: repeat(2, 1fr);
+			grid-auto-rows: 120px;
+		}
+
+		.hero-gallery {
+			height: 350px;
+		}
+
+		.hero-card {
+			width: 140px;
+			--unit-x: 90px;
+			--card-y: 0px;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.project-workspace {
+			padding: 1rem;
+		}
+
+		.showcase-grid {
+			grid-template-columns: 1fr;
+			grid-auto-rows: 200px;
+		}
+
+		.showcase-item:hover {
+			transform: scale(1.02);
+		}
+
+		.showcase-item.col-span-2,
+		.showcase-item.col-span-3 {
+			grid-column: span 1;
+		}
+
+		.showcase-item.row-span-2,
+		.showcase-item.row-span-3 {
+			grid-row: span 1;
+		}
+
+		.hero-gallery {
+			height: 300px;
+		}
+
+		.hero-card {
+			width: 120px;
+			--unit-x: 80px;
+			--unit-rotate: 8deg;
+			--card-y: 0px;
+		}
+
+		.hero-card:nth-child(1),
+		.hero-card:nth-child(5) {
+			display: none;
+		}
+
+		.hero-card:nth-child(2),
+		.hero-card:nth-child(4) {
+			z-index: 1;
+		}
+		.hero-card:nth-child(3) {
+			z-index: 5;
+		}
+	}
+</style>

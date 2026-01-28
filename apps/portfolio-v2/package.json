@@ -43,6 +43,7 @@
     "@biomejs/biome": "catalog:",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
+    "sharp": "^0.34.5",
     "svgo": "~2.8.0",
     "typescript": "catalog:",
     "ultracite": "catalog:",
