@@ -1,0 +1,23 @@
+---
+title: asMilliseconds()
+description: Minutes/seconds converter snippet
+tags: ["js", "snippets", "typescript"]
+publishedAt: 2026-1-30
+---
+
+```ts
+const SECOND = 1000;
+const MINUTE = 60 * SECOND;
+
+type AsMillisecondsParams = {
+  seconds?: number;
+  minutes?: number;
+};
+
+export function asMilliseconds({
+  seconds = 0,
+  minutes = 0,
+}: AsMillisecondsParams) {
+  return seconds * SECOND + minutes * MINUTE;
+}
+```
