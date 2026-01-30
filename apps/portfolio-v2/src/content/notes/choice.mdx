@@ -1,14 +1,14 @@
 ---
 title: Choice
-description: Picking a random choice snippet.
-tags: ['js', 'snippets', 'typescript']
+description: Picking a random choice snippet
+tags: ["js", "snippets", "typescript"]
 publishedAt: 2022-12-1
 ---
 
 ```ts
 function choice<T>(items: T[]): T {
   if (items.length === 0) {
-    throw new Error('Cannot choose from empty list without fallback');
+    throw new Error("Cannot choose from empty list without fallback");
   }
   return items[Math.floor(Math.random() * items.length)]!;
 }
