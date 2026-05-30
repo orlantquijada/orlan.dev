@@ -1,5 +1,6 @@
 import { format } from "date-fns";
 import { type MDXComponents, MDXRemote } from "next-mdx-remote-client/rsc";
+import ReactDOM from "react-dom";
 import Actions from "@/components/Actions";
 import LikeWrapper from "@/components/LikeWrapper";
 import { LikedContentProvider } from "@/hooks/useLikedContext";
@@ -29,6 +30,8 @@ export default function DailyDetail({
 }: DailyDetailProps) {
   const { day, month } = date;
   const dateFormat = toDateFormat({ day, month });
+
+  ReactDOM.preload("/heart.webp", { as: "image", type: "image/webp" });
 
   return (
     <LikedContentProvider daily={{ month, day }}>
