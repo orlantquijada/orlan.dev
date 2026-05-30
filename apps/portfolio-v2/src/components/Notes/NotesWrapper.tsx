@@ -5,11 +5,11 @@ import type { TagGraphMap } from "@/lib/notes";
 import NotesList from "./NotesList";
 import NoteTagsList from "./NoteTagsList";
 
-interface Props {
+type Props = {
 	notes: Array<CollectionEntry<"notes">["data"] & { href: string }>;
 	tags: string[];
 	tagsGraph: TagGraphMap;
-}
+};
 
 // wrapper component necessary for layout animations
 export default function NotesWrapper({ notes, tags, tagsGraph }: Props) {

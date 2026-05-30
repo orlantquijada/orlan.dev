@@ -12,9 +12,9 @@ import {
 import { capitalize } from "@/lib/utils";
 import styles from "./page.module.css";
 
-interface Props {
+type Props = {
   params: Promise<{ month: Month }>;
-}
+};
 
 export async function generateStaticParams() {
   return monthSchema.options.map((month) => ({ month }));

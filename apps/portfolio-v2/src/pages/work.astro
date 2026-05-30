@@ -48,14 +48,14 @@ const spaceduckImages = await Promise.all(
 	})
 );
 
-interface ShowcaseItem {
+type ShowcaseItem = {
 	alt: string;
 	background?: "surface" | "none";
 	colSpan?: 1 | 2 | 3;
 	component?: "swatch";
 	rowSpan?: 1 | 2 | 3;
 	src: ImageMetadata | string;
-}
+};
 
 const swatchColors = [
 	{ name: "Surface One", neutral: "Neutral 0", hex: "#0d0e14" },

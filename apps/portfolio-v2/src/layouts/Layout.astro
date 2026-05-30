@@ -3,10 +3,10 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import BaseLayout from "./BaseLayout.astro";
 
-export interface Props {
+export type Props = {
 	className?: string;
 	title: string;
-}
+};
 
 const { title, className } = Astro.props;
 ---

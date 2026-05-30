@@ -16,12 +16,12 @@ function toDateFormat({ day, month }: DailyDate) {
   return format(new Date(year, monthIndex, Number(day)), "LLLL do");
 }
 
-interface DailyDetailProps {
+type DailyDetailProps = {
   // biome-ignore lint/suspicious/noExplicitAny: mdx content
   Body: any;
   date: DailyDate;
   frontmatter: Daily;
-}
+};
 
 export default function DailyDetail({
   Body,
@@ -29,7 +29,7 @@ export default function DailyDetail({
   frontmatter,
 }: DailyDetailProps) {
   const { day, month } = date;
-  const dateFormat = toDateFormat({ day, month });
+  const dateFormat = toDateFormat(date);
 
   ReactDOM.preload("/heart.webp", { as: "image", type: "image/webp" });
 
@@ -39,7 +39,7 @@ export default function DailyDetail({
         <div
           className={`${styles.container} min-h-screen animate-[fade-in_1s_both]`}
         >
-          <HiddenHeader data={frontmatter} dateFormat={dateFormat} />
+          <HiddenHeader dateFormat={dateFormat} frontmatter={frontmatter} />
 
           <main
             className="mx-auto flex max-w-(--content-max-width) flex-col items-center px-(--content-px) pt-(--header-height) pb-[calc(2.5rem+var(--icon-button-size))]"
@@ -87,10 +87,10 @@ export default function DailyDetail({
 }
 
 function HiddenHeader({
-  data,
+  frontmatter,
   dateFormat,
 }: {
-  data: Daily;
+  frontmatter: Daily;
   dateFormat: string;
 }) {
   return (
@@ -103,7 +103,7 @@ function HiddenHeader({
                 p: (props) => <p {...props} className="truncate" />,
               } satisfies MDXComponents
             }
-            source={data.title}
+            source={frontmatter.title}
           />
 
           <span className="shrink-0 text-base">{dateFormat}</span>

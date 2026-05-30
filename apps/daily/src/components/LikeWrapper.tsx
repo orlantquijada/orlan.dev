@@ -7,9 +7,9 @@ import { useLikedContext } from "@/hooks/useLikedContext";
 const HEART_SIZE = 130;
 const SKEW_DEG = 30;
 
-interface Props {
+type Props = {
   children: ReactNode;
-}
+};
 
 export default function LikeWrapper({ children }: Props) {
   const [open, setOpen] = useState<
@@ -73,7 +73,5 @@ function HeartImage() {
 }
 
 function getRandomInt(min: number, max: number) {
-  const _min = Math.ceil(min);
-  const _max = Math.floor(max);
-  return Math.floor(Math.random() * (_max - _min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }

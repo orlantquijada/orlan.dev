@@ -1,10 +1,10 @@
 const SECOND = 1000;
 const MINUTE = 60 * SECOND;
 
-export interface asMillisecondsParams {
+export type asMillisecondsParams = {
   minutes?: number;
   seconds?: number;
-}
+};
 
 export function asMilliseconds({
   seconds = 0,

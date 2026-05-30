@@ -4,14 +4,14 @@ import { useVideoControls } from "@/hooks/useVideoControls";
 import { cn } from "@/lib/general";
 import { browserIconButtonStyles } from "./BrowserIconButton/styles";
 
-interface Props {
+type Props = {
 	children?: ReactNode;
 	className?: string;
 	pausedIcon?: ReactNode;
 	playingIcon?: ReactNode;
 	src: string;
 	type?: Exclude<HTMLAttributes<"source">["type"], null>;
-}
+};
 
 export default function Video({
 	src,

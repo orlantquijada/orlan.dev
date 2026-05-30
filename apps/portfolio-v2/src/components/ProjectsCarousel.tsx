@@ -15,10 +15,10 @@ import {
 
 import { cn } from "@/lib/general";
 
-interface Props {
+type Props = {
 	children?: ReactNode;
 	numOfItems: number;
-}
+};
 
 const gapSize = 16;
 const breakpoint = 768;

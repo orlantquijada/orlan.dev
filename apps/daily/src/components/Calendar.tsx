@@ -31,22 +31,24 @@ export function useCalendarContext() {
   return context;
 }
 
+type UseCalendarOptions = {
+  value?: Date;
+  defaultDate?: Date;
+  onChangeCurrentDate?: (date: Date) => void;
+};
+
 function useCalendar({
   defaultDate,
   onChangeCurrentDate,
   value,
-}: {
-  value?: Date;
-  defaultDate?: Date;
-  onChangeCurrentDate?: (date: Date) => void;
-} = {}) {
+}: UseCalendarOptions = {}) {
   const today = new Date();
-  const [_currentDate, setCurrentDate] = useState(defaultDate || today);
+  const [internalDate, setInternalDate] = useState(defaultDate ?? today);
 
-  const currentDate = value ? value : _currentDate;
+  const currentDate = value ?? internalDate;
 
-  const handleChangeDate = (date: Date) => {
-    setCurrentDate(date);
+  const setCurrentDate = (date: Date) => {
+    setInternalDate(date);
     onChangeCurrentDate?.(date);
   };
 
@@ -58,17 +60,13 @@ function useCalendar({
     isToday: isSameDay(date, today),
   }));
 
-  const handleNext = () => setCurrentDate(add(currentDate, { months: 1 }));
-  const handlePrevious = () => setCurrentDate(sub(currentDate, { months: 1 }));
-  const handleReset = () => setCurrentDate(defaultDate || today);
-
   return {
     currentDate,
-    setCurrentDate: handleChangeDate,
-    handleNext,
-    handlePrevious,
     days,
-    handleReset,
+    setCurrentDate,
+    goToNextMonth: () => setCurrentDate(add(currentDate, { months: 1 })),
+    goToPreviousMonth: () => setCurrentDate(sub(currentDate, { months: 1 })),
+    reset: () => setCurrentDate(defaultDate ?? today),
   } as const;
 }
 
@@ -76,70 +74,38 @@ export type UseCalendarResult = ReturnType<typeof useCalendar>;
 
 export function Root({
   children,
-  defaultDate,
-  onChangeCurrentDate,
-  value: valueProp,
-}: {
-  value?: Date;
-  children: ReactNode;
-  defaultDate?: Date;
-  onChangeCurrentDate?: (date: Date) => void;
-}) {
-  const value = useCalendar({
-    defaultDate,
-    onChangeCurrentDate,
-    value: valueProp,
-  });
+  ...options
+}: UseCalendarOptions & { children: ReactNode }) {
+  const value = useCalendar(options);
   return <CalendarContext value={value}>{children}</CalendarContext>;
 }
 
-export function PreviousMonthButton(props: ComponentProps<"button">) {
-  const { handlePrevious } = useCalendarContext();
-
+function CalendarActionButton({
+  action,
+  ...props
+}: ComponentProps<"button"> & { action: () => void }) {
   return (
     <button
       {...props}
       onClick={(e) => {
-        handlePrevious();
-
-        if (props.onClick) {
-          props.onClick(e);
-        }
+        action();
+        props.onClick?.(e);
       }}
     />
   );
+}
+
+export function PreviousMonthButton(props: ComponentProps<"button">) {
+  const { goToPreviousMonth } = useCalendarContext();
+  return <CalendarActionButton {...props} action={goToPreviousMonth} />;
 }
 
 export function NextMonthButton(props: ComponentProps<"button">) {
-  const { handleNext } = useCalendarContext();
-
-  return (
-    <button
-      {...props}
-      onClick={(e) => {
-        handleNext();
-
-        if (props.onClick) {
-          props.onClick(e);
-        }
-      }}
-    />
-  );
+  const { goToNextMonth } = useCalendarContext();
+  return <CalendarActionButton {...props} action={goToNextMonth} />;
 }
 
 export function ResetToTodayButton(props: ComponentProps<"button">) {
-  const { handleReset } = useCalendarContext();
-
-  return (
-    <button
-      {...props}
-      onClick={(e) => {
-        handleReset();
-
-        if (props.onClick) {
-          props.onClick(e);
-        }
-      }}
-    />
-  );
+  const { reset } = useCalendarContext();
+  return <CalendarActionButton {...props} action={reset} />;
 }
