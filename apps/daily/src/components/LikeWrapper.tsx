@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "motion/react";
-import Image from "next/image";
 import { type ReactNode, useState } from "react";
 import { useLikedContext } from "@/hooks/useLikedContext";
 
@@ -68,13 +67,8 @@ export default function LikeWrapper({ children }: Props) {
 
 function HeartImage() {
   return (
-    <Image
-      alt="Heart"
-      height={HEART_SIZE}
-      preload
-      src="/heart.webp"
-      width={HEART_SIZE}
-    />
+    // biome-ignore lint/performance/noImgElement: 3KB asset, next/image optimizer roundtrip adds latency on first interaction
+    <img alt="Heart" height={HEART_SIZE} src="/heart.webp" width={HEART_SIZE} />
   );
 }
 
