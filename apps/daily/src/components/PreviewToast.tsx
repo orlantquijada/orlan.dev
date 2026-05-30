@@ -63,10 +63,8 @@ export default function PreviewToast({
         >
           {loading ? (
             <div className={styles.loadingTitleSkeleton} />
-          ) : daily ? (
-            <Title>{daily.title}</Title>
           ) : (
-            <Title>No content yet!</Title>
+            <Title>{daily?.title ?? "No content yet!"}</Title>
           )}
 
           {daily ? (

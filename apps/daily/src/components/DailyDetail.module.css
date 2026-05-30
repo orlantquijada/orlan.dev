@@ -38,10 +38,10 @@
 .body {
   & > p:first-child:first-letter {
     float: left;
-    line-height: 85%;
     width: 0.7em;
+    padding-inline-end: 1rem;
     font-size: 325%;
     font-style: initial;
-    padding-inline-end: 1rem;
+    line-height: 85%;
   }
 }

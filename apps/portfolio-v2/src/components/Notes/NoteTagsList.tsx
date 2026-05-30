@@ -15,10 +15,10 @@ import Chip from "../Chip/Chip";
 
 import styles from "./styles.module.css";
 
-type Props = {
+interface Props {
 	tags: string[];
 	tagsGraph: TagGraphMap;
-};
+}
 
 export default function NoteTagsList(props: Props) {
 	const { tags, tagsGraph } = props;

@@ -3,7 +3,9 @@ import "../styles/global.css";
 import { useState } from "react";
 import { cn } from "@/lib/general";
 
-type Props = { char: string };
+interface Props {
+	char: string;
+}
 
 export default function Unicode({ char }: Props) {
 	const [copied, setCopied] = useState(false);

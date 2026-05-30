@@ -1,18 +1,19 @@
 ---
-export type Props = {
+export interface Props {
 	className?: string;
-};
+}
 
 const { className } = Astro.props;
 ---
 
 <button
+	type="button"
 	class:list={[
     'h-10 rounded-lg border border-gray7 bg-gray1 px-3 transition-colors hover:border-gray8 dark:border-gray6 dark:bg-gray-a3',
     className,
   ]}
 >
-	<slot/>
+	<slot />
 </button>
 
 <style>

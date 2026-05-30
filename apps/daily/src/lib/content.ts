@@ -5,10 +5,12 @@ import type { Daily, DailyDate } from "./like";
 async function getAllCalendarFiles(dir: string) {
   const months = await fs.readdir(dir, { withFileTypes: true });
 
-  const allFiles = [];
+  const allFiles: string[] = [];
 
   for (const month of months) {
-    if (!month.isDirectory()) continue;
+    if (!month.isDirectory()) {
+      continue;
+    }
 
     const monthPath = path.join(dir, month.name);
     const files = await fs.readdir(monthPath);

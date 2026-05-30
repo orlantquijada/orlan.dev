@@ -15,10 +15,10 @@ import {
 
 import { cn } from "@/lib/general";
 
-type Props = {
+interface Props {
 	children?: ReactNode;
 	numOfItems: number;
-};
+}
 
 const gapSize = 16;
 const breakpoint = 768;
@@ -66,7 +66,7 @@ export default function ProjectsCarousel({ children, numOfItems }: Props) {
 		>
 			<div
 				className={cn(
-					"-mx-6 sticky top-24 flex flex-col items-start overflow-x-clip px-6",
+					"sticky top-24 -mx-6 flex flex-col items-start overflow-x-clip px-6",
 					"md:relative md:inset-[initial] md:h-208 md:min-w-full md:overflow-visible"
 				)}
 			>

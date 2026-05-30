@@ -10,16 +10,14 @@ const tabs = ["Home", "Company", "About", "Careers"];
 	className="overflow-clip overflow-x-auto flex justify-center items-center"
 >
 	<div class="flex max-w-full list-none items-center rounded-xl">
-		{
-      tabs.map((tab) => (
+		{tabs.map((tab) => (
         <div>
           {/* <input type="radio" name="tabs" value={tab} id={tab} /> */}
-          <label for={tab} class="label">
+          <label class="label" for={tab}>
             {tab}
           </label>
         </div>
-      ))
-    }
+      ))}
 	</div>
 </Showcase>
 
@@ -28,8 +26,8 @@ const tabs = ["Home", "Company", "About", "Careers"];
 		display: none;
 	}
 	li {
-		background-color: var(--gray4);
 		position: relative;
+		background-color: var(--gray4);
 		border: 1px solid var(--gray6);
 	}
 	li:first-child {
@@ -44,8 +42,8 @@ const tabs = ["Home", "Company", "About", "Careers"];
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		padding-inline: 1.5rem;
 		min-height: 3rem;
+		padding-inline: 1.5rem;
 		cursor: pointer;
 	}
 	li:where(:hover) {
@@ -58,18 +56,18 @@ const tabs = ["Home", "Company", "About", "Careers"];
 	li:has(input:checked) label {
 		color: var(--accent-violet);
 		text-decoration: underline;
-		text-underline-offset: 4px;
 		text-decoration-style: wavy;
+		text-underline-offset: 4px;
 	}
 
 	/* TODO: breaks on mobile */
 
 	li:has(input:checked) + li::before,
 	li:has(+ li input:checked)::before {
-		font-size: 1rem;
-		color: var(--accent-violet);
 		position: absolute;
 		left: 50%;
+		font-size: 1rem;
+		color: var(--accent-violet);
 		transform: translate(-50%, calc(100% * var(--direction, 1)));
 	}
 
@@ -85,12 +83,12 @@ const tabs = ["Home", "Company", "About", "Careers"];
 		border-bottom-left-radius: 0.75rem;
 	}
 	li:has(+ li input:checked)::before {
-		content: "↓";
-		top: 0;
 		--direction: -1;
+		top: 0;
+		content: "↓";
 	}
 	li:has(input:checked) + li::before {
-		content: "↑";
 		bottom: 0;
+		content: "↑";
 	}
 </style>

@@ -202,6 +202,12 @@
 
 /* Shine effect - gradient top border for cards, visible only in dark mode */
 .shine {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 1px;
+	pointer-events: none;
 	background: linear-gradient(
 		90deg,
 		rgba(56, 189, 248, 0),
@@ -209,15 +215,9 @@
 		var(--gray9) 50%,
 		rgba(236, 72, 153, 0)
 	);
-	height: 1px;
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
 	border-radius: inherit;
 	opacity: 0;
 	transition: opacity 150ms ease;
-	pointer-events: none;
 }
 
 html.dark .shine {

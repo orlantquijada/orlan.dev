@@ -1,12 +1,9 @@
-export function range(start: number, end?: number, step = 1) {
+export function range(startOrEnd: number, end?: number, step = 1) {
   const output: number[] = [];
+  const start = typeof end === "undefined" ? 0 : startOrEnd;
+  const stop = typeof end === "undefined" ? startOrEnd : end;
 
-  if (typeof end === "undefined") {
-    end = start;
-    start = 0;
-  }
-
-  for (let i = start; i < end; i += step) {
+  for (let i = start; i < stop; i += step) {
     output.push(i);
   }
 

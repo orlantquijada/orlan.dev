@@ -3,16 +3,16 @@ import { cn } from "@/lib/general";
 
 const { className } = Astro.props;
 
-type Props = {
+interface Props {
 	className?: string;
-};
+}
 ---
 
 <div
 	class={cn(
-    'rounded-xl border border-dashed border-gray-a9 bg-gray-a4 p-[10%] isolate',
+    'isolate rounded-xl border border-gray-a9 border-dashed bg-gray-a4 p-[10%]',
     className,
   )}
 >
-	<slot/>
+	<slot />
 </div>

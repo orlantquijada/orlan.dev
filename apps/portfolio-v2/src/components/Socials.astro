@@ -5,12 +5,12 @@ import { EMAIL, GITHUB, LINKED_IN } from "@/utils/constants";
 import { buttonStyles } from "./Button";
 
 type SocialID = "github" | "linked-in" | "email";
-type Social = {
-	id: SocialID;
-	url: string;
+interface Social {
 	iconName: string;
+	id: SocialID;
 	title: string;
-};
+	url: string;
+}
 
 const socials: Social[] = [
 	{
@@ -55,7 +55,7 @@ const btnClass = twMerge(
 
 <div data-animate style="--stagger: 5" class="flex gap-x-5">
 	{socials.map((social) => (
-    <a href={social.url} title={social.title} class="aspect-square px-2 -mx-2 text-gray9 transition-all ease-out hover:text-gray12 hover:scale-110">
+    <a class="-mx-2 aspect-square px-2 text-gray9 transition-all ease-out hover:scale-110 hover:text-gray12" href={social.url} title={social.title}>
       <Icon
         class='size-6'
         name={social.iconName}

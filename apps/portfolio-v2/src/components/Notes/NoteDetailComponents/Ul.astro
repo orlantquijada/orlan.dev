@@ -7,7 +7,7 @@ const props = Astro.props;
 ---
 
 <ul {...props} class:list={['ul', props.class]}>
-	<slot/>
+	<slot />
 </ul>
 
 <style>
@@ -17,10 +17,10 @@ const props = Astro.props;
 	}
 
 	:global(.ul li::before) {
-		content: "— ";
 		position: absolute;
-		left: 0;
 		top: 0;
+		left: 0;
 		color: var(--color-gray11, var(--gray11));
+		content: "— ";
 	}
 </style>

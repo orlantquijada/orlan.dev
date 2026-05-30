@@ -34,6 +34,8 @@ export function useTheme() {
 		toggleTheme: handletoggleTheme,
 	};
 
-	if (loading) return { loading: true, theme: undefined, ...fns } as const;
+	if (loading) {
+		return { loading: true, theme: undefined, ...fns } as const;
+	}
 	return { loading: false, theme: theme as ThemeKeys, ...fns } as const;
 }

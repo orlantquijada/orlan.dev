@@ -48,14 +48,14 @@ const spaceduckImages = await Promise.all(
 	})
 );
 
-type ShowcaseItem = {
-	src: ImageMetadata | string;
+interface ShowcaseItem {
 	alt: string;
-	colSpan?: 1 | 2 | 3;
-	rowSpan?: 1 | 2 | 3;
 	background?: "surface" | "none";
+	colSpan?: 1 | 2 | 3;
 	component?: "swatch";
-};
+	rowSpan?: 1 | 2 | 3;
+	src: ImageMetadata | string;
+}
 
 const swatchColors = [
 	{ name: "Surface One", neutral: "Neutral 0", hex: "#0d0e14" },
@@ -128,7 +128,7 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 <Layout title="Work — Orlan Quijada">
 	<Fragment slot="head">
 		{spaceduckImages.map(img => (
-			<link rel="preload" as="image" href={img.src} type="image/webp" />
+			<link as="image" href={img.src} rel="preload" type="image/webp" />
 		))}
 	</Fragment>
 	<a href="/" class="text-sm text-gray11 hover:text-gray12 transition-colors"
@@ -152,16 +152,17 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 					<div class="hero-gallery">
 						{[0, 1, 2, 3, 4].map((index) => (
 						<button
-							data-lightbox-index={index}
 							class="hero-card"
+							data-lightbox-index={index}
+							type="button"
 						>
 							<Image
-								src={heroImages[index]}
 								alt={spaceduckImages[index].alt}
 								class="h-full w-full object-cover"
-								width={180}
-								loading="lazy"
 								decoding="async"
+								loading="lazy"
+								src={heroImages[index]}
+								width={180}
 							/>
 						</button>
 					))}
@@ -181,6 +182,7 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 								item.rowSpan === 3 && "row-span-3",
 								item.background === "surface" && "has-surface-bg",
 							]}
+							type="button"
 						>
 							{item.component === "swatch" ? (
 								<div class="swatch-grid">
@@ -197,21 +199,23 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 										</div>
 									))}
 								</div>
-							) : typeof item.src === "string" ? (
+							) : // biome-ignore lint/style/noNestedTernary: three-way branch on item type is clearest as nested ternary here
+							typeof item.src === "string" ? (
+								// biome-ignore lint/correctness/useImageSize: showcase item dimensions are dynamic/CSS-controlled
 								<img
-									src={item.src}
 									alt={item.alt}
 									class="h-full w-full object-contain"
-									loading="lazy"
 									decoding="async"
+									loading="lazy"
+									src={item.src}
 								/>
 							) : (
 								<Image
-									src={item.src}
 									alt={item.alt}
 									class="h-full w-full object-contain"
-									loading="lazy"
 									decoding="async"
+									loading="lazy"
+									src={item.src}
 								/>
 							)}
 						</button>
@@ -226,13 +230,13 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 <style>
 	/* Project Workspace Container */
 	.project-workspace {
+		position: relative;
+		padding: 2rem;
+		margin-top: 2rem;
 		background: var(--color-chip-bg);
 		border: 1px solid var(--gray6);
 		border-radius: 16px;
-		padding: 2rem;
-		margin-top: 2rem;
 		box-shadow: rgb(0 0 0 / 10%) 0px 5px 30px -5px;
-		position: relative;
 
 		html.dark & {
 			background: var(--color-gray-a2);
@@ -249,9 +253,9 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 	}
 
 	.showcase-item {
-		border-radius: 12px;
 		overflow: hidden;
 		cursor: pointer;
+		border-radius: 12px;
 		box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 		transition:
 			transform 150ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -261,41 +265,41 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 	}
 
 	.showcase-item:hover {
-		transform: scale(1.06);
 		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+		transform: scale(1.06);
 	}
 
 	/* Sibling desaturation for showcase */
 	.showcase-grid:has(.showcase-item:hover) .showcase-item:not(:hover) {
-		filter: saturate(0);
 		opacity: 0.7;
+		filter: saturate(0);
 	}
 
 	.showcase-item.has-surface-bg {
-		background: #0d0e14;
-		padding: 1.5rem;
 		display: flex;
 		align-items: center;
 		justify-content: center;
+		padding: 1.5rem;
+		background: #0d0e14;
 	}
 
 	.showcase-item.has-surface-bg img {
-		object-fit: contain;
 		max-width: 80%;
 		max-height: 80%;
+		object-fit: contain;
 	}
 
 	.swatch-grid {
 		display: flex;
 		width: 100%;
 		height: 100%;
-		border-radius: 8px;
 		overflow: hidden;
+		border-radius: 8px;
 	}
 
 	.swatch-item {
-		flex: 1;
 		display: flex;
+		flex: 1;
 		flex-direction: column;
 		justify-content: flex-end;
 		padding: 0.75rem;
@@ -329,8 +333,8 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 	.hero-gallery {
 		position: relative;
 		display: flex;
-		justify-content: center;
 		align-items: center;
+		justify-content: center;
 		height: 400px;
 		perspective: 1000px;
 	}
@@ -342,17 +346,17 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 		--unit-rotate: 6deg;
 		position: absolute;
 		width: 180px;
-		border-radius: 12px;
 		overflow: hidden;
-		background: white;
-		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 		cursor: pointer;
-		transition-duration: 150ms;
-		transition-property: transform, box-shadow, filter, opacity;
-		transition-timing-function: cubic-bezier(0.4, 0.2, 1);
+		background: white;
+		border-radius: 12px;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
 		transform: translateX(calc(var(--card-index) * var(--unit-x)))
 			rotate(calc(var(--card-index) * var(--unit-rotate)))
 			translateY(var(--card-y));
+		transition-timing-function: cubic-bezier(0.4, 0.2, 1);
+		transition-duration: 150ms;
+		transition-property: transform, box-shadow, filter, opacity;
 	}
 
 	.hero-card:nth-child(1) {
@@ -388,8 +392,8 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 	}
 
 	.hero-gallery:has(.hero-card:hover) .hero-card:not(:hover) {
-		filter: saturate(0);
 		opacity: 0.7;
+		filter: saturate(0);
 	}
 
 	@media (max-width: 768px) {
@@ -407,9 +411,9 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 		}
 
 		.hero-card {
-			width: 140px;
 			--unit-x: 90px;
 			--card-y: 0px;
+			width: 140px;
 		}
 	}
 
@@ -442,10 +446,10 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 		}
 
 		.hero-card {
-			width: 120px;
 			--unit-x: 80px;
 			--unit-rotate: 8deg;
 			--card-y: 0px;
+			width: 120px;
 		}
 
 		.hero-card:nth-child(1),

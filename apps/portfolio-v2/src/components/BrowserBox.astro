@@ -2,12 +2,12 @@
 import { Icon } from "astro-icon/components";
 import BrowserIconButton from "./BrowserIconButton/BrowserIconButton.astro";
 
-type Props = {
-	title: string;
+interface Props {
+	aspect: "phone" | "desktop";
 	className?: string;
 	href?: string;
-	aspect: "phone" | "desktop";
-};
+	title: string;
+}
 
 const props = Astro.props;
 ---
@@ -35,30 +35,28 @@ const props = Astro.props;
       props.aspect === "phone" ? "md:aspect-6/13" : "md:aspect-93/80",
     ]}
 	>
-		<slot/>
+		<slot />
 	</div>
 
-	{
-    props.href ? (
+	{props.href ? (
       <BrowserIconButton
         as="a"
-        target="_blank"
-        rel="noopener noreferrer"
-        href={props.href}
         class="absolute bottom-4 left-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+        href={props.href}
+        rel="noopener noreferrer"
+        target="_blank"
       >
         <Icon name="arrow-top-right" />
       </BrowserIconButton>
-    ) : null
-  }
+    ) : null}
 </div>
 
 <style>
 	.titlebar {
 		background-image: url(/traffic-lights.svg), url(/globe.svg);
+		background-repeat: no-repeat, no-repeat;
 		background-position:
 			8px center,
 			right 8px center;
-		background-repeat: no-repeat, no-repeat;
 	}
 </style>

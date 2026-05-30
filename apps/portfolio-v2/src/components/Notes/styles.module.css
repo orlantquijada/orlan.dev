@@ -16,8 +16,8 @@
 
 .notesList > * {
 	order: 1;
-	margin-block-end: var(--mason-mb);
 	width: 100%;
+	margin-block-end: var(--mason-mb);
 }
 
 @media (min-width: 640px) {
@@ -34,10 +34,10 @@
 
 @media (min-width: 640px) {
 	.notesList::after {
-		content: "";
 		flex-basis: 100%;
-		width: 0;
 		order: 1;
+		width: 0;
+		content: "";
 	}
 
 	.notesList > *:nth-child(2n + 1) {
@@ -52,10 +52,10 @@
 @media (min-width: 768px) {
 	.notesList::before,
 	.notesList::after {
-		content: "";
 		flex-basis: 100%;
-		width: 0;
 		order: 2;
+		width: 0;
+		content: "";
 	}
 
 	.notesList > *:nth-child(3n + 1) {

@@ -4,15 +4,15 @@ import { AnimatePresence, motion } from "motion/react";
 import { type Ref, useImperativeHandle, useState } from "react";
 import styles from "./CopiedLinkToast.module.css";
 
-type CopiedLinkToastActions = {
+interface CopiedLinkToastActions {
   open: () => void;
-};
+}
 
 const TOAST_DURATION = 2000;
 
-type CopiedLinkToastProps = {
+interface CopiedLinkToastProps {
   ref?: Ref<CopiedLinkToastActions>;
-};
+}
 
 export type CopiedLinkToast = CopiedLinkToastActions;
 export function CopiedLinkToast({ ref }: CopiedLinkToastProps) {

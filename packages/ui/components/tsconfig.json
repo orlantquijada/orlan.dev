@@ -14,22 +14,12 @@
     "preserveWatchOutput": true,
     "skipLibCheck": true,
     "strict": true,
-    "lib": [
-      "esnext"
-    ],
+    "lib": ["esnext"],
     "module": "Node16",
     "target": "ES2018",
     "jsx": "react-jsx",
     "strictNullChecks": true
   },
-  "include": [
-    "src/**/*",
-    "panda.config.ts",
-    "styled-system"
-  ],
-  "exclude": [
-    "dist",
-    "build",
-    "node_modules"
-  ]
+  "include": ["src/**/*", "panda.config.ts", "styled-system"],
+  "exclude": ["dist", "build", "node_modules"]
 }

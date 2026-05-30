@@ -49,6 +49,7 @@ export default function Document() {
         />
 
         <style
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: font-face injection requires inline style
           dangerouslySetInnerHTML={{
             __html: `
               @font-face {

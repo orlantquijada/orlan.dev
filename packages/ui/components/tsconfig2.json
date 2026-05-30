@@ -3,10 +3,7 @@
   "compilerOptions": {
     "target": "ES2024",
     "module": "Node16",
-    "lib": [
-      "ES2024",
-      "DOM"
-    ],
+    "lib": ["ES2024", "DOM"],
     "outDir": "dist",
     "declaration": true,
     "declarationMap": true,
@@ -17,12 +14,6 @@
     "jsx": "react-jsx",
     "strictNullChecks": true
   },
-  "include": [
-    "src/**/*",
-    "panda.config.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*", "panda.config.ts"],
+  "exclude": ["node_modules", "dist"]
 }

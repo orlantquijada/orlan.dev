@@ -8,9 +8,9 @@ import { useLikedContext } from "@/hooks/useLikedContext";
 const HEART_SIZE = 130;
 const SKEW_DEG = 30;
 
-type Props = {
+interface Props {
   children: ReactNode;
-};
+}
 
 export default function LikeWrapper({ children }: Props) {
   const [open, setOpen] = useState<
@@ -19,7 +19,8 @@ export default function LikeWrapper({ children }: Props) {
   const [, setIsLiked] = useLikedContext();
 
   return (
-    //  biome-ignore lint/a11y/noStaticElementInteractions: intentional
+    // biome-ignore lint/a11y/noStaticElementInteractions: intentional
+    // biome-ignore lint/a11y/noNoninteractiveElementInteractions: intentional
     <div
       className="relative max-w-screen overflow-clip"
       onDoubleClick={(e) => {

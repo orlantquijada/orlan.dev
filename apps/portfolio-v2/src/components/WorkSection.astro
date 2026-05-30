@@ -51,11 +51,11 @@ const previewImages = [
 				{previewImages.map((image, index) => (
 					<div class="preview-card" style={`--card-index: ${index}`}>
 						<Image
-							height={221}
-							width={111}
-							src={image.src}
 							alt={image.alt}
 							class="h-full w-full object-cover"
+							height={221}
+							src={image.src}
+							width={111}
 						/>
 					</div>
 				))}
@@ -66,18 +66,18 @@ const previewImages = [
 
 <style>
 	.work-card {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 		gap: 3rem;
 		padding: 1.5rem;
+		text-decoration: none;
 		/* !important needed to override Tailwind utility specificity */
 		background: var(--color-chip-bg) !important;
 		border: 1px solid var(--gray6);
 		border-radius: 16px;
-		text-decoration: none;
 		box-shadow: rgb(0 0 0 / 10%) 0px 5px 30px -5px;
 		transition: border-color 150ms ease;
-		position: relative;
 
 		html.dark & {
 			background: var(--color-gray-a2) !important;
@@ -89,11 +89,11 @@ const previewImages = [
 	}
 
 	.preview-gallery {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 200px;
 		position: relative;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 200px;
 		perspective: 800px;
 	}
 
@@ -101,8 +101,8 @@ const previewImages = [
 		--card-index: 0;
 		position: absolute;
 		width: 100px;
-		border-radius: 8px;
 		overflow: hidden;
+		border-radius: 8px;
 		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 		transition:
 			transform 200ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -110,23 +110,23 @@ const previewImages = [
 	}
 
 	.preview-card:nth-child(1) {
-		transform: translateX(-110px) rotate(-8deg);
 		z-index: 1;
+		transform: translateX(-110px) rotate(-8deg);
 	}
 
 	.preview-card:nth-child(2) {
-		transform: translateX(-38px) rotate(-3deg);
 		z-index: 2;
+		transform: translateX(-38px) rotate(-3deg);
 	}
 
 	.preview-card:nth-child(3) {
-		transform: translateX(38px) rotate(3deg);
 		z-index: 2;
+		transform: translateX(38px) rotate(3deg);
 	}
 
 	.preview-card:nth-child(4) {
-		transform: translateX(110px) rotate(8deg);
 		z-index: 1;
+		transform: translateX(110px) rotate(8deg);
 	}
 
 	.work-card:hover .preview-card:nth-child(1) {

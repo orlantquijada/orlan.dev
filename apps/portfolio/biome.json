@@ -8,7 +8,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "includes": ["**", "!node_modules", "!.next", "!dist", "!build"]
+    "includes": ["!node_modules", "!.next", "!dist", "!build"]
   },
   "css": {
     "parser": {
@@ -25,6 +25,9 @@
     "enabled": true,
     "rules": {
       "recommended": true,
+      "style": {
+        "useFilenamingConvention": "off"
+      },
       "suspicious": {
         "noUnknownAtRules": "off"
       }
@@ -41,5 +44,9 @@
       }
     }
   },
-  "extends": ["ultracite/core", "ultracite/react", "ultracite/next"]
+  "extends": [
+    "ultracite/biome/core",
+    "ultracite/biome/react",
+    "ultracite/biome/next"
+  ]
 }

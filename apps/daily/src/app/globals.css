@@ -28,10 +28,9 @@
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-foreground);
-
   font-family: var(--font-eb-garamond);
+  color: var(--color-foreground);
+  background: var(--color-background);
 }
 
 ::selection {

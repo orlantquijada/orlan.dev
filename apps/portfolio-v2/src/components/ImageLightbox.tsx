@@ -6,16 +6,16 @@ import ArrowRight from "@/icons/arrow-right.svg?react";
 import Close from "@/icons/cross.svg?react";
 import { cn } from "@/lib/general";
 
-type ImageItem = {
-	src: string;
+interface ImageItem {
 	alt: string;
-};
+	src: string;
+}
 
-type LightboxDialogProps = {
-	images: ImageItem[];
+interface LightboxDialogProps {
 	currentIndex: number | null;
+	images: ImageItem[];
 	onIndexChange: (index: number | null) => void;
-};
+}
 
 export function LightboxDialog({
 	images,
@@ -73,6 +73,7 @@ export function LightboxDialog({
 				>
 					<AnimatePresence initial={false} mode="popLayout">
 						{currentIndex !== null && images[currentIndex] && (
+							// biome-ignore lint/correctness/useImageSize: lightbox renders external images without known dimensions
 							<motion.img
 								alt={images[currentIndex].alt}
 								animate={{ opacity: 1, scale: 1 }}
@@ -98,6 +99,9 @@ export function LightboxDialog({
 						onClick={goToNext}
 					/>
 
+					{/* biome-ignore lint/a11y/noStaticElementInteractions: stop-propagation wrapper only */}
+					{/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: stop-propagation wrapper only */}
+					{/* biome-ignore lint/a11y/useKeyWithClickEvents: stop-propagation wrapper only */}
 					<div
 						className={cn(
 							"fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4"
@@ -113,8 +117,11 @@ export function LightboxDialog({
 						</DialogPrimitive.Close>
 					</div>
 
+					{/* biome-ignore lint/a11y/noStaticElementInteractions: stop-propagation wrapper only */}
+					{/* biome-ignore lint/a11y/noNoninteractiveElementInteractions: stop-propagation wrapper only */}
+					{/* biome-ignore lint/a11y/useKeyWithClickEvents: stop-propagation wrapper only */}
 					<div
-						className="-translate-x-1/2 fixed bottom-4 left-1/2 rounded-lg bg-black/50 px-3 py-1.5 text-sm text-white"
+						className="fixed bottom-4 left-1/2 -translate-x-1/2 rounded-lg bg-black/50 px-3 py-1.5 text-sm text-white"
 						onClick={(e) => e.stopPropagation()}
 					>
 						{(currentIndex ?? 0) + 1} / {images.length}
@@ -125,10 +132,10 @@ export function LightboxDialog({
 	);
 }
 
-type ImageLightboxProps = {
-	images: ImageItem[];
+interface ImageLightboxProps {
 	children: React.ReactNode;
-};
+	images: ImageItem[];
+}
 
 export default function ImageLightbox({
 	images,
@@ -139,15 +146,17 @@ export default function ImageLightbox({
 	const handleClick = (e: React.MouseEvent) => {
 		const target = (e.target as HTMLElement).closest("[data-lightbox-index]");
 		if (target) {
-			const index = Number.parseInt(
-				target.getAttribute("data-lightbox-index")!,
-				10
-			);
-			setCurrentIndex(index);
+			const indexAttr = target.getAttribute("data-lightbox-index");
+			if (indexAttr !== null) {
+				setCurrentIndex(Number.parseInt(indexAttr, 10));
+			}
 		}
 	};
 
 	return (
+		// biome-ignore lint/a11y/noStaticElementInteractions: event delegation — children are interactive
+		// biome-ignore lint/a11y/noNoninteractiveElementInteractions: event delegation — children are interactive
+		// biome-ignore lint/a11y/useKeyWithClickEvents: keyboard events handled inside LightboxDialog
 		<div onClick={handleClick}>
 			{children}
 			<LightboxDialog
@@ -159,11 +168,11 @@ export default function ImageLightbox({
 	);
 }
 
-type NavButtonProps = {
+interface NavButtonProps {
+	"aria-label": string;
 	direction: "prev" | "next";
 	onClick: () => void;
-	"aria-label": string;
-};
+}
 
 function NavButton({
 	direction,
@@ -177,7 +186,7 @@ function NavButton({
 			aria-label={ariaLabel}
 			className={cn(
 				"bg-transparent text-gray1 dark:text-gray12",
-				"-translate-y-1/2 fixed top-1/2 z-10 grid cursor-pointer",
+				"fixed top-1/2 z-10 grid -translate-y-1/2 cursor-pointer",
 				"h-[60vh] w-12 place-items-center transition-all md:w-16",
 				"active:opacity-75",
 				isPrev ? "left-0" : "right-0"

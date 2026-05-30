@@ -22,6 +22,7 @@ export const disableTransitionOnThemeChange = (callback: () => void) => {
 	callback();
 
 	setTimeout(() => {
+		// biome-ignore lint/suspicious/noUnusedExpressions: forces style recalculation (layout flush) before removing transition-blocking CSS
 		window.getComputedStyle(css).opacity;
 		document.head.removeChild(css);
 	}, 1);
@@ -32,7 +33,9 @@ export const getDefaultTheme = () =>
 
 export const getTheme = () => {
 	const theme = localStorage.getItem(storageKey);
-	if (theme) return theme as ThemeKeys;
+	if (theme) {
+		return theme as ThemeKeys;
+	}
 	return getDefaultTheme();
 };
 
