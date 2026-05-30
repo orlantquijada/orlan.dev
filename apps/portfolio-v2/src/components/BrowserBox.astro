@@ -2,12 +2,12 @@
 import { Icon } from "astro-icon/components";
 import BrowserIconButton from "./BrowserIconButton/BrowserIconButton.astro";
 
-interface Props {
+type Props = {
 	aspect: "phone" | "desktop";
 	className?: string;
 	href?: string;
 	title: string;
-}
+};
 
 const props = Astro.props;
 ---

@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
-interface Props {
+type Props = {
 	children: ReactNode;
 	description: string;
 	title: string;
-}
+};
 
 export default function ContactDetail(props: Props) {
 	const { children, title, description } = props;

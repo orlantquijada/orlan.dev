@@ -5,12 +5,12 @@ import { EMAIL, GITHUB, LINKED_IN } from "@/utils/constants";
 import { buttonStyles } from "./Button";
 
 type SocialID = "github" | "linked-in" | "email";
-interface Social {
+type Social = {
 	iconName: string;
 	id: SocialID;
 	title: string;
 	url: string;
-}
+};
 
 const socials: Social[] = [
 	{

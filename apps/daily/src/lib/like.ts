@@ -1,17 +1,17 @@
 import { z } from "zod/mini";
 
-export interface Daily {
+export type Daily = {
   author: string;
   book: string;
   quote: string;
   section: string;
   title: string;
-}
+};
 
-export interface DailyDate {
+export type DailyDate = {
   day: string;
   month: string;
-}
+};
 
 const DAILY_KEY = "__daily_/";
 export function toKey({ day, month }: DailyDate) {

@@ -6,16 +6,16 @@ import ArrowRight from "@/icons/arrow-right.svg?react";
 import Close from "@/icons/cross.svg?react";
 import { cn } from "@/lib/general";
 
-interface ImageItem {
+type ImageItem = {
 	alt: string;
 	src: string;
-}
+};
 
-interface LightboxDialogProps {
+type LightboxDialogProps = {
 	currentIndex: number | null;
 	images: ImageItem[];
 	onIndexChange: (index: number | null) => void;
-}
+};
 
 export function LightboxDialog({
 	images,
@@ -132,10 +132,10 @@ export function LightboxDialog({
 	);
 }
 
-interface ImageLightboxProps {
+type ImageLightboxProps = {
 	children: React.ReactNode;
 	images: ImageItem[];
-}
+};
 
 export default function ImageLightbox({
 	images,
@@ -168,11 +168,11 @@ export default function ImageLightbox({
 	);
 }
 
-interface NavButtonProps {
+type NavButtonProps = {
 	"aria-label": string;
 	direction: "prev" | "next";
 	onClick: () => void;
-}
+};
 
 function NavButton({
 	direction,

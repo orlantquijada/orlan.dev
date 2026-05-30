@@ -18,7 +18,11 @@
     "rules": {
       "recommended": true,
       "style": {
-        "useFilenamingConvention": "off"
+        "useFilenamingConvention": "off",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": { "style": "type" }
+        }
       },
       "performance": {
         "noNamespaceImport": "off"

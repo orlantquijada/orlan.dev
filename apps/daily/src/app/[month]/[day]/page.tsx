@@ -5,9 +5,9 @@ import DailyDetail from "@/components/DailyDetail";
 import { getDaily, getValidDates, isValidDate } from "@/lib/content";
 import { stripMarkdown } from "@/lib/utils";
 
-interface Props {
+type Props = {
   params: Promise<{ month: string; day: string }>;
-}
+};
 
 export async function generateStaticParams() {
   return await getValidDates();
