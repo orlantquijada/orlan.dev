@@ -1,8 +1,5 @@
 ---
-import { Icon } from "astro-icon/components";
-
 import { SPACEDUCK_LINK } from "@/utils/constants";
-import NotesSection from "./NotesSection.astro";
 import Projects from "./Projects.astro";
 import Socials from "./Socials.astro";
 import { DuckSprite } from "./Sprite.tsx";
@@ -32,19 +29,17 @@ import WorkSection from "./WorkSection.astro";
 					>Spaceduck</a
 				><span
 					class="pointer-events-none select-none size-10 absolute transition-all duration-350 opacity-0 rotate-45 group-hover:opacity-100 group-hover:-translate-y-8 group-hover:-rotate-30"
-					><DuckSprite client:only /></span
+					><DuckSprite client:only="react" /></span
 				>
 			</span>
 			{' '}— building the company’s flagship iOS and Android app. I’ve delivered
 			major features end‑to‑end, including an
 			<VideoPreviewDialog client:load src="/ai-assistant2.mp4" type="video/mp4">
 				AI assistant
-				<Icon name="play" width={10} height={12} slot="icon" />
 			</VideoPreviewDialog>
 			{' '}and a
 			<VideoPreviewDialog client:load src="/collab-notes3.mp4" type="video/mp4">
 				real-time multiplayer text editor
-				<Icon name="play" width={10} height={12} slot="icon" />
 			</VideoPreviewDialog>
 		</p>
 
