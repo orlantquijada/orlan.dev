@@ -1,6 +1,6 @@
-type Props = {
+interface Props {
 	open?: boolean;
-};
+}
 
 export default function MenuIcon({ open }: Props) {
 	return (

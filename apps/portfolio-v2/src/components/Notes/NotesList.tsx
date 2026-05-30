@@ -10,7 +10,10 @@ import { MotionNoteCard } from "../NoteCard/NoteCard";
 import styles from "./styles.module.css";
 
 type Note = NoteFrontmatter & { selected: boolean; href: string };
-type Props = { notes: Omit<Note, "selected">[]; className?: string };
+interface Props {
+	className?: string;
+	notes: Omit<Note, "selected">[];
+}
 
 // estimated height per note
 const HEIGHT = 100;

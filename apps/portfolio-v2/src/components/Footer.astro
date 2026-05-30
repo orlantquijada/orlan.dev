@@ -2,9 +2,9 @@
 import { GITHUB } from "@/utils/constants";
 import LogoIcon from "./LogoIcon.astro";
 
-type Props = {
+interface Props {
 	class?: string;
-};
+}
 
 const { class: className } = Astro.props;
 ---
@@ -16,8 +16,8 @@ const { class: className } = Astro.props;
 
 	<ul class="flex gap-3">
 		<li>
-			<button class="theme-toggle">
-				<LogoIcon/>
+			<button class="theme-toggle" type="button">
+				<LogoIcon />
 			</button>
 		</li>
 
@@ -78,14 +78,14 @@ const { class: className } = Astro.props;
 
 	a {
 		text-decoration: underline;
+		text-decoration-thickness: 1px;
 		text-decoration-color: var(--gray8);
 		text-underline-offset: 4px;
-		text-decoration-thickness: 1px;
 	}
 
 	a:hover {
-		text-decoration-color: var(--gray10);
 		text-decoration-style: wavy;
+		text-decoration-color: var(--gray10);
 	}
 
 	.divider {

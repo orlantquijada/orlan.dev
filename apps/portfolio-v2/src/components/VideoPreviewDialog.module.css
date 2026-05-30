@@ -22,9 +22,9 @@
 
 .close {
 	/* dark gray a3 */
-	background: hsla(0, 0%, 100%, 0.056);
-	/* dark gray 12 */
 	color: hsl(0, 0%, 93%),;
+	/* dark gray a3 */
+	background: hsla(0, 0%, 100%, 0.056);
 }
 
 @keyframes enter {
@@ -56,8 +56,8 @@
 }
 
 .hoverContent {
-	height: 435px;
 	width: 200px;
+	height: 435px;
 
 	transform-origin: var(--radix-hover-card-content-transform-origin);
 

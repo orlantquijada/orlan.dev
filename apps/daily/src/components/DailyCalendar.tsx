@@ -11,7 +11,10 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { type Dispatch, type SetStateAction, useEffect, useState } from "react";
-import * as Calendar from "@/components/Calendar";
+import {
+  Root as CalendarRoot,
+  useCalendarContext,
+} from "@/components/Calendar";
 import UTurnLeftIcon from "@/icons/UTurnLeftIcon";
 import { type Month, monthSchema, monthSubjectsMap } from "@/lib/like";
 import { cn } from "@/lib/utils";
@@ -76,7 +79,7 @@ export default function DailyCalendar() {
 
   return (
     <>
-      <Calendar.Root defaultDate={currentMonthDate} value={currentMonthDate}>
+      <CalendarRoot defaultDate={currentMonthDate} value={currentMonthDate}>
         <header className="flex w-full items-center md:justify-between">
           <h1 className="text-base md:text-xl">
             {format(currentMonthDate, "MMM y")}
@@ -143,7 +146,7 @@ export default function DailyCalendar() {
             x={x}
           />
         </div>
-      </Calendar.Root>
+      </CalendarRoot>
       <PreviewToast
         selectedDate={selectedDate}
         setSelectedDate={setSelectedDate}
@@ -169,7 +172,7 @@ function Days({
   x: MotionValue<number>;
   opacity: MotionValue<number>;
 }) {
-  const { days } = Calendar.useCalendarContext();
+  const { days } = useCalendarContext();
 
   const selected = (date: Date) =>
     selectedDate && isSameDay(date, selectedDate);

@@ -10,15 +10,15 @@ export function cn(...args: ClassValue[]) {
 }
 
 // Types for the result object with discriminated union
-type Success<T> = {
+interface Success<T> {
   data: T;
   error: null;
-};
+}
 
-type Failure<E> = {
+interface Failure<E> {
   data: null;
   error: E;
-};
+}
 
 type Result<T, E = Error> = Success<T> | Failure<E>;
 

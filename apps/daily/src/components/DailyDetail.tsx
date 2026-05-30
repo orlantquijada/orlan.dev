@@ -15,12 +15,12 @@ function toDateFormat({ day, month }: DailyDate) {
   return format(new Date(year, monthIndex, Number(day)), "LLLL do");
 }
 
-type DailyDetailProps = {
-  date: DailyDate;
+interface DailyDetailProps {
   // biome-ignore lint/suspicious/noExplicitAny: mdx content
   Body: any;
+  date: DailyDate;
   frontmatter: Daily;
-};
+}
 
 export default function DailyDetail({
   Body,

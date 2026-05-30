@@ -1,9 +1,9 @@
 ---
 import { Menu } from "./Menu/Menu";
 
-type Props = {
+interface Props {
 	class?: string;
-};
+}
 
 const { class: className } = Astro.props;
 ---
@@ -21,5 +21,5 @@ const { class: className } = Astro.props;
 			Orlan Quijada
 		</h1>
 	</a>
-	<Menu client:load/>
+	<Menu client:load />
 </header>

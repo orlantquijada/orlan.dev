@@ -19,6 +19,9 @@
       "recommended": true,
       "style": {
         "useFilenamingConvention": "off"
+      },
+      "performance": {
+        "noNamespaceImport": "off"
       }
     }
   },
@@ -50,5 +53,5 @@
       }
     }
   ],
-  "extends": ["ultracite/core", "ultracite/astro"]
+  "extends": ["ultracite/biome/core", "ultracite/biome/astro"]
 }

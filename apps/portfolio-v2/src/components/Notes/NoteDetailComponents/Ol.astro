@@ -7,16 +7,16 @@ const props = Astro.props;
 ---
 
 <ol {...props} class:list={['ol', props.class]}>
-	<slot/>
+	<slot />
 </ol>
 
 <style>
 	:global(.ol) {
-		list-style: none;
-		counter-reset: counts;
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
+		list-style: none;
+		counter-reset: counts;
 	}
 
 	:global(.ol > li) {
@@ -25,11 +25,11 @@ const props = Astro.props;
 	}
 
 	:global(.ol li::before) {
+		position: absolute;
+		top: 0;
+		left: 0;
+		color: var(--color-gray11, var(--gray11));
 		content: counter(counts) ". ";
 		counter-increment: counts;
-		position: absolute;
-		left: 0;
-		top: 0;
-		color: var(--color-gray11, var(--gray11));
 	}
 </style>

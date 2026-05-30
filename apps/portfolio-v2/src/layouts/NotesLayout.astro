@@ -13,7 +13,7 @@ const data = Astro.props;
 ---
 
 <Layout title={data.title}>
-	<ClientRouter slot="head"/>
+	<ClientRouter slot="head" />
 	<div class="grid place-items-start gap-2">
 		<h1
 			class="text-balance text-3xl font-medium"
@@ -21,65 +21,58 @@ const data = Astro.props;
 		>
 			{data.title}
 		</h1>
-		{
-      data.description ? (
+		{data.description ? (
       <p class="text-gray-a11 md:max-w-4/5">{data.description}</p>
-      ) : null
-    }
+      ) : null}
 	</div>
 
 	<div class="flex flex-wrap gap-x-6">
 		<MetaData>
-			<Icon name="tag" slot="icon"/>
+			<Icon name="tag" slot="icon" />
 
 			<ul class="flex items-center">
 				<!-- TODO: filter notes by tag link -->
-				{
-          [...data.tags].map((tag) => (
+				{[...data.tags].map((tag) => (
             <li class="tag">
-              <a href="/notes" class="hover:underline">
+              <a class="hover:underline" href="/notes">
                 {tag}
               </a>
             </li>
-          ))
-        }
+          ))}
 			</ul>
 		</MetaData>
 
 		<MetaData>
-			<Icon name="clock" slot="icon"/>
+			<Icon name="clock" slot="icon" />
 			<span>{formatDate(data.publishedAt)}</span>
 		</MetaData>
 
-		{
-      data.updatedAt ? (
+		{data.updatedAt ? (
         <MetaData>
           <Icon name="pencil" />
           <span>
             {formatDate(
               Array.isArray(data.updatedAt)
-                ? data.updatedAt[data.updatedAt.length - 1]!
+                // biome-ignore lint/style/noNonNullAssertion: non-empty per content schema
+            ? data.updatedAt.at(-1)!
                 : data.updatedAt,
             )}
           </span>
         </MetaData>
-      ) : null
-    }
+      ) : null}
 
-		{
-      data.wip ? (
+		{data.wip ? (
         <MetaData>
           <Icon name="wrench" slot="icon" />
           <span>work-in-progress</span>
         </MetaData>
-      ) : null
-    }
+      ) : null}
 	</div>
 
 	<hr class="my-8 w-full border-t-2 border-t-gray-a4">
 
 	<article>
-		<slot/>
+		<slot />
 	</article>
 </Layout>
 
@@ -100,8 +93,8 @@ const data = Astro.props;
 	}
 
 	.tag:not(:last-of-type)::after {
-		content: "·";
 		margin-inline: 0.25rem;
+		content: "·";
 	}
 
 	:global(article > :where(:not(:last-child))) {

@@ -22,7 +22,6 @@
 
 .footer {
   --padding-x: 1rem;
-  padding-inline: var(--padding-x);
   max-width: calc(
     var(--icon-button-size) *
     2 +
@@ -30,4 +29,5 @@
     4 +
     var(--content-max-width)
   );
+  padding-inline: var(--padding-x);
 }

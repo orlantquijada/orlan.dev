@@ -9,7 +9,7 @@ const props = Astro.props;
 	{...props}
 	class="relative text-gray11 *:after:absolute *:after:ml-0.5 *:after:content-[close-quote]"
 >
-	<slot/>
+	<slot />
 </blockquote>
 
 <style>
@@ -18,9 +18,9 @@ const props = Astro.props;
 	}
 
 	blockquote::before {
-		content: open-quote;
 		position: absolute;
 		left: -2px;
+		content: open-quote;
 		transform: translateX(-100%);
 	}
 </style>

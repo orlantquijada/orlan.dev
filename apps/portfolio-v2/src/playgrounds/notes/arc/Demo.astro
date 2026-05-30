@@ -17,10 +17,13 @@ const buttonStyles = cva(
         buttonStyles(),
         'border-r-2 text-sm uppercase tracking-wider',
       ]}
+			type="button"
 		>
 			Arc
 		</button>
-		<button class:list={[buttonStyles(), 'border-l-2']}>Dec 1, 2022</button>
+		<button class:list={[buttonStyles(), 'border-l-2']} type="button">
+			Dec 1, 2022
+		</button>
 	</div>
 	<div
 		class="dark:border-gray3 dark:bg-gray3 dark:text-gray11 dark:hover:bg-gray4"
@@ -39,10 +42,10 @@ const buttonStyles = cva(
 	.stripe-thingy::before {
 		--stripe-1: var(--gray1);
 		--stripe-2: var(--gray12);
-
-		content: "";
 		position: absolute;
 		inset: 0;
+
+		content: "";
 		background-image: linear-gradient(
 			-45deg,
 			var(--stripe-1) 25%,

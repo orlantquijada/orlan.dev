@@ -8,7 +8,7 @@ export const size = {
   height: 630,
 };
 
-async function loadFont(font: string) {
+function loadFont(font: string) {
   return readFile(join(process.cwd(), `public/fonts/${font}`));
 }
 

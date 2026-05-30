@@ -6,7 +6,7 @@
     "@biomejs/biome": "catalog:",
     "@pandacss/dev": "catalog:",
     "@pandacss/preset-panda": "catalog:",
-    "@radix-ui/colors": "^3.0.0",
+    "@radix-ui/colors": "catalog:",
     "@tsconfig/strictest": "catalog:",
     "typescript": "catalog:"
   },
