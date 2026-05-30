@@ -9,17 +9,15 @@ import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config
 const config = defineConfig({
-	experimental: {
-		fonts: [
-			{
-				provider: fontProviders.google(),
-				name: "JetBrains Mono",
-				cssVariable: "--font-jetbrains-mono",
-				fallbacks: ["monospace"],
-				subsets: ["latin"],
-			},
-		],
-	},
+	fonts: [
+		{
+			provider: fontProviders.google(),
+			name: "JetBrains Mono",
+			cssVariable: "--font-jetbrains-mono",
+			fallbacks: ["monospace"],
+			subsets: ["latin"],
+		},
+	],
 	integrations: [react(), mdx(), icon()],
 	scopedStyleStrategy: "where",
 	markdown: {
