@@ -8,13 +8,13 @@ import { useVideoControls } from "@/hooks/useVideoControls";
 import Close from "@/icons/cross.svg?react";
 import Pause from "@/icons/pause-big.svg?react";
 import Play from "@/icons/play-big.svg?react";
+import PlaySmall from "@/icons/play.svg?react";
 import { cn } from "@/lib/general";
 import { buttonStyles } from "./Button";
 import styles from "./VideoPreviewDialog.module.css";
 
 type Props = {
 	children: ReactNode;
-	icon?: ReactNode;
 } & VideoProps;
 
 const btnClassName = twMerge(
@@ -25,18 +25,13 @@ const btnClassName = twMerge(
 	})
 );
 
-export default function VideoPreviewDialog({
-	children,
-	icon,
-	src,
-	type,
-}: Props) {
+export default function VideoPreviewDialog({ children, src, type }: Props) {
 	return (
 		<DialogPrimitive.Root>
 			<HoverCard.Root closeDelay={0} openDelay={0}>
 				<HoverCard.Trigger asChild>
 					<DialogPrimitive.Trigger className={btnClassName}>
-						{icon}
+						<PlaySmall width={10} height={12} aria-hidden="true" />
 						<span>{children}</span>
 					</DialogPrimitive.Trigger>
 				</HoverCard.Trigger>
@@ -86,7 +81,7 @@ type VideoProps = {
 
 function Video({ src, type, ...props }: VideoProps) {
 	return (
-		<video muted {...props}>
+		<video muted playsInline preload="metadata" {...props}>
 			<source src={src} type={type} />
 		</video>
 	);
