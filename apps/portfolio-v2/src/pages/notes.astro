@@ -1,6 +1,6 @@
 ---
 import { getCollection } from "astro:content";
-import { ViewTransitions } from "astro:transitions";
+import { ClientRouter } from "astro:transitions";
 import NotesWrapper from "@/components/Notes/NotesWrapper";
 import Layout from "@/layouts/Layout.astro";
 import { buildTagGraph } from "@/lib/notes";
@@ -19,7 +19,7 @@ const tagsGraph = buildTagGraph(...tagsPerNote);
 ---
 
 <Layout title="🌱 Notes — Orlan Quijada">
-	<ViewTransitions slot="head"/>
+	<ClientRouter slot="head"/>
 	<h1 class="text-3xl font-medium">Notes</h1>
 	<p class="mt-2 max-w-md text-xl">
 		A personal wiki of notes, code snippets, and more stuff on the internet.
