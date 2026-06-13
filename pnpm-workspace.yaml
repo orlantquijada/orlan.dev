@@ -31,8 +31,8 @@ catalogs:
     react-dom: ^19.2.6
 
 minimumReleaseAgeExclude:
-  - '@clack/core@1.4.0'
-  - '@clack/prompts@1.5.0'
+  - "@clack/core@1.4.0"
+  - "@clack/prompts@1.5.0"
   - date-fns@4.4.0
   - next-mdx-remote-client@2.1.11
 
@@ -42,35 +42,3 @@ onlyBuiltDependencies:
   - esbuild
   - protobufjs
   - sharp
-
-# Security overrides for transitive advisories (`pnpm audit`, F7). All are
-# build-time tooling deps (astro-icon/@iconify/tools, @astrojs/vercel/@vercel/nft,
-# astro/vite). Bumped to the patched floor; packages present in two majors use
-# range-scoped keys so each major lands on its own in-major fix.
-# `tar` is the exception: its fix ships only in 7.x (no 6.x patch exists), so it
-# is bumped across the 6→7 major boundary — verified safe by a full `pnpm build`.
-# NOT overridden — `path-to-regexp` (1 remaining high, GHSA-9wv6-86v2-598j): its
-# only consumer is @vercel/routing-utils in @astrojs/vercel's build-time redirect
-# generation, and the fix (>=6.3.0) changes the compiled regex shape, breaking
-# `astro:build:done` ("Route at index 0 must define either handle or src"). It is
-# build-time only (trusted route config), so the residual runtime risk is nil.
-overrides:
-  form-data: ">=4.0.4"
-  axios: ">=1.16.0"
-  undici: ">=6.24.0"
-  rollup: ">=4.59.0"
-  esbuild: ">=0.28.1"
-  postcss: ">=8.5.10"
-  follow-redirects: ">=1.15.12"
-  yaml: ">=2.8.3"
-  js-yaml: ">=4.1.1"
-  mdast-util-to-hast: ">=13.2.1"
-  estree-util-value-to-estree: ">=3.3.3"
-  fast-uri: ">=3.1.2"
-  svgo@2: ">=2.8.1 <3"
-  svgo@3: ">=3.3.3"
-  picomatch@2: ">=2.3.2 <3"
-  picomatch@4: ">=4.0.4"
-  ajv@6: ">=6.15.0 <7"
-  ajv@8: ">=8.20.0"
-  tar: ">=7.5.11"
