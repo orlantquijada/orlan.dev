@@ -10,3 +10,12 @@ export const useIsomorphicLayoutEffect = isBrowser
 export function cn(...args: CxOptions) {
 	return twMerge(cx(args));
 }
+
+export async function copyToClipboard(text: string): Promise<boolean> {
+	try {
+		await navigator.clipboard.writeText(text);
+		return true;
+	} catch {
+		return false;
+	}
+}

@@ -63,20 +63,18 @@ export function parseKey(key: string) {
   };
 }
 
-export function like(daily: DailyDate) {
-  return localStorage.setItem(toKey(daily), JSON.stringify(true));
-}
-export function removeLike(daily: DailyDate) {
-  return localStorage.removeItem(toKey(daily));
-}
-export function getIsLiked(daily: DailyDate) {
-  return Boolean(localStorage.getItem(toKey(daily)));
-}
 export function getAllLikedDates(month?: Month): DailyDate[] {
   const monthsToCheck = month ? [month] : monthSchema.options;
   return Object.keys(localStorage)
     .filter((key) =>
       monthsToCheck.some((_month) => key.startsWith(`${DAILY_KEY}${_month}`))
     )
+    .filter((key) => {
+      try {
+        return JSON.parse(localStorage.getItem(key) ?? "false") === true;
+      } catch {
+        return false;
+      }
+    })
     .map(parseKey);
 }

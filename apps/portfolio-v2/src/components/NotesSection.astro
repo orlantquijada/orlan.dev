@@ -2,7 +2,6 @@
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import NoteCard from "./NoteCard/NoteCard";
-import styles from "./Notes/styles.module.css";
 
 const notesData = await getCollection("notes");
 const recentNotes = notesData
@@ -13,26 +12,11 @@ const recentNotes = notesData
 		...note.data,
 		href: `/notes/${note.id}`,
 	}));
-
-// Masonry height calculation (same as NotesList.tsx)
-const HEIGHT = 100; // estimated height per card
-const CARD_MARGIN_BOTTOM = 12;
-const totalItems = recentNotes.length + 1; // +1 for "view all" card
-const toRem = (num: number) => `${num / 16}rem`;
-const smHeight = toRem(
-	Math.ceil(totalItems / 2) * (HEIGHT + CARD_MARGIN_BOTTOM)
-);
-const mdHeight = toRem(
-	Math.ceil(totalItems / 3) * (HEIGHT + CARD_MARGIN_BOTTOM)
-);
 ---
 
 <section data-animate style="--stagger: 8">
 	<h3 class="text-gray11 mb-6 text-sm">Notes</h3>
-	<div
-		class:list={[styles.notesList, "notes-masonry"]}
-		style={`--mason-mb: 0.75rem; --smHeight: ${smHeight}; --mdHeight: ${mdHeight};`}
-	>
+	<div class="notes-grid">
 		{recentNotes.map((note) => (
       <NoteCard {...note} />
     ))}
@@ -44,19 +28,26 @@ const mdHeight = toRem(
 </section>
 
 <style>
-	.notes-masonry {
-		height: auto;
+	/* Responsive equal-height grid. Masonry looked ragged for a handful of
+	   variable-height cards (uneven columns + a big trailing gap), so the
+	   recent-notes block uses a uniform grid instead: natural heights when
+	   stacked on mobile, equal-height rows once there are multiple columns. */
+	.notes-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 0.75rem;
 	}
 
 	@media (min-width: 640px) {
-		.notes-masonry {
-			height: var(--smHeight);
+		.notes-grid {
+			grid-template-columns: repeat(2, 1fr);
+			grid-auto-rows: 1fr;
 		}
 	}
 
 	@media (min-width: 768px) {
-		.notes-masonry {
-			height: var(--mdHeight);
+		.notes-grid {
+			grid-template-columns: repeat(3, 1fr);
 		}
 	}
 

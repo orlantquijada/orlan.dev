@@ -1,15 +1,19 @@
-import { getDaily } from "@/lib/content";
+import { getDaily, isValidDate } from "@/lib/content";
 import { tryCatch } from "@/lib/utils";
 
 export async function GET(_: Request, ctx: RouteContext<"/api/[month]/[day]">) {
   const { month, day } = await ctx.params;
 
+  // Validate against the known content set before importing, and keep the 404
+  // body static — don't reflect the raw params back to the caller.
+  if (!(await isValidDate({ day, month }))) {
+    return new Response("Not found.", { status: 404 });
+  }
+
   const tryDaily = await tryCatch(getDaily({ day, month }));
 
   if (tryDaily.error) {
-    return new Response(`No entry found for ${month}, ${day}.`, {
-      status: 404,
-    });
+    return new Response("Not found.", { status: 404 });
   }
 
   return Response.json(tryDaily.data.frontmatter, {

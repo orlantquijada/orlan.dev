@@ -103,8 +103,11 @@ export default function Actions({
               navigator.clipboard
                 .writeText(`${BASE_URL}/${month}/${day}`)
                 .then(() => {
-                  // TODO:
                   toastRef.current?.open();
+                })
+                .catch(() => {
+                  // clipboard can reject on denied permission / insecure context;
+                  // best-effort share, so do not open the success toast on failure
                 });
             }}
             size="small"

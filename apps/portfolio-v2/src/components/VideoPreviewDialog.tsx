@@ -7,8 +7,8 @@ import { twMerge } from "tailwind-merge";
 import { useVideoControls } from "@/hooks/useVideoControls";
 import Close from "@/icons/cross.svg?react";
 import Pause from "@/icons/pause-big.svg?react";
-import Play from "@/icons/play-big.svg?react";
 import PlaySmall from "@/icons/play.svg?react";
+import Play from "@/icons/play-big.svg?react";
 import { cn } from "@/lib/general";
 import { buttonStyles } from "./Button";
 import styles from "./VideoPreviewDialog.module.css";
@@ -31,7 +31,7 @@ export default function VideoPreviewDialog({ children, src, type }: Props) {
 			<HoverCard.Root closeDelay={0} openDelay={0}>
 				<HoverCard.Trigger asChild>
 					<DialogPrimitive.Trigger className={btnClassName}>
-						<PlaySmall width={10} height={12} aria-hidden="true" />
+						<PlaySmall aria-hidden="true" height={12} width={10} />
 						<span>{children}</span>
 					</DialogPrimitive.Trigger>
 				</HoverCard.Trigger>

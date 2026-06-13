@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Audit — apps/daily (improve skill)</title>
+    <style>
+      :root {
+        --bg: #0f1411;
+        --panel: #161d18;
+        --panel-2: #1c2620;
+        --ink: #e7efe8;
+        --muted: #93a499;
+        --line: #2a3a30;
+        --hi: #8fd6a8;
+        --high: #ff8d7b;
+        --med: #ffd07a;
+        --low: #9ec8ff;
+        --ok: #8fd6a8;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: linear-gradient(180deg, #0f1411, #0c100e 60%);
+        color: var(--ink);
+        font: 15px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        padding: 32px clamp(16px, 5vw, 64px) 80px;
+      }
+      h1 { font-size: 26px; margin: 0 0 4px; letter-spacing: -0.01em; }
+      h2 { font-size: 19px; margin: 38px 0 12px; letter-spacing: -0.01em; }
+      .sub { color: var(--muted); margin: 0 0 6px; }
+      code, .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 12.5px; }
+      code { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; color: #cfe7d6; }
+      a { color: var(--hi); }
+      .bar { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin: 14px 0 4px; }
+      button {
+        background: var(--panel-2); color: var(--ink); border: 1px solid var(--line);
+        border-radius: 8px; padding: 8px 13px; cursor: pointer; font-size: 13px;
+      }
+      button:hover { border-color: var(--hi); color: var(--hi); }
+      table { border-collapse: collapse; width: 100%; margin-top: 8px; font-size: 13.5px; }
+      th, td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      th { color: var(--muted); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; }
+      tr:hover td { background: #141b16; }
+      .pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font-size: 11.5px; font-weight: 700; }
+      .p-high { background: rgba(255,141,123,0.16); color: var(--high); }
+      .p-med { background: rgba(255,208,122,0.16); color: var(--med); }
+      .p-low { background: rgba(158,200,255,0.16); color: var(--low); }
+      .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+      .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 17px; }
+      .card h3 { margin: 0 0 8px; font-size: 15px; }
+      .card .meta { color: var(--muted); font-size: 12px; margin-bottom: 8px; }
+      .card ul { margin: 8px 0 0; padding-left: 18px; }
+      .card li { margin: 3px 0; }
+      .tag { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+      .flow { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; }
+      .flow pre { margin: 0; white-space: pre-wrap; color: #cfe7d6; font-size: 12.5px; line-height: 1.5; }
+      .crash { color: var(--high); font-weight: 700; }
+      .good { color: var(--ok); font-weight: 700; }
+      .note { color: var(--muted); font-size: 13px; }
+      .legend { color: var(--muted); font-size: 12px; }
+      footer { margin-top: 46px; color: var(--muted); font-size: 12px; border-top: 1px solid var(--line); padding-top: 14px; }
+    </style>
+  </head>
+  <body>
+    <h1>Audit — <code>apps/daily</code></h1>
+    <p class="sub">improve skill · advisor pass · standard effort · audited against commit <code>5caeab0</code> · 2026-06-13</p>
+    <p class="note">Read-only review. No source was modified. Plans live as <code>plans/009–013-*.md</code>; this file is the human-review companion. Scope read: every <code>.ts/.tsx</code> in <code>apps/daily/src</code> (app routes, components, hooks, lib). Not read: the 365 MDX content files (data) and CSS modules (styling).</p>
+
+    <div class="bar">
+      <button onclick="copyMd()">Copy findings as Markdown</button>
+      <button onclick="copyPrompt()">Copy "execute next plan" prompt</button>
+      <span class="legend">Severity = Impact. Confidence is HIGH for findings 1–3 &amp; 5 (read the code), HIGH for 4.</span>
+    </div>
+
+    <h2>Findings</h2>
+    <table id="tbl">
+      <thead>
+        <tr><th>#</th><th>Finding</th><th>Cat</th><th>Impact</th><th>Effort</th><th>Risk</th><th>Plan</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td><b>February crashes the home page + root OG image.</b> <code>getDailyDateToday</code> builds the month with <code>toLocaleString</code> → <code>"february"</code>, but the content dir, <code>monthSchema</code>, and <code>monthSubjectsMap</code> all use the misspelled <code>"febuary"</code>. So <code>import('@/content/february/N.mdx')</code> is module-not-found every February.<br /><span class="mono note">utils.ts:43 · page.tsx:34 · opengraph-image.tsx:22 · like.ts:36</span></td>
+          <td>bug</td><td><span class="pill p-high">High</span></td><td>S</td><td>LOW</td><td>010</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td><b>Unliked entries still show in "Liked".</b> <code>getAllLikedDates</code> selects by localStorage key prefix only; <code>useLocalStorage.setValue</code> writes <code>"false"</code> on unlike and never deletes the key → ghost likes.<br /><span class="mono note">like.ts:75 · useLocalStorage.ts:21 · useLikes.ts:10</span></td>
+          <td>bug</td><td><span class="pill p-high">Med-High</span></td><td>S</td><td>LOW</td><td>011</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td><b><code>useShowActions</code> swapped destructure.</b> Hook returns <code>[isMinTabDimes, loading]</code>; caller reads <code>[loading, isMinTabDimes]</code>, inverting "always show on desktop". <code>Actions.tsx:39</code> reads the same hook correctly — the proof.<br /><span class="mono note">useShowActions.ts:9 vs :67</span></td>
+          <td>bug</td><td><span class="pill p-med">Med</span></td><td>S</td><td>LOW</td><td>012</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td><b>No test runner.</b> Zero tests; the bug-prone pure date/key logic (where 1 &amp; 2 live) is unguarded. Plan 001 added typecheck+CI but deferred a runner.<br /><span class="mono note">package.json · 0 *.test.* in repo</span></td>
+          <td>tests</td><td><span class="pill p-med">Med</span></td><td>M</td><td>LOW</td><td>009</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td><b>Dead code + boilerplate.</b> <code>like()/removeLike()/getIsLiked()</code> have zero callers; <code>/hello</code> debug route ships; root metadata is "Create Next App" with no <code>metadataBase</code>.<br /><span class="mono note">like.ts:66 · hello/page.tsx · layout.tsx:10</span></td>
+          <td>tech-debt</td><td><span class="pill p-low">Low-Med</span></td><td>S</td><td>LOW</td><td>011+013</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Finding 1 — why February breaks (data flow)</h2>
+    <div class="flow">
+<pre>
+producer            consumers (all expect the dir spelling)
+─────────           ────────────────────────────────────────
+getDailyDateToday   ──"february"──▶  page.tsx  ─▶ getDaily()  ─▶ import('@/content/<span class="crash">february</span>/N.mdx')  <span class="crash">✗ not found → crash</span>
+  toLocaleString()                  opengraph-image.tsx ─▶ getDaily() ─▶ same crash
+
+getMonthToday       ──"febuary"───▶  /[month] pages, calendar nav                                  <span class="good">✓ works</span>
+  monthSchema.options[getMonth()]
+
+content dir:  src/content/<span class="good">febuary</span>/   ·   monthSchema: [... "<span class="good">febuary</span>" ...]   ·   localStorage keys: __daily_/<span class="good">febuary</span>/<day>
+
+FIX (plan 010): make getDailyDateToday derive the month the SAME way getMonthToday does —
+monthSchema.options[today.getMonth()] — so it emits "<span class="good">febuary</span>". No dir rename → saved likes &amp; shared URLs stay intact.
+</pre>
+    </div>
+    <p class="note">A prior audit logged this as <b>F8</b> and deprioritized it ("the app works, all three agree") — it missed that <code>getDailyDateToday</code>'s <i>runtime</i> output is a fourth value that disagrees. Plan 010 supersedes F8 with a no-rename fix.</p>
+
+    <h2>Direction (options for the maintainer, not defects)</h2>
+    <div class="grid">
+      <div class="card">
+        <span class="tag">adjacent possible</span>
+        <h3>Per-day prev/next navigation</h3>
+        <div class="meta">Confidence: MED · Effort: S–M (spike)</div>
+        The <code>/api/[month]/[day]</code> route + the <code>/[month]/[day]</code> URL scheme already exist; day pages only offer month-level "back". Adding within-day arrows reuses infrastructure you already ship. Trade-off: minor; mostly a navigation/UX addition.
+      </div>
+      <div class="card">
+        <span class="tag">friction worth productizing</span>
+        <h3>Likes history / streak view</h3>
+        <div class="meta">Confidence: MED · Effort: M (spike)</div>
+        <code>getAllLikedDates()</code> already enumerates every liked date across months. Surfacing a streak/history view productizes data you already collect. Trade-off: stays device-local (localStorage) until a backend/accounts layer is added.
+      </div>
+    </div>
+
+    <h2>Considered, not turned into plans</h2>
+    <ul>
+      <li><b>Uncached <code>getDaily</code>/<code>getValidDates</code></b> (<code>content.ts</code>) — re-reads/re-parses per request. Wrap in React <code>cache()</code>. Real but MED risk near daily rollover; deferred (matches prior audit F5).</li>
+      <li><b>API route input validation</b> (<code>api/[month]/[day]/route.ts</code>) — no schema check, but the dynamic <code>import()</code> is webpack-scoped to <code>content/**.mdx</code>, so not path traversal. Minor hardening; LOW (matches prior F6).</li>
+      <li><b><code>useLocalStorage</code> stale-closure functional update + unguarded <code>JSON.parse</code></b> (<code>useLocalStorage.ts:14,19</code>) — low impact (values are only <code>"true"/"false"</code> here). Noted in plan 011 as an optional follow-up.</li>
+      <li><b><code>Likes.tsx:19</code> <code>.sort</code> mutates state array</b> — cosmetic; prefer <code>toSorted</code>. Not worth its own plan.</li>
+      <li><b>Full <code>"febuary"</code> rename</b> — would orphan localStorage likes &amp; break shared URLs; needs a migration shim. Deliberately NOT done; plan 010 fixes the live bug without it.</li>
+    </ul>
+
+    <footer>
+      Generated by the <b>improve</b> skill (advisor mode). Plans: <code>plans/009-daily-test-runner.md</code> · <code>010-daily-february-today-fix.md</code> · <code>011-daily-ghost-likes-fix.md</code> · <code>012-daily-show-actions-destructure.md</code> · <code>013-daily-cleanup-metadata-hello.md</code>. Index + status: <code>plans/README.md</code>.
+    </footer>
+
+    <script>
+      const MD = `# Audit — apps/daily (improve skill, commit 5caeab0, 2026-06-13)
+
+| # | Finding | Cat | Impact | Effort | Risk | Plan |
+|---|---------|-----|--------|--------|------|------|
+| 1 | February crashes home + root OG: getDailyDateToday emits "february" but dir/schema use "febuary" (utils.ts:43; page.tsx:34; opengraph-image.tsx:22) | bug | High | S | LOW | 010 |
+| 2 | Unliked entries stay in Liked list: getAllLikedDates ignores stored value; useLocalStorage writes "false" & never deletes (like.ts:75; useLocalStorage.ts:21) | bug | Med-High | S | LOW | 011 |
+| 3 | useShowActions swapped destructure inverts "always show on desktop" (useShowActions.ts:9 vs :67) | bug | Med | S | LOW | 012 |
+| 4 | No test runner; pure date/key logic unguarded (package.json) | tests | Med | M | LOW | 009 |
+| 5 | Dead like helpers + /hello route + "Create Next App" metadata (like.ts:66; hello/page.tsx; layout.tsx:10) | tech-debt | Low-Med | S | LOW | 011+013 |
+
+Direction: (D1) per-day prev/next nav — API + URL scheme already exist. (D2) likes history/streak view — getAllLikedDates already enumerates liked dates; stays device-local until a backend exists.
+
+Recommended order: 009 (test baseline) → 010 (Feb) → 011 (likes) → 012 (useShowActions) → 013 (cleanup). 010 & 011 depend on 009 for regression tests.`;
+
+      const PROMPT = `Execute the next implementation plan in this repo.
+
+1. Read plans/README.md. In the status table, find the FIRST plan (top to bottom) whose Status is TODO. If none are TODO, report "no plans left to run" and stop.
+2. Immediately set that plan's Status to IN PROGRESS in plans/README.md, and tell me which plan you claimed.
+3. Read that plan file fully. Run its "Drift check"; if in-scope files drifted from the "Current state" excerpts, set Status to BLOCKED (drift) and stop with a report.
+4. Follow the plan's Steps in order. After each, run its verification command and confirm the expected result before continuing. Modify ONLY files in the plan's "In scope" list.
+5. If a STOP condition triggers, set Status to BLOCKED (<one-line reason>) and stop.
+6. When all Done criteria pass, set Status to DONE.
+
+Do not commit, push, or open a PR unless I ask. Report: which plan, the git diff, each Done-criteria checkbox with its actual command output. Run only ONE plan per invocation.`;
+
+      function flash(btn, txt) { const o = btn.textContent; btn.textContent = txt; setTimeout(() => (btn.textContent = o), 1200); }
+      function copyMd() { navigator.clipboard.writeText(MD).then(() => flash(event.target, "Copied ✓")); }
+      function copyPrompt() { navigator.clipboard.writeText(PROMPT).then(() => flash(event.target, "Copied ✓")); }
+    </script>
+  </body>
+</html>

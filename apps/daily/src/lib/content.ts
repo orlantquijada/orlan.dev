@@ -1,5 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { cache } from "react";
 import type { Daily, DailyDate } from "./like";
 
 async function getAllCalendarFiles(dir: string) {
@@ -29,7 +30,11 @@ export function getFiles() {
   return getAllCalendarFiles(path.join(process.cwd(), "src", "content"));
 }
 
-export async function getValidDates(): Promise<DailyDate[]> {
+// Wrapped in React `cache()` so a single render pass scans the content dir once,
+// even though `getValidDates`/`isValidDate` run from generateStaticParams,
+// generateMetadata, and the page body. Per-request scope — no cross-request
+// staleness, so the daily rollover stays correct.
+export const getValidDates = cache(async (): Promise<DailyDate[]> => {
   const files = await getFiles();
 
   return files.map((fileName) => {
@@ -43,7 +48,7 @@ export async function getValidDates(): Promise<DailyDate[]> {
       day: _day,
     };
   });
-}
+});
 
 export async function isValidDate(date: DailyDate) {
   return Boolean(
@@ -53,10 +58,18 @@ export async function isValidDate(date: DailyDate) {
   );
 }
 
-export async function getDaily({ day, month }: DailyDate) {
+// Keyed on primitive (month, day) args, not the DailyDate object: React `cache()`
+// compares args by reference, so two callers passing distinct `{ day, month }`
+// literals for the same date would otherwise each re-parse the MDX. The public
+// signature stays object-based for call sites.
+const loadDaily = cache(async (month: string, day: string) => {
   const { default: Body, frontmatter } = await import(
     `@/content/${month}/${day}.mdx`
   );
 
   return { Body, frontmatter: frontmatter as Daily };
+});
+
+export function getDaily({ day, month }: DailyDate) {
+  return loadDaily(month, day);
 }

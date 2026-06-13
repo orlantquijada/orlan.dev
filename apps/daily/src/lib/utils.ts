@@ -3,7 +3,7 @@ import clsx, { type ClassValue } from "clsx";
 import { remark } from "remark";
 import strip from "strip-markdown";
 import { twMerge } from "tailwind-merge";
-import type { DailyDate } from "./like";
+import { type DailyDate, monthSchema } from "./like";
 
 export function cn(...args: ClassValue[]) {
   return twMerge(clsx(args));
@@ -40,7 +40,7 @@ export function stripMarkdown(markdown: string) {
 
 export function getDailyDateToday(): DailyDate {
   const today = new TZDate(new Date(), "Asia/Manila");
-  const month = today.toLocaleString("en-US", { month: "long" }).toLowerCase();
+  const month = monthSchema.options[today.getMonth()];
   const day = today.getDate().toString();
 
   return { day, month };
