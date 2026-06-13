@@ -18,6 +18,29 @@
     "lint:ws": "pnpm dlx sherif@latest",
     "format": "turbo run format"
   },
+  "pnpm": {
+    "overrides": {
+      "form-data": ">=4.0.4",
+      "axios": ">=1.16.0",
+      "undici": ">=6.24.0",
+      "rollup": ">=4.59.0",
+      "esbuild": ">=0.28.1",
+      "postcss": ">=8.5.10",
+      "follow-redirects": ">=1.15.12",
+      "yaml": ">=2.8.3",
+      "js-yaml": ">=4.1.1",
+      "mdast-util-to-hast": ">=13.2.1",
+      "estree-util-value-to-estree": ">=3.3.3",
+      "fast-uri": ">=3.1.2",
+      "svgo@2": ">=2.8.1 <3",
+      "svgo@3": ">=3.3.3",
+      "picomatch@2": ">=2.3.2 <3",
+      "picomatch@4": ">=4.0.4",
+      "ajv@6": ">=6.15.0 <7",
+      "ajv@8": ">=8.20.0",
+      "tar": ">=7.5.11"
+    }
+  },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
     "turbo": "^2.9.16",
