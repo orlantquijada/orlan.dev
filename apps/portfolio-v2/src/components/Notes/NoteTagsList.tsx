@@ -10,7 +10,14 @@ import { type ComponentProps, type Ref, useEffect, useState } from "react";
 import Close from "@/icons/cross.svg?react";
 
 import { getNeighborhoodsIntersection, type TagGraphMap } from "@/lib/notes";
-import { $selectedTags, addTag, clearTags, removeTag } from "@/stores/notes";
+import {
+	$selectedTags,
+	addTag,
+	clearTags,
+	initTagsFromURL,
+	removeTag,
+	syncTagsToURL,
+} from "@/stores/notes";
 import Chip from "../Chip/Chip";
 
 import styles from "./styles.module.css";
@@ -28,6 +35,8 @@ export default function NoteTagsList(props: Props) {
 	const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags);
 
 	const initialOpacity = useTagsInitialOpacity();
+
+	useTagsUrlSync(tags);
 
 	return (
 		<LayoutGroup>
@@ -112,6 +121,27 @@ function useTagsInitialOpacity() {
 	}, []);
 
 	return initialOpacity;
+}
+
+// Two-way sync between `?tags=` in the URL and the $selectedTags store:
+// seed the store from the URL on mount and after every ClientRouter navigation
+// (astro:page-load), and write the store back to the URL whenever it changes.
+function useTagsUrlSync(validTags: string[]) {
+	useEffect(() => {
+		// Seed first so the immediate subscribe() callback below writes the
+		// URL-derived value back (a no-op) instead of clobbering it with [].
+		initTagsFromURL(validTags);
+
+		const reseed = () => initTagsFromURL(validTags);
+		document.addEventListener("astro:page-load", reseed);
+
+		const unsubscribe = $selectedTags.subscribe(() => syncTagsToURL());
+
+		return () => {
+			document.removeEventListener("astro:page-load", reseed);
+			unsubscribe();
+		};
+	}, [validTags]);
 }
 
 type TagProps = { tag: string; ref?: Ref<HTMLButtonElement> } & ComponentProps<

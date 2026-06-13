@@ -1,16 +1,20 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import Check from "@/icons/check.svg?react";
+import { copyToClipboard } from "@/lib/general";
 
 export default function CopyButton({ code }: { code: string }) {
 	const [copied, setCopied] = useState(false);
+	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	const copyCode = async () => {
-		await navigator.clipboard.writeText(code);
+		const ok = await copyToClipboard(code);
+		if (!ok) {
+			return;
+		}
 		setCopied(true);
-		setTimeout(() => {
-			setCopied(false);
-		}, 2000);
+		clearTimeout(timer.current);
+		timer.current = setTimeout(() => setCopied(false), 2000);
 	};
 
 	return (

@@ -53,10 +53,14 @@ export function getNeighborhoodsIntersection(
 	});
 }
 
+// Build a valid CSS custom-ident from a note title for view-transition-name.
+// Any non-alphanumeric run collapses to a single dash; the `note-` prefix
+// guarantees the result never starts with a digit (which is illegal for a
+// custom-ident). All call sites use this fn, so old/new pages stay matched.
 export function getViewTransitionName(title: NoteFrontmatter["title"]) {
-	return title
+	const slug = title
 		.toLowerCase()
-		.replaceAll(" ", "-")
-		.replaceAll("()", "")
-		.replaceAll("`", "");
+		.replace(/[^a-z0-9]+/g, "-")
+		.replace(/^-+|-+$/g, "");
+	return `note-${slug}`;
 }

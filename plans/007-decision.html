@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>007 — Decision: retire portfolio v1 + Panda?</title>
+<style>
+  :root{
+    --bg:#0f1115; --panel:#171a21; --panel2:#1d212b; --ink:#e6e9ef; --mut:#9aa3b2;
+    --line:#2a2f3a; --accent:#7cc4ff; --keep:#34d399; --retire:#f59e0b; --stop:#f87171;
+    --chip:#222735; --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+  .wrap{max-width:1080px;margin:0 auto;padding:32px 24px 80px}
+  h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+  .sub{color:var(--mut);font-size:13px;margin-bottom:24px}
+  .sub code{font-family:var(--mono);background:var(--chip);padding:1px 6px;border-radius:5px;font-size:12px}
+  h2{font-size:18px;margin:34px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+  h3{font-size:14px;margin:18px 0 8px;color:var(--mut);text-transform:uppercase;letter-spacing:.06em}
+  p{margin:8px 0}
+  code{font-family:var(--mono);font-size:12.5px;background:var(--chip);padding:1px 6px;border-radius:5px}
+  pre{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:14px 16px;overflow:auto;font-family:var(--mono);font-size:12.5px;line-height:1.5}
+  table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13.5px}
+  th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--mut);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.04em}
+  tr:last-child td{border-bottom:none}
+  .num{color:var(--accent);font-family:var(--mono);width:34px}
+
+  /* decision banner */
+  .decision{display:flex;gap:18px;flex-wrap:wrap;background:linear-gradient(135deg,#10271d,#13202b);border:1px solid #214b39;border-radius:14px;padding:18px 20px;margin:6px 0 8px}
+  .decision .badge{font-weight:800;font-size:13px;letter-spacing:.08em;color:var(--keep);border:1px solid #2e6b4f;background:#0f2a1f;border-radius:999px;padding:6px 14px;height:fit-content}
+  .decision .body{flex:1;min-width:280px}
+  .decision .body b{color:#fff}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:8px}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card.keep{border-color:#2e6b4f}
+  .card.retire{opacity:.82}
+  .card h4{margin:0 0 4px;font-size:15px;display:flex;align-items:center;gap:8px}
+  .tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:999px}
+  .tag.kept{background:#0f2a1f;color:var(--keep);border:1px solid #2e6b4f}
+  .tag.not{background:#2a2010;color:var(--retire);border:1px solid #5a431a}
+  .card ul{margin:8px 0 0;padding-left:18px}
+  .card li{margin:5px 0}
+  .card .note{color:var(--mut);font-size:12.5px;margin-top:10px}
+
+  .pill{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.04em}
+  .pill.low{background:#0f2a1f;color:var(--keep);border:1px solid #2e6b4f}
+  .callout{background:#241a10;border:1px solid #5a431a;border-radius:10px;padding:12px 15px;margin:12px 0;font-size:13.5px}
+  .callout b{color:var(--retire)}
+  .ok{color:var(--keep)}
+  .qa td:first-child{color:var(--mut);width:46%}
+  .check{list-style:none;padding-left:0}
+  .check li{margin:7px 0;padding-left:26px;position:relative}
+  .check li::before{content:"✓";position:absolute;left:0;color:var(--keep);font-weight:800}
+  .flow{font-family:var(--mono);font-size:12.5px;color:var(--mut);background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:12px 15px;margin:8px 0}
+  .flow b{color:var(--ink)}
+  .bar{position:sticky;top:0;z-index:5;display:flex;gap:10px;align-items:center;background:rgba(15,17,21,.86);backdrop-filter:blur(8px);padding:12px 0;margin:-32px -24px 18px;padding-left:24px;border-bottom:1px solid var(--line)}
+  button{font:600 13px/1 inherit;color:#06121b;background:var(--accent);border:0;border-radius:8px;padding:9px 14px;cursor:pointer}
+  button:active{transform:translateY(1px)}
+  button.ghost{background:transparent;color:var(--mut);border:1px solid var(--line)}
+  .toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--keep);color:#05140d;font-weight:700;padding:10px 18px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .foot{color:var(--mut);font-size:12px;margin-top:40px;border-top:1px solid var(--line);padding-top:14px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <button onclick="copyMd()">Copy as Markdown</button>
+    <button class="ghost" onclick="copyDecision()">Copy decision line</button>
+    <span style="color:var(--mut);font-size:12px">plan 007 · decision doc · 2026-06-13</span>
+  </div>
+
+  <h1>Retire portfolio v1 + the Panda CSS stack?</h1>
+  <div class="sub">Deliverable of <code>plan 007</code> · audited at commit <code>5caeab0</code> · drift check clean (Panda still v1-only). Markdown twin: <code>007-decision.md</code>.</div>
+
+  <div class="decision">
+    <span class="badge">KEEP · NO DELETION</span>
+    <div class="body">
+      <b>Owner decided to keep v1.</b> It's still deployed and may be revived, so the Panda
+      stack — v1's only consumer — stays with it. The owner doesn't want Panda for future
+      apps, which means <b>Panda's lifetime is bound to v1</b>: retire both together when v1
+      is formally sunset. No files were changed by this plan. Plan 008 (deletion) is
+      <b>not</b> authored — it was gated on a "v1 is retired" answer that wasn't given.
+    </div>
+  </div>
+
+  <h2>Owner input</h2>
+  <table class="qa">
+    <tr><th>Question</th><th>Answer</th></tr>
+    <tr><td>Is <code>apps/portfolio</code> (v1) deployed / will it be revived?</td><td><b class="ok">Keep it.</b> Still deployed; may revive. v2 hasn't formally sunset it.</td></tr>
+    <tr><td>Want the Panda design system for any <em>future</em> app?</td><td><b>No</b> — v2 covers all visual needs in Tailwind 4.</td></tr>
+  </table>
+  <div class="flow"><b>Implication:</b> keep v1 &nbsp;→&nbsp; keep Panda (v1 is its sole consumer) &nbsp;→&nbsp; no future Panda use &nbsp;→&nbsp; <b>Panda dies with v1</b>, not before.</div>
+
+  <h2>Current state (verified facts)</h2>
+  <table>
+    <tr><th>Area</th><th>Fact</th></tr>
+    <tr><td>CSS systems</td><td><b>Tailwind 4</b>: <code>portfolio-v2</code> (live), <code>daily</code>. &nbsp; <b>Panda CSS</b>: <code>apps/portfolio</code> (v1) only.</td></tr>
+    <tr><td>v1 content</td><td>A heading + <code>&lt;WIPBanner/&gt;</code> ("In Progress…"). A placeholder. <code>vercel.json</code> sets region <code>hkg1</code> + font cache headers → wired to deploy.</td></tr>
+    <tr><td>Panda consumers</td><td><code>index.tsx</code> (Box/Text, css/cx, _flex/text), <code>WIPBanner.tsx</code> (Banner, css), <code>panda.config.ts</code> (preset). <code>packages/ui/components/*</code> import <code>styled/*</code> internally only.</td></tr>
+    <tr><td>Not Panda</td><td><code>packages/utils</code> (<code>@repo/utils</code>) — date/motion helpers used by the Tailwind apps. Unrelated; stays.</td></tr>
+    <tr><td>README</td><td>Already stale (F9): lists <code>eslint-config-custom</code> + <code>tsconfig</code> that don't exist.</td></tr>
+  </table>
+
+  <h2>Inventory — what retiring <em>would</em> remove <span class="pill low">blast radius: LOW</span></h2>
+  <p>Listed so the Keep call is informed, and so a future plan 008 can lift it verbatim when v1 is sunset.</p>
+  <table>
+    <tr><th class="num">#</th><th>Target</th><th>Note</th></tr>
+    <tr><td class="num">1</td><td><code>apps/portfolio/</code> (whole app)</td><td>incl. <code>vercel.json</code>, <code>panda.config.ts</code>, <code>WIPBanner.tsx</code></td></tr>
+    <tr><td class="num">2</td><td><code>packages/ui/components/</code></td><td>Box, Text, Flex, Grid, Pill, Banner</td></tr>
+    <tr><td class="num">3</td><td><code>packages/ui/styled/</code></td><td>preset, tokens, recipes, patterns, generated <code>styled-system/</code></td></tr>
+    <tr><td class="num">4</td><td><code>pnpm-workspace.yaml</code> catalog: <code>@pandacss/dev</code> + <code>@pandacss/preset-panda</code></td><td>Panda-exclusive — safe to drop</td></tr>
+    <tr><td class="num">5</td><td><code>pnpm-workspace.yaml</code>: the <code>packages/ui/*</code> glob</td><td>dead once ui gone; <b>keep <code>packages/*</code></b> (holds <code>packages/utils</code>)</td></tr>
+    <tr><td class="num">6</td><td>root <code>package.json</code>: the <code>dev:p</code> script</td><td>+ any <code>turbo.json</code> ref to the portfolio app</td></tr>
+    <tr><td class="num">7</td><td><code>README.md</code>: rewrite stale "Apps and Packages" list</td><td>also closes F9</td></tr>
+    <tr><td class="num">8</td><td><code>pnpm install</code></td><td>re-resolve lockfile; drops all <code>@pandacss/*</code> transitive deps</td></tr>
+  </table>
+  <div class="callout"><b>Catalog correction:</b> <code>@tsconfig/strictest</code> is <b>NOT</b> Panda-only — <code>packages/utils</code> uses it too. <b>Do not remove it.</b> And there are no Panda-only <em>root</em> devDeps (root has only <code>@biomejs/biome</code>, <code>turbo</code>, <code>ultracite</code>).</div>
+  <h3>What is lost on retirement</h3>
+  <p>The <code>components</code> primitives (<b>Box, Text, Flex, Grid, Pill, Banner</b>), the <code>styled</code> tokens/recipes/patterns/jsx factory, and the v1-only <code>WIPBanner</code> animation. Confirmed <span class="ok">nothing live depends on these</span> — v2 reimplements its visual needs in Tailwind 4.</p>
+
+  <h2>Recommendation — both branches</h2>
+  <div class="grid2">
+    <div class="card keep">
+      <h4>If KEEP <span class="tag kept">CHOSEN</span></h4>
+      <ul>
+        <li><b>Document the split</b> in the README so two CSS systems read as intentional — stops a future agent/contributor "consolidating" a live app by mistake. Highest-value follow-up.</li>
+        <li>Leave the Panda stack untouched. Its cost is the price of keeping v1 alive.</li>
+        <li><b>Revisit</b> when v1 gets real content (justifies Panda) or is formally sunset (run plan 008).</li>
+      </ul>
+      <div class="note">README edit is <b>recommended, not applied</b> — plan 007 forbids touching non-<code>plans/</code> files. Snippet is in <code>007-decision.md</code>.</div>
+    </div>
+    <div class="card retire">
+      <h4>If RETIRE <span class="tag not">NOT CHOSEN</span></h4>
+      <ul>
+        <li>Deletion order: <b>app → ui packages → catalog/glob → root script + README → <code>pnpm install</code></b>.</li>
+        <li>Then author <code>plans/008-retire-portfolio-v1.md</code> with gates: install clean, <code>pnpm build</code> green for v2+daily, no dangling <code>components</code>/<code>styled</code>/<code>@pandacss</code> refs, v1 Vercel project archived.</li>
+        <li>Flag the large-but-mechanical lockfile churn in the PR.</li>
+      </ul>
+      <div class="note">Reference only — provided so the decision is informed and 008 is a copy-paste away if v1 is later sunset.</div>
+    </div>
+  </div>
+
+  <h2>Done-criteria trace (plan 007)</h2>
+  <ul class="check">
+    <li><code>007-decision.md</code> exists: v1 status (keep), exact removal set, what's lost, recommendation per branch.</li>
+    <li>No source/app/package/config changed — only files under <code>plans/</code>.</li>
+    <li>Plan 008 <b>not</b> authored — correct: owner did not confirm retirement (criterion is conditional).</li>
+    <li><code>plans/README.md</code> 007 row updated to DONE.</li>
+  </ul>
+
+  <div class="foot">Generated for plan 007. No source was modified. Re-open this file from disk in any browser; use “Copy as Markdown” to paste the decision back into a thread.</div>
+</div>
+
+<div class="toast" id="toast">Copied</div>
+<script>
+const MD = `# 007 — Decision: retire portfolio v1 + Panda?
+
+DECISION (2026-06-13, owner input): KEEP v1 — NO DELETION.
+- v1 fate: KEEP (still deployed, may revive).
+- Panda for future apps: NOT wanted → Panda's lifetime is bound to v1; retire both when v1 is sunset.
+- Plan 008 (deletion) NOT authored (gated on a "v1 is retired" answer, not given).
+- Follow-up: document the two-CSS-system split in README (recommended, not applied — out of plan-007 scope).
+
+REMOVAL SET (if ever retired):
+1. apps/portfolio/ (whole app incl vercel.json, panda.config.ts, WIPBanner.tsx)
+2. packages/ui/components/  3. packages/ui/styled/
+4. pnpm-workspace.yaml catalog: @pandacss/dev + @pandacss/preset-panda
+5. pnpm-workspace.yaml: packages/ui/* glob (keep packages/* — holds packages/utils)
+6. root package.json: dev:p script (+ turbo.json ref)
+7. README.md: rewrite stale Apps/Packages list (closes F9)
+8. pnpm install (drops all @pandacss/* transitive deps)
+CORRECTION: @tsconfig/strictest is NOT Panda-only (packages/utils uses it) — keep it. No Panda-only root devDeps.
+LOST: Box/Text/Flex/Grid/Pill/Banner + styled tokens/recipes; nothing live depends on them (v2 = Tailwind 4).
+Blast radius: LOW.`;
+const DEC = "Plan 007 decision (2026-06-13): KEEP portfolio v1 — no deletion. Panda stack stays (v1 is its sole consumer); retire both when v1 is sunset. Plan 008 not authored. Follow-up: document the two-CSS-system split in README.";
+function toast(t){const e=document.getElementById('toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1300);}
+function copyMd(){navigator.clipboard.writeText(MD).then(()=>toast('Markdown copied'));}
+function copyDecision(){navigator.clipboard.writeText(DEC).then(()=>toast('Decision copied'));}
+</script>
+</body>
+</html>

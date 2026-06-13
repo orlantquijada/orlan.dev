@@ -6,7 +6,7 @@ const PAGE_OFFSET = 65;
 export function useShowActions() {
   const show = useShowOnScroll(PAGE_OFFSET);
   const isContentScrollable = useIsContentScrollable();
-  const [loading, isMinTabDimes] = useIsMinWidthTabDimensions();
+  const [isMinTabDimes, loading] = useIsMinWidthTabDimensions();
 
   // always show on desktop
   if (!loading && isMinTabDimes) {

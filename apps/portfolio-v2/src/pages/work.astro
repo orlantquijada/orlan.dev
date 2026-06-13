@@ -150,18 +150,18 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 				<div class="shine"></div>
 				<ImageLightbox images={spaceduckImages} client:visible>
 					<div class="hero-gallery">
-						{[0, 1, 2, 3, 4].map((index) => (
+						{heroImages.slice(0, 5).map((src, index) => (
 						<button
 							class="hero-card"
 							data-lightbox-index={index}
 							type="button"
 						>
 							<Image
-								alt={spaceduckImages[index].alt}
+								alt={`Spaceduck app screenshot ${index + 1}`}
 								class="h-full w-full object-cover"
 								decoding="async"
 								loading="lazy"
-								src={heroImages[index]}
+								src={src}
 								width={180}
 							/>
 						</button>

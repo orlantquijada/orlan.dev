@@ -1,7 +1,7 @@
 import "../styles/global.css";
 
-import { useState } from "react";
-import { cn } from "@/lib/general";
+import { useRef, useState } from "react";
+import { cn, copyToClipboard } from "@/lib/general";
 
 type Props = {
 	char: string;
@@ -9,13 +9,16 @@ type Props = {
 
 export default function Unicode({ char }: Props) {
 	const [copied, setCopied] = useState(false);
+	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
 	const copy = async () => {
-		await navigator.clipboard.writeText(char);
+		const ok = await copyToClipboard(char);
+		if (!ok) {
+			return;
+		}
 		setCopied(true);
-		setTimeout(() => {
-			setCopied(false);
-		}, 1500);
+		clearTimeout(timer.current);
+		timer.current = setTimeout(() => setCopied(false), 1500);
 	};
 
 	return (

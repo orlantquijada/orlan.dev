@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>orlan.dev — Codebase Audit Report</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #171a21; --panel2: #1d212b; --line: #2a3040;
+    --ink: #e6e9ef; --mut: #9aa3b2; --dim: #6b7484;
+    --hi: #ff6b6b; --med: #ffb454; --lo: #6bcB77; --info: #5aa9ff; --acc: #b08cff;
+    --chip: #232838;
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+    font: 14px/1.55 ui-sans-serif,-apple-system,"Segoe UI",Roboto,Helvetica,Arial; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 22px 80px; }
+  h1 { font-size: 24px; margin: 0 0 2px; letter-spacing:-.01em; }
+  h2 { font-size: 16px; margin: 30px 0 10px; color:var(--ink);
+    border-bottom:1px solid var(--line); padding-bottom:6px; }
+  .sub { color: var(--mut); font-size: 13px; margin-bottom: 18px; }
+  .sub code { background:var(--chip); padding:1px 6px; border-radius:5px; color:var(--acc); }
+  .grid-meta { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:10px; margin:14px 0 4px; }
+  .mcard { background:var(--panel); border:1px solid var(--line); border-radius:10px; padding:11px 13px; }
+  .mcard .k { color:var(--dim); font-size:11px; text-transform:uppercase; letter-spacing:.06em; }
+  .mcard .v { font-size:18px; font-weight:600; margin-top:3px; }
+  table { width:100%; border-collapse:collapse; margin-top:6px; font-size:13px; }
+  th, td { text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th { color:var(--dim); font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.05em; position:sticky; top:0; background:var(--bg); }
+  tr:hover td { background:var(--panel); }
+  td.id { font-weight:700; color:var(--acc); white-space:nowrap; }
+  td.title { font-weight:600; }
+  td.title .ev { display:block; color:var(--mut); font-weight:400; font-size:12px; margin-top:3px; }
+  td.title .ev code { background:var(--chip); padding:0 4px; border-radius:4px; color:#cdd6e6; font-size:11px; }
+  .pill { display:inline-block; padding:1px 8px; border-radius:999px; font-size:11px; font-weight:600; white-space:nowrap; }
+  .cat { background:var(--chip); color:var(--mut); }
+  .HIGH { background:rgba(255,107,107,.16); color:var(--hi); }
+  .MED  { background:rgba(255,180,84,.16); color:var(--med); }
+  .LOW  { background:rgba(107,203,119,.16); color:var(--lo); }
+  .sev-dot { width:9px;height:9px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:middle;}
+  .eff { font-variant-numeric:tabular-nums; font-weight:600; }
+  .lead { color:var(--mut); }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:12px; }
+  .card { background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:14px 15px; }
+  .card.dir { border-left:3px solid var(--info); }
+  .card.rej { border-left:3px solid var(--dim); opacity:.86; }
+  .card h3 { margin:0 0 7px; font-size:14px; }
+  .card p { margin:6px 0; color:var(--mut); font-size:13px; }
+  .card code { background:var(--chip); padding:0 5px; border-radius:4px; color:#cdd6e6; font-size:12px; }
+  .tag { font-size:11px; color:var(--dim); }
+  .selbox { display:flex; align-items:center; gap:8px; }
+  .selbox input { width:15px; height:15px; accent-color:var(--acc); cursor:pointer; }
+  .bar { position:sticky; bottom:0; margin-top:26px; background:var(--panel2);
+    border:1px solid var(--line); border-radius:12px; padding:13px 16px;
+    display:flex; align-items:center; gap:14px; flex-wrap:wrap; box-shadow:0 -8px 30px rgba(0,0,0,.35); }
+  .bar .count { font-weight:600; }
+  .bar .count b { color:var(--acc); }
+  button { font:inherit; font-weight:600; cursor:pointer; border-radius:8px; padding:8px 14px; border:1px solid var(--line); background:var(--chip); color:var(--ink); }
+  button.primary { background:var(--acc); color:#11121a; border-color:var(--acc); }
+  button:active { transform:translateY(1px); }
+  .legend { color:var(--dim); font-size:12px; margin:8px 0 0; }
+  .note { background:rgba(90,169,255,.08); border:1px solid rgba(90,169,255,.25); border-radius:9px; padding:10px 13px; color:#bcd6f5; font-size:13px; margin:10px 0; }
+  .foot { color:var(--dim); font-size:12px; margin-top:26px; border-top:1px solid var(--line); padding-top:12px; }
+  textarea { position:absolute; left:-9999px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>orlan.dev — Codebase Audit</h1>
+  <div class="sub">
+    Turborepo · pnpm · Node 24 · TS strictest + Biome · <b>3 apps</b> (daily / portfolio v1 / portfolio-v2) · <b>3 packages</b><br>
+    Audited at commit <code>5caeab0</code> · 2026-06-13 · effort: <b>standard</b> · ~7.6K LOC ·
+    advisor pass (read-only, no source modified)
+  </div>
+
+  <div class="grid-meta">
+    <div class="mcard"><div class="k">Findings</div><div class="v">9 <span class="lead" style="font-size:13px">+ 3 direction</span></div></div>
+    <div class="mcard"><div class="k">Top leverage</div><div class="v" style="color:var(--lo)">F1 · F2 · F3</div></div>
+    <div class="mcard"><div class="k">Verification baseline</div><div class="v" style="color:var(--hi)">none</div></div>
+    <div class="mcard"><div class="k">Tests / CI</div><div class="v" style="color:var(--hi)">0 / 0</div></div>
+  </div>
+
+  <div class="note">
+    <b>Read me first.</b> This is a personal portfolio monorepo, not a money/auth product — the bar is "fast, correct, low-maintenance," not "enterprise-hardened."
+    Findings are ranked by <b>leverage = impact ÷ effort, discounted by confidence &amp; fix-risk</b>. The honest picture: the code is clean
+    (1 <code>any</code>, strict TS, Biome). The real gaps are a <b>missing safety net</b> (no typecheck gate / CI) and a few <b>small, high-confidence frontend wins</b>.
+    Several subagent over-reports were rejected after I read the code — see the bottom section.
+  </div>
+
+  <h2>Findings — ranked by leverage</h2>
+  <table id="tbl">
+    <thead><tr>
+      <th>Plan?</th><th>#</th><th>Finding &amp; evidence</th><th>Category</th>
+      <th>Impact</th><th>Effort</th><th>Risk</th><th>Conf.</th>
+    </tr></thead>
+    <tbody><!-- rows injected --></tbody>
+  </table>
+  <div class="legend">Impact / Confidence: <span class="pill HIGH">HIGH</span> <span class="pill MED">MED</span> <span class="pill LOW">LOW</span> &nbsp;·&nbsp; Effort S = hours, M = ~a day, L = multi-day.</div>
+
+  <h2>Direction — options for you to weigh (not ranked against bugs)</h2>
+  <div class="cards" id="dir"></div>
+
+  <h2>Considered &amp; rejected — so nobody re-audits these</h2>
+  <div class="cards" id="rej"></div>
+
+  <div class="bar">
+    <span class="selbox"><input type="checkbox" id="all"><label for="all">select all top-5</label></span>
+    <span class="count"><b id="n">0</b> selected</span>
+    <button class="primary" onclick="copyPrompt()">📋 Copy as prompt for planning</button>
+    <button onclick="copyMd()">Copy as Markdown</button>
+    <span id="msg" class="lead"></span>
+  </div>
+
+  <div class="foot">
+    Next step: tell the advisor which findings to turn into self-contained executor plans (default suggestion: <b>F1, F2, F3, F4</b> + any direction item).
+    Each becomes a <code>plans/NNN-slug.md</code> written for a zero-context executor model. Nothing in your source has been or will be modified by the advisor.
+  </div>
+</div>
+
+<textarea id="clip"></textarea>
+<script>
+const F = [
+  { id:"F1", sel:true, title:"Clipboard writes never handle failure (silent on mobile / denied permission)",
+    ev:"<code>Actions.tsx:103</code> .then() no .catch · <code>ContactDialog.tsx:20-26</code> (has comment “does not work on mobile &amp; localhost”) · <code>Unicode.tsx:13-19</code> · <code>CopyButton.tsx:8-14</code> — bare <code>await navigator.clipboard.writeText</code>, no try/catch, no timer cleanup.",
+    cat:"correctness", impact:"HIGH", eff:"S", risk:"LOW", conf:"HIGH",
+    why:"On non-secure contexts / denied permission the promise rejects: the success toast/checkmark never fires and the rejection is unhandled. The team already documented it broken on mobile. One shared copyToClipboard() helper fixes all 4 sites." },
+  { id:"F2", sel:true, title:"No typecheck gate for the Astro app, no CI, no repo-wide typecheck task",
+    ev:"<code>turbo.json</code> has no typecheck task · <code>portfolio-v2</code> build = <code>astro build</code> (does NOT typecheck; <code>@astrojs/check</code> is installed but unwired) · no <code>.github/</code> · zero tests.",
+    cat:"dx", impact:"HIGH", eff:"S–M", risk:"LOW", conf:"HIGH",
+    why:"With no tests, the type system is the only safety net — and portfolio-v2 type errors ship silently because astro build skips them. Add a turbo `typecheck` task (astro check / tsc --noEmit) + a minimal CI running lint+typecheck+build. Unblocks every other risky change." },
+  { id:"F3", sel:true, title:"Fonts preload BOTH woff2 and woff for Inter (double fetch) + all fonts on every page",
+    ev:"<code>Fonts.astro:29-49</code> — preloads Inter-Regular/Medium in woff2 <i>and</i> woff; browser uses one but preload fetches both. 7 preloads fire on every route incl. Redaction.",
+    cat:"perf", impact:"MED", eff:"S", risk:"LOW", conf:"HIGH",
+    why:"Each page wastes ~2 redundant font downloads on the critical path. woff2 has &gt;96% support. Drop the woff preloads/format and the unused-on-this-page variants. Aligns with the recent media-preload perf work." },
+  { id:"F4", sel:true, title:"Below-the-fold React islands hydrate with client:load",
+    ev:"<code>Projects.astro:41,66</code> two <code>Video client:load</code> (sticky, below fold) · <code>Header.astro:24</code> <code>Menu client:load</code> ships motion + Radix popover on every page.",
+    cat:"perf", impact:"MED", eff:"S", risk:"LOW", conf:"HIGH / MED",
+    why:"Projects videos are below the fold yet block initial hydration → switch to client:visible (clear win). Menu is above-fold nav so client:load may be intentional; client:idle is the safe defer. ImageLightbox/VideoPreviewDialog are already correctly deferred (not flagged)." },
+  { id:"F5", sel:false, title:"getDaily / getValidDates re-run uncached; homepage re-parses today's MDX twice per request",
+    ev:"<code>page.tsx:12,35</code> getDaily ×2 under <code>dynamic=\"force-dynamic\"</code> · <code>content.ts:56</code> dynamic import · getValidDates does fs.readdir over 12 dirs per call (twice in [day] route).",
+    cat:"perf", impact:"MED", eff:"S–M", risk:"MED", conf:"HIGH",
+    why:"Wrap getDaily + getValidDates in React cache() to dedupe within a request. Modest (single fast MDX parse) but free correctness/clarity. Risk: cache scope vs the daily rollover — note it." },
+  { id:"F6", sel:false, title:"Daily API route skips input validation and echoes params in the 404 body",
+    ev:"<code>api/[month]/[day]/route.ts:7</code> calls getDaily with no isValidMonth/isValidDate (pages DO validate) · <code>:10</code> error body echoes <code>${month}, ${day}</code>.",
+    cat:"security", impact:"LOW", eff:"S", risk:"LOW", conf:"HIGH",
+    why:"NOT path traversal — the dynamic import() is bundler-scoped to content/*/*.mdx, so arbitrary file read is impossible (subagent over-claimed). Residual is minor: inconsistent validation + tiny info echo. Mirror the pages' isValidDate guard, return a static 404." },
+  { id:"F7", sel:false, title:"56 transitive dependency advisories (1 critical / 30 high) — all build-time",
+    ev:"pnpm audit: <code>astro-icon→@iconify/tools→{axios,form-data,tar}</code>, <code>@astrojs/vercel→@vercel/nft→tar</code>, <code>esbuild</code> (dev-server-on-Windows; N/A on darwin).",
+    cat:"deps", impact:"LOW", eff:"S–M", risk:"MED", conf:"HIGH",
+    why:"None are in runtime-served code — they run at build with trusted inputs (your own icons). Real-world risk for a static site is low, but the noise blocks adding `pnpm audit` to CI. Clear via pnpm overrides / bumping astro-icon + @astrojs/vercel." },
+  { id:"F8", sel:false, title:"“febuary” misspelled across enum, subjects map, and the content directory",
+    ev:"<code>like.ts:23,38</code> + <code>src/content/febuary/</code> — all three agree, so the app works today.",
+    cat:"correctness", impact:"LOW", eff:"S*", risk:"MED", conf:"HIGH",
+    why:"Cosmetic + a trap for future code using canonical spelling, and it’s in public URLs. But renaming orphans users’ saved likes (localStorage keys `__daily_/febuary/...`) and breaks shared links — needs a migration, not a rename. Low priority; do it with a key-migration shim or not at all." },
+  { id:"F9", sel:false, title:"README lists packages that don’t exist",
+    ev:"<code>README.md:14-15</code> claims <code>eslint-config-custom</code> &amp; <code>tsconfig</code> packages; only <code>ui</code> (components/styled) &amp; <code>utils</code> exist.",
+    cat:"docs", impact:"LOW", eff:"S", risk:"LOW", conf:"HIGH",
+    why:"Misleads onboarding (and agents). One-line README fix to list @repo/utils + the ui packages." },
+];
+const DIR = [
+  { id:"D1", title:"Finish & re-enable NotesSection on the homepage",
+    body:"<code>Content.astro:63-64</code> — <code>&lt;!-- TODO: fix masonry layout --&gt;</code> with <code>&lt;NotesSection/&gt;</code> commented out. The component was built (git log: “add NotesSection component”) but is disabled behind a masonry bug. Highest-signal unfinished intent.",
+    tag:"unfinished intent · M effort" },
+  { id:"D2", title:"Implement tag filtering for notes",
+    body:"<code>NotesLayout.astro:34</code> — every tag links to bare <code>/notes</code> with a <code>TODO: filter notes by tag</code>. The tag data + notes collection already exist (nanostores in place); this is a stubbed surface, not new infrastructure.",
+    tag:"surface asymmetry · M effort" },
+  { id:"D3", title:"Decide the fate of portfolio v1 + the Panda CSS stack",
+    body:"<code>apps/portfolio</code> is a deployed WIP placeholder (<code>vercel.json</code> present) and is the <i>only</i> consumer of <code>packages/ui/{components,styled}</code> + Panda. portfolio-v2 (the live site) + daily use Tailwind. Retiring v1 would delete 2 packages, Panda, and catalog entries — a big simplification. <b>But it’s deployed, so this is your call, not an assertion.</b>",
+    tag:"consolidation · needs your decision" },
+];
+const REJ = [
+  { t:"ImageLightbox / VideoPreviewDialog hydration", b:"Already <code>client:visible</code> / <code>client:idle</code> — optimal. Converting Radix→native for marginal bytes risks a11y. Subagent flagged them anyway." },
+  { t:"Timer “memory leak / unmounted setState warning”", b:"React 19 removed that warning; the real residual (unhandled rejection) is folded into <b>F1</b>." },
+  { t:"useVideoControls double play()/pause()", b:"<code>useVideoControls.ts:36-42</code> calls the DOM method twice — harmless (idempotent). Not worth a plan." },
+  { t:"CSS-module naming inconsistency", b:"Low pain; the real styling question is the Panda↔Tailwind split (see D3), not file naming." },
+  { t:"“Delete portfolio v1 + ui packages” (as an action)", b:"v1 is deployed — became decision D3 instead of a delete plan." },
+  { t:"CLAUDE.md “compressed/caveman”", b:"Intentional token-efficiency format with a .original.md backup. Not an issue." },
+];
+
+const tb = document.querySelector("#tbl tbody");
+F.forEach(f => {
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td><span class="selbox"><input type="checkbox" data-id="${f.id}" ${f.sel?"checked":""}></span></td>
+    <td class="id">${f.id}</td>
+    <td class="title">${f.title}<span class="ev">${f.ev}</span><span class="ev" style="color:var(--dim)">${f.why}</span></td>
+    <td><span class="pill cat">${f.cat}</span></td>
+    <td><span class="pill ${f.impact.includes('HIGH')?'HIGH':f.impact.includes('MED')?'MED':'LOW'}">${f.impact}</span></td>
+    <td class="eff">${f.eff}</td>
+    <td><span class="pill ${f.risk}">${f.risk}</span></td>
+    <td><span class="pill ${f.conf.includes('HIGH')?'HIGH':f.conf.includes('MED')?'MED':'LOW'}">${f.conf}</span></td>`;
+  tb.appendChild(tr);
+});
+const dirEl = document.querySelector("#dir");
+DIR.forEach(d => { const el=document.createElement("div"); el.className="card dir";
+  el.innerHTML=`<h3>${d.id} · ${d.title}</h3><p>${d.body}</p><div class="tag">${d.tag}</div>`; dirEl.appendChild(el); });
+const rejEl = document.querySelector("#rej");
+REJ.forEach(r => { const el=document.createElement("div"); el.className="card rej";
+  el.innerHTML=`<h3>✕ ${r.t}</h3><p>${r.b}</p>`; rejEl.appendChild(el); });
+
+function selected(){ return [...document.querySelectorAll('input[data-id]')].filter(c=>c.checked).map(c=>c.dataset.id); }
+function refresh(){ document.querySelector("#n").textContent = selected().length; }
+document.querySelectorAll('input[data-id]').forEach(c=>c.addEventListener('change',refresh));
+document.querySelector('#all').addEventListener('change',e=>{
+  const top=['F1','F2','F3','F4','F5'];
+  document.querySelectorAll('input[data-id]').forEach(c=>{ if(top.includes(c.dataset.id)) c.checked=e.target.checked; });
+  refresh();
+});
+function titleOf(id){ return (F.find(x=>x.id===id)||DIR.find(x=>x.id===id)||{}).title || id; }
+function copy(text,label){ const t=document.querySelector('#clip'); t.value=text; t.select();
+  document.execCommand('copy'); const m=document.querySelector('#msg'); m.textContent=label+" copied ✓";
+  setTimeout(()=>m.textContent="",2200); }
+function copyPrompt(){ const ids=selected();
+  if(!ids.length){ document.querySelector('#msg').textContent="select at least one finding"; return; }
+  const lines = ids.map(i=>`- ${i}: ${titleOf(i)}`).join("\n");
+  copy(`Using the improve skill, write self-contained executor plans for these findings from plans/audit-report.html (commit 5caeab0):\n${lines}\n\nWrite each as plans/NNN-slug.md per the plan template, then update plans/README.md.`,"Prompt"); }
+function copyMd(){ const ids=selected();
+  const rows = F.filter(f=>ids.includes(f.id)).map(f=>`| ${f.id} | ${f.title} | ${f.cat} | ${f.impact} | ${f.eff} | ${f.conf} |`).join("\n");
+  copy(`| # | Finding | Category | Impact | Effort | Confidence |\n|---|---|---|---|---|---|\n${rows}`,"Markdown"); }
+refresh();
+</script>
+</body>
+</html>

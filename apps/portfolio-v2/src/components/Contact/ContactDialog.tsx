@@ -1,5 +1,5 @@
 import { cva } from "cva";
-import { type ComponentProps, type ReactNode, useState } from "react";
+import { type ComponentProps, type ReactNode, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import Check from "@/icons/check.svg?react";
@@ -7,6 +7,7 @@ import Copy from "@/icons/copy-filled.svg?react";
 import GitHub from "@/icons/github.svg?react";
 import Send from "@/icons/send-filled.svg?react";
 import Twitter from "@/icons/twitter.svg?react";
+import { copyToClipboard } from "@/lib/general";
 import { EMAIL } from "@/utils/constants";
 import { Button, buttonStyles } from "../Button";
 import * as Dialog from "../Dialog";
@@ -15,14 +16,16 @@ import styles from "./ContactDialog.module.css";
 
 export default function ContactDialog({ children }: { children: ReactNode }) {
 	const [copied, setCopied] = useState(false);
+	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-	// NOTE: does not work on mobile & localhost (permission problem)
 	const copyEmail = async () => {
-		await navigator.clipboard.writeText(EMAIL);
+		const ok = await copyToClipboard(EMAIL);
+		if (!ok) {
+			return;
+		}
 		setCopied(true);
-		setTimeout(() => {
-			setCopied(false);
-		}, 2000);
+		clearTimeout(timer.current);
+		timer.current = setTimeout(() => setCopied(false), 2000);
 	};
 
 	return (

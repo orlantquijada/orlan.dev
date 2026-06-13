@@ -13,6 +13,8 @@
     "dev:p": "turbo run dev --filter=portfolio",
     "dev:p2": "turbo run dev --filter=portfolio-2.0",
     "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
     "lint:ws": "pnpm dlx sherif@latest",
     "format": "turbo run format"
   },
@@ -21,5 +23,5 @@
     "turbo": "^2.9.16",
     "ultracite": "catalog:"
   },
-  "packageManager": "pnpm@11.5.0"
+  "packageManager": "pnpm@11.6.0"
 }

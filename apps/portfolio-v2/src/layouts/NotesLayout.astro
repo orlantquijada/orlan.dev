@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { ClientRouter } from "astro:transitions";
 import { formatDate } from "@repo/utils";
 import { Icon } from "astro-icon/components";
 import MetaData from "@/components/Notes/NoteDetailComponents/MetaData.astro";
@@ -13,7 +12,6 @@ const data = Astro.props;
 ---
 
 <Layout title={data.title}>
-	<ClientRouter slot="head" />
 	<div class="grid place-items-start gap-2">
 		<h1
 			class="text-balance text-3xl font-medium"
@@ -31,10 +29,9 @@ const data = Astro.props;
 			<Icon name="tag" slot="icon" />
 
 			<ul class="flex items-center">
-				<!-- TODO: filter notes by tag link -->
 				{[...data.tags].map((tag) => (
             <li class="tag">
-              <a class="hover:underline" href="/notes">
+              <a class="hover:underline" href={`/notes?tags=${encodeURIComponent(tag)}`}>
                 {tag}
               </a>
             </li>
