@@ -48,5 +48,6 @@
     "typescript": "catalog:",
     "ultracite": "catalog:",
     "vite-plugin-svgr": "^4.5.0"
-  }
+  },
+  "packageManager": "pnpm@11.6.0"
 }
