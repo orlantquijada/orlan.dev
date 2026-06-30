@@ -1,7 +1,11 @@
 import { getDaily, isValidDate } from "@/lib/content";
 import { tryCatch } from "@/lib/utils";
 
-export async function GET(_: Request, ctx: RouteContext<"/api/[month]/[day]">) {
+type Params = {
+  params: Promise<{ month: string; day: string }>;
+};
+
+export async function GET(_: Request, ctx: Params) {
   const { month, day } = await ctx.params;
 
   // Validate against the known content set before importing, and keep the 404
