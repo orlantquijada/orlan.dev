@@ -14,10 +14,10 @@ import { GITHUB, LINKED_IN } from "@/utils/constants";
 import ContactDialog from "../Contact/ContactDialog";
 import styles from "./styles.module.css";
 
-export function MenuPanel() {
+export function MenuPanel({ onNavigate }: { onNavigate: () => void }) {
 	return (
 		<div className="mt-10 flex flex-col gap-8">
-			<Nav />
+			<Nav onNavigate={onNavigate} />
 
 			<div>
 				<h4 className="mb-3 text-gray10 dark:text-gray11">Connect</h4>
@@ -139,13 +139,13 @@ const links: Array<{
 	{ href: "/work", label: "Work", color: "bg-accent-violet" },
 ];
 
-function Nav() {
+function Nav({ onNavigate }: { onNavigate: () => void }) {
 	return (
 		<nav>
 			<ul className="flex flex-col">
 				{links.map((link) => (
 					<li key={link.label}>
-						<a className="font-medium" href={link.href}>
+						<a className="font-medium" href={link.href} onClick={onNavigate}>
 							<MenuItem
 								Icon={
 									<ArrowRight

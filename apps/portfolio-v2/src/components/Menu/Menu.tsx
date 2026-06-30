@@ -110,7 +110,7 @@ export function Menu() {
 									}}
 									variants={panelVariants}
 								>
-									<MenuPanel />
+									<MenuPanel onNavigate={() => setOpen(false)} />
 								</motion.div>
 							</PopoverPrimitive.Content>
 						</PopoverPrimitive.Portal>
