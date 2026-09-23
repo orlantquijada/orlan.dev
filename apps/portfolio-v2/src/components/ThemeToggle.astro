@@ -2,93 +2,104 @@
 import { query, storageKey } from "@/lib/theme-toggle";
 ---
 
-<!-- inline is necessary to avoid FOUC 
-     flash happens on dark mode default -->
+<!-- Apply the effective theme before styles paint, including on client navigation. -->
 <script define:vars={{ query, storageKey }} is:inline>
-	////////////////////////////// Util fns //////////////////////////////
+	(() => {
+		// Inline scripts run again on Astro client navigation. Keep just one set of listeners.
+		const key = Symbol.for("portfolio.theme-controller");
+		window[key]?.abort();
+		const controller = new AbortController();
+		window[key] = controller;
+		const { signal } = controller;
+		const system = window.matchMedia("(prefers-color-scheme: dark)");
 
-	const disableTransitionOnThemeChange = (callback) => {
-		const css = document.createElement("style");
-		css.appendChild(
-			document.createTextNode(
-				`* {
-			            -webkit-transition: none !important;
-			            -moz-transition: none !important;
-			            -o-transition: none !important;
-			            -ms-transition: none !important;
-			            transition: none !important;
-			          }`
-			)
+		const preference = () => {
+			const stored = localStorage.getItem(storageKey);
+			if (stored === "dark" || stored === "light") {
+				return stored;
+			}
+			if (stored !== null) {
+				localStorage.removeItem(storageKey);
+			}
+			return null;
+		};
+		const effectiveTheme = () =>
+			preference() ?? (system.matches ? "dark" : "light");
+		const applyTheme = (target, theme, suppressTransitions = false) => {
+			const root = target.documentElement;
+			if (suppressTransitions && !root.classList.contains(theme)) {
+				const style = target.createElement("style");
+				style.textContent =
+					"*, *::before, *::after { transition: none !important; }";
+				target.head.append(style);
+				root.classList.toggle("dark", theme === "dark");
+				root.classList.toggle("light", theme === "light");
+				// biome-ignore lint/suspicious/noUnusedExpressions: forces a style recalculation before restoring transitions
+				window.getComputedStyle(root).opacity;
+				setTimeout(() => style.remove(), 1);
+			} else {
+				root.classList.toggle("dark", theme === "dark");
+				root.classList.toggle("light", theme === "light");
+			}
+			for (const button of target.querySelectorAll(query)) {
+				button.setAttribute("aria-label", theme);
+			}
+		};
+
+		applyTheme(document, effectiveTheme());
+		document.addEventListener(
+			"DOMContentLoaded",
+			() => applyTheme(document, effectiveTheme()),
+			{ signal }
 		);
-		document.head.appendChild(css);
-
-		callback();
-
-		setTimeout(() => {
-			const _ = window.getComputedStyle(css).opacity;
-			document.head.removeChild(css);
-		}, 1);
-	};
-
-	const getDefaultTheme = () =>
-		window.matchMedia("(prefers-color-scheme: dark)").matches
-			? "dark"
-			: "light";
-
-	const getTheme = () => {
-		const theme = localStorage.getItem(storageKey);
-		if (theme) {
-			return theme;
-		}
-		return getDefaultTheme();
-	};
-
-	const setTheme = (theme) => {
-		disableTransitionOnThemeChange(() => {
-			localStorage.setItem(storageKey, theme);
-			document.documentElement.className = theme;
-			document.querySelector(query)?.setAttribute("aria-label", theme);
-		});
-	};
-
-	const toggleTheme = () => {
-		setTheme(getTheme() === "dark" ? "light" : "dark");
-	};
-
-	//////////////////////////////////////////////////////////////////////
-
-	// set early so no page flashes / CSS is made aware
-	setTheme(getTheme());
-
-	window.addEventListener("load", () => {
-		const theme = getTheme();
-		setTheme(theme);
-
-		document.querySelector(query)?.addEventListener("click", toggleTheme);
-	});
-
-	// event for astro view transitions
-	document.addEventListener("astro:after-swap", () => {
-		const theme = getTheme();
-		setTheme(theme);
-
-		document.querySelector(query)?.addEventListener("click", toggleTheme);
-	});
-
-	// sync with system changes
-	window
-		.matchMedia("(prefers-color-scheme: dark)")
-		.addEventListener("change", ({ matches: isDark }) => {
-			const theme = isDark ? "dark" : "light";
-			setTheme(theme);
-		});
-
-	// sync across tabs
-	window.addEventListener("storage", (e) => {
-		if (e.key !== storageKey) {
-			return;
-		}
-
-		setTheme(e.newValue);
-	});
+		document.addEventListener(
+			"click",
+			(event) => {
+				const { target } = event;
+				if (!(target instanceof Element)) {
+					return;
+				}
+				if (!target.closest(`${query}, [data-theme-toggle]`)) {
+					return;
+				}
+				const next = effectiveTheme() === "dark" ? "light" : "dark";
+				localStorage.setItem(storageKey, next);
+				applyTheme(document, next, true);
+			},
+			{ signal }
+		);
+		system.addEventListener(
+			"change",
+			() => {
+				if (preference() === null) {
+					applyTheme(document, system.matches ? "dark" : "light", true);
+				}
+			},
+			{ signal }
+		);
+		window.addEventListener(
+			"storage",
+			(event) => {
+				if (event.key !== storageKey && event.key !== null) {
+					return;
+				}
+				applyTheme(document, effectiveTheme(), true);
+			},
+			{ signal }
+		);
+		document.addEventListener(
+			"astro:before-swap",
+			(event) => {
+				applyTheme(event.newDocument, effectiveTheme());
+			},
+			{ signal }
+		);
+		document.addEventListener(
+			"astro:after-swap",
+			() => {
+				applyTheme(document, effectiveTheme());
+			},
+			{ signal }
+		);
+	})();
 </script>

@@ -2,7 +2,12 @@ import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as HoverCard from "@radix-ui/react-hover-card";
 import { transitions } from "@repo/utils";
 import { AnimatePresence, motion } from "motion/react";
-import type { ComponentProps, ReactNode } from "react";
+import {
+	type ComponentProps,
+	type ReactNode,
+	useEffect,
+	useState,
+} from "react";
 import { twMerge } from "tailwind-merge";
 import { useVideoControls } from "@/hooks/useVideoControls";
 import Close from "@/icons/cross.svg?react";
@@ -26,8 +31,9 @@ const btnClassName = twMerge(
 );
 
 export default function VideoPreviewDialog({ children, src, type }: Props) {
+	const [open, setOpen] = useState(false);
 	return (
-		<DialogPrimitive.Root>
+		<DialogPrimitive.Root onOpenChange={setOpen} open={open}>
 			<HoverCard.Root closeDelay={0} openDelay={0}>
 				<HoverCard.Trigger asChild>
 					<DialogPrimitive.Trigger className={btnClassName}>
@@ -59,7 +65,7 @@ export default function VideoPreviewDialog({ children, src, type }: Props) {
 						<DialogPrimitive.Title className="sr-only">
 							{children} video preview
 						</DialogPrimitive.Title>
-						<DialogVideo src={src} type={type} />
+						<DialogVideo open={open} src={src} type={type} />
 
 						<div
 							className={`${styles.gradientBg} fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4 md:hidden`}
@@ -91,24 +97,32 @@ function Video({ src, type, ...props }: VideoProps) {
 	);
 }
 
-function DialogVideo({ src, type }: VideoProps) {
+function DialogVideo({ open, src, type }: VideoProps & { open: boolean }) {
 	const [videoRef, { state, toggle }] = useVideoControls();
+
+	useEffect(() => {
+		if (!open) {
+			return;
+		}
+
+		const video = videoRef.current;
+		return () => {
+			video?.pause();
+		};
+	}, [open, videoRef]);
 
 	return (
 		<div className="group relative grid w-[calc(75vw)] max-w-100 place-items-center">
-			<Video
-				className="cursor-pointer"
-				onClick={toggle}
-				ref={videoRef}
-				src={src}
-				type={type}
-			/>
+			<Video ref={videoRef} src={src} type={type} />
 
-			<div
+			<button
+				aria-label={state === "playing" ? "Pause video" : "Play video"}
 				className={cn(
-					"pointer-events-none absolute inset-0 grid place-items-center bg-overlay/20 opacity-0 transition-all duration-250 group-hover:opacity-100",
+					"absolute inset-0 grid cursor-pointer place-items-center bg-overlay/20 opacity-0 transition-all duration-250 focus-visible:opacity-100 group-hover:opacity-100",
 					state === "paused" && "opacity-100"
 				)}
+				onClick={toggle}
+				type="button"
 			>
 				<AnimatePresence mode="popLayout">
 					{state === "paused" && (
@@ -122,7 +136,7 @@ function DialogVideo({ src, type }: VideoProps) {
 						</AnimateVideoIcon>
 					)}
 				</AnimatePresence>
-			</div>
+			</button>
 		</div>
 	);
 }

@@ -12,6 +12,7 @@
     "lint": "biome check",
     "preview": "astro preview",
     "start": "astro dev",
+    "test": "pnpm build && playwright test",
     "typecheck": "astro check"
   },
   "dependencies": {
@@ -41,6 +42,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
+    "@playwright/test": "^1.63.0",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "sharp": "^0.35.4",

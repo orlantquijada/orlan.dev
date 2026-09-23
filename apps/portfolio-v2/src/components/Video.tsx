@@ -20,7 +20,7 @@ export default function Video({
 	playingIcon,
 	className,
 }: Props) {
-	const [videoRef, { pause, play, state, toggle }] = useVideoControls();
+	const [videoRef, { state, toggle }] = useVideoControls();
 
 	return (
 		<div className={cn("relative", className)}>
@@ -29,8 +29,6 @@ export default function Video({
 				controls={false}
 				loop
 				muted
-				onPause={pause}
-				onPlay={play}
 				playsInline
 				preload="none"
 				ref={videoRef}
