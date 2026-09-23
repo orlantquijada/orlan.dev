@@ -20,8 +20,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "catalog:",
-    "turbo": "^2.9.16",
+    "turbo": "^2.11.3",
     "ultracite": "catalog:"
   },
-  "packageManager": "pnpm@11.6.0"
+  "packageManager": "pnpm@12.5.1"
 }

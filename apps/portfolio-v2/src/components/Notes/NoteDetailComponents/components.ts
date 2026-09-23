@@ -8,12 +8,12 @@ import Pre from "./Pre.astro";
 import Ul from "./Ul.astro";
 
 export const components = {
-	ol: Ol,
-	ul: Ul,
+	blockquote: Blockquote,
+	code: Code,
 	h1: H1,
 	h2: H2,
-	code: Code,
-	Unicode,
-	blockquote: Blockquote,
+	ol: Ol,
 	pre: Pre,
+	Unicode,
+	ul: Ul,
 };

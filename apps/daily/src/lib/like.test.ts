@@ -24,9 +24,9 @@ describe("month schema", () => {
 
 describe("toKey / parseKey", () => {
   it("round-trips a date through the storage key", () => {
-    const key = toKey({ month: "march", day: "5" });
+    const key = toKey({ day: "5", month: "march" });
     expect(key).toBe("__daily_/march/5");
-    expect(parseKey(key)).toEqual({ month: "march", day: "5" });
+    expect(parseKey(key)).toEqual({ day: "5", month: "march" });
   });
 });
 
@@ -48,25 +48,25 @@ describe("getAllLikedDates", () => {
     vi.stubGlobal(
       "localStorage",
       makeLocalStorage({
+        "__daily_/april/1": "notjson", // malformed -> excluded
         "__daily_/march/5": "true", // liked  -> included
         "__daily_/march/6": "false", // unliked -> excluded (the bug)
-        "__daily_/april/1": "notjson", // malformed -> excluded
         unrelated_key: "true", // foreign -> excluded
       })
     );
 
     const dates = getAllLikedDates();
-    expect(dates).toEqual([{ month: "march", day: "5" }]);
+    expect(dates).toEqual([{ day: "5", month: "march" }]);
   });
 
   it("honors the month filter", () => {
     vi.stubGlobal(
       "localStorage",
       makeLocalStorage({
-        "__daily_/march/5": "true",
         "__daily_/april/1": "true",
+        "__daily_/march/5": "true",
       })
     );
-    expect(getAllLikedDates("april")).toEqual([{ month: "april", day: "1" }]);
+    expect(getAllLikedDates("april")).toEqual([{ day: "1", month: "april" }]);
   });
 });

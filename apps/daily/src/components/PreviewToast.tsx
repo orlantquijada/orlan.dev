@@ -14,8 +14,8 @@ import { stripMarkdown } from "@/lib/utils";
 import styles from "./PreviewToast.module.css";
 
 const variants: Variants = {
-  hide: { y: "30%", opacity: 0 },
-  show: { y: 0, opacity: 1 },
+  hide: { opacity: 0, y: "30%" },
+  show: { opacity: 1, y: 0 },
 };
 
 export default function PreviewToast({
@@ -31,7 +31,7 @@ export default function PreviewToast({
   const day = selectedDate ? selectedDate.getDate() : undefined;
 
   const { data: daily, error } = useSWR(
-    selectedDate ? { month, day } : null,
+    selectedDate ? { day, month } : null,
     fetcher
   );
 
@@ -51,7 +51,7 @@ export default function PreviewToast({
 
   return (
     <AnimatePresence mode="wait">
-      {selectedDate && (
+      {selectedDate ? (
         <motion.div
           animate="show"
           className="fixed inset-x-0 bottom-(--content-padding-y) z-10 mx-auto flex h-(--toast-height) w-[calc(100%-var(--viewport-padding))] max-w-[calc(var(--content-max-width)-var(--viewport-padding))] items-center justify-between gap-4 rounded-lg border border-olive-6 bg-olive-1 p-3"
@@ -77,7 +77,7 @@ export default function PreviewToast({
             </Link>
           ) : null}
         </motion.div>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 }

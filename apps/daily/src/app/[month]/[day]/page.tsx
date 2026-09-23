@@ -29,17 +29,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const cleanQuote = (await stripMarkdown(frontmatter.quote)).toString();
 
   return {
-    title: cleanTitle,
     description: cleanQuote,
     openGraph: {
-      title: cleanTitle,
       description: cleanQuote,
+      title: cleanTitle,
       type: "article",
     },
+    title: cleanTitle,
     twitter: {
       card: "summary_large_image",
-      title: cleanTitle,
       description: cleanQuote,
+      title: cleanTitle,
     },
   };
 }

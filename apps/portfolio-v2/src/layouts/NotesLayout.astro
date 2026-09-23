@@ -20,8 +20,8 @@ const data = Astro.props;
 			{data.title}
 		</h1>
 		{data.description ? (
-      <p class="text-gray-a11 md:max-w-4/5">{data.description}</p>
-      ) : null}
+	<p class="text-gray-a11 md:max-w-4/5">{data.description}</p>
+) : null}
 	</div>
 
 	<div class="flex flex-wrap gap-x-6">
@@ -30,12 +30,12 @@ const data = Astro.props;
 
 			<ul class="flex items-center">
 				{[...data.tags].map((tag) => (
-            <li class="tag">
-              <a class="hover:underline" href={`/notes?tags=${encodeURIComponent(tag)}`}>
-                {tag}
-              </a>
-            </li>
-          ))}
+	<li class="tag">
+		<a class="hover:underline" href={`/notes?tags=${encodeURIComponent(tag)}`}>
+			{tag}
+		</a>
+	</li>
+))}
 			</ul>
 		</MetaData>
 
@@ -45,25 +45,25 @@ const data = Astro.props;
 		</MetaData>
 
 		{data.updatedAt ? (
-        <MetaData>
-          <Icon name="pencil" />
-          <span>
-            {formatDate(
-              Array.isArray(data.updatedAt)
-                // biome-ignore lint/style/noNonNullAssertion: non-empty per content schema
-            ? data.updatedAt.at(-1)!
-                : data.updatedAt,
-            )}
-          </span>
-        </MetaData>
-      ) : null}
+	<MetaData>
+		<Icon name="pencil" />
+		<span>
+			{formatDate(
+				Array.isArray(data.updatedAt)
+					? // biome-ignore lint/style/noNonNullAssertion: non-empty per content schema
+						data.updatedAt.at(-1)!
+					: data.updatedAt
+			)}
+		</span>
+	</MetaData>
+) : null}
 
 		{data.wip ? (
-        <MetaData>
-          <Icon name="wrench" slot="icon" />
-          <span>work-in-progress</span>
-        </MetaData>
-      ) : null}
+	<MetaData>
+		<Icon name="wrench" slot="icon" />
+		<span>work-in-progress</span>
+	</MetaData>
+) : null}
 	</div>
 
 	<hr class="my-8 w-full border-t-2 border-t-gray-a4">

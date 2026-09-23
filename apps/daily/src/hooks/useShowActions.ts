@@ -53,16 +53,20 @@ function useIsContentScrollable() {
 const TAB_WIDTH = 768;
 
 export function useIsMinWidthTabDimensions() {
-  const [isMinTabDimes, setIsMinTabDimes] = useState<boolean>();
+  const [dimensions, setDimensions] = useState<{
+    isMinTabDimes: boolean;
+    loading: boolean;
+  }>({ isMinTabDimes: false, loading: true });
 
   useLayoutEffect(() => {
     const htmlElement = document.querySelector("html");
     if (htmlElement) {
-      setIsMinTabDimes(htmlElement.clientWidth >= TAB_WIDTH);
+      setDimensions({
+        isMinTabDimes: htmlElement.clientWidth >= TAB_WIDTH,
+        loading: false,
+      });
     }
   }, []);
 
-  const loading = isMinTabDimes === undefined;
-
-  return [isMinTabDimes, loading] as const;
+  return [dimensions.isMinTabDimes, dimensions.loading] as const;
 }

@@ -16,19 +16,19 @@ describe("getDailyDateToday", () => {
     // 2026-06-13 14:00 Manila (UTC+8) => June 13
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-06-13T06:00:00.000Z"));
-    expect(getDailyDateToday()).toEqual({ month: "june", day: "13" });
+    expect(getDailyDateToday()).toEqual({ day: "13", month: "june" });
   });
 
   it("uses the project's 'febuary' spelling in February (regression)", () => {
     // 2026-02-15 14:00 Manila (UTC+8) => Feb 15
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-02-15T06:00:00.000Z"));
-    expect(getDailyDateToday()).toEqual({ month: "febuary", day: "15" });
+    expect(getDailyDateToday()).toEqual({ day: "15", month: "febuary" });
   });
 
   it("returns december for a December date", () => {
     vi.useFakeTimers();
     vi.setSystemTime(new Date("2026-12-25T06:00:00.000Z"));
-    expect(getDailyDateToday()).toEqual({ month: "december", day: "25" });
+    expect(getDailyDateToday()).toEqual({ day: "25", month: "december" });
   });
 });

@@ -19,18 +19,18 @@ export function toKey({ day, month }: DailyDate) {
 }
 
 export const monthSubjectsMap: Record<Month, string> = {
-  january: "Clarity",
-  febuary: "Passions and Emotion",
-  march: "Awareness",
   april: "Unbiased Thought",
-  may: "Right Action",
-  june: "Problem Solving",
-  july: "Duty",
   august: "Pragmatism",
-  september: "Fortitude and Resilience",
-  october: "Virtue and Kindness",
-  november: "Acceptance",
   december: "Meditation On Mortality",
+  febuary: "Passions and Emotion",
+  january: "Clarity",
+  july: "Duty",
+  june: "Problem Solving",
+  march: "Awareness",
+  may: "Right Action",
+  november: "Acceptance",
+  october: "Virtue and Kindness",
+  september: "Fortitude and Resilience",
 } as const;
 
 export const monthSchema = z.enum([
@@ -58,8 +58,8 @@ export function parseKey(key: string) {
   const [, month, day] = key.split("/");
 
   return {
-    month,
     day,
+    month,
   };
 }
 

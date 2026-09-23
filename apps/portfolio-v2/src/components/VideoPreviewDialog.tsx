@@ -126,10 +126,10 @@ function DialogVideo({ src, type }: VideoProps) {
 function AnimateVideoIcon({ children }: { children: ReactNode }) {
 	return (
 		<motion.span
-			animate={{ scale: 1, opacity: 1 }}
+			animate={{ opacity: 1, scale: 1 }}
 			className="absolute"
-			exit={{ scale: 0.8, opacity: 0 }}
-			initial={{ scale: 0.8, opacity: 0 }}
+			exit={{ opacity: 0, scale: 0.8 }}
+			initial={{ opacity: 0, scale: 0.8 }}
 			transition={transitions.punchy}
 		>
 			{children}

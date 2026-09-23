@@ -5,7 +5,6 @@ export const query = ".theme-toggle";
 
 export const disableTransitionOnThemeChange = (callback: () => void) => {
 	const css = document.createElement("style");
-	css.type = "text/css";
 	css.appendChild(
 		document.createTextNode(
 			`* {

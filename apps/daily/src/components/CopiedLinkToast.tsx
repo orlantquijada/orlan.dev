@@ -34,7 +34,7 @@ export function CopiedLinkToast({ ref }: CopiedLinkToastProps) {
 
   return (
     <AnimatePresence mode="wait">
-      {open && (
+      {open ? (
         <motion.div
           animate="show"
           className={`${styles.container} fixed inset-x-0 top-(--header-height) z-999 mx-auto flex items-center justify-center rounded-lg border border-olive-6 bg-olive-4 p-3 text-olive-11`}
@@ -45,13 +45,13 @@ export function CopiedLinkToast({ ref }: CopiedLinkToastProps) {
         >
           Link Copied
         </motion.div>
-      )}
+      ) : null}
     </AnimatePresence>
   );
 }
 CopiedLinkToast.displayName = "CopiedLinkToast";
 
 const variants = {
-  hide: { y: "-30%", opacity: 0 },
-  show: { y: 0, opacity: 1 },
+  hide: { opacity: 0, y: "-30%" },
+  show: { opacity: 1, y: 0 },
 };

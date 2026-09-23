@@ -9,46 +9,43 @@ type Props = {
 	title: string;
 };
 
-const props = Astro.props;
+const { aspect, className, href, title } = Astro.props;
 ---
 
 <div
 	class:list={[
-    "group relative w-full overflow-hidden rounded-lg border border-gray5 shadow-[0px_3px_10px_rgba(0,0,0,0.15)] shadow-black/15 transition-transform hover:-translate-y-1",
-    props.className,
-  ]}
+	"group relative w-full overflow-hidden rounded-lg border border-gray5 shadow-[0px_3px_10px_rgba(0,0,0,0.15)] shadow-black/15 transition-transform hover:-translate-y-1",
+	className,
+]}
 >
 	<a
-		href={props.href}
-		target="_blank"
-		rel="noopener noreferrer"
 		class="titlebar flex h-6 items-center justify-center bg-gray2"
+		href={href}
+		rel="noopener noreferrer"
+		target="_blank"
 	>
 		<span class="text-[.625rem] text-gray11 font-medium underline"
-			>{props.title}</span
+			>{title}</span
 		>
 	</a>
 
 	<div
-		class:list={[
-      "w-full bg-gray3",
-      props.aspect === "phone" ? "md:aspect-6/13" : "md:aspect-93/80",
-    ]}
+		class:list={["w-full bg-gray3", aspect === "phone" ? "md:aspect-6/13" : "md:aspect-93/80"]}
 	>
 		<slot />
 	</div>
 
-	{props.href ? (
-      <BrowserIconButton
-        as="a"
-        class="absolute bottom-4 left-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
-        href={props.href}
-        rel="noopener noreferrer"
-        target="_blank"
-      >
-        <Icon name="arrow-top-right" />
-      </BrowserIconButton>
-    ) : null}
+	{href ? (
+	<BrowserIconButton
+		class="absolute bottom-4 left-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+		href={href}
+		label={`Open ${title} in a new tab`}
+		rel="noopener noreferrer"
+		target="_blank"
+	>
+		<Icon name="arrow-top-right" />
+	</BrowserIconButton>
+) : null}
 </div>
 
 <style>

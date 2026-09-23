@@ -40,10 +40,10 @@ const heroImages = [
 // Generate optimized lightbox images (larger for full-screen viewing)
 const spaceduckImages = await Promise.all(
 	heroImages.map(async (img, i) => {
-		const optimized = await getImage({ src: img, width: 1200, format: "webp" });
+		const optimized = await getImage({ format: "webp", src: img, width: 1200 });
 		return {
-			src: optimized.src,
 			alt: `Spaceduck app screenshot ${i + 1}`,
+			src: optimized.src,
 		};
 	})
 );
@@ -58,80 +58,80 @@ type ShowcaseItem = {
 };
 
 const swatchColors = [
-	{ name: "Surface One", neutral: "Neutral 0", hex: "#0d0e14" },
-	{ name: "Surface Two", neutral: "Neutral 20", hex: "#1a1b26" },
-	{ name: "Surface Three", neutral: "Neutral 30", hex: "#2a2c3d" },
-	{ name: "Surface Four", neutral: "Neutral 40", hex: "#3d4055" },
-	{ name: "Surface Five", neutral: "Neutral 99", hex: "#f5f5f7" },
+	{ hex: "#0d0e14", name: "Surface One", neutral: "Neutral 0" },
+	{ hex: "#1a1b26", name: "Surface Two", neutral: "Neutral 20" },
+	{ hex: "#2a2c3d", name: "Surface Three", neutral: "Neutral 30" },
+	{ hex: "#3d4055", name: "Surface Four", neutral: "Neutral 40" },
+	{ hex: "#f5f5f7", name: "Surface Five", neutral: "Neutral 99" },
 ];
 
 const showcaseItems: ShowcaseItem[] = [
 	{
-		src: desktop,
 		alt: "Spaceduck desktop dashboard",
 		colSpan: 3,
 		rowSpan: 2,
+		src: desktop,
 	},
 	{
-		src: home1,
 		alt: "Spaceduck app home screen",
 		rowSpan: 2,
+		src: home1,
 	},
 	{
-		src: typography,
 		alt: "Typography specimen",
-		colSpan: 2,
 		background: "surface",
+		colSpan: 2,
+		src: typography,
 	},
 	{
-		src: icons,
 		alt: "Spaceduck icon set",
-		colSpan: 2,
 		background: "surface",
+		colSpan: 2,
+		src: icons,
 	},
 	{
-		src: "/projects/spaceduck/showcase/swatch.webp",
 		alt: "Spaceduck color palette",
 		colSpan: 2,
 		component: "swatch",
+		src: "/projects/spaceduck/showcase/swatch.webp",
 	},
 	{
-		src: "/projects/spaceduck/showcase/wordmark.svg",
 		alt: "Spaceduck wordmark",
-		colSpan: 2,
 		background: "surface",
+		colSpan: 2,
+		src: "/projects/spaceduck/showcase/wordmark.svg",
 	},
 	{
-		src: home2,
 		alt: "Spaceduck app drafts view",
 		rowSpan: 2,
+		src: home2,
 	},
 	{
-		src: journal,
 		alt: "Spaceduck journal feature",
 		rowSpan: 2,
+		src: journal,
 	},
 	{
-		src: "/projects/spaceduck/showcase/logo.svg",
 		alt: "Spaceduck logo",
 		background: "surface",
+		src: "/projects/spaceduck/showcase/logo.svg",
 	},
 ];
 
 // For lightbox, we need string URLs
 const showcaseItemsForLightbox = showcaseItems.map((item) => ({
-	src: typeof item.src === "string" ? item.src : item.src.src,
 	alt: item.alt,
+	src: typeof item.src === "string" ? item.src : item.src.src,
 }));
 ---
 
 <Layout title="Work — Orlan Quijada">
 	<Fragment slot="head">
-		{spaceduckImages.map(img => (
-			<link as="image" href={img.src} rel="preload" type="image/webp" />
-		))}
+		{spaceduckImages.map((img) => (
+	<link as="image" href={img.src} rel="preload" type="image/webp" />
+))}
 	</Fragment>
-	<a href="/" class="text-sm text-gray11 hover:text-gray12 transition-colors"
+	<a class="text-sm text-gray11 hover:text-gray12 transition-colors" href="/"
 		>← Back</a
 	>
 
@@ -151,75 +151,71 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 				<ImageLightbox images={spaceduckImages} client:visible>
 					<div class="hero-gallery">
 						{heroImages.slice(0, 5).map((src, index) => (
-						<button
-							class="hero-card"
-							data-lightbox-index={index}
-							type="button"
-						>
-							<Image
-								alt={`Spaceduck app screenshot ${index + 1}`}
-								class="h-full w-full object-cover"
-								decoding="async"
-								loading="lazy"
-								src={src}
-								width={180}
-							/>
-						</button>
-					))}
+	<button class="hero-card" data-lightbox-index={index} type="button">
+		<Image
+			alt={`Spaceduck app screenshot ${index + 1}`}
+			class="h-full w-full object-cover"
+			decoding="async"
+			loading="lazy"
+			src={src}
+			width={180}
+		/>
+	</button>
+))}
 					</div>
 				</ImageLightbox>
 
 				<ImageLightbox images={showcaseItemsForLightbox} client:visible>
 					<div class="showcase-grid">
 						{showcaseItems.map((item, index) => (
-						<button
-							data-lightbox-index={index}
-							class:list={[
-								"showcase-item",
-								item.colSpan === 2 && "col-span-2",
-								item.colSpan === 3 && "col-span-3",
-								item.rowSpan === 2 && "row-span-2",
-								item.rowSpan === 3 && "row-span-3",
-								item.background === "surface" && "has-surface-bg",
-							]}
-							type="button"
-						>
-							{item.component === "swatch" ? (
-								<div class="swatch-grid">
-									{swatchColors.map((color) => (
-										<div
-											class:list={[
-												"swatch-item",
-												color.hex === "#f5f5f7" && "swatch-item-light",
-											]}
-											style={`background: ${color.hex}`}
-										>
-											<span class="swatch-name">{color.name}</span>
-											<span class="swatch-neutral">{color.neutral}</span>
-										</div>
-									))}
-								</div>
-							) : // biome-ignore lint/style/noNestedTernary: three-way branch on item type is clearest as nested ternary here
-							typeof item.src === "string" ? (
-								// biome-ignore lint/correctness/useImageSize: showcase item dimensions are dynamic/CSS-controlled
-								<img
-									alt={item.alt}
-									class="h-full w-full object-contain"
-									decoding="async"
-									loading="lazy"
-									src={item.src}
-								/>
-							) : (
-								<Image
-									alt={item.alt}
-									class="h-full w-full object-contain"
-									decoding="async"
-									loading="lazy"
-									src={item.src}
-								/>
-							)}
-						</button>
-					))}
+	<button
+		class:list={[
+			"showcase-item",
+			item.colSpan === 2 && "col-span-2",
+			item.colSpan === 3 && "col-span-3",
+			item.rowSpan === 2 && "row-span-2",
+			item.rowSpan === 3 && "row-span-3",
+			item.background === "surface" && "has-surface-bg",
+		]}
+		data-lightbox-index={index}
+		type="button"
+	>
+		{item.component === "swatch" ? (
+			<div class="swatch-grid">
+				{swatchColors.map((color) => (
+					<div
+						class:list={[
+							"swatch-item",
+							color.hex === "#f5f5f7" && "swatch-item-light",
+						]}
+						style={`background: ${color.hex}`}
+					>
+						<span class="swatch-name">{color.name}</span>
+						<span class="swatch-neutral">{color.neutral}</span>
+					</div>
+				))}
+			</div>
+		) : // biome-ignore lint/style/noNestedTernary: three-way branch on item type is clearest as nested ternary here
+		typeof item.src === "string" ? (
+			// biome-ignore lint/correctness/useImageSize: showcase item dimensions are dynamic/CSS-controlled
+			<img
+				alt={item.alt}
+				class="h-full w-full object-contain"
+				decoding="async"
+				loading="lazy"
+				src={item.src}
+			/>
+		) : (
+			<Image
+				alt={item.alt}
+				class="h-full w-full object-contain"
+				decoding="async"
+				loading="lazy"
+				src={item.src}
+			/>
+		)}
+	</button>
+))}
 					</div>
 				</ImageLightbox>
 			</div>

@@ -17,7 +17,7 @@ import WorkSection from "./WorkSection.astro";
 	</h1>
 
 	<section class="flex flex-col gap-6 max-w-md">
-		<p data-animate style="--stagger: 1" class="">
+		<p class="" data-animate style="--stagger: 1">
 			I currently lead mobile development at
 			<span
 				class="inline-flex relative items-center justify-center group isolate"
@@ -25,21 +25,21 @@ import WorkSection from "./WorkSection.astro";
 				<a
 					class="link"
 					href={SPACEDUCK_LINK}
-					target="_blank"
 					rel="noopener noreferrer"
+					target="_blank"
 					>Spaceduck</a
 				><span
 					class="pointer-events-none select-none size-10 absolute transition-all duration-350 opacity-0 rotate-45 group-hover:opacity-100 group-hover:-translate-y-8 group-hover:-rotate-30"
 					><DuckSprite client:only="react" /></span
 				>
 			</span>
-			{' '}— building the company’s flagship iOS and Android app. I’ve delivered
+			{" "}— building the company’s flagship iOS and Android app. I’ve delivered
 			major features end‑to‑end, including an
-			<VideoPreviewDialog client:idle src="/ai-assistant2.mp4" type="video/mp4">
+			<VideoPreviewDialog src="/ai-assistant2.mp4" type="video/mp4" client:idle>
 				AI assistant
 			</VideoPreviewDialog>
-			{' '}and a
-			<VideoPreviewDialog client:idle src="/collab-notes3.mp4" type="video/mp4">
+			{" "}and a
+			<VideoPreviewDialog src="/collab-notes3.mp4" type="video/mp4" client:idle>
 				real-time multiplayer text editor
 			</VideoPreviewDialog>
 		</p>

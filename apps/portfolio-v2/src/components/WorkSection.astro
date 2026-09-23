@@ -8,18 +8,18 @@ import spaceduck3 from "../../public/projects/spaceduck/3.png";
 import spaceduck4 from "../../public/projects/spaceduck/4.png";
 
 const previewImages = [
-	{ src: spaceduck1, alt: "Spaceduck app screenshot 1" },
-	{ src: spaceduck2, alt: "Spaceduck app screenshot 2" },
-	{ src: spaceduck3, alt: "Spaceduck app screenshot 3" },
-	{ src: spaceduck4, alt: "Spaceduck app screenshot 4" },
+	{ alt: "Spaceduck app screenshot 1", src: spaceduck1 },
+	{ alt: "Spaceduck app screenshot 2", src: spaceduck2 },
+	{ alt: "Spaceduck app screenshot 3", src: spaceduck3 },
+	{ alt: "Spaceduck app screenshot 4", src: spaceduck4 },
 ];
 ---
 
-<section data-animate style="--stagger: 6" class="flex flex-col w-full">
+<section class="flex flex-col w-full" data-animate style="--stagger: 6">
 	<h3 class="text-gray11 mb-6 text-sm">Work</h3>
 
 	<div class="relative">
-		<a href="/work" class="work-card group">
+		<a class="work-card group" href="/work">
 			<div class="shine"></div>
 			<div class="flex justify-between items-start gap-4 work-card-content">
 				<div class="flex-1">
@@ -41,24 +41,24 @@ const previewImages = [
 						View project
 					</span>
 					<Icon
-						name="arrow-right"
 						class="size-4 text-gray11 group-hover:text-gray12 group-hover:translate-x-1 transition-all"
+						name="arrow-right"
 					/>
 				</div>
 			</div>
 
 			<div class="preview-gallery">
 				{previewImages.map((image, index) => (
-					<div class="preview-card" style={`--card-index: ${index}`}>
-						<Image
-							alt={image.alt}
-							class="h-full w-full object-cover"
-							height={221}
-							src={image.src}
-							width={111}
-						/>
-					</div>
-				))}
+	<div class="preview-card" style={`--card-index: ${index}`}>
+		<Image
+			alt={image.alt}
+			class="h-full w-full object-cover"
+			height={221}
+			src={image.src}
+			width={111}
+		/>
+	</div>
+))}
 			</div>
 		</a>
 	</div>

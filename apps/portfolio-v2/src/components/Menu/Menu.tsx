@@ -7,7 +7,7 @@ import {
 	motion,
 	type Variants,
 } from "motion/react";
-import { type RefObject, useMemo, useRef, useState } from "react";
+import { type RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 import { buttonStyles } from "../Button";
@@ -15,30 +15,31 @@ import { MenuPanel } from "./MenuPanel";
 import styles from "./styles.module.css";
 
 const panelVariants: Variants = {
-	open: {
-		opacity: 1,
-		scale: 1,
-	},
 	closed: {
 		opacity: 0,
 		scale: 0.95,
 	},
+	open: {
+		opacity: 1,
+		scale: 1,
+	},
 };
 
 const buttonVariants: Variants = {
-	open: {
-		x: "-20%",
-		y: "45%",
-	},
 	closed: {
 		x: 0,
 		y: 0,
+	},
+	open: {
+		x: "-20%",
+		y: "45%",
 	},
 };
 
 export function Menu() {
 	const [open, setOpen] = useState(false);
 	const containerRef = useRef<HTMLElement>(null);
+	const handleNavigate = useCallback(() => setOpen(false), []);
 
 	return (
 		<MotionConfig transition={transitions.punchy}>
@@ -56,8 +57,8 @@ export function Menu() {
 							)}
 							initial="closed"
 							style={{
-								border: "none",
 								background: "none",
+								border: "none",
 								boxShadow: "none",
 							}}
 							variants={buttonVariants}
@@ -71,9 +72,9 @@ export function Menu() {
 							className={twMerge(
 								buttonStyles({
 									className: "absolute inset-0",
+									motionSafe: false,
 									translucent: true,
 									withAnimations: false,
-									motionSafe: false,
 								})
 							)}
 							id="portal-container"
@@ -105,12 +106,12 @@ export function Menu() {
 											"var(--radix-popover-content-transform-origin)",
 									}}
 									transition={{
-										type: "tween",
 										duration: 0.2,
+										type: "tween",
 									}}
 									variants={panelVariants}
 								>
-									<MenuPanel onNavigate={() => setOpen(false)} />
+									<MenuPanel onNavigate={handleNavigate} />
 								</motion.div>
 							</PopoverPrimitive.Content>
 						</PopoverPrimitive.Portal>
@@ -124,13 +125,13 @@ export function Menu() {
 function getLineMotionProps(direction: -1 | 1) {
 	return {
 		variants: {
-			open: {
-				y: 4 * direction,
-				rotate: 45 * direction,
-			},
 			closed: {
-				y: 0,
 				rotate: 0,
+				y: 0,
+			},
+			open: {
+				rotate: 45 * direction,
+				y: 4 * direction,
 			},
 		},
 	};
@@ -168,18 +169,18 @@ const contentStyles = cva(
 		styles.menuContent,
 	],
 	{
+		defaultVariants: {
+			translucent: false,
+		},
 		variants: {
 			translucent: {
+				false: ["dark:bg-gray3"],
 				true: [
 					"dark:bg-gray-a3",
 					// 'dark:backdrop-blur-md dark:backdrop-brightness-75 dark:saturate-200 dark:contrast-75',
 					"dark:backdrop-blur-md dark:backdrop-brightness-75",
 				],
-				false: ["dark:bg-gray3"],
 			},
-		},
-		defaultVariants: {
-			translucent: false,
 		},
 	}
 );

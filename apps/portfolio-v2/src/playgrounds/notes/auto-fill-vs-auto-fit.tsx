@@ -17,9 +17,7 @@ export default function Demo() {
 	const [auto, setAuto] = useState<Auto>("fill");
 
 	const handleChangeAuto = (value: Auto) => {
-		if (auto) {
-			setAuto(value);
-		}
+		setAuto(value);
 	};
 	const handleResetShowcase = () => {
 		if (!ref.current) {

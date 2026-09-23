@@ -5,8 +5,8 @@ import { getDaily } from "@/lib/content";
 import { stripMarkdown } from "@/lib/utils";
 
 export const size = {
-  width: 1200,
   height: 630,
+  width: 1200,
 };
 
 function loadFont(font: string) {
@@ -24,13 +24,14 @@ export default async function Image({
   params: Promise<{ day: string; month: string }>;
 }) {
   const { day, month } = await params;
-  const { frontmatter } = await getDaily({ day, month });
+  const {
+    frontmatter: { author, title: markdownTitle },
+  } = await getDaily({ day, month });
 
-  const cleanTitle = (await stripMarkdown(frontmatter.title)).toString();
+  const cleanTitle = (await stripMarkdown(markdownTitle)).toString();
 
   const subtitle = `${month} ${day}`;
   const title = cleanTitle || "Daily Philosophy Quotes";
-  const author = frontmatter.author;
 
   const interFontData = await loadFont("InterDisplay-ExtraBold.ttf");
   const ibmFontData = await loadFont("IBMPlexMono-Regular.ttf");
@@ -38,24 +39,24 @@ export default async function Image({
   return new ImageResponse(
     <div
       style={{
+        alignItems: "flex-start",
         // olive 2
         background: "#f8faf8",
-        width: "100%",
-        height: "100%",
         display: "flex",
         flexDirection: "column",
-        alignItems: "flex-start",
+        height: "100%",
         justifyContent: "flex-start",
         padding: "5%",
+        width: "100%",
       }}
     >
       <div
         style={{
-          fontFamily: ibmFontFamily,
-          fontSize: 44,
           alignSelf: "flex-start",
           // olive 11
           color: "#6b716a",
+          fontFamily: ibmFontFamily,
+          fontSize: 44,
           textTransform: "capitalize",
         }}
       >
@@ -63,24 +64,23 @@ export default async function Image({
       </div>
       <div
         style={{
-          fontFamily: '"Inter"',
-          fontSize: 88,
-          marginTop: 12,
-          marginBottom: 6,
-
           // olive 12
           color: "#141e12",
+          fontFamily: '"Inter"',
+          fontSize: 88,
+          marginBottom: 6,
+          marginTop: 12,
         }}
       >
         {title}
       </div>
       <div
         style={{
+          // olive 11
+          color: "#6b716a",
           fontFamily: ibmFontFamily,
           fontSize: 52,
           marginTop: "auto",
-          // olive 11
-          color: "#6b716a",
         }}
       >
         {author}
@@ -90,14 +90,14 @@ export default async function Image({
       emoji: "fluent",
       fonts: [
         {
-          name: "Inter",
           data: interFontData,
+          name: "Inter",
           style: "normal",
           weight: 700,
         },
         {
-          name: ibm,
           data: ibmFontData,
+          name: ibm,
           style: "normal",
           weight: 400,
         },

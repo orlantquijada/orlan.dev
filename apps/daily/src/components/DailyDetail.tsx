@@ -34,7 +34,7 @@ export default function DailyDetail({
   ReactDOM.preload("/heart.webp", { as: "image", type: "image/webp" });
 
   return (
-    <LikedContentProvider daily={{ month, day }}>
+    <LikedContentProvider daily={{ day, month }}>
       <LikeWrapper>
         <div
           className={`${styles.container} min-h-screen animate-[fade-in_1s_both]`}

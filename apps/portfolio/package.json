@@ -3,13 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
     "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit",
-    "lint": "biome check",
+    "dev": "next dev --turbopack",
     "format": "biome format --write",
-    "prepare": "panda codegen"
+    "lint": "biome check",
+    "prepare": "panda codegen",
+    "start": "next start",
+    "typecheck": "tsc --noEmit"
   },
   "dependencies": {
     "@radix-ui/react-icons": "catalog:",
@@ -31,5 +31,5 @@
     "typescript": "catalog:",
     "ultracite": "catalog:"
   },
-  "packageManager": "pnpm@11.6.0"
+  "packageManager": "pnpm@12.5.1"
 }

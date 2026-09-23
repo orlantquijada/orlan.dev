@@ -22,5 +22,5 @@ const tagsGraph = buildTagGraph(...tagsPerNote);
 	<p class="mt-2 max-w-md text-xl">
 		A personal wiki of notes, code snippets, and more stuff on the internet.
 	</p>
-	<NotesWrapper tags={tags} tagsGraph={tagsGraph} notes={notes} client:load />
+	<NotesWrapper notes={notes} tags={tags} tagsGraph={tagsGraph} client:load />
 </Layout>

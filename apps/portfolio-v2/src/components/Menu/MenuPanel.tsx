@@ -14,6 +14,12 @@ import { GITHUB, LINKED_IN } from "@/utils/constants";
 import ContactDialog from "../Contact/ContactDialog";
 import styles from "./styles.module.css";
 
+function handleToggleTheme() {
+	if (isBrowser) {
+		toggleTheme();
+	}
+}
+
 export function MenuPanel({ onNavigate }: { onNavigate: () => void }) {
 	return (
 		<div className="mt-10 flex flex-col gap-8">
@@ -50,11 +56,7 @@ export function MenuPanel({ onNavigate }: { onNavigate: () => void }) {
 					className:
 						"cursor-pointer text-left text-sm transition-all hover:translate-x-1",
 				})}
-				onClick={() => {
-					if (isBrowser) {
-						toggleTheme();
-					}
-				}}
+				onClick={handleToggleTheme}
 				type="button"
 			>
 				<div className="flex justify-center">
@@ -135,8 +137,8 @@ const links: Array<{
 }> = [
 	// { href: '/writing', label: 'Writing', color: 'bg-accent-pink' },
 	// { href: '/bookmarks', label: 'Bookmarks', color: 'bg-accent-violet' },
-	{ href: "/notes", label: "Notes", color: "bg-accent-blue" },
-	{ href: "/work", label: "Work", color: "bg-accent-violet" },
+	{ color: "bg-accent-blue", href: "/notes", label: "Notes" },
+	{ color: "bg-accent-violet", href: "/work", label: "Work" },
 ];
 
 function Nav({ onNavigate }: { onNavigate: () => void }) {
@@ -167,14 +169,14 @@ function Nav({ onNavigate }: { onNavigate: () => void }) {
 const menuItemStyles = cva(
 	["grid grid-cols-[1.25rem_auto_1fr] items-center gap-2"],
 	{
+		defaultVariants: {
+			intent: "default",
+		},
 		variants: {
 			intent: {
 				default: "py-1",
 				sendBtn: "py-6",
 			},
-		},
-		defaultVariants: {
-			intent: "default",
 		},
 	}
 );

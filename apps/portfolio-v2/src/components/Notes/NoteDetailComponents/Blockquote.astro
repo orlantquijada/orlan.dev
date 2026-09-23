@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"blockquote">;
-const props = Astro.props;
+const { ...props } = Astro.props;
 ---
 
 <blockquote

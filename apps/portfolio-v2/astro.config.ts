@@ -9,17 +9,20 @@ import svgr from "vite-plugin-svgr";
 
 // https://astro.build/config
 const config = defineConfig({
+	adapter: vercel(),
+	// Astro 7 defaults to JSX whitespace compression; retain Astro 6's
+	// spacing between adjacent inline elements.
+	compressHTML: true,
 	fonts: [
 		{
-			provider: fontProviders.google(),
-			name: "JetBrains Mono",
 			cssVariable: "--font-jetbrains-mono",
 			fallbacks: ["monospace"],
+			name: "JetBrains Mono",
+			provider: fontProviders.google(),
 			subsets: ["latin"],
 		},
 	],
 	integrations: [react(), mdx(), icon()],
-	scopedStyleStrategy: "where",
 	markdown: {
 		shikiConfig: {
 			themes: {
@@ -28,16 +31,15 @@ const config = defineConfig({
 			},
 		},
 	},
+	redirects: {
+		"/resume": { destination: "/01Quijada.pdf", status: 301 },
+	},
+	scopedStyleStrategy: "where",
 	vite: {
 		plugins: [svgr(), tailwindcss()],
 		ssr: {
 			noExternal: ["@radix-ui/*"],
 		},
-	},
-
-	adapter: vercel(),
-	redirects: {
-		"/resume": { destination: "/01Quijada.pdf", status: 301 },
 	},
 });
 

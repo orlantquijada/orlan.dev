@@ -24,9 +24,9 @@ export function useTheme() {
 		setTheme(theme === "dark" ? "light" : "dark");
 	}
 
-	function handleSetTheme(theme: ThemeKeys) {
-		_setTheme(theme);
-		setTheme(theme);
+	function handleSetTheme(nextTheme: ThemeKeys) {
+		_setTheme(nextTheme);
+		setTheme(nextTheme);
 	}
 
 	const fns = {

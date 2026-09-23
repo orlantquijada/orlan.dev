@@ -3,10 +3,10 @@ import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"ol">;
 
-const props = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<ol {...props} class:list={['ol', props.class]}>
+<ol {...props} class:list={["ol", className]}>
 	<slot />
 </ol>
 

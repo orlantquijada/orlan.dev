@@ -3,7 +3,13 @@
 import { ArrowLeftIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { motion } from "motion/react";
 import Link from "next/link";
-import { type ComponentProps, useEffect, useRef, useState } from "react";
+import {
+  type ComponentProps,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { useLikedContext } from "@/hooks/useLikedContext";
 import {
@@ -18,11 +24,11 @@ import styles from "./Actions.module.css";
 import { CopiedLinkToast } from "./CopiedLinkToast";
 
 const list = {
+  hidden: { height: "var(--icon-button-size)" },
   visible: {
     height: "100%",
     transition: { staggerChildren: 0.125 },
   },
-  hidden: { height: "var(--icon-button-size)" },
 };
 
 export default function Actions({
@@ -36,10 +42,8 @@ export default function Actions({
   const [isLiked, setIsLiked] = useLikedContext();
   const toastRef = useRef<CopiedLinkToast>(null);
   const shouldShow = useShowActions();
-  const [isMinTabDimes] = useIsMinWidthTabDimensions();
+  const [isMinTabDimes, loading] = useIsMinWidthTabDimensions();
   const ref = useRef<HTMLDivElement>(null);
-
-  const loading = isMinTabDimes === undefined;
 
   useClickOutside(ref, () => {
     if (!isMinTabDimes) {
@@ -52,6 +56,24 @@ export default function Actions({
       setOpen(isMinTabDimes);
     }
   }, [isMinTabDimes, loading]);
+  const toggleOpen = useCallback(() => {
+    setOpen((prev) => !prev);
+  }, []);
+  const copyLink = useCallback(() => {
+    navigator.clipboard
+      .writeText(`${BASE_URL}/${month}/${day}`)
+      .then(() => {
+        // biome-ignore lint/suspicious/noUnnecessaryConditions: The clipboard promise may resolve after the toast unmounts.
+        toastRef.current?.open();
+      })
+      .catch(() => {
+        // clipboard can reject on denied permission / insecure context;
+        // best-effort share, so do not open the success toast on failure
+      });
+  }, [day, month]);
+  const toggleLiked = useCallback(() => {
+    setIsLiked((prev) => !prev);
+  }, [setIsLiked]);
 
   if (loading) {
     return null;
@@ -74,16 +96,10 @@ export default function Actions({
           )}
           initial={open ? "visible" : "hidden"}
           ref={ref}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          transition={{ damping: 30, stiffness: 300, type: "spring" }}
           variants={list}
         >
-          <FooterButton
-            className="mt-2 mb-1"
-            onClick={() => {
-              setOpen((prev) => !prev);
-            }}
-            size="small"
-          >
+          <FooterButton className="mt-2 mb-1" onClick={toggleOpen} size="small">
             <IconMotionWrapper>
               <DotsHorizontalIcon className={footerBtnIconStyles()} />
             </IconMotionWrapper>
@@ -98,38 +114,19 @@ export default function Actions({
             </IconMotionWrapper>
           </Link>
 
-          <FooterButton
-            onClick={() => {
-              navigator.clipboard
-                .writeText(`${BASE_URL}/${month}/${day}`)
-                .then(() => {
-                  toastRef.current?.open();
-                })
-                .catch(() => {
-                  // clipboard can reject on denied permission / insecure context;
-                  // best-effort share, so do not open the success toast on failure
-                });
-            }}
-            size="small"
-          >
+          <FooterButton onClick={copyLink} size="small">
             <IconMotionWrapper>
               <ShareSvg className={footerBtnIconStyles()} />
             </IconMotionWrapper>
           </FooterButton>
 
-          <FooterButton
-            className="mt-1"
-            onClick={() => {
-              setIsLiked((prev) => !prev);
-            }}
-            size="small"
-          >
+          <FooterButton className="mt-1" onClick={toggleLiked} size="small">
             <IconMotionWrapper
               animate={
                 isLiked
                   ? {
-                      scale: [0.8, 1.3, 1],
                       rotate: [0, 25, 0],
+                      scale: [0.8, 1.3, 1],
                       transition: { ease: ["easeOut", "easeIn"] },
                     }
                   : {
@@ -178,7 +175,7 @@ function FooterButton({
   return (
     <motion.button
       {...props}
-      className={footerButtonStyles({ size, className: props.className })}
+      className={footerButtonStyles({ className: props.className, size })}
     />
   );
 }
@@ -190,9 +187,9 @@ function IconMotionWrapper(props: ComponentProps<typeof motion.div>) {
       whileTap={{
         scale: 0.8,
         transition: {
-          type: "spring",
-          stiffness: 400,
           damping: 17,
+          stiffness: 400,
+          type: "spring",
         },
       }}
       {...props}

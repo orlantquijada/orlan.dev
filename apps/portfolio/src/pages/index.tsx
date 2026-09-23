@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <div
       className={css({
+        "& > *": { px: "4" },
         minHeight: "100vh",
         pt: "8",
-        "& > *": { px: "4" },
         tab: {
           pt: "16",
         },
@@ -28,7 +28,7 @@ export default function Home() {
         <WIPBanner css={{ mb: "6" }} />
         <HeaderText>
           <span
-            className={cx(text(), css({ display: "block", color: "accent" }))}
+            className={cx(text(), css({ color: "accent", display: "block" }))}
           >
             Orlan Quijada
           </span>

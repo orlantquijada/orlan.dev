@@ -5,12 +5,19 @@ import { format, isSameDay, isThisMonth } from "date-fns";
 import {
   type MotionValue,
   motion,
+  type PanInfo,
   useMotionValue,
   useTransform,
 } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { type Dispatch, type SetStateAction, useState } from "react";
+import {
+  type Dispatch,
+  type DragEvent,
+  type SetStateAction,
+  useCallback,
+  useState,
+} from "react";
 import {
   Root as CalendarRoot,
   useCalendarContext,
@@ -61,6 +68,12 @@ export default function DailyCalendar() {
     [-NAVIGATION_OFFSET, 0, NAVIGATION_OFFSET],
     [0.1, 1, 0.1]
   );
+  const goToNextMonth = useCallback(() => {
+    window.history.pushState(null, "", `/${nextMonth}`);
+  }, [nextMonth]);
+  const goToPreviousMonth = useCallback(() => {
+    window.history.pushState(null, "", `/${previousMonth}`);
+  }, [previousMonth]);
 
   return (
     <>
@@ -119,13 +132,9 @@ export default function DailyCalendar() {
           </div>
 
           <Days
-            next={() => {
-              window.history.pushState(null, "", `/${nextMonth}`);
-            }}
+            next={goToNextMonth}
             opacity={opacity}
-            prev={() => {
-              window.history.pushState(null, "", `/${previousMonth}`);
-            }}
+            prev={goToPreviousMonth}
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
             x={x}
@@ -156,6 +165,18 @@ function Days({
   opacity: MotionValue<number>;
 }) {
   const { days } = useCalendarContext();
+  const handleDragEnd = useCallback(
+    (_: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
+      const offset = info.offset.x;
+
+      if (offset > NAVIGATION_OFFSET) {
+        prev();
+      } else if (offset < -NAVIGATION_OFFSET) {
+        next();
+      }
+    },
+    [next, prev]
+  );
 
   return (
     <motion.div
@@ -164,40 +185,62 @@ function Days({
       dragConstraints={{ left: 0, right: 0 }}
       dragElastic={0.3}
       dragMomentum={false}
-      onDragEnd={(_, info) => {
-        const offset = info.offset.x;
-
-        if (offset > NAVIGATION_OFFSET) {
-          prev();
-        } else if (offset < -NAVIGATION_OFFSET) {
-          next();
-        }
-      }}
-      style={{ x, opacity }}
+      onDragEnd={handleDragEnd}
+      style={{ opacity, x }}
     >
       <div className="grid grid-cols-7 md:border md:border-olive-3">
-        {days.map(({ date, isInCurrentMonth, isToday }) => {
-          const isSelected = selectedDate && isSameDay(date, selectedDate);
-          return (
-            <button
-              className={cn(
-                styles.day,
-                "grid h-16 cursor-pointer place-items-center border-t border-t-olive-3 bg-background p-4 text-base text-foreground leading-none transition-colors duration-75 hover:bg-olive-2 focus:outline-olive-7 md:h-25 md:place-items-start md:border md:border-olive-3",
-                isToday &&
-                  "relative text-olive-10 before:absolute before:size-[2em] before:rounded-full before:bg-olive-3 md:before:top-[0.5em] md:before:left-[0.5em]",
-                isSelected && "underline",
-                !isInCurrentMonth && "text-olive-8"
-              )}
-              key={date.toString()}
-              onClick={() => setSelectedDate(date)}
-              onDragStart={(e) => e.preventDefault()}
-              type="button"
-            >
-              <span className="z-10">{format(date, "d")}</span>
-            </button>
-          );
-        })}
+        {days.map(({ date, isInCurrentMonth, isToday }) => (
+          <DayButton
+            date={date}
+            isInCurrentMonth={isInCurrentMonth}
+            isSelected={Boolean(selectedDate && isSameDay(date, selectedDate))}
+            isToday={isToday}
+            key={date.toString()}
+            setSelectedDate={setSelectedDate}
+          />
+        ))}
       </div>
     </motion.div>
+  );
+}
+
+function preventDragStart(event: DragEvent<HTMLButtonElement>) {
+  event.preventDefault();
+}
+
+function DayButton({
+  date,
+  isInCurrentMonth,
+  isSelected,
+  isToday,
+  setSelectedDate,
+}: {
+  date: Date;
+  isInCurrentMonth: boolean;
+  isSelected: boolean;
+  isToday: boolean;
+  setSelectedDate: Dispatch<SetStateAction<Date | undefined>>;
+}) {
+  const handleClick = useCallback(
+    () => setSelectedDate(date),
+    [date, setSelectedDate]
+  );
+
+  return (
+    <button
+      className={cn(
+        styles.day,
+        "grid h-16 cursor-pointer place-items-center border-t border-t-olive-3 bg-background p-4 text-base text-foreground leading-none transition-colors duration-75 hover:bg-olive-2 focus:outline-olive-7 md:h-25 md:place-items-start md:border md:border-olive-3",
+        isToday &&
+          "relative text-olive-10 before:absolute before:size-[2em] before:rounded-full before:bg-olive-3 md:before:top-[0.5em] md:before:left-[0.5em]",
+        isSelected && "underline",
+        !isInCurrentMonth && "text-olive-8"
+      )}
+      onClick={handleClick}
+      onDragStart={preventDragStart}
+      type="button"
+    >
+      <span className="z-10">{format(date, "d")}</span>
+    </button>
   );
 }
