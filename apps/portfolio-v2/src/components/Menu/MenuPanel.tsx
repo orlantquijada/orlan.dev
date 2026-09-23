@@ -8,17 +8,9 @@ import GitHub from "@/icons/github.svg?react";
 import LinkedIn from "@/icons/linked-in.svg?react";
 import Logo from "@/icons/logo.svg?react";
 import Twitter from "@/icons/twitter.svg?react";
-import { isBrowser } from "@/lib/general";
-import { toggleTheme } from "@/lib/theme-toggle";
 import { GITHUB, LINKED_IN } from "@/utils/constants";
 import ContactDialog from "../Contact/ContactDialog";
 import styles from "./styles.module.css";
-
-function handleToggleTheme() {
-	if (isBrowser) {
-		toggleTheme();
-	}
-}
 
 export function MenuPanel({ onNavigate }: { onNavigate: () => void }) {
 	return (
@@ -56,7 +48,7 @@ export function MenuPanel({ onNavigate }: { onNavigate: () => void }) {
 					className:
 						"cursor-pointer text-left text-sm transition-all hover:translate-x-1",
 				})}
-				onClick={handleToggleTheme}
+				data-theme-toggle
 				type="button"
 			>
 				<div className="flex justify-center">

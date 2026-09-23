@@ -2,47 +2,46 @@ import { type ComponentRef, useEffect, useRef, useState } from "react";
 
 export function useVideoControls() {
 	const videoRef = useRef<ComponentRef<"video">>(null);
-	const [state, setState] = useState<"playing" | "paused">();
+	const [state, setState] = useState<"playing" | "paused">("paused");
 
 	useEffect(() => {
-		if (videoRef.current) {
-			setState(videoRef.current.paused ? "paused" : "playing");
+		const video = videoRef.current;
+		if (!video) {
+			return;
 		}
+
+		const onPlay = () => setState("playing");
+		const onPause = () => setState("paused");
+		video.addEventListener("play", onPlay);
+		video.addEventListener("pause", onPause);
+		video.addEventListener("ended", onPause);
+		setState(video.paused ? "paused" : "playing");
+
+		return () => {
+			video.removeEventListener("play", onPlay);
+			video.removeEventListener("pause", onPause);
+			video.removeEventListener("ended", onPause);
+		};
 	}, []);
 
-	const play = () => {
-		if (!videoRef.current) {
-			return;
-		}
-
-		videoRef.current.play();
-		setState("playing");
-	};
-
-	const pause = () => {
-		if (!videoRef.current) {
-			return;
-		}
-
-		videoRef.current.pause();
-		setState("paused");
-	};
-
 	const toggle = () => {
-		if (!videoRef.current) {
+		const video = videoRef.current;
+		if (!video) {
 			return;
 		}
 
-		if (videoRef.current.paused) {
-			videoRef.current.play();
-			play();
+		if (video.paused) {
+			video.play().catch(() => {
+				if (video.paused) {
+					setState("paused");
+				}
+			});
 		} else {
-			videoRef.current.pause();
-			pause();
+			video.pause();
 		}
 	};
 
-	const controls = { pause, play, state, toggle };
+	const controls = { state, toggle };
 
 	return [videoRef, controls] as const;
 }
