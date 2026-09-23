@@ -35,6 +35,7 @@ const config = defineConfig({
 		"/resume": { destination: "/01Quijada.pdf", status: 301 },
 	},
 	scopedStyleStrategy: "where",
+	site: "https://orlan.dev",
 	vite: {
 		plugins: [svgr(), tailwindcss()],
 		ssr: {

@@ -39,9 +39,10 @@ export default function Video({
 			</video>
 
 			<button
+				aria-label={state === "playing" ? "Pause video" : "Play video"}
 				className={cn(
 					browserIconButtonStyles(),
-					"absolute right-4 bottom-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100",
+					"absolute right-4 bottom-4 translate-y-10 opacity-0 focus-visible:translate-y-0 focus-visible:opacity-100 group-hover:translate-y-0 group-hover:opacity-100",
 					state === "paused" && "translate-y-0 opacity-100"
 				)}
 				onClick={toggle}

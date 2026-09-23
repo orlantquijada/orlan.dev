@@ -6,12 +6,11 @@ type Props = HTMLAttributes<"pre">;
 const { ...props } = Astro.props;
 
 const html = await Astro.slots.render("default");
-const code = html.replace(/<[^>]*>/g, "");
 ---
 
 <div class="root">
 	<pre {...props}><Fragment set:html={html} /></pre>
-	<CopyButton code={code} client:idle />
+	<CopyButton client:idle />
 	<div class="shine" style="top: -1px; z-index: -1;" />
 </div>
 

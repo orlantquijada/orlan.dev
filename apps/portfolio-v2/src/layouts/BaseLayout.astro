@@ -7,9 +7,19 @@ import ThemeToggle from "@/components/ThemeToggle.astro";
 
 export type Props = {
 	title: string;
+	description: string;
+	previewImage?: string | undefined;
+	ogType?: "website" | "article" | undefined;
 };
 
-const { title } = Astro.props;
+const {
+	title,
+	description,
+	previewImage = "/social-preview.png",
+	ogType = "website",
+} = Astro.props;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const previewUrl = new URL(previewImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -20,6 +30,17 @@ const { title } = Astro.props;
 		<link href="/favicon.svg" rel="icon">
 		<meta content={Astro.generator} name="generator">
 		<title>{title}</title>
+		<meta content={description} name="description">
+		<link href={canonical} rel="canonical">
+		<meta content={ogType} property="og:type">
+		<meta content={title} property="og:title">
+		<meta content={description} property="og:description">
+		<meta content={canonical} property="og:url">
+		<meta content={previewUrl} property="og:image">
+		<meta content="summary_large_image" name="twitter:card">
+		<meta content={title} name="twitter:title">
+		<meta content={description} name="twitter:description">
+		<meta content={previewUrl} name="twitter:image">
 		<ClientRouter />
 		<slot name="head" />
 		<Font cssVariable="--font-jetbrains-mono" preload />

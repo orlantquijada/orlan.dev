@@ -15,7 +15,7 @@ const recentNotes = notesData
 ---
 
 <section data-animate style="--stagger: 8">
-	<h3 class="text-gray11 mb-6 text-sm">Notes</h3>
+	<h2 class="text-gray11 mb-6 text-sm">Notes</h2>
 	<div class="notes-grid">
 		{recentNotes.map((note) => <NoteCard {...note} />)}
 		<a class="view-all-card" href="/notes">

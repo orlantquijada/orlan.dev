@@ -29,7 +29,7 @@ import WorkSection from "./WorkSection.astro";
 					target="_blank"
 					>Spaceduck</a
 				><span
-					class="pointer-events-none select-none size-10 absolute transition-all duration-350 opacity-0 rotate-45 group-hover:opacity-100 group-hover:-translate-y-8 group-hover:-rotate-30"
+					class="pointer-events-none select-none size-10 absolute transition-all duration-350 opacity-0 rotate-45 group-hover:opacity-100 group-hover:-translate-y-8 group-hover:-rotate-30 group-focus-within:opacity-100 group-focus-within:-translate-y-8 group-focus-within:-rotate-30"
 					><DuckSprite client:only="react" /></span
 				>
 			</span>
@@ -85,7 +85,6 @@ import WorkSection from "./WorkSection.astro";
 		color: var(--selection-color);
 		text-decoration-line: underline;
 		text-decoration-style: wavy;
-		outline: none;
 		background-color: var(--accent);
 	}
 

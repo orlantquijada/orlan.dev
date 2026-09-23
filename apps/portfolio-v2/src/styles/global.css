@@ -200,6 +200,11 @@
 	/*   5px 10px 12.6px -2.5px rgba(3, 2, 2, 0.1); */
 }
 
+:is(a, button, [role="button"]):focus-visible {
+	outline: 2px solid var(--gray12);
+	outline-offset: 3px;
+}
+
 /* Shine effect - gradient top border for cards, visible only in dark mode */
 .shine {
 	position: absolute;

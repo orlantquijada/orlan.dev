@@ -83,6 +83,9 @@ export function LightboxDialog({
 					className="fixed inset-0 z-50 flex items-center justify-center data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent"
 					onClick={handleContentClick}
 				>
+					<DialogPrimitive.Title className="sr-only">
+						Spaceduck image gallery
+					</DialogPrimitive.Title>
 					<AnimatePresence initial={false} mode="popLayout">
 						{currentIndex !== null && images[currentIndex] && (
 							// biome-ignore lint/correctness/useImageSize: lightbox renders external images without known dimensions
@@ -121,6 +124,7 @@ export function LightboxDialog({
 						onClick={stopClickPropagation}
 					>
 						<DialogPrimitive.Close
+							aria-label="Close image gallery"
 							className={cn(
 								"grid size-12 cursor-pointer place-items-center rounded-xl bg-gray-a3 text-gray1 transition-all active:scale-90 active:opacity-75 md:size-16 dark:text-gray12"
 							)}

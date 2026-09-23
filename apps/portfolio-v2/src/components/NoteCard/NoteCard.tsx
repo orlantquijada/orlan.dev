@@ -44,7 +44,7 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 			href={href}
 			layoutId={title}
 		>
-			<h1
+			<h2
 				className="font-medium"
 				style={
 					{
@@ -53,7 +53,7 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 				}
 			>
 				{title}
-			</h1>
+			</h2>
 			{description ? (
 				<p className="text-gray10 text-sm dark:text-gray11">{description}</p>
 			) : null}
