@@ -46,7 +46,7 @@ export function MenuPanel({ onNavigate }: { onNavigate: () => void }) {
 			<button
 				className={menuItemStyles({
 					className:
-						"cursor-pointer text-left text-sm transition-all hover:translate-x-1",
+						"cursor-pointer text-left text-sm motion-safe:transition-all motion-safe:hover:translate-x-1",
 				})}
 				data-theme-toggle
 				type="button"
@@ -89,11 +89,11 @@ function MenuItem(props: { Icon: ReactNode; children: ReactNode }) {
 		<div
 			className={menuItemStyles({
 				className:
-					"group/menu transition-transform focus-within:translate-x-1 hover:translate-x-1",
+					"group/menu motion-safe:transition-transform motion-safe:hover:translate-x-1 motion-safe:focus-within:translate-x-1",
 			})}
 		>
 			{children}
-			<div className="-mx-2 opacity-0 transition-all group-focus-within/menu:translate-x-1 group-focus-within/menu:opacity-100 group-hover/menu:translate-x-1 group-hover/menu:opacity-100">
+			<div className="-mx-2 opacity-0 group-focus-within/menu:opacity-100 group-hover/menu:opacity-100 motion-safe:transition-all motion-safe:group-hover/menu:translate-x-1 motion-safe:group-focus-within/menu:translate-x-1">
 				{Icon}
 			</div>
 		</div>

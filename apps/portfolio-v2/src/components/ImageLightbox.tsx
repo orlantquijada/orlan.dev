@@ -1,7 +1,8 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { transitions } from "@repo/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import { type MouseEvent, useCallback, useEffect, useState } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import ArrowRight from "@/icons/arrow-right.svg?react";
 import Close from "@/icons/cross.svg?react";
 import { cn } from "@/lib/general";
@@ -27,6 +28,7 @@ export function LightboxDialog({
 	onIndexChange,
 }: LightboxDialogProps) {
 	const isOpen = currentIndex !== null;
+	const shouldReduceMotion = useReducedMotion();
 
 	const handleOpenChange = useCallback(
 		(open: boolean) => {
@@ -86,22 +88,24 @@ export function LightboxDialog({
 					<DialogPrimitive.Title className="sr-only">
 						Spaceduck image gallery
 					</DialogPrimitive.Title>
-					<AnimatePresence initial={false} mode="popLayout">
-						{currentIndex !== null && images[currentIndex] && (
-							// biome-ignore lint/correctness/useImageSize: lightbox renders external images without known dimensions
-							<motion.img
-								alt={images[currentIndex].alt}
-								animate={{ opacity: 1, scale: 1 }}
-								className="max-h-[85vh] max-w-[90vw] rounded-xl object-contain md:max-h-[90vh] md:max-w-[85vw]"
-								exit={{ opacity: 0, scale: 0.95 }}
-								initial={{ opacity: 0, scale: 0.95 }}
-								key={currentIndex}
-								onClick={stopClickPropagation}
-								src={images[currentIndex].src}
-								transition={transitions.punchy}
-							/>
-						)}
-					</AnimatePresence>
+					<MotionConfig reducedMotion={shouldReduceMotion ? "always" : "never"}>
+						<AnimatePresence initial={false} mode="popLayout">
+							{currentIndex !== null && images[currentIndex] && (
+								// biome-ignore lint/correctness/useImageSize: lightbox renders external images without known dimensions
+								<motion.img
+									alt={images[currentIndex].alt}
+									animate={{ opacity: 1, scale: 1 }}
+									className="max-h-[85vh] max-w-[90vw] rounded-xl object-contain md:max-h-[90vh] md:max-w-[85vw]"
+									exit={{ opacity: 0, scale: 0.95 }}
+									initial={{ opacity: 0, scale: 0.95 }}
+									key={currentIndex}
+									onClick={stopClickPropagation}
+									src={images[currentIndex].src}
+									transition={transitions.punchy}
+								/>
+							)}
+						</AnimatePresence>
+					</MotionConfig>
 
 					<NavButton
 						aria-label="Previous image"
@@ -126,7 +130,7 @@ export function LightboxDialog({
 						<DialogPrimitive.Close
 							aria-label="Close image gallery"
 							className={cn(
-								"grid size-12 cursor-pointer place-items-center rounded-xl bg-gray-a3 text-gray1 transition-all active:scale-90 active:opacity-75 md:size-16 dark:text-gray12"
+								"grid size-12 cursor-pointer place-items-center rounded-xl bg-gray-a3 text-gray1 active:opacity-75 motion-safe:transition-all motion-safe:active:scale-90 md:size-16 dark:text-gray12"
 							)}
 						>
 							<Close />
@@ -210,7 +214,7 @@ function NavButton({
 			className={cn(
 				"bg-transparent text-gray1 dark:text-gray12",
 				"fixed top-1/2 z-10 grid -translate-y-1/2 cursor-pointer",
-				"h-[60vh] w-12 place-items-center transition-all md:w-16",
+				"h-[60vh] w-12 place-items-center motion-safe:transition-all md:w-16",
 				"active:opacity-75",
 				isPrev ? "left-0" : "right-0"
 			)}

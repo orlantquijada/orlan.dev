@@ -13,6 +13,7 @@ import {
 	useEffect,
 	useState,
 } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import Close from "@/icons/cross.svg?react";
 
 import { getNeighborhoodsIntersection, type TagGraphMap } from "@/lib/notes";
@@ -36,6 +37,7 @@ type Props = {
 export default function NoteTagsList(props: Props) {
 	const { tags, tagsGraph } = props;
 	const _selectedTags = useStore($selectedTags);
+	const shouldReduceMotion = useReducedMotion();
 	const isSelecting = Boolean(_selectedTags.length);
 
 	const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags);
@@ -45,9 +47,12 @@ export default function NoteTagsList(props: Props) {
 	useTagsUrlSync(tags);
 
 	return (
-		<LayoutGroup>
-			<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
-				<MotionConfig transition={transitions.snappy}>
+		<MotionConfig
+			reducedMotion={shouldReduceMotion ? "always" : "never"}
+			transition={transitions.snappy}
+		>
+			<LayoutGroup>
+				<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
 					<AnimatePresence mode="popLayout">
 						{isSelecting ? (
 							<Chip asChild>
@@ -113,9 +118,9 @@ export default function NoteTagsList(props: Props) {
 									/>
 								))}
 					</AnimatePresence>
-				</MotionConfig>
-			</div>
-		</LayoutGroup>
+				</div>
+			</LayoutGroup>
+		</MotionConfig>
 	);
 }
 

@@ -1,5 +1,6 @@
 import { asMilliseconds, choice, range } from "@repo/utils";
 import { useEffect, useState } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 export default function SpriteSheet({
 	img,
@@ -52,8 +53,13 @@ const SPRITE_INTERVAL = asMilliseconds({ seconds: 0.5 });
 
 export function DuckSprite() {
 	const [index, setIndex] = useState(choice(DUCK_INDECES));
+	const shouldReduceMotion = useReducedMotion();
 
 	useEffect(() => {
+		if (shouldReduceMotion) {
+			return;
+		}
+
 		const id = setInterval(() => {
 			setIndex((prevIndex) =>
 				choice(DUCK_INDECES.filter((i) => i !== prevIndex))
@@ -63,7 +69,7 @@ export function DuckSprite() {
 		return () => {
 			clearInterval(id);
 		};
-	}, []);
+	}, [shouldReduceMotion]);
 
 	return (
 		<div
