@@ -6,67 +6,63 @@ import Video from "./Video.tsx";
 ---
 
 <section
-	class:list={["flex w-full flex-col", "h-[200vh]", "md:h-208"]}
-	style="--stagger:7"
 	data-animate
+	style="--stagger:7"
+	class:list={["flex w-full flex-col", "h-[200vh]", "md:h-208"]}
 >
 	<h3
-		class:list={[
-      "text-gray11 mb-6 text-sm",
-      "sticky top-24",
-      "md:relative md:top-[initial]",
-    ]}
+		class:list={["text-gray11 mb-6 text-sm", "sticky top-24", "md:relative md:top-[initial]"]}
 	>
 		Side Projects
 	</h3>
 
 	<div class="relative h-full w-full">
 		<div
-			class:list={[
-	       "sticky top-35",
-	       "md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:w-full md:max-w-lg",
-	     ]}
 			id="daily"
+			class:list={[
+	"sticky top-35",
+	"md:absolute md:bottom-0 md:left-[initial] md:right-0 md:top-[initial] md:z-10 md:w-full md:max-w-lg",
+]}
 		>
 			<BrowserBox
-				title="Daily Stoic"
 				aspect="desktop"
-				href="https://daily.orlan.dev"
 				className="md:min-w-lg"
+				href="https://daily.orlan.dev"
+				title="Daily Stoic"
 			>
 				<Video
+					className="aspect-93/80"
 					src="/stoic-demo2.mp4"
 					type="video/mp4"
-					className="aspect-93/80"
 					client:visible
 				>
 					<Icon name="pause" slot="pausedIcon" />
-					<Icon name="play" slot="playingIcon" width={10} height={12} />
+					<Icon height={12} name="play" slot="playingIcon" width={10} />
 				</Video>
 			</BrowserBox>
 		</div>
 
 		<div
-			class:list={[
-	       "sticky top-35 mt-4 brightness-[.3]",
-	       "md:absolute md:left-0 md:top-0 md:w-full md:max-w-xs md:brightness-100 md:hover:z-10",
-	     ]}
 			id="money"
+			class:list={[
+	"sticky top-35 mt-4 brightness-[.3]",
+	"md:absolute md:left-0 md:top-0 md:w-full md:max-w-xs md:brightness-100 md:hover:z-10",
+]}
 		>
 			<BrowserBox
-				title="Money Manager"
 				aspect="phone"
-				href="https://github.com/orlantquijada/money-manager"
 				className="md:min-w-[20rem]"
+				href="https://github.com/orlantquijada/money-manager"
+				title="Money Manager"
 			>
 				<Video
-					src="/jamm-add-fund2.mp4"
 					className="aspect-6/13"
+					src="/jamm-add-fund2.mp4"
 					type="video/mp4"
 					client:visible
 				>
 					<Icon name="pause" slot="pausedIcon" />
-					<Icon name="play" slot="playingIcon" width={10} height={12} />
+					<Icon height={12} name="play" slot="playingIcon" width={10} />
 				</Video>
 			</BrowserBox>
 		</div>

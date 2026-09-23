@@ -9,29 +9,29 @@ export const buttonStyles = cva(
 		styles.button,
 	],
 	{
-		variants: {
-			withAnimations: {
-				true: "hover:bg-gray1 active:scale-97 active:opacity-75 hover:dark:bg-gray5",
+		compoundVariants: [
+			{
+				className: "hover:dark:bg-gray-a5",
+				translucent: true,
+				withAnimations: true,
 			},
+		],
+		defaultVariants: {
+			motionSafe: true,
+			translucent: false,
+			withAnimations: true,
+		},
+		variants: {
 			motionSafe: {
 				true: "transition-all ease-out",
 			},
 			translucent: {
-				true: "bg-chip-bg dark:bg-gray-a3",
 				false: "dark:bg-gray3",
+				true: "bg-chip-bg dark:bg-gray-a3",
 			},
-		},
-		compoundVariants: [
-			{
-				withAnimations: true,
-				translucent: true,
-				className: "hover:dark:bg-gray-a5",
+			withAnimations: {
+				true: "hover:bg-gray1 active:scale-97 active:opacity-75 hover:dark:bg-gray5",
 			},
-		],
-		defaultVariants: {
-			withAnimations: true,
-			translucent: false,
-			motionSafe: true,
 		},
 	}
 );
@@ -52,7 +52,7 @@ export function Button(props: ButtonProps) {
 		<button
 			{..._props}
 			className={twMerge(
-				buttonStyles({ className, translucent, withAnimations, motionSafe })
+				buttonStyles({ className, motionSafe, translucent, withAnimations })
 			)}
 		>
 			{children}

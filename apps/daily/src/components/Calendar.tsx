@@ -14,7 +14,9 @@ import {
 import {
   type ComponentProps,
   createContext,
+  type MouseEvent,
   type ReactNode,
+  useCallback,
   useContext,
   useState,
 } from "react";
@@ -54,7 +56,7 @@ function useCalendar({
 
   const start = startOfWeek(startOfMonth(currentDate));
   const end = endOfWeek(endOfMonth(currentDate));
-  const days = eachDayOfInterval({ start, end }).map((date) => ({
+  const days = eachDayOfInterval({ end, start }).map((date) => ({
     date,
     isInCurrentMonth: isSameMonth(date, currentDate),
     isToday: isSameDay(date, today),
@@ -63,10 +65,10 @@ function useCalendar({
   return {
     currentDate,
     days,
-    setCurrentDate,
     goToNextMonth: () => setCurrentDate(add(currentDate, { months: 1 })),
     goToPreviousMonth: () => setCurrentDate(sub(currentDate, { months: 1 })),
     reset: () => setCurrentDate(defaultDate ?? today),
+    setCurrentDate,
   } as const;
 }
 
@@ -82,17 +84,18 @@ export function Root({
 
 function CalendarActionButton({
   action,
+  onClick,
   ...props
 }: ComponentProps<"button"> & { action: () => void }) {
-  return (
-    <button
-      {...props}
-      onClick={(e) => {
-        action();
-        props.onClick?.(e);
-      }}
-    />
+  const handleClick = useCallback(
+    (event: MouseEvent<HTMLButtonElement>) => {
+      action();
+      onClick?.(event);
+    },
+    [action, onClick]
   );
+
+  return <button {...props} onClick={handleClick} />;
 }
 
 export function PreviousMonthButton(props: ComponentProps<"button">) {

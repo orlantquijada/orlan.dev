@@ -6,24 +6,19 @@ import type { Daily, DailyDate } from "./like";
 async function getAllCalendarFiles(dir: string) {
   const months = await fs.readdir(dir, { withFileTypes: true });
 
-  const allFiles: string[] = [];
+  const monthDirectories = months.filter((month) => month.isDirectory());
+  const filesByMonth = await Promise.all(
+    monthDirectories.map(async (month) => {
+      const monthPath = path.join(dir, month.name);
+      const files = await fs.readdir(monthPath);
 
-  for (const month of months) {
-    if (!month.isDirectory()) {
-      continue;
-    }
+      return files
+        .filter((file) => file.endsWith(".mdx"))
+        .map((file) => path.join(monthPath, file));
+    })
+  );
 
-    const monthPath = path.join(dir, month.name);
-    const files = await fs.readdir(monthPath);
-
-    for (const file of files) {
-      if (file.endsWith(".mdx")) {
-        allFiles.push(path.join(monthPath, file));
-      }
-    }
-  }
-
-  return allFiles;
+  return filesByMonth.flat();
 }
 
 export function getFiles() {
@@ -41,11 +36,11 @@ export const getValidDates = cache(async (): Promise<DailyDate[]> => {
     const [month, day] = fileName.split("/").slice(-2);
 
     // removes file extension
-    const _day = day.split(".")[0];
+    const [_day] = day.split(".");
 
     return {
-      month,
       day: _day,
+      month,
     };
   });
 });

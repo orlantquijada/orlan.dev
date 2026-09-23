@@ -2,37 +2,37 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    orientation: "portrait",
-    theme_color: "#ECEEEC",
     background_color: "#ECEEEC",
-    display: "standalone",
-    scope: "/",
-    start_url: "/",
-    name: "Daily Stoic",
-    short_name: "Daily Stoic",
     description:
       "366 Meditations on Wisdom, Perseverance, and The Art of Living",
+    display: "standalone",
     icons: [
       {
-        src: "/icon-192x192.png",
         sizes: "192x192",
+        src: "/icon-192x192.png",
         type: "image/png",
       },
       {
-        src: "/icon-256x256.png",
         sizes: "256x256",
+        src: "/icon-256x256.png",
         type: "image/png",
       },
       {
-        src: "/icon-384x384.png",
         sizes: "384x384",
+        src: "/icon-384x384.png",
         type: "image/png",
       },
       {
-        src: "/icon-512x512.png",
         sizes: "512x512",
+        src: "/icon-512x512.png",
         type: "image/png",
       },
     ],
+    name: "Daily Stoic",
+    orientation: "portrait",
+    scope: "/",
+    short_name: "Daily Stoic",
+    start_url: "/",
+    theme_color: "#ECEEEC",
   };
 }

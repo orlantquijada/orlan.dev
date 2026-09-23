@@ -4,12 +4,11 @@ import { query, storageKey } from "@/lib/theme-toggle";
 
 <!-- inline is necessary to avoid FOUC 
      flash happens on dark mode default -->
-<script is:inline define:vars={{ query, storageKey }}>
+<script define:vars={{ query, storageKey }} is:inline>
 	////////////////////////////// Util fns //////////////////////////////
 
 	const disableTransitionOnThemeChange = (callback) => {
 		const css = document.createElement("style");
-		css.type = "text/css";
 		css.appendChild(
 			document.createTextNode(
 				`* {
@@ -59,8 +58,7 @@ import { query, storageKey } from "@/lib/theme-toggle";
 	//////////////////////////////////////////////////////////////////////
 
 	// set early so no page flashes / CSS is made aware
-	const theme = getTheme();
-	setTheme(theme);
+	setTheme(getTheme());
 
 	window.addEventListener("load", () => {
 		const theme = getTheme();

@@ -6,7 +6,13 @@ import {
 	MotionConfig,
 	motion,
 } from "motion/react";
-import { type ComponentProps, type Ref, useEffect, useState } from "react";
+import {
+	type ComponentProps,
+	type Ref,
+	useCallback,
+	useEffect,
+	useState,
+} from "react";
 import Close from "@/icons/cross.svg?react";
 
 import { getNeighborhoodsIntersection, type TagGraphMap } from "@/lib/notes";
@@ -48,7 +54,7 @@ export default function NoteTagsList(props: Props) {
 								<motion.button
 									animate={{ opacity: 1 }}
 									initial={{ opacity: 0 }}
-									onClick={() => clearTags()}
+									onClick={clearTags}
 								>
 									<Close className={styles.icon} />
 								</motion.button>
@@ -73,11 +79,11 @@ export default function NoteTagsList(props: Props) {
 									key={tag}
 									layoutId={tag}
 									style={{
-										zIndex: 5 - index,
+										justifyContent: "flex-end",
+										marginLeft: -32,
 
 										paddingLeft: 36,
-										marginLeft: -32,
-										justifyContent: "flex-end",
+										zIndex: 5 - index,
 									}}
 									tag={tag}
 								/>
@@ -152,6 +158,13 @@ const Tag = (props: TagProps) => {
 	const { tag, ref, ...rest } = props;
 	const _selectedTags = useStore($selectedTags);
 	const isSelected = _selectedTags.includes(tag);
+	const handleTagClick = useCallback(() => {
+		if (isSelected) {
+			removeTag(tag);
+		} else {
+			addTag(tag);
+		}
+	}, [isSelected, tag]);
 
 	return (
 		<Chip
@@ -164,13 +177,7 @@ const Tag = (props: TagProps) => {
 				{...rest}
 				className={_selectedTags.length > 1 ? styles.chip : ""}
 				data-selected={isSelected}
-				onClick={() => {
-					if (isSelected) {
-						removeTag(tag);
-					} else {
-						addTag(tag);
-					}
-				}}
+				onClick={handleTagClick}
 				ref={ref}
 				style={{
 					// fix to distorition on animation (border-radius distorts if size animates)

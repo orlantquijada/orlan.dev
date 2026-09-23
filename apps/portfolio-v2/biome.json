@@ -7,7 +7,16 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": [
+      "src/**",
+      "*.ts",
+      "*.tsx",
+      "*.js",
+      "*.json",
+      "!!public",
+      "!!src/icons"
+    ]
   },
   "formatter": {
     "enabled": true,
@@ -16,7 +25,7 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true,
+      "preset": "recommended",
       "style": {
         "useFilenamingConvention": "off",
         "useConsistentTypeDefinitions": {

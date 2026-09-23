@@ -42,7 +42,7 @@ export function useVideoControls() {
 		}
 	};
 
-	const controls = { state, play, pause, toggle };
+	const controls = { pause, play, state, toggle };
 
 	return [videoRef, controls] as const;
 }

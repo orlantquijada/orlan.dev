@@ -1,13 +1,14 @@
 ---
-import type { HTMLTag, Polymorphic } from "astro/types";
+import type { HTMLAttributes } from "astro/types";
 
 import { browserIconButtonStyles } from "./styles.ts";
 
-type Props<T extends HTMLTag> = Polymorphic<{ as: T }>;
+type Props = HTMLAttributes<"a"> & { href: string; label: string };
 
-const { as: Tag, ...props } = Astro.props;
+const { class: className, href, label, ...props } = Astro.props;
 ---
 
-<Tag {...props} class={browserIconButtonStyles({ class: props.class })}>
+<a {...props} class={browserIconButtonStyles({ class: className })} href={href}>
 	<slot />
-</Tag>
+	<span class="sr-only">{label}</span>
+</a>

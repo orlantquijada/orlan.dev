@@ -14,20 +14,20 @@ type Social = {
 
 const socials: Social[] = [
 	{
-		id: "github",
 		iconName: "github2",
+		id: "github",
 		title: "Github",
 		url: GITHUB,
 	},
 	{
-		id: "linked-in",
 		iconName: "linked-in",
+		id: "linked-in",
 		title: "LinkedIn",
 		url: LINKED_IN,
 	},
 	{
-		id: "email",
 		iconName: "email",
+		id: "email",
 		title: "Email",
 		url: `mailto:${EMAIL}`,
 	},
@@ -42,25 +42,25 @@ const btnClass = twMerge(
 ---
 
 <div data-animate style="--stagger: 4">
-	<a class={btnClass} href="/resume" target="_blank" rel="noopener noreferrer">
+	<a class={btnClass} href="/resume" rel="noopener noreferrer" target="_blank">
 		<Icon
-			name="file-download"
-			slot="icon"
-			size={16}
 			class="text-gray10 group-hover:text-gray1 transition-all"
+			name="file-download"
+			size={16}
+			slot="icon"
 		/>
 		<span>View Resume</span>
 	</a>
 </div>
 
-<div data-animate style="--stagger: 5" class="flex gap-x-5">
+<div class="flex gap-x-5" data-animate style="--stagger: 5">
 	{socials.map((social) => (
-    <a class="-mx-2 aspect-square px-2 text-gray9 transition-all ease-out hover:scale-110 hover:text-gray12" href={social.url} title={social.title}>
-      <Icon
-        class='size-6'
-        name={social.iconName}
-        slot="icon"
-      />
-    </a>
-  ))}
+	<a
+		class="-mx-2 aspect-square px-2 text-gray9 transition-all ease-out hover:scale-110 hover:text-gray12"
+		href={social.url}
+		title={social.title}
+	>
+		<Icon class="size-6" name={social.iconName} slot="icon" />
+	</a>
+))}
 </div>

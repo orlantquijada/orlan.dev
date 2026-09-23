@@ -28,11 +28,11 @@ export default function SpriteSheet({
 		<div
 			style={{
 				backgroundImage: `url(${img})`,
-				backgroundRepeat: "no-repeat",
 				backgroundPosition: `${shiftBy(col, cols)}% ${shiftBy(row, rows)}%`,
+				backgroundRepeat: "no-repeat",
 				backgroundSize: `auto ${100 * rows}%`,
-				width: "100%",
 				height: "100%",
+				width: "100%",
 			}}
 		/>
 	);
@@ -68,7 +68,7 @@ export function DuckSprite() {
 	return (
 		<div
 			className="overflow-clip rounded-full"
-			style={{ width: DUCK_SIZE, height: DUCK_SIZE }}
+			style={{ height: DUCK_SIZE, width: DUCK_SIZE }}
 		>
 			<SpriteSheet
 				img="/no-bg-duck-sprite.png"

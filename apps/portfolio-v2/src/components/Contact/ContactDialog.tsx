@@ -102,13 +102,13 @@ function Social(props: ComponentProps<"a">) {
 }
 
 const iconStyles = cva([styles.icon], {
-	variants: {
-		size: {
-			sm: "h-4 w-4",
-			md: "h-6 w-6",
-		},
-	},
 	defaultVariants: {
 		size: "sm",
+	},
+	variants: {
+		size: {
+			md: "h-6 w-6",
+			sm: "h-4 w-4",
+		},
 	},
 });

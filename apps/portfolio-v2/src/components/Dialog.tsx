@@ -11,18 +11,18 @@ const contentStyles = cva(
 		"data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent",
 	],
 	{
+		defaultVariants: {
+			color: "gray",
+			transluscent: false,
+		},
 		variants: {
 			color: {
 				gray: "border-gray7 bg-gray1",
 			},
 			transluscent: {
-				true: "dark:bg-gray-a3 dark:backdrop-blur-md dark:backdrop-brightness-75",
 				false: "dark:border-gray6 dark:bg-gray3",
+				true: "dark:bg-gray-a3 dark:backdrop-blur-md dark:backdrop-brightness-75",
 			},
-		},
-		defaultVariants: {
-			transluscent: false,
-			color: "gray",
 		},
 	}
 );
@@ -56,7 +56,4 @@ export function Root(props: Props) {
 	);
 }
 
-export const Trigger = DialogPrimitive.Trigger;
-export const Close = DialogPrimitive.Close;
-export const Title = DialogPrimitive.Title;
-export const Description = DialogPrimitive.Description;
+export const { Trigger, Close, Title, Description } = DialogPrimitive;

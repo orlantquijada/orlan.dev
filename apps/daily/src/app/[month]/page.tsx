@@ -37,17 +37,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = `${capitalizedMonth} — ${subject}`;
 
   return {
-    title,
     description: subject,
     openGraph: {
-      title,
       description: subject,
+      title,
       type: "article",
     },
+    title,
     twitter: {
       card: "summary_large_image",
-      title,
       description: subject,
+      title,
     },
   };
 }

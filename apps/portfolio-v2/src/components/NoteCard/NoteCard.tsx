@@ -37,8 +37,8 @@ export function MotionNoteCard(props: MotionNoteCardProps) {
 			animate={isSelecting ? { opacity: selected ? 1 : 0.3 } : {}}
 			className={twMerge(
 				noteCardStyles({
-					stripes: wip,
 					className: "will-change-[opacity,transform]",
+					stripes: wip,
 				})
 			)}
 			href={href}

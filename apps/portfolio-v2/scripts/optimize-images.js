@@ -11,6 +11,37 @@ const TARGET_DIR = path.resolve(
 	"../public/projects/spaceduck/showcase/"
 );
 
+async function optimizeImage(file) {
+	const filePath = path.join(TARGET_DIR, file);
+	const fileNameWithoutExt = path.parse(file).name;
+	const webpPath = path.join(TARGET_DIR, `${fileNameWithoutExt}.webp`);
+
+	const originalStats = await fs.stat(filePath);
+	console.log(
+		`Processing ${file} (${(originalStats.size / 1024).toFixed(2)} KB)`
+	);
+
+	const image = sharp(filePath);
+
+	await image.webp({ quality: 80 }).toFile(webpPath);
+
+	const webpStats = await fs.stat(webpPath);
+	console.log(
+		`  -> Created WebP: ${(webpStats.size / 1024).toFixed(2)} KB (${Math.round((1 - webpStats.size / originalStats.size) * 100)}% saved)`
+	);
+
+	const buffer = await image
+		.png({ compressionLevel: 9, quality: 80 })
+		.toBuffer();
+
+	await fs.writeFile(filePath, buffer);
+
+	const newPngStats = await fs.stat(filePath);
+	console.log(
+		`  -> Optimized PNG: ${(newPngStats.size / 1024).toFixed(2)} KB (${Math.round((1 - newPngStats.size / originalStats.size) * 100)}% saved)`
+	);
+}
+
 async function optimizeImages() {
 	console.log(`Scanning directory: ${TARGET_DIR}`);
 
@@ -22,34 +53,8 @@ async function optimizeImages() {
 				continue;
 			}
 
-			const filePath = path.join(TARGET_DIR, file);
-			const fileNameWithoutExt = path.parse(file).name;
-			const webpPath = path.join(TARGET_DIR, `${fileNameWithoutExt}.webp`);
-
-			const originalStats = await fs.stat(filePath);
-			console.log(
-				`Processing ${file} (${(originalStats.size / 1024).toFixed(2)} KB)`
-			);
-
-			const image = sharp(filePath);
-
-			await image.webp({ quality: 80 }).toFile(webpPath);
-
-			const webpStats = await fs.stat(webpPath);
-			console.log(
-				`  -> Created WebP: ${(webpStats.size / 1024).toFixed(2)} KB (${Math.round((1 - webpStats.size / originalStats.size) * 100)}% saved)`
-			);
-
-			const buffer = await image
-				.png({ quality: 80, compressionLevel: 9 })
-				.toBuffer();
-
-			await fs.writeFile(filePath, buffer);
-
-			const newPngStats = await fs.stat(filePath);
-			console.log(
-				`  -> Optimized PNG: ${(newPngStats.size / 1024).toFixed(2)} KB (${Math.round((1 - newPngStats.size / originalStats.size) * 100)}% saved)`
-			);
+			// biome-ignore lint/performance/noAwaitInLoops: Finish each image before starting the next to preserve processing and log order.
+			await optimizeImage(file);
 		}
 
 		console.log("Done!");

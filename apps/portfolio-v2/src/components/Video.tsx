@@ -20,7 +20,7 @@ export default function Video({
 	playingIcon,
 	className,
 }: Props) {
-	const [videoRef, { pause, play, state }] = useVideoControls();
+	const [videoRef, { pause, play, state, toggle }] = useVideoControls();
 
 	return (
 		<div className={cn("relative", className)}>
@@ -44,19 +44,7 @@ export default function Video({
 					"absolute right-4 bottom-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100",
 					state === "paused" && "translate-y-0 opacity-100"
 				)}
-				onClick={() => {
-					if (!videoRef.current) {
-						return;
-					}
-
-					if (videoRef.current.paused) {
-						videoRef.current.play();
-						play();
-					} else {
-						videoRef.current.pause();
-						pause();
-					}
-				}}
+				onClick={toggle}
 				type="button"
 			>
 				<span

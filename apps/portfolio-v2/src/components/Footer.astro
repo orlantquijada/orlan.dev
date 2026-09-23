@@ -10,8 +10,8 @@ const { class: className } = Astro.props;
 ---
 
 <footer
-	class:list={['flex flex-col justify-center gap-4 px-6 pb-24', className]}
 	transition:persist
+	class:list={["flex flex-col justify-center gap-4 px-6 pb-24", className]}
 >
 	<div class="divider mb-6 h-4 w-full overflow-clip"></div>
 
@@ -32,8 +32,8 @@ const { class: className } = Astro.props;
 		<li>
 			<a
 				href="https://daily.orlan.dev"
-				target="_blank"
 				rel="noopener noreferrer"
+				target="_blank"
 				>Daily</a
 			>
 		</li>
@@ -41,13 +41,13 @@ const { class: className } = Astro.props;
 		<li class="ml-auto">
 			<a
 				href="https://twitter.com/orlantquijada"
-				target="_blank"
 				rel="noopener noreferrer"
+				target="_blank"
 				>Twitter</a
 			>
 		</li>
 		<li>
-			<a href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a>
+			<a href={GITHUB} rel="noopener noreferrer" target="_blank">GitHub</a>
 		</li>
 	</ul>
 
@@ -55,15 +55,15 @@ const { class: className } = Astro.props;
 		This portfolio is Open Sourced! View it in
 		<a
 			href="https://www.figma.com/file/9DD7B7AKV2SN3sqo6cLWRB/Portfolio?node-id=610%3A3865"
-			target="_blank"
 			rel="noopener noreferrer"
+			target="_blank"
 			>Figma</a
 		>
-		{' '}or{' '}
+		{" "}or{" "}
 		<a
 			href="https://github.com/orlantquijada/orlan.dev"
-			target="_blank"
 			rel="noopener noreferrer"
+			target="_blank"
 			>Github</a
 		>.
 	</p>

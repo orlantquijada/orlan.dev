@@ -14,7 +14,7 @@ const { title, className } = Astro.props;
 <BaseLayout title={title}>
 	<slot name="head" slot="head" />
 	<Header class="mx-auto w-screen max-w-176 px-6" />
-	<main class:list={['mx-auto w-screen max-w-176 px-6 py-24', className]}>
+	<main class:list={["mx-auto w-screen max-w-176 px-6 py-24", className]}>
 		<div class="gradient"></div>
 		<slot />
 	</main>

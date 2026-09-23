@@ -1,7 +1,7 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import { transitions } from "@repo/utils";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import { type MouseEvent, useCallback, useEffect, useState } from "react";
 import ArrowRight from "@/icons/arrow-right.svg?react";
 import Close from "@/icons/cross.svg?react";
 import { cn } from "@/lib/general";
@@ -17,6 +17,10 @@ type LightboxDialogProps = {
 	onIndexChange: (index: number | null) => void;
 };
 
+function stopClickPropagation(event: MouseEvent) {
+	event.stopPropagation();
+}
+
 export function LightboxDialog({
 	images,
 	currentIndex,
@@ -24,11 +28,19 @@ export function LightboxDialog({
 }: LightboxDialogProps) {
 	const isOpen = currentIndex !== null;
 
-	const handleOpenChange = (open: boolean) => {
-		if (!open) {
-			onIndexChange(null);
-		}
-	};
+	const handleOpenChange = useCallback(
+		(open: boolean) => {
+			if (!open) {
+				onIndexChange(null);
+			}
+		},
+		[onIndexChange]
+	);
+
+	const handleContentClick = useCallback(
+		() => onIndexChange(null),
+		[onIndexChange]
+	);
 
 	const goToPrevious = useCallback(() => {
 		if (currentIndex === null) {
@@ -69,7 +81,7 @@ export function LightboxDialog({
 				<DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-overlay data-[state=closed]:motion-safe:animate-hide data-[state=open]:motion-safe:animate-show" />
 				<DialogPrimitive.Content
 					className="fixed inset-0 z-50 flex items-center justify-center data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent"
-					onClick={() => onIndexChange(null)}
+					onClick={handleContentClick}
 				>
 					<AnimatePresence initial={false} mode="popLayout">
 						{currentIndex !== null && images[currentIndex] && (
@@ -81,7 +93,7 @@ export function LightboxDialog({
 								exit={{ opacity: 0, scale: 0.95 }}
 								initial={{ opacity: 0, scale: 0.95 }}
 								key={currentIndex}
-								onClick={(e) => e.stopPropagation()}
+								onClick={stopClickPropagation}
 								src={images[currentIndex].src}
 								transition={transitions.punchy}
 							/>
@@ -106,7 +118,7 @@ export function LightboxDialog({
 						className={cn(
 							"fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4"
 						)}
-						onClick={(e) => e.stopPropagation()}
+						onClick={stopClickPropagation}
 					>
 						<DialogPrimitive.Close
 							className={cn(
@@ -122,7 +134,7 @@ export function LightboxDialog({
 					{/* biome-ignore lint/a11y/useKeyWithClickEvents: stop-propagation wrapper only */}
 					<div
 						className="fixed bottom-4 left-1/2 -translate-x-1/2 rounded-lg bg-black/50 px-3 py-1.5 text-sm text-white"
-						onClick={(e) => e.stopPropagation()}
+						onClick={stopClickPropagation}
 					>
 						{(currentIndex ?? 0) + 1} / {images.length}
 					</div>
@@ -143,7 +155,7 @@ export default function ImageLightbox({
 }: ImageLightboxProps) {
 	const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
-	const handleClick = (e: React.MouseEvent) => {
+	const handleClick = useCallback((e: MouseEvent) => {
 		const target = (e.target as HTMLElement).closest("[data-lightbox-index]");
 		if (target) {
 			const indexAttr = target.getAttribute("data-lightbox-index");
@@ -151,7 +163,7 @@ export default function ImageLightbox({
 				setCurrentIndex(Number.parseInt(indexAttr, 10));
 			}
 		}
-	};
+	}, []);
 
 	return (
 		// biome-ignore lint/a11y/noStaticElementInteractions: event delegation — children are interactive
@@ -180,6 +192,13 @@ function NavButton({
 	"aria-label": ariaLabel,
 }: NavButtonProps) {
 	const isPrev = direction === "prev";
+	const handleClick = useCallback(
+		(e: MouseEvent<HTMLButtonElement>) => {
+			e.stopPropagation();
+			onClick();
+		},
+		[onClick]
+	);
 
 	return (
 		<button
@@ -191,10 +210,7 @@ function NavButton({
 				"active:opacity-75",
 				isPrev ? "left-0" : "right-0"
 			)}
-			onClick={(e) => {
-				e.stopPropagation();
-				onClick();
-			}}
+			onClick={handleClick}
 			type="button"
 		>
 			<ArrowRight className={cn("size-5 md:size-6", isPrev && "rotate-180")} />

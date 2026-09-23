@@ -3,31 +3,38 @@ import pandaPreset from "@pandacss/preset-panda";
 import { preset } from "styled";
 
 const globalCss = defineGlobalStyles({
-  "*, *::before, *::after": {
-    boxSizing: "border-box",
+  "::selection": {
+    backgroundColor: "colors.olive.5",
   },
 
   "*": {
     margin: 0,
   },
+  "*, *::before, *::after": {
+    boxSizing: "border-box",
+  },
+
+  a: {
+    textDecoration: "none",
+  },
+
+  body: {
+    "-webkit-font-smoothing": "antialiased",
+    backgroundColor: "bg",
+    lineHeight: 1.5,
+  },
+
+  button: {
+    userSelect: "none",
+  },
 
   "html, body": {
-    fontFamily: "sans-serif",
     color: "textColor",
+    fontFamily: "sans-serif",
   },
 
   "html, body, #__next": {
     height: "100%",
-  },
-
-  body: {
-    backgroundColor: "bg",
-    lineHeight: 1.5,
-    "-webkit-font-smoothing": "antialiased",
-  },
-
-  "::selection": {
-    backgroundColor: "colors.olive.5",
   },
 
   "img, picture, video, canvas, svg": {
@@ -39,23 +46,17 @@ const globalCss = defineGlobalStyles({
     font: "inherit",
   },
 
-  button: {
-    userSelect: "none",
-  },
-
   "p, h1, h2, h3, h4, h5, h6": {
     overflowWrap: "break-word",
-  },
-
-  a: {
-    textDecoration: "none",
   },
 });
 
 export default defineConfig({
-  // Whether to use css reset
-  preflight: true,
+  // Files to exclude
+  exclude: [],
   globalCss,
+
+  importMap: "styled",
 
   // Where to look for your css declarations
   include: [
@@ -65,18 +66,15 @@ export default defineConfig({
     "../../packages/ui/styled/**/*.{ts,tsx}",
   ],
 
-  // Files to exclude
-  exclude: [],
+  // The output directory for your css system
+  outdir: "styled-system",
+  // Whether to use css reset
+  preflight: true,
+
+  presets: [pandaPreset, preset],
 
   // Useful for theme customization
   theme: {
     extend: {},
   },
-
-  presets: [pandaPreset, preset],
-
-  importMap: "styled",
-
-  // The output directory for your css system
-  outdir: "styled-system",
 });

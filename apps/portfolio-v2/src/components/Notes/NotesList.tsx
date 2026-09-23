@@ -57,9 +57,9 @@ export default function NotesList(props: Props) {
 			)}
 			style={
 				{
-					"--smHeight": smHeight,
-					"--mdHeight": mdHeight,
 					"--mason-mb": toRem(CARD_MARGIN_BOTTOM),
+					"--mdHeight": mdHeight,
+					"--smHeight": smHeight,
 				} as CSSProperties
 			}
 		>

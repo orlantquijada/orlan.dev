@@ -2,10 +2,10 @@
 import type { HTMLAttributes } from "astro/types";
 
 type Props = HTMLAttributes<"code">;
-const props = Astro.props;
+const { class: className, ...props } = Astro.props;
 ---
 
-<code {...props} class:list={[props.class]}><slot /></code>
+<code {...props} class:list={[className]}><slot /></code>
 
 <style>
 	code:not(pre code) {
