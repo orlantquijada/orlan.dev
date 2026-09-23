@@ -53,6 +53,7 @@ export default function NoteTagsList(props: Props) {
 							<Chip asChild>
 								<motion.button
 									animate={{ opacity: 1 }}
+									aria-label="Clear selected tags"
 									initial={{ opacity: 0 }}
 									onClick={clearTags}
 								>
@@ -175,6 +176,7 @@ const Tag = (props: TagProps) => {
 		>
 			<motion.button
 				{...rest}
+				aria-pressed={isSelected}
 				className={_selectedTags.length > 1 ? styles.chip : ""}
 				data-selected={isSelected}
 				onClick={handleTagClick}

@@ -2,7 +2,7 @@ import { cva } from "cva";
 
 export const chipStyles = cva(
 	[
-		"grid cursor-pointer place-items-center rounded-full border leading-none transition-colors focus-within:outline-none",
+		"grid cursor-pointer place-items-center rounded-full border leading-none transition-colors",
 	],
 	{
 		compoundVariants: [

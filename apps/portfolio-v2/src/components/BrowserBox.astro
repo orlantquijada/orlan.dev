@@ -37,7 +37,7 @@ const { aspect, className, href, title } = Astro.props;
 
 	{href ? (
 	<BrowserIconButton
-		class="absolute bottom-4 left-4 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"
+		class="absolute bottom-4 left-4 translate-y-10 opacity-0 focus-visible:translate-y-0 focus-visible:opacity-100 group-hover:translate-y-0 group-hover:opacity-100"
 		href={href}
 		label={`Open ${title} in a new tab`}
 		rel="noopener noreferrer"

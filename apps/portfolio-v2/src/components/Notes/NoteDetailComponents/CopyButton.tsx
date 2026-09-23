@@ -1,14 +1,18 @@
-import { useRef, useState } from "react";
+import { type MouseEvent, useRef, useState } from "react";
 
 import Check from "@/icons/check.svg?react";
 import { copyToClipboard } from "@/lib/general";
 
-export default function CopyButton({ code }: { code: string }) {
+export default function CopyButton() {
 	const [copied, setCopied] = useState(false);
 	const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
-	const copyCode = async () => {
-		const ok = await copyToClipboard(code);
+	const copyCode = async (event: MouseEvent<HTMLButtonElement>) => {
+		const pre = event.currentTarget.closest(".root")?.querySelector("pre");
+		if (!pre) {
+			return;
+		}
+		const ok = await copyToClipboard(pre.textContent);
 		if (!ok) {
 			return;
 		}

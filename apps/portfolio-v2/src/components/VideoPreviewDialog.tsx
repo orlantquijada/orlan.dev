@@ -56,12 +56,16 @@ export default function VideoPreviewDialog({ children, src, type }: Props) {
 				<DialogPrimitive.Portal>
 					<DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-overlay data-[state=closed]:motion-safe:animate-hide data-[state=open]:motion-safe:animate-show" />
 					<DialogPrimitive.Content className="-translate-1/2 fixed top-1/2 left-1/2 isolate z-50 grid w-fit place-items-center overflow-hidden rounded-xl shadow-sm data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent md:w-fit">
+						<DialogPrimitive.Title className="sr-only">
+							{children} video preview
+						</DialogPrimitive.Title>
 						<DialogVideo src={src} type={type} />
 
 						<div
 							className={`${styles.gradientBg} fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4 md:hidden`}
 						>
 							<DialogPrimitive.Close
+								aria-label="Close video preview"
 								className={`${styles.close} grid size-16 cursor-pointer place-items-center rounded-xl transition-all active:scale-90 active:opacity-75`}
 							>
 								<Close />

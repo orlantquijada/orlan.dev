@@ -125,12 +125,11 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 }));
 ---
 
-<Layout title="Work — Orlan Quijada">
-	<Fragment slot="head">
-		{spaceduckImages.map((img) => (
-	<link as="image" href={img.src} rel="preload" type="image/webp" />
-))}
-	</Fragment>
+<Layout
+	description="Selected work by Orlan Quijada, including the Spaceduck mobile app."
+	previewImage="/projects/spaceduck/showcase/desktop.png"
+	title="Work — Orlan Quijada"
+>
 	<a class="text-sm text-gray11 hover:text-gray12 transition-colors" href="/"
 		>← Back</a
 	>
@@ -151,7 +150,12 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 				<ImageLightbox images={spaceduckImages} client:visible>
 					<div class="hero-gallery">
 						{heroImages.slice(0, 5).map((src, index) => (
-	<button class="hero-card" data-lightbox-index={index} type="button">
+	<button
+		aria-label={`View Spaceduck app screenshot ${index + 1}`}
+		class="hero-card"
+		data-lightbox-index={index}
+		type="button"
+	>
 		<Image
 			alt={`Spaceduck app screenshot ${index + 1}`}
 			class="h-full w-full object-cover"
@@ -169,6 +173,7 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 					<div class="showcase-grid">
 						{showcaseItems.map((item, index) => (
 	<button
+		aria-label={`View ${item.alt}`}
 		class:list={[
 			"showcase-item",
 			item.colSpan === 2 && "col-span-2",

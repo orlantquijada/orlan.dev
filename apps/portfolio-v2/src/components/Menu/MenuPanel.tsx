@@ -96,11 +96,12 @@ function MenuItem(props: { Icon: ReactNode; children: ReactNode }) {
 	return (
 		<div
 			className={menuItemStyles({
-				className: "group/menu transition-transform hover:translate-x-1",
+				className:
+					"group/menu transition-transform focus-within:translate-x-1 hover:translate-x-1",
 			})}
 		>
 			{children}
-			<div className="-mx-2 opacity-0 transition-all group-hover/menu:translate-x-1 group-hover/menu:opacity-100">
+			<div className="-mx-2 opacity-0 transition-all group-focus-within/menu:translate-x-1 group-focus-within/menu:opacity-100 group-hover/menu:translate-x-1 group-hover/menu:opacity-100">
 				{Icon}
 			</div>
 		</div>

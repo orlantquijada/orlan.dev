@@ -5,10 +5,12 @@ import NotesLayout from "@/layouts/NotesLayout.astro";
 
 export async function getStaticPaths() {
 	const notes = await getCollection("notes");
-	return notes.map((_note) => ({
-		params: { slug: _note.id },
-		props: _note,
-	}));
+	return notes
+		.filter(({ data: { draft } }) => !draft)
+		.map((_note) => ({
+			params: { slug: _note.id },
+			props: _note,
+		}));
 }
 
 type Props = CollectionEntry<"notes">;

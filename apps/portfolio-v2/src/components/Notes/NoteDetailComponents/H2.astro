@@ -14,9 +14,9 @@ const { id, ...props } = Astro.props;
 	class:list={[styles({ tag: "h3" }), "group flex items-center"]}
 >
 	<slot />
-	<a href={`#${id}`}>
+	<a aria-label={`Link to ${id}`} href={`#${id}`}>
 		<Icon
-			class="ml-[0.35em] inline h-[0.75em] w-[0.75em] opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100"
+			class="ml-[0.35em] inline h-[0.75em] w-[0.75em] opacity-0 transition-all group-hover:translate-x-1 group-hover:opacity-100 group-focus-within:opacity-100"
 			name="link-2"
 		/>
 	</a>

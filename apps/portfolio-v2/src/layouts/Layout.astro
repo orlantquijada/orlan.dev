@@ -6,12 +6,20 @@ import BaseLayout from "./BaseLayout.astro";
 export type Props = {
 	className?: string;
 	title: string;
+	description: string;
+	previewImage?: string;
+	ogType?: "website" | "article";
 };
 
-const { title, className } = Astro.props;
+const { title, description, previewImage, ogType, className } = Astro.props;
 ---
 
-<BaseLayout title={title}>
+<BaseLayout
+	description={description}
+	ogType={ogType}
+	previewImage={previewImage}
+	title={title}
+>
 	<slot name="head" slot="head" />
 	<Header class="mx-auto w-screen max-w-176 px-6" />
 	<main class:list={["mx-auto w-screen max-w-176 px-6 py-24", className]}>
