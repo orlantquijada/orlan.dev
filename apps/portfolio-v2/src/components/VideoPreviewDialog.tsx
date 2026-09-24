@@ -1,14 +1,17 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
 import * as HoverCard from "@radix-ui/react-hover-card";
 import { transitions } from "@repo/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import {
 	type ComponentProps,
 	type ReactNode,
+	useCallback,
 	useEffect,
+	useRef,
 	useState,
 } from "react";
 import { twMerge } from "tailwind-merge";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useVideoControls } from "@/hooks/useVideoControls";
 import Close from "@/icons/cross.svg?react";
 import Pause from "@/icons/pause-big.svg?react";
@@ -32,55 +35,82 @@ const btnClassName = twMerge(
 
 export default function VideoPreviewDialog({ children, src, type }: Props) {
 	const [open, setOpen] = useState(false);
+	const [previewOpen, setPreviewOpen] = useState(false);
+	const shouldReduceMotion = useReducedMotion();
+	const previewRef = useRef<HTMLVideoElement>(null);
+	const handleDialogOpenChange = useCallback((nextOpen: boolean) => {
+		setOpen(nextOpen);
+		if (nextOpen) {
+			setPreviewOpen(false);
+		}
+	}, []);
+	const handlePreviewOpenChange = useCallback(
+		(nextOpen: boolean) => setPreviewOpen(nextOpen && !open),
+		[open]
+	);
+
+	useEffect(() => {
+		if (shouldReduceMotion) {
+			previewRef.current?.pause();
+		}
+	}, [shouldReduceMotion]);
 	return (
-		<DialogPrimitive.Root onOpenChange={setOpen} open={open}>
-			<HoverCard.Root closeDelay={0} openDelay={0}>
-				<HoverCard.Trigger asChild>
-					<DialogPrimitive.Trigger className={btnClassName}>
-						<PlaySmall aria-hidden="true" height={12} width={10} />
-						<span>{children}</span>
-					</DialogPrimitive.Trigger>
-				</HoverCard.Trigger>
+		<MotionConfig reducedMotion={shouldReduceMotion ? "always" : "never"}>
+			<DialogPrimitive.Root onOpenChange={handleDialogOpenChange} open={open}>
+				<HoverCard.Root
+					closeDelay={0}
+					onOpenChange={handlePreviewOpenChange}
+					open={previewOpen && !open}
+					openDelay={0}
+				>
+					<HoverCard.Trigger asChild>
+						<DialogPrimitive.Trigger className={btnClassName}>
+							<PlaySmall aria-hidden="true" height={12} width={10} />
+							<span>{children}</span>
+						</DialogPrimitive.Trigger>
+					</HoverCard.Trigger>
 
-				<HoverCard.Portal>
-					<HoverCard.Content
-						align="center"
-						className={`${styles.hoverContent} z-10 overflow-clip rounded-xl`}
-						side="top"
-					>
-						<Video
-							autoPlay
-							height={435}
-							loop
-							src={src}
-							type={type}
-							width={200}
-						/>
-					</HoverCard.Content>
-				</HoverCard.Portal>
-
-				<DialogPrimitive.Portal>
-					<DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-overlay data-[state=closed]:motion-safe:animate-hide data-[state=open]:motion-safe:animate-show" />
-					<DialogPrimitive.Content className="-translate-1/2 fixed top-1/2 left-1/2 isolate z-50 grid w-fit place-items-center overflow-hidden rounded-xl shadow-sm data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent md:w-fit">
-						<DialogPrimitive.Title className="sr-only">
-							{children} video preview
-						</DialogPrimitive.Title>
-						<DialogVideo open={open} src={src} type={type} />
-
-						<div
-							className={`${styles.gradientBg} fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4 md:hidden`}
+					<HoverCard.Portal>
+						<HoverCard.Content
+							align="center"
+							className={`${styles.hoverContent} z-10 overflow-clip rounded-xl`}
+							side="top"
 						>
-							<DialogPrimitive.Close
-								aria-label="Close video preview"
-								className={`${styles.close} grid size-16 cursor-pointer place-items-center rounded-xl transition-all active:scale-90 active:opacity-75`}
+							<Video
+								autoPlay={!shouldReduceMotion}
+								height={435}
+								loop
+								ref={previewRef}
+								src={src}
+								type={type}
+								width={200}
+							/>
+						</HoverCard.Content>
+					</HoverCard.Portal>
+
+					<DialogPrimitive.Portal>
+						<DialogPrimitive.Overlay className="fixed inset-0 z-40 bg-overlay data-[state=closed]:motion-safe:animate-hide data-[state=open]:motion-safe:animate-show" />
+						<DialogPrimitive.Content className="-translate-1/2 fixed top-1/2 left-1/2 isolate z-50 grid w-fit place-items-center overflow-hidden rounded-xl shadow-sm data-[state=closed]:motion-safe:animate-hideContent data-[state=open]:motion-safe:animate-showContent md:w-fit">
+							<DialogPrimitive.Title className="sr-only">
+								{children} video preview
+							</DialogPrimitive.Title>
+							<DialogVideo open={open} src={src} type={type} />
+
+							<div
+								className={`${styles.gradientBg} fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4 md:hidden`}
 							>
-								<Close />
-							</DialogPrimitive.Close>
-						</div>
-					</DialogPrimitive.Content>
-				</DialogPrimitive.Portal>
-			</HoverCard.Root>
-		</DialogPrimitive.Root>
+								<DialogPrimitive.Close
+									aria-label="Close video preview"
+									className={`${styles.close} grid size-16 cursor-pointer place-items-center rounded-xl active:opacity-75 motion-safe:transition-all motion-safe:active:scale-90`}
+								>
+									<Close />
+								</DialogPrimitive.Close>
+							</div>
+						</DialogPrimitive.Content>
+					</DialogPrimitive.Portal>
+				</HoverCard.Root>
+			</DialogPrimitive.Root>
+		</MotionConfig>
 	);
 }
 
@@ -118,7 +148,7 @@ function DialogVideo({ open, src, type }: VideoProps & { open: boolean }) {
 			<button
 				aria-label={state === "playing" ? "Pause video" : "Play video"}
 				className={cn(
-					"absolute inset-0 grid cursor-pointer place-items-center bg-overlay/20 opacity-0 transition-all duration-250 focus-visible:opacity-100 group-hover:opacity-100",
+					"absolute inset-0 grid cursor-pointer place-items-center bg-overlay/20 opacity-0 duration-250 focus-visible:opacity-100 group-hover:opacity-100 motion-safe:transition-all",
 					state === "paused" && "opacity-100"
 				)}
 				onClick={toggle}

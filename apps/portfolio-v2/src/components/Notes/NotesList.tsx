@@ -4,6 +4,7 @@ import { cx } from "cva";
 import { LayoutGroup, MotionConfig } from "motion/react";
 import type { CSSProperties } from "react";
 import { twMerge } from "tailwind-merge";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 import type { NoteFrontmatter } from "@/lib/notes";
 import { $selectedTags } from "@/stores/notes";
 import { MotionNoteCard } from "../NoteCard/NoteCard";
@@ -24,6 +25,7 @@ const toRem = (num: number) => `${num / 16}rem`;
 export default function NotesList(props: Props) {
 	const { notes, className } = props;
 	const _selectedTags = useStore($selectedTags);
+	const shouldReduceMotion = useReducedMotion();
 
 	const isSelecting = Boolean(_selectedTags.length);
 
@@ -63,7 +65,10 @@ export default function NotesList(props: Props) {
 				} as CSSProperties
 			}
 		>
-			<MotionConfig transition={transitions.snappy}>
+			<MotionConfig
+				reducedMotion={shouldReduceMotion ? "always" : "never"}
+				transition={transitions.snappy}
+			>
 				<LayoutGroup>
 					{filtered.map((note) => (
 						<MotionNoteCard

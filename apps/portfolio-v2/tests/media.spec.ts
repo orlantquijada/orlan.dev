@@ -111,3 +111,47 @@ test("mouse and keyboard toggle once, and closing stops playback", async ({
 		true
 	);
 });
+
+test("reduced motion prevents autoplay but preserves intentional playback", async ({
+	page,
+}) => {
+	await page.emulateMedia({ reducedMotion: "reduce" });
+	await installMediaProbe(page, false);
+	await page.goto("/");
+
+	const project = page.locator("#daily video");
+	await project.scrollIntoViewIfNeeded();
+	await page.locator("#daily astro-island:not([ssr])").waitFor();
+	expect(
+		await project.evaluate((video: HTMLVideoElement) => ({
+			autoplay: video.autoplay,
+			paused: video.paused,
+		}))
+	).toEqual({ autoplay: false, paused: true });
+
+	await page.emulateMedia({ reducedMotion: "no-preference" });
+	await expect
+		.poll(() => project.evaluate((video: HTMLVideoElement) => video.paused))
+		.toBe(false);
+	await page.emulateMedia({ reducedMotion: "reduce" });
+	await expect
+		.poll(() => project.evaluate((video: HTMLVideoElement) => video.paused))
+		.toBe(true);
+
+	const trigger = page.getByRole("button", { name: "AI assistant" });
+	await trigger.hover();
+	const preview = page.locator("[data-radix-popper-content-wrapper] video");
+	await expect(preview).toBeVisible();
+	expect(
+		await preview.evaluate((video: HTMLVideoElement) => video.autoplay)
+	).toBe(false);
+	await trigger.click();
+	const dialog = page.getByRole("dialog", {
+		name: "AI assistant video preview",
+	});
+	await dialog.getByRole("button", { name: "Play video" }).click();
+	await expect(
+		dialog.getByRole("button", { name: "Pause video" })
+	).toBeVisible();
+	expect(await page.evaluate(() => window.mediaProbe?.playCalls)).toBe(1);
+});

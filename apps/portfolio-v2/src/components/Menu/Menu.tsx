@@ -9,6 +9,7 @@ import {
 } from "motion/react";
 import { type RefObject, useCallback, useMemo, useRef, useState } from "react";
 import { twMerge } from "tailwind-merge";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
 
 import { buttonStyles } from "../Button";
 import { MenuPanel } from "./MenuPanel";
@@ -40,9 +41,13 @@ export function Menu() {
 	const [open, setOpen] = useState(false);
 	const containerRef = useRef<HTMLElement>(null);
 	const handleNavigate = useCallback(() => setOpen(false), []);
+	const shouldReduceMotion = useReducedMotion();
 
 	return (
-		<MotionConfig transition={transitions.punchy}>
+		<MotionConfig
+			reducedMotion={shouldReduceMotion ? "always" : "never"}
+			transition={transitions.punchy}
+		>
 			<PopoverPrimitive.Root onOpenChange={setOpen} open={open}>
 				<div className="relative ml-auto flex">
 					<PopoverPrimitive.Trigger asChild>
