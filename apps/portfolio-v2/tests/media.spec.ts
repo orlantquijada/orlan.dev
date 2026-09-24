@@ -1,6 +1,8 @@
 import type { Page } from "@playwright/test";
 import { expect, test } from "@playwright/test";
 
+const workImagePattern = /\/_astro\/(?:1|2|desktop)\.[^/]+\.webp$/;
+
 type MediaProbe = {
 	playCalls: number;
 	pauseCalls: number;
@@ -154,4 +156,70 @@ test("reduced motion prevents autoplay but preserves intentional playback", asyn
 		dialog.getByRole("button", { name: "Pause video" })
 	).toBeVisible();
 	expect(await page.evaluate(() => window.mediaProbe?.playCalls)).toBe(1);
+});
+
+test("work lightbox keeps the matching preview when full images cannot load", async ({
+	page,
+}) => {
+	await page.goto("/work");
+	const previews = new Set(
+		await page
+			.locator(".hero-gallery img, .showcase-grid img")
+			.evaluateAll((images) =>
+				images.map((image) => (image as HTMLImageElement).src)
+			)
+	);
+	await page.route(workImagePattern, async (route) => {
+		if (previews.has(route.request().url())) {
+			await route.continue();
+		} else {
+			await route.abort();
+		}
+	});
+
+	await page
+		.locator('astro-island[component-url*="ImageLightbox"]:not([ssr])')
+		.first()
+		.waitFor();
+	await page
+		.getByRole("button", { name: "View Spaceduck app screenshot 1" })
+		.click();
+	const dialog = page.getByRole("dialog", { name: "Spaceduck image gallery" });
+	const first = dialog.getByRole("img", { name: "Spaceduck app screenshot 1" });
+	await expect(first).toBeVisible();
+	await expect
+		.poll(() => first.evaluate((image: HTMLImageElement) => image.naturalWidth))
+		.toBeGreaterThan(0);
+
+	await page.keyboard.press("ArrowRight");
+	const second = dialog.getByRole("img", {
+		name: "Spaceduck app screenshot 2",
+	});
+	await expect(second).toBeVisible();
+	await expect
+		.poll(() =>
+			second.evaluate((image: HTMLImageElement) => image.naturalWidth)
+		)
+		.toBeGreaterThan(0);
+	await expect(first).toHaveCount(0);
+
+	await page.keyboard.press("Escape");
+	const desktop = page.getByRole("button", {
+		name: "View Spaceduck desktop dashboard",
+	});
+	await desktop.scrollIntoViewIfNeeded();
+	await page
+		.locator('astro-island[component-url*="ImageLightbox"]:not([ssr])')
+		.last()
+		.waitFor();
+	await desktop.click();
+	const showcase = dialog.getByRole("img", {
+		name: "Spaceduck desktop dashboard",
+	});
+	await expect(showcase).toBeVisible();
+	await expect
+		.poll(() =>
+			showcase.evaluate((image: HTMLImageElement) => image.naturalWidth)
+		)
+		.toBeGreaterThan(0);
 });

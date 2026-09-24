@@ -35,11 +35,21 @@ import WorkSection from "./WorkSection.astro";
 			</span>
 			{" "}— building the company’s flagship iOS and Android app. I’ve delivered
 			major features end‑to‑end, including an
-			<VideoPreviewDialog src="/ai-assistant2.mp4" type="video/mp4" client:idle>
+			<VideoPreviewDialog
+				poster="/posters/ai-assistant.webp"
+				src="/ai-assistant2.mp4"
+				type="video/mp4"
+				client:load
+			>
 				AI assistant
 			</VideoPreviewDialog>
 			{" "}and a
-			<VideoPreviewDialog src="/collab-notes3.mp4" type="video/mp4" client:idle>
+			<VideoPreviewDialog
+				poster="/posters/collab-notes.webp"
+				src="/collab-notes3.mp4"
+				type="video/mp4"
+				client:load
+			>
 				real-time multiplayer text editor
 			</VideoPreviewDialog>
 		</p>
