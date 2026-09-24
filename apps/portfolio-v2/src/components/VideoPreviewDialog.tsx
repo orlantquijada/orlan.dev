@@ -33,7 +33,12 @@ const btnClassName = twMerge(
 	})
 );
 
-export default function VideoPreviewDialog({ children, src, type }: Props) {
+export default function VideoPreviewDialog({
+	children,
+	poster,
+	src,
+	type,
+}: Props) {
 	const [open, setOpen] = useState(false);
 	const [previewOpen, setPreviewOpen] = useState(false);
 	const shouldReduceMotion = useReducedMotion();
@@ -80,6 +85,7 @@ export default function VideoPreviewDialog({ children, src, type }: Props) {
 								autoPlay={!shouldReduceMotion}
 								height={435}
 								loop
+								poster={poster}
 								ref={previewRef}
 								src={src}
 								type={type}
@@ -94,7 +100,7 @@ export default function VideoPreviewDialog({ children, src, type }: Props) {
 							<DialogPrimitive.Title className="sr-only">
 								{children} video preview
 							</DialogPrimitive.Title>
-							<DialogVideo open={open} src={src} type={type} />
+							<DialogVideo open={open} poster={poster} src={src} type={type} />
 
 							<div
 								className={`${styles.gradientBg} fixed inset-x-0 top-0 z-10 flex items-center justify-end pt-4 pr-4 md:hidden`}
@@ -115,6 +121,7 @@ export default function VideoPreviewDialog({ children, src, type }: Props) {
 }
 
 type VideoProps = {
+	poster: string;
 	src: string;
 	type?: Exclude<ComponentProps<"source">["type"], null>;
 } & ComponentProps<"video">;
@@ -127,7 +134,12 @@ function Video({ src, type, ...props }: VideoProps) {
 	);
 }
 
-function DialogVideo({ open, src, type }: VideoProps & { open: boolean }) {
+function DialogVideo({
+	open,
+	poster,
+	src,
+	type,
+}: VideoProps & { open: boolean }) {
 	const [videoRef, { state, toggle }] = useVideoControls();
 
 	useEffect(() => {
@@ -143,7 +155,7 @@ function DialogVideo({ open, src, type }: VideoProps & { open: boolean }) {
 
 	return (
 		<div className="group relative grid w-[calc(75vw)] max-w-100 place-items-center">
-			<Video ref={videoRef} src={src} type={type} />
+			<Video poster={poster} ref={videoRef} src={src} type={type} />
 
 			<button
 				aria-label={state === "playing" ? "Pause video" : "Play video"}

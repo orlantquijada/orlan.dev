@@ -10,12 +10,14 @@ type Props = {
 	className?: string;
 	pausedIcon?: ReactNode;
 	playingIcon?: ReactNode;
+	poster: string;
 	src: string;
 	type?: Exclude<HTMLAttributes<"source">["type"], null>;
 };
 
 export default function Video({
 	src,
+	poster,
 	type = "video/mp4",
 	pausedIcon,
 	playingIcon,
@@ -45,6 +47,7 @@ export default function Video({
 				loop
 				muted
 				playsInline
+				poster={poster}
 				preload="none"
 				ref={videoRef}
 			>

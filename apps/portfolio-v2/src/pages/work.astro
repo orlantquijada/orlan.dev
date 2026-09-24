@@ -22,6 +22,7 @@ import home1 from "../../public/projects/spaceduck/showcase/home-1.webp";
 import home2 from "../../public/projects/spaceduck/showcase/home-2.webp";
 import icons from "../../public/projects/spaceduck/showcase/icons.webp";
 import journal from "../../public/projects/spaceduck/showcase/journal.webp";
+import swatch from "../../public/projects/spaceduck/showcase/swatch.webp";
 import typography from "../../public/projects/spaceduck/showcase/typography.webp";
 
 const heroImages = [
@@ -37,13 +38,19 @@ const heroImages = [
 	img10,
 ];
 
-// Generate optimized lightbox images (larger for full-screen viewing)
+// The first five previews reuse their already-loaded grid thumbnails.
 const spaceduckImages = await Promise.all(
 	heroImages.map(async (img, i) => {
-		const optimized = await getImage({ format: "webp", src: img, width: 1200 });
+		const [thumbnail, full] = await Promise.all([
+			getImage({ format: "webp", src: img, width: 180 }),
+			getImage({ format: "webp", src: img, width: 1200 }),
+		]);
 		return {
 			alt: `Spaceduck app screenshot ${i + 1}`,
-			src: optimized.src,
+			height: img.height,
+			placeholder: thumbnail.src,
+			src: full.src,
+			width: img.width,
 		};
 	})
 );
@@ -93,7 +100,7 @@ const showcaseItems: ShowcaseItem[] = [
 		alt: "Spaceduck color palette",
 		colSpan: 2,
 		component: "swatch",
-		src: "/projects/spaceduck/showcase/swatch.webp",
+		src: swatch,
 	},
 	{
 		alt: "Spaceduck wordmark",
@@ -117,12 +124,44 @@ const showcaseItems: ShowcaseItem[] = [
 		src: "/projects/spaceduck/showcase/logo.svg",
 	},
 ];
+const showcaseWidthBySpan = { 1: 420, 2: 640, 3: 960 };
 
-// For lightbox, we need string URLs
-const showcaseItemsForLightbox = showcaseItems.map((item) => ({
-	alt: item.alt,
-	src: typeof item.src === "string" ? item.src : item.src.src,
-}));
+function showcasePreviewWidth(item: ShowcaseItem) {
+	return item.component === "swatch"
+		? 280
+		: showcaseWidthBySpan[item.colSpan ?? 1];
+}
+
+// Reuse each visible grid thumbnail as its preview; swatches have no raster grid image.
+const showcaseItemsForLightbox = await Promise.all(
+	showcaseItems.map(async (item) => {
+		if (typeof item.src === "string") {
+			return { alt: item.alt, src: item.src };
+		}
+		const image = item.src;
+		return {
+			alt: item.alt,
+			height: image.height,
+			placeholder: (
+				await getImage({
+					format: "webp",
+					quality: item.component === "swatch" ? 55 : 75,
+					src: image,
+					width: Math.min(image.width, showcasePreviewWidth(item)),
+				})
+			).src,
+			src: image.src,
+			width: image.width,
+		};
+	})
+);
+// Preload the tiny hero previews, including cards hidden on narrow screens.
+const lightboxPreviewsToPreload = [
+	...spaceduckImages,
+	...showcaseItemsForLightbox.filter(
+		(_item, index) => showcaseItems[index]?.component === "swatch"
+	),
+];
 ---
 
 <Layout
@@ -130,6 +169,19 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 	previewImage="/projects/spaceduck/showcase/desktop.png"
 	title="Work — Orlan Quijada"
 >
+	<Fragment slot="head">
+		{lightboxPreviewsToPreload.map(
+	(image) =>
+		image.placeholder && (
+			<link
+				as="image"
+				fetchpriority="low"
+				href={image.placeholder}
+				rel="preload"
+			/>
+		)
+)}
+	</Fragment>
 	<a class="text-sm text-gray11 hover:text-gray12 transition-colors" href="/"
 		>← Back</a
 	>
@@ -215,8 +267,11 @@ const showcaseItemsForLightbox = showcaseItems.map((item) => ({
 				alt={item.alt}
 				class="h-full w-full object-contain"
 				decoding="async"
+				format="webp"
 				loading="lazy"
+				quality={75}
 				src={item.src}
+				width={Math.min(item.src.width, showcasePreviewWidth(item))}
 			/>
 		)}
 	</button>

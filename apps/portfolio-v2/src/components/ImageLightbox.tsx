@@ -1,15 +1,21 @@
 import * as DialogPrimitive from "@radix-ui/react-dialog";
-import { transitions } from "@repo/utils";
-import { AnimatePresence, MotionConfig, motion } from "motion/react";
-import { type MouseEvent, useCallback, useEffect, useState } from "react";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
+import {
+	type MouseEvent,
+	type SyntheticEvent,
+	useCallback,
+	useEffect,
+	useState,
+} from "react";
 import ArrowRight from "@/icons/arrow-right.svg?react";
 import Close from "@/icons/cross.svg?react";
 import { cn } from "@/lib/general";
 
 type ImageItem = {
 	alt: string;
+	height?: number;
+	placeholder?: string;
 	src: string;
+	width?: number;
 };
 
 type LightboxDialogProps = {
@@ -22,13 +28,64 @@ function stopClickPropagation(event: MouseEvent) {
 	event.stopPropagation();
 }
 
+function LightboxImage({ image }: { image: ImageItem }) {
+	const [isDecoded, setIsDecoded] = useState(false);
+	const handleFullImageLoad = useCallback(
+		(event: SyntheticEvent<HTMLImageElement>) => {
+			event.currentTarget.decode().then(
+				() => setIsDecoded(true),
+				() => setIsDecoded(false)
+			);
+		},
+		[]
+	);
+
+	if (!(image.placeholder && image.width && image.height)) {
+		// SVG artwork needs no separate raster preview.
+		return (
+			// biome-ignore lint/correctness/useImageSize: SVG dimensions are intrinsic
+			<img
+				alt={image.alt}
+				className="max-h-[85vh] max-w-[90vw] rounded-xl object-contain md:max-h-[90vh] md:max-w-[85vw]"
+				src={image.src}
+			/>
+		);
+	}
+
+	return (
+		<div
+			className="relative max-w-[90vw] md:max-w-[85vw]"
+			style={{
+				aspectRatio: `${image.width} / ${image.height}`,
+				width: `min(90vw, ${image.width}px, ${(85 * image.width) / image.height}vh)`,
+			}}
+		>
+			{/* biome-ignore lint/correctness/useImageSize: dimensions are set by the image container */}
+			<img
+				alt={image.alt}
+				className="absolute inset-0 h-full w-full rounded-xl object-contain"
+				src={image.placeholder}
+			/>
+			{/* biome-ignore lint/correctness/useImageSize: dimensions are set by the image container */}
+			<img
+				alt=""
+				aria-hidden="true"
+				className={`absolute inset-0 h-full w-full rounded-xl object-contain ${
+					isDecoded ? "opacity-100" : "opacity-0"
+				} motion-safe:transition-opacity motion-safe:duration-150`}
+				onLoad={handleFullImageLoad}
+				src={image.src}
+			/>
+		</div>
+	);
+}
+
 export function LightboxDialog({
 	images,
 	currentIndex,
 	onIndexChange,
 }: LightboxDialogProps) {
 	const isOpen = currentIndex !== null;
-	const shouldReduceMotion = useReducedMotion();
 
 	const handleOpenChange = useCallback(
 		(open: boolean) => {
@@ -40,7 +97,11 @@ export function LightboxDialog({
 	);
 
 	const handleContentClick = useCallback(
-		() => onIndexChange(null),
+		(event: MouseEvent) => {
+			if (event.target === event.currentTarget) {
+				onIndexChange(null);
+			}
+		},
 		[onIndexChange]
 	);
 
@@ -88,24 +149,12 @@ export function LightboxDialog({
 					<DialogPrimitive.Title className="sr-only">
 						Spaceduck image gallery
 					</DialogPrimitive.Title>
-					<MotionConfig reducedMotion={shouldReduceMotion ? "always" : "never"}>
-						<AnimatePresence initial={false} mode="popLayout">
-							{currentIndex !== null && images[currentIndex] && (
-								// biome-ignore lint/correctness/useImageSize: lightbox renders external images without known dimensions
-								<motion.img
-									alt={images[currentIndex].alt}
-									animate={{ opacity: 1, scale: 1 }}
-									className="max-h-[85vh] max-w-[90vw] rounded-xl object-contain md:max-h-[90vh] md:max-w-[85vw]"
-									exit={{ opacity: 0, scale: 0.95 }}
-									initial={{ opacity: 0, scale: 0.95 }}
-									key={currentIndex}
-									onClick={stopClickPropagation}
-									src={images[currentIndex].src}
-									transition={transitions.punchy}
-								/>
-							)}
-						</AnimatePresence>
-					</MotionConfig>
+					{currentIndex !== null && images[currentIndex] && (
+						<LightboxImage
+							image={images[currentIndex]}
+							key={`${currentIndex}-${images[currentIndex].src}`}
+						/>
+					)}
 
 					<NavButton
 						aria-label="Previous image"
