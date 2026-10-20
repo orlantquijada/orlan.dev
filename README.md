@@ -11,10 +11,12 @@ Monorepo using [Turborepo](https://turbo.build/repo), with apps using [React](ht
 - `Portfolio Website v1`
 - `Portfolio Website v2`
 - `Daily Stoic`
-- `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `tsconfig`: `tsconfig.json`s used throughout the monorepo
+- `ui`: shared Panda CSS components and styled primitives used by v1
+- `utils`: shared utilities
 
 Each package/app is 100% `TypeScript`.
+
+Linting and formatting use [Biome](https://biomejs.dev/) with the [Ultracite](https://www.ultracite.ai/) preset (`biome.json` at the root). Run `pnpm lint` or `pnpm format`.
 
 ## [Portfolio v2](https://orlan.dev)
 
