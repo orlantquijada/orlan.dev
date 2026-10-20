@@ -152,6 +152,10 @@ function useTagsUrlSync(validTags: string[]) {
 		return () => {
 			document.removeEventListener("astro:page-load", reseed);
 			unsubscribe();
+			// The store outlives the island across ClientRouter navigations. Reset it
+			// (after unsubscribing, so the next page's URL isn't touched) so the next
+			// /notes visit hydrates with no selection, matching the server HTML.
+			clearTags();
 		};
 	}, [validTags]);
 }

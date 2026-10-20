@@ -27,10 +27,12 @@ function readTagsFromURL(validTags: Tag[]): Tag[] {
 		return [];
 	}
 	const valid = new Set(validTags);
-	return raw
+	const tags = raw
 		.split(",")
 		.map(decodeURIComponent)
 		.filter((tag) => valid.has(tag));
+	// Dedupe so a hand-edited `?tags=css,css` can't render the same chip twice.
+	return [...new Set(tags)];
 }
 
 // Seed the store from `?tags=` (ignoring unknown tags). Call on mount and on

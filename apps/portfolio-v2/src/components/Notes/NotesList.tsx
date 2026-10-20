@@ -2,7 +2,12 @@ import { useStore } from "@nanostores/react";
 import { transitions } from "@repo/utils";
 import { cx } from "cva";
 import { LayoutGroup, MotionConfig } from "motion/react";
-import type { CSSProperties } from "react";
+import {
+	type CSSProperties,
+	type RefObject,
+	useLayoutEffect,
+	useRef,
+} from "react";
 import { twMerge } from "tailwind-merge";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import type { NoteFrontmatter } from "@/lib/notes";
@@ -16,7 +21,8 @@ type Props = {
 	notes: Omit<Note, "selected">[];
 };
 
-// estimated height per note
+// estimated height per note (server render only; replaced by measured heights
+// once hydrated, see useFitMasonryHeight)
 const HEIGHT = 100;
 const CARD_MARGIN_BOTTOM = 12;
 
@@ -26,6 +32,8 @@ export default function NotesList(props: Props) {
 	const { notes, className } = props;
 	const _selectedTags = useStore($selectedTags);
 	const shouldReduceMotion = useReducedMotion();
+	const listRef = useRef<HTMLDivElement>(null);
+	useFitMasonryHeight(listRef);
 
 	const isSelecting = Boolean(_selectedTags.length);
 
@@ -57,6 +65,7 @@ export default function NotesList(props: Props) {
 					"h-full sm:h-(--smHeight) md:h-(--mdHeight)",
 				])
 			)}
+			ref={listRef}
 			style={
 				{
 					"--mason-mb": toRem(CARD_MARGIN_BOTTOM),
@@ -88,4 +97,44 @@ export default function NotesList(props: Props) {
 			</MotionConfig>
 		</div>
 	);
+}
+
+// The masonry is a wrapping flex column, so its height decides where each
+// column breaks. Child i sits in column i % cols (see styles.module.css), so
+// set the height to the tallest column's measured total. Runs after every
+// render (filtering reorders cards between columns) and on resize.
+function useFitMasonryHeight(ref: RefObject<HTMLDivElement | null>) {
+	useLayoutEffect(() => {
+		const list = ref.current;
+		if (!list) {
+			return;
+		}
+
+		const fit = () => {
+			let cols = 1;
+			if (matchMedia("(min-width: 768px)").matches) {
+				cols = 3;
+			} else if (matchMedia("(min-width: 640px)").matches) {
+				cols = 2;
+			}
+			const heights = new Array<number>(cols).fill(0);
+			const children = [...list.children] as HTMLElement[];
+			for (const [i, child] of children.entries()) {
+				const marginBottom = Number.parseFloat(
+					getComputedStyle(child).marginBottom
+				);
+				heights[i % cols] =
+					(heights[i % cols] ?? 0) + child.offsetHeight + marginBottom;
+			}
+			list.style.height = `${Math.ceil(Math.max(...heights))}px`;
+		};
+
+		fit();
+		const observer = new ResizeObserver(fit);
+		observer.observe(list);
+		for (const child of list.children) {
+			observer.observe(child);
+		}
+		return () => observer.disconnect();
+	});
 }
