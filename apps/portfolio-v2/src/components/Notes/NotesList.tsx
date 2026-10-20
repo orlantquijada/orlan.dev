@@ -11,7 +11,11 @@ import {
 import { twMerge } from "tailwind-merge";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import type { NoteFrontmatter } from "@/lib/notes";
-import { $selectedTags } from "@/stores/notes";
+import {
+	$selectedTags,
+	$tagAnimationsEnabled,
+	tagTransition,
+} from "@/stores/notes";
 import { MotionNoteCard } from "../NoteCard/NoteCard";
 import styles from "./styles.module.css";
 
@@ -32,6 +36,7 @@ export default function NotesList(props: Props) {
 	const { notes, className } = props;
 	const _selectedTags = useStore($selectedTags);
 	const shouldReduceMotion = useReducedMotion();
+	const animationsEnabled = useStore($tagAnimationsEnabled);
 	const listRef = useRef<HTMLDivElement>(null);
 	useFitMasonryHeight(listRef);
 
@@ -76,7 +81,7 @@ export default function NotesList(props: Props) {
 		>
 			<MotionConfig
 				reducedMotion={shouldReduceMotion ? "always" : "never"}
-				transition={transitions.snappy}
+				transition={tagTransition(animationsEnabled, transitions.snappy)}
 			>
 				<LayoutGroup>
 					{filtered.map((note) => (

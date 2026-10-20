@@ -19,11 +19,13 @@ import Close from "@/icons/cross.svg?react";
 import { getNeighborhoodsIntersection, type TagGraphMap } from "@/lib/notes";
 import {
 	$selectedTags,
+	$tagAnimationsEnabled,
 	addTag,
 	clearTags,
 	initTagsFromURL,
 	removeTag,
 	syncTagsToURL,
+	tagTransition,
 } from "@/stores/notes";
 import Chip from "../Chip/Chip";
 
@@ -38,6 +40,7 @@ export default function NoteTagsList(props: Props) {
 	const { tags, tagsGraph } = props;
 	const _selectedTags = useStore($selectedTags);
 	const shouldReduceMotion = useReducedMotion();
+	const animationsEnabled = useStore($tagAnimationsEnabled);
 	const isSelecting = Boolean(_selectedTags.length);
 
 	const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags);
@@ -49,7 +52,7 @@ export default function NoteTagsList(props: Props) {
 	return (
 		<MotionConfig
 			reducedMotion={shouldReduceMotion ? "always" : "never"}
-			transition={transitions.snappy}
+			transition={tagTransition(animationsEnabled, transitions.snappy)}
 		>
 			<LayoutGroup>
 				<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">

@@ -4,6 +4,15 @@ type Tag = string;
 
 export const $selectedTags = atom<Tag[]>([]);
 
+// False while the selection is being seeded from the URL, so arriving on
+// /notes?tags=… shows that state at once instead of animating from "all".
+// Chip clicks happen after it flips back to true, so they still animate.
+export const $tagAnimationsEnabled = atom(false);
+
+const INSTANT = { duration: 0 } as const;
+export const tagTransition = <T>(enabled: boolean, transition: T) =>
+	enabled ? transition : INSTANT;
+
 export function addTag(tag: Tag) {
 	$selectedTags.set([...$selectedTags.get(), tag]);
 }
@@ -38,7 +47,12 @@ function readTagsFromURL(validTags: Tag[]): Tag[] {
 // Seed the store from `?tags=` (ignoring unknown tags). Call on mount and on
 // `astro:page-load` so view-transition navigations re-seed too.
 export function initTagsFromURL(validTags: Tag[]) {
+	$tagAnimationsEnabled.set(false);
 	$selectedTags.set(readTagsFromURL(validTags));
+	// Two frames: let the seeded state commit and paint before re-enabling.
+	requestAnimationFrame(() =>
+		requestAnimationFrame(() => $tagAnimationsEnabled.set(true))
+	);
 }
 
 // Reflect the current selection back into the URL via replaceState so filtered
