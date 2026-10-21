@@ -9,10 +9,6 @@ export const $selectedTags = atom<Tag[]>([]);
 // Chip clicks happen after it flips back to true, so they still animate.
 export const $tagAnimationsEnabled = atom(false);
 
-const INSTANT = { duration: 0 } as const;
-export const tagTransition = <T>(enabled: boolean, transition: T) =>
-	enabled ? transition : INSTANT;
-
 export function addTag(tag: Tag) {
 	$selectedTags.set([...$selectedTags.get(), tag]);
 }

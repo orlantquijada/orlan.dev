@@ -1,21 +1,10 @@
 import { useStore } from "@nanostores/react";
-import { transitions } from "@repo/utils";
 import { cx } from "cva";
-import { LayoutGroup, MotionConfig } from "motion/react";
-import {
-	type CSSProperties,
-	type RefObject,
-	useLayoutEffect,
-	useRef,
-} from "react";
+import { LayoutGroup } from "motion/react";
+import { type CSSProperties, useLayoutEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 import type { NoteFrontmatter } from "@/lib/notes";
-import {
-	$selectedTags,
-	$tagAnimationsEnabled,
-	tagTransition,
-} from "@/stores/notes";
+import { $selectedTags } from "@/stores/notes";
 import { MotionNoteCard } from "../NoteCard/NoteCard";
 import styles from "./styles.module.css";
 
@@ -35,10 +24,7 @@ const toRem = (num: number) => `${num / 16}rem`;
 export default function NotesList(props: Props) {
 	const { notes, className } = props;
 	const _selectedTags = useStore($selectedTags);
-	const shouldReduceMotion = useReducedMotion();
-	const animationsEnabled = useStore($tagAnimationsEnabled);
-	const listRef = useRef<HTMLDivElement>(null);
-	useFitMasonryHeight(listRef);
+	const listRef = useFitMasonryHeight();
 
 	const isSelecting = Boolean(_selectedTags.length);
 
@@ -79,36 +65,33 @@ export default function NotesList(props: Props) {
 				} as CSSProperties
 			}
 		>
-			<MotionConfig
-				reducedMotion={shouldReduceMotion ? "always" : "never"}
-				transition={tagTransition(animationsEnabled, transitions.snappy)}
-			>
-				<LayoutGroup>
-					{filtered.map((note) => (
-						<MotionNoteCard
-							{...note}
-							isSelecting={isSelecting}
-							key={note.title}
-						/>
-					))}
-					{rest.map((note) => (
-						<MotionNoteCard
-							{...note}
-							isSelecting={isSelecting}
-							key={note.title}
-						/>
-					))}
-				</LayoutGroup>
-			</MotionConfig>
+			<LayoutGroup>
+				{filtered.map((note) => (
+					<MotionNoteCard
+						{...note}
+						isSelecting={isSelecting}
+						key={note.title}
+					/>
+				))}
+				{rest.map((note) => (
+					<MotionNoteCard
+						{...note}
+						isSelecting={isSelecting}
+						key={note.title}
+					/>
+				))}
+			</LayoutGroup>
 		</div>
 	);
 }
 
 // The masonry is a wrapping flex column, so its height decides where each
 // column breaks. Child i sits in column i % cols (see styles.module.css), so
-// set the height to the tallest column's measured total. Runs after every
-// render (filtering reorders cards between columns) and on resize.
-function useFitMasonryHeight(ref: RefObject<HTMLDivElement | null>) {
+// size it to the tallest column. Re-runs after every render (filtering
+// reorders cards) and whenever the list or a card resizes.
+function useFitMasonryHeight() {
+	const ref = useRef<HTMLDivElement>(null);
+
 	useLayoutEffect(() => {
 		const list = ref.current;
 		if (!list) {
@@ -116,30 +99,42 @@ function useFitMasonryHeight(ref: RefObject<HTMLDivElement | null>) {
 		}
 
 		const fit = () => {
-			let cols = 1;
-			if (matchMedia("(min-width: 768px)").matches) {
-				cols = 3;
-			} else if (matchMedia("(min-width: 640px)").matches) {
-				cols = 2;
-			}
-			const heights = new Array<number>(cols).fill(0);
-			const children = [...list.children] as HTMLElement[];
-			for (const [i, child] of children.entries()) {
-				const marginBottom = Number.parseFloat(
-					getComputedStyle(child).marginBottom
-				);
-				heights[i % cols] =
-					(heights[i % cols] ?? 0) + child.offsetHeight + marginBottom;
-			}
+			const cards = [...list.children] as HTMLElement[];
+			const cols = getColumnCount();
+			const heights = Array.from({ length: cols }, (_, col) =>
+				cards
+					.filter((_card, i) => i % cols === col)
+					.reduce((sum, card) => sum + getOuterHeight(card), 0)
+			);
 			list.style.height = `${Math.ceil(Math.max(...heights))}px`;
 		};
 
 		fit();
 		const observer = new ResizeObserver(fit);
 		observer.observe(list);
-		for (const child of list.children) {
-			observer.observe(child);
+		for (const card of list.children) {
+			observer.observe(card);
 		}
 		return () => observer.disconnect();
 	});
+
+	return ref;
+}
+
+// Must match the breakpoints in styles.module.css.
+function getColumnCount() {
+	if (matchMedia("(min-width: 768px)").matches) {
+		return 3;
+	}
+	if (matchMedia("(min-width: 640px)").matches) {
+		return 2;
+	}
+	return 1;
+}
+
+function getOuterHeight(element: HTMLElement) {
+	return (
+		element.offsetHeight +
+		Number.parseFloat(getComputedStyle(element).marginBottom)
+	);
 }
