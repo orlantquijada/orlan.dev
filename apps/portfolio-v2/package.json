@@ -16,13 +16,11 @@
     "typecheck": "astro check"
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.10",
     "@astrojs/mdx": "^8.0.2",
     "@astrojs/react": "^7.0.0",
     "@astrojs/ts-plugin": "^1.10.12",
     "@astrojs/vercel": "^11.0.11",
     "@nanostores/react": "^2.0.1",
-    "@radix-ui/colors": "catalog:",
     "@radix-ui/react-dialog": "^1.1.23",
     "@radix-ui/react-hover-card": "^1.1.23",
     "@radix-ui/react-popover": "^1.1.23",
@@ -41,12 +39,12 @@
     "tailwindcss": "catalog:"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.10",
     "@biomejs/biome": "catalog:",
     "@playwright/test": "^1.63.0",
     "@types/react": "catalog:react19",
     "@types/react-dom": "catalog:react19",
     "sharp": "^0.35.4",
-    "svgo": "^4.1.0",
     "typescript": "catalog:",
     "ultracite": "catalog:",
     "vite-plugin-svgr": "^5.2.0"

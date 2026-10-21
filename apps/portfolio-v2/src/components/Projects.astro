@@ -72,26 +72,35 @@ import Video from "./Video.tsx";
 </section>
 
 <script>
-	import { type AnimationOptions, animate, inView } from "motion";
+	import { animate, inView } from "motion";
 
-	// tawilwind md breakpoint
-	if (!window.matchMedia("(min-width: 48rem)").matches) {
-		const transition: AnimationOptions = {};
+	let stop: (() => void) | undefined;
+
+	document.addEventListener("astro:page-load", () => {
+		stop?.();
+		stop = undefined;
+		// Tailwind md breakpoint
+		if (
+			!document.querySelector("#money") ||
+			window.matchMedia("(min-width: 48rem)").matches
+		) {
+			return;
+		}
 		const hide = { filter: "brightness(0.3)" };
 		const show = { filter: "brightness(1)" };
 
-		inView(
+		stop = inView(
 			"#money",
 			(element) => {
-				animate(element, show, transition);
-				animate("#daily", hide, transition);
+				animate(element, show);
+				animate("#daily", hide);
 
 				return () => {
-					animate(element, hide, transition);
-					animate("#daily", show, transition);
+					animate(element, hide);
+					animate("#daily", show);
 				};
 			},
 			{ amount: "all", margin: "50%" }
 		);
-	}
+	});
 </script>

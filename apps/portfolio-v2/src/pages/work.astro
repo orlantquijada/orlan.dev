@@ -376,16 +376,6 @@ const lightboxPreviewsToPreload = [
 		opacity: 0.7;
 	}
 
-	.span-col-2 {
-		grid-column: span 2;
-	}
-	.span-row-2 {
-		grid-row: span 2;
-	}
-	.span-row-3 {
-		grid-row: span 3;
-	}
-
 	.hero-gallery {
 		position: relative;
 		display: flex;
@@ -410,7 +400,7 @@ const lightboxPreviewsToPreload = [
 		transform: translateX(calc(var(--card-index) * var(--unit-x)))
 			rotate(calc(var(--card-index) * var(--unit-rotate)))
 			translateY(var(--card-y));
-		transition-timing-function: cubic-bezier(0.4, 0.2, 1);
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 150ms;
 		transition-property: transform, box-shadow, filter, opacity;
 	}

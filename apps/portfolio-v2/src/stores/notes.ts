@@ -32,10 +32,7 @@ function readTagsFromURL(validTags: Tag[]): Tag[] {
 		return [];
 	}
 	const valid = new Set(validTags);
-	const tags = raw
-		.split(",")
-		.map(decodeURIComponent)
-		.filter((tag) => valid.has(tag));
+	const tags = raw.split(",").filter((tag) => valid.has(tag));
 	// Dedupe so a hand-edited `?tags=css,css` can't render the same chip twice.
 	return [...new Set(tags)];
 }
@@ -60,7 +57,7 @@ export function syncTagsToURL() {
 	const tags = $selectedTags.get();
 	const url = new URL(location.href);
 	if (tags.length) {
-		url.searchParams.set("tags", tags.map(encodeURIComponent).join(","));
+		url.searchParams.set("tags", tags.join(","));
 	} else {
 		url.searchParams.delete("tags");
 	}
