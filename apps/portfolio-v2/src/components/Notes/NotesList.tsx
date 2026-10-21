@@ -1,10 +1,8 @@
 import { useStore } from "@nanostores/react";
-import { transitions } from "@repo/utils";
 import { cx } from "cva";
-import { LayoutGroup, MotionConfig } from "motion/react";
-import type { CSSProperties } from "react";
+import { LayoutGroup } from "motion/react";
+import { type CSSProperties, useLayoutEffect, useRef } from "react";
 import { twMerge } from "tailwind-merge";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
 import type { NoteFrontmatter } from "@/lib/notes";
 import { $selectedTags } from "@/stores/notes";
 import { MotionNoteCard } from "../NoteCard/NoteCard";
@@ -16,7 +14,8 @@ type Props = {
 	notes: Omit<Note, "selected">[];
 };
 
-// estimated height per note
+// estimated height per note (server render only; replaced by measured heights
+// once hydrated, see useFitMasonryHeight)
 const HEIGHT = 100;
 const CARD_MARGIN_BOTTOM = 12;
 
@@ -25,7 +24,7 @@ const toRem = (num: number) => `${num / 16}rem`;
 export default function NotesList(props: Props) {
 	const { notes, className } = props;
 	const _selectedTags = useStore($selectedTags);
-	const shouldReduceMotion = useReducedMotion();
+	const listRef = useFitMasonryHeight();
 
 	const isSelecting = Boolean(_selectedTags.length);
 
@@ -57,6 +56,7 @@ export default function NotesList(props: Props) {
 					"h-full sm:h-(--smHeight) md:h-(--mdHeight)",
 				])
 			)}
+			ref={listRef}
 			style={
 				{
 					"--mason-mb": toRem(CARD_MARGIN_BOTTOM),
@@ -65,27 +65,76 @@ export default function NotesList(props: Props) {
 				} as CSSProperties
 			}
 		>
-			<MotionConfig
-				reducedMotion={shouldReduceMotion ? "always" : "never"}
-				transition={transitions.snappy}
-			>
-				<LayoutGroup>
-					{filtered.map((note) => (
-						<MotionNoteCard
-							{...note}
-							isSelecting={isSelecting}
-							key={note.title}
-						/>
-					))}
-					{rest.map((note) => (
-						<MotionNoteCard
-							{...note}
-							isSelecting={isSelecting}
-							key={note.title}
-						/>
-					))}
-				</LayoutGroup>
-			</MotionConfig>
+			<LayoutGroup>
+				{filtered.map((note) => (
+					<MotionNoteCard
+						{...note}
+						isSelecting={isSelecting}
+						key={note.title}
+					/>
+				))}
+				{rest.map((note) => (
+					<MotionNoteCard
+						{...note}
+						isSelecting={isSelecting}
+						key={note.title}
+					/>
+				))}
+			</LayoutGroup>
 		</div>
+	);
+}
+
+// The masonry is a wrapping flex column, so its height decides where each
+// column breaks. Child i sits in column i % cols (see styles.module.css), so
+// size it to the tallest column. Re-runs after every render (filtering
+// reorders cards) and whenever the list or a card resizes.
+function useFitMasonryHeight() {
+	const ref = useRef<HTMLDivElement>(null);
+
+	useLayoutEffect(() => {
+		const list = ref.current;
+		if (!list) {
+			return;
+		}
+
+		const fit = () => {
+			const cards = [...list.children] as HTMLElement[];
+			const cols = getColumnCount();
+			const heights = Array.from({ length: cols }, (_, col) =>
+				cards
+					.filter((_card, i) => i % cols === col)
+					.reduce((sum, card) => sum + getOuterHeight(card), 0)
+			);
+			list.style.height = `${Math.ceil(Math.max(...heights))}px`;
+		};
+
+		fit();
+		const observer = new ResizeObserver(fit);
+		observer.observe(list);
+		for (const card of list.children) {
+			observer.observe(card);
+		}
+		return () => observer.disconnect();
+	});
+
+	return ref;
+}
+
+// Must match the breakpoints in styles.module.css.
+function getColumnCount() {
+	if (matchMedia("(min-width: 768px)").matches) {
+		return 3;
+	}
+	if (matchMedia("(min-width: 640px)").matches) {
+		return 2;
+	}
+	return 1;
+}
+
+function getOuterHeight(element: HTMLElement) {
+	return (
+		element.offsetHeight +
+		Number.parseFloat(getComputedStyle(element).marginBottom)
 	);
 }

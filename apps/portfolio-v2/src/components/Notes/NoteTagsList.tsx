@@ -1,19 +1,7 @@
 import { useStore } from "@nanostores/react";
-import { transitions } from "@repo/utils";
-import {
-	AnimatePresence,
-	LayoutGroup,
-	MotionConfig,
-	motion,
-} from "motion/react";
-import {
-	type ComponentProps,
-	type Ref,
-	useCallback,
-	useEffect,
-	useState,
-} from "react";
-import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { type ComponentProps, type Ref, useCallback, useEffect } from "react";
+import { useHasMounted } from "@/hooks/useHasMounted";
 import Close from "@/icons/cross.svg?react";
 
 import { getNeighborhoodsIntersection, type TagGraphMap } from "@/lib/notes";
@@ -37,102 +25,86 @@ type Props = {
 export default function NoteTagsList(props: Props) {
 	const { tags, tagsGraph } = props;
 	const _selectedTags = useStore($selectedTags);
-	const shouldReduceMotion = useReducedMotion();
 	const isSelecting = Boolean(_selectedTags.length);
 
 	const visibleTags = getNeighborhoodsIntersection(tagsGraph, _selectedTags);
 
-	const initialOpacity = useTagsInitialOpacity();
+	// Chips that appear after mount fade in; the server-rendered ones don't.
+	const initialOpacity = useHasMounted() ? 0 : 1;
 
 	useTagsUrlSync(tags);
 
 	return (
-		<MotionConfig
-			reducedMotion={shouldReduceMotion ? "always" : "never"}
-			transition={transitions.snappy}
-		>
-			<LayoutGroup>
-				<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
-					<AnimatePresence mode="popLayout">
-						{isSelecting ? (
-							<Chip asChild>
-								<motion.button
-									animate={{ opacity: 1 }}
-									aria-label="Clear selected tags"
-									initial={{ opacity: 0 }}
-									onClick={clearTags}
-								>
-									<Close className={styles.icon} />
-								</motion.button>
-							</Chip>
+		<LayoutGroup>
+			<div className="mt-6 flex flex-wrap justify-start gap-2 sm:max-w-[85%] md:gap-y-3">
+				<AnimatePresence mode="popLayout">
+					{isSelecting ? (
+						<Chip asChild>
+							<motion.button
+								animate={{ opacity: 1 }}
+								aria-label="Clear selected tags"
+								initial={{ opacity: 0 }}
+								onClick={clearTags}
+							>
+								<Close className={styles.icon} />
+							</motion.button>
+						</Chip>
+					) : (
+						<Chip asChild color="primary">
+							<motion.span exit={{ opacity: 0 }}>all</motion.span>
+						</Chip>
+					)}
+
+					{_selectedTags.map((tag, index) =>
+						index === 0 ? (
+							<Tag
+								key={tag}
+								layoutId={tag}
+								style={{ zIndex: 5 - index }}
+								tag={tag}
+							/>
 						) : (
-							<Chip asChild color="primary">
-								<motion.span exit={{ opacity: 0 }}>all</motion.span>
-							</Chip>
-						)}
+							<Tag
+								custom={index}
+								key={tag}
+								layoutId={tag}
+								style={{
+									justifyContent: "flex-end",
+									marginLeft: -32,
 
-						{_selectedTags.map((tag, index) =>
-							index === 0 ? (
+									paddingLeft: 36,
+									zIndex: 5 - index,
+								}}
+								tag={tag}
+							/>
+						)
+					)}
+
+					{isSelecting
+						? visibleTags.map((tag) => (
 								<Tag
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									initial={{ opacity: initialOpacity }}
 									key={tag}
 									layoutId={tag}
-									style={{ zIndex: 5 - index }}
 									tag={tag}
 								/>
-							) : (
+							))
+						: tags.map((tag) => (
 								<Tag
-									custom={index}
+									animate={{ opacity: 1 }}
+									exit={{ opacity: 0 }}
+									initial={{ opacity: initialOpacity }}
 									key={tag}
 									layoutId={tag}
-									style={{
-										justifyContent: "flex-end",
-										marginLeft: -32,
-
-										paddingLeft: 36,
-										zIndex: 5 - index,
-									}}
 									tag={tag}
 								/>
-							)
-						)}
-
-						{isSelecting
-							? visibleTags.map((tag) => (
-									<Tag
-										animate={{ opacity: 1 }}
-										exit={{ opacity: 0 }}
-										initial={{ opacity: initialOpacity }}
-										key={tag}
-										layoutId={tag}
-										tag={tag}
-									/>
-								))
-							: tags.map((tag) => (
-									<Tag
-										animate={{ opacity: 1 }}
-										exit={{ opacity: 0 }}
-										initial={{ opacity: initialOpacity }}
-										key={tag}
-										layoutId={tag}
-										tag={tag}
-									/>
-								))}
-					</AnimatePresence>
-				</div>
-			</LayoutGroup>
-		</MotionConfig>
+							))}
+				</AnimatePresence>
+			</div>
+		</LayoutGroup>
 	);
-}
-
-// initial opacity = 1 on hard page load
-function useTagsInitialOpacity() {
-	const [initialOpacity, setInitialOpacity] = useState(1);
-
-	useEffect(() => {
-		setInitialOpacity(0);
-	}, []);
-
-	return initialOpacity;
 }
 
 // Two-way sync between `?tags=` in the URL and the $selectedTags store:
@@ -152,6 +124,10 @@ function useTagsUrlSync(validTags: string[]) {
 		return () => {
 			document.removeEventListener("astro:page-load", reseed);
 			unsubscribe();
+			// The store outlives the island across ClientRouter navigations. Reset it
+			// (after unsubscribing, so the next page's URL isn't touched) so the next
+			// /notes visit hydrates with no selection, matching the server HTML.
+			clearTags();
 		};
 	}, [validTags]);
 }
