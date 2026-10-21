@@ -16,8 +16,10 @@ export default function Demo() {
 	const ref = useRef<HTMLDivElement>(null);
 	const [auto, setAuto] = useState<Auto>("fill");
 
-	const handleChangeAuto = (value: Auto) => {
-		setAuto(value);
+	const handleChangeAuto = (value: string) => {
+		if (value === "fit" || value === "fill") {
+			setAuto(value);
+		}
 	};
 	const handleResetShowcase = () => {
 		if (!ref.current) {
@@ -51,6 +53,7 @@ export default function Demo() {
 					<AutoFitFillToggle auto={auto} onChangeAuto={handleChangeAuto} />
 
 					<Button
+						aria-label="Reset demo size"
 						className="grid aspect-square h-8 place-items-center p-0 text-gray-a11"
 						onClick={handleResetShowcase}
 						translucent
@@ -77,7 +80,7 @@ function AutoFitFillToggle({
 	onChangeAuto,
 }: {
 	auto: Auto;
-	onChangeAuto: (value: Auto) => void;
+	onChangeAuto: (value: string) => void;
 }) {
 	return (
 		<ToggleGroup.Root

@@ -50,7 +50,7 @@ const data = Astro.props;
 
 		{data.updatedAt ? (
 	<MetaData>
-		<Icon name="pencil" />
+		<Icon name="pencil" slot="icon" />
 		<span>
 			{formatDate(
 				Array.isArray(data.updatedAt)

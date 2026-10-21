@@ -48,8 +48,8 @@ const previewImages = [
 			</div>
 
 			<div class="preview-gallery">
-				{previewImages.map((image, index) => (
-	<div class="preview-card" style={`--card-index: ${index}`}>
+				{previewImages.map((image) => (
+	<div class="preview-card">
 		<Image
 			alt={image.alt}
 			class="h-full w-full object-cover"
@@ -98,7 +98,6 @@ const previewImages = [
 	}
 
 	.preview-card {
-		--card-index: 0;
 		position: absolute;
 		width: 100px;
 		overflow: hidden;

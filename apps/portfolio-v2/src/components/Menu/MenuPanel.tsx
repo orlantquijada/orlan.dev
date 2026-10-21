@@ -128,8 +128,6 @@ const links: Array<{
 	label: string;
 	color: `bg-accent-${"blue" | "pink" | "violet"}`;
 }> = [
-	// { href: '/writing', label: 'Writing', color: 'bg-accent-pink' },
-	// { href: '/bookmarks', label: 'Bookmarks', color: 'bg-accent-violet' },
 	{ color: "bg-accent-blue", href: "/notes", label: "Notes" },
 	{ color: "bg-accent-violet", href: "/work", label: "Work" },
 ];

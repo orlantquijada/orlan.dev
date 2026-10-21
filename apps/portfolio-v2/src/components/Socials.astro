@@ -43,12 +43,7 @@ const btnClass = twMerge(
 
 <div data-animate style="--stagger: 4">
 	<a class={btnClass} href="/resume" rel="noopener noreferrer" target="_blank">
-		<Icon
-			class="text-gray10 group-hover:text-gray1 transition-all"
-			name="file-download"
-			size={16}
-			slot="icon"
-		/>
+		<Icon class="text-gray10 transition-all" name="file-download" size={16} />
 		<span>View Resume</span>
 	</a>
 </div>
@@ -61,7 +56,7 @@ const btnClass = twMerge(
 		href={social.url}
 		title={social.title}
 	>
-		<Icon class="size-6" name={social.iconName} slot="icon" />
+		<Icon class="size-6" name={social.iconName} />
 	</a>
 ))}
 </div>
